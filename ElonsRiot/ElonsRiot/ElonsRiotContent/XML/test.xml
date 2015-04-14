@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GameObject Name="hayleyCopter" Path="3D/helicopter/Helicopter">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="terrain" Path="3D/Ziemia/terrain">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="Elon" Path="3D/ludzik/elon">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+</Scene>
