@@ -13,13 +13,17 @@ namespace ElonsRiot
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        //W³aœciwoœci
+        Scene MyScene { get; set; }             //Scena. Dziêki niej ³adujemy wszystkie gameobjecty itd.
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            MyScene = new Scene(Content);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
         }
         protected override void Initialize()
         {
@@ -29,6 +33,7 @@ namespace ElonsRiot
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            MyScene.LoadAllContent();
         }
         protected override void UnloadContent()
         {
@@ -47,6 +52,7 @@ namespace ElonsRiot
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            MyScene.DrawAllContent();
             base.Draw(gameTime);
         }
     }
