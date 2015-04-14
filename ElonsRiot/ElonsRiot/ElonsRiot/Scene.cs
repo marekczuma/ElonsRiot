@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,8 @@ namespace ElonsRiot
         public ContentManager ContentManager { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public XMLScene XMLScene { get; set; }
+
+        private Player PlayerObject;
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
@@ -38,7 +41,6 @@ namespace ElonsRiot
             }
 
         }
-
         public void DrawAllContent()
         {
             foreach(var elem in GameObjects)
@@ -47,7 +49,12 @@ namespace ElonsRiot
                 elem.RefreshMatrix();
             }
         }
-        public XMLScene DeserializeFromXML()
+        public void PlayerControll(KeyboardState _state)
+        {
+            PlayerObject.SetState(_state);
+            PlayerObject.Movement(_state);
+        }
+        private XMLScene DeserializeFromXML()
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(XMLScene));
             TextReader textReader = new StreamReader(@"../../../../ElonsRiotContent/XML/scena.xml");
@@ -86,6 +93,7 @@ namespace ElonsRiot
             Elon.Rotation = new Vector3(-90, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
+            PlayerObject = Elon;
         }
     }
 }

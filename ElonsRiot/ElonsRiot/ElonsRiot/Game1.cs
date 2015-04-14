@@ -15,6 +15,7 @@ namespace ElonsRiot
     {
         //W³aœciwoœci
         Scene MyScene { get; set; }             //Scena. Dziêki niej ³adujemy wszystkie gameobjecty itd.
+        KeyboardState state;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
@@ -44,9 +45,8 @@ namespace ElonsRiot
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
-            // TODO: Add your update logic here
-
+            state = Keyboard.GetState();
+            MyScene.PlayerControll(state);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
