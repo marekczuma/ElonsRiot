@@ -15,16 +15,18 @@ namespace ElonsRiot
     {
         //W³aœciwoœci
         Scene MyScene { get; set; }             //Scena. Dziêki niej ³adujemy wszystkie gameobjecty itd.
-        KeyboardState state;
+        KeyboardState state { get; set; }
+        MouseState CurrentMouseState { get; set; }
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
+            CurrentMouseState = Mouse.GetState();
         }
         protected override void Initialize()
         {
@@ -46,7 +48,9 @@ namespace ElonsRiot
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             state = Keyboard.GetState();
-            MyScene.PlayerControll(state);
+            
+            MyScene.PlayerControll(state, gameTime, CurrentMouseState);
+            CurrentMouseState = Mouse.GetState();
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)

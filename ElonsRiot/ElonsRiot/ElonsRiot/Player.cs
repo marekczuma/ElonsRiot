@@ -10,9 +10,16 @@ namespace ElonsRiot
     public class Player : GameObject
     {
         public CharacterState elonState {get; set;}    //STAN ELONA - TO JEST KLASA KUŹWA!
+        public Camera camera;
+
+        private bool isMouseMovement;
+        private float angle;
         public Player()
         {
             elonState = new CharacterState(State.idle);
+            camera = new Camera();
+            isMouseMovement = false;
+            angle = 0;
         }
 
         public void SetState(KeyboardState state)
@@ -30,24 +37,96 @@ namespace ElonsRiot
                 elonState.SetCurrentState(State.idle);
             }
         }
-        public void Movement(KeyboardState state)
+        public void Movement(KeyboardState state, MouseState _oldMouseState)
         {
             if (state.IsKeyDown(Keys.W))
             {
-                ChangePosition(new Vector3(0, 0, -elonState.VelocityForward));
+                ChangePosition(new Vector3(elonState.VelocityForward, 0,0 ));
             }
             else if (state.IsKeyDown(Keys.S))
             {
-                ChangePosition(new Vector3(0, 0, elonState.VelocityBack));
+                ChangePosition(new Vector3(-elonState.VelocityBack, 0,0 ));
             }
             if (state.IsKeyDown(Keys.D))
             {
-                ChangePosition(new Vector3(elonState.VelocitySide, 0, 0));
+                ChangePosition(new Vector3(0, 0, elonState.VelocitySide));
             }
             else if (state.IsKeyDown(Keys.A))
             {
-                ChangePosition(new Vector3(-elonState.VelocitySide, 0, 0));
+                ChangePosition(new Vector3(0, 0, -elonState.VelocitySide));
+            }
+            //obracanie playera
+            if (!(elonState.State == State.idle))
+            {
+                MouseState newState;
+                newState = Mouse.GetState();
+                int newMouseX = newState.X;
+                int oldMouseX = _oldMouseState.X;
+                float delta = 0;
+                if ((oldMouseX - newMouseX) != 0)
+                {
+                    isMouseMovement = true;
+                }
+                if (isMouseMovement)
+                {
+                    delta = oldMouseX - newMouseX;
+                }
+
+                if (delta < 0)
+                {
+                    angle -= 6.1f;
+                    //angle += delta / 10;
+                }
+                else if (delta > 0)
+                {
+                    angle += 6.1f;
+                    //angle -= delta / 10;
+                }
+                ChangeRotation(new Vector3(0, angle, 0));
+                _oldMouseState = newState;
+                isMouseMovement = false;
+                angle = 0;
             }
         }
+        public void CameraUpdate(GameTime gameTime)
+        {
+            camera.Update(this.MatrixWorld, elonState, this.Rotation);
+            camera.UpdateCamera(gameTime);
+
+        }
+        //private void Movement()
+        //{
+        //    MouseState newState = Mouse.GetState();
+        //    int newMouseX = newState.X;
+        //    int newMouseY = newState.Y;
+        //    if((newMouseX != oldMouseX) || (newMouseY != oldMouseY))
+        //    {
+        //        isMouseMovement = true;
+        //    }
+        //    if(hayleyState == HayleyState.lifting)
+        //    {
+        //        float delta = 0;
+        //        if(isMouseMovement == true)
+        //        {
+        //            delta = oldMouseX - newMouseX;
+        //        }
+        //        position += Vector3.Transform(new Vector3(0.0f, 0.02f, 0), Matrix.CreateRotationY(MathHelper.ToRadians(90) + angle));
+        //        if ( delta < 0)
+        //        {
+        //            angle += delta / 100;
+        //        }
+        //        else if (delta > 0)
+        //        {
+        //            angle += delta / 100;
+
+        //        }
+        //        if (state.IsKeyDown(Keys.W))
+        //        {
+        //            position += Vector3.Transform(new Vector3(0.04f, 0, 0), Matrix.CreateRotationY(MathHelper.ToRadians(90) + angle));
+        //        }
+        //    isMouseMovement = false;
+        //    oldMouseX = newMouseX;
+        //    oldMouseY = newMouseY;
+        //}
     }
 }

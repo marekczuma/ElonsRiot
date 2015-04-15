@@ -45,14 +45,15 @@ namespace ElonsRiot
         {
             foreach(var elem in GameObjects)
             {
-                DrawSimpleModel(elem.GameObjectModel, elem.MatrixWorld, elem.MatrixView, elem.MatrixProjection);
+                DrawSimpleModel(elem.GameObjectModel, elem.MatrixWorld, PlayerObject.camera.viewMatrix, PlayerObject.camera.projectionMatrix);
                 elem.RefreshMatrix();
             }
         }
-        public void PlayerControll(KeyboardState _state)
+        public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
             PlayerObject.SetState(_state);
-            PlayerObject.Movement(_state);
+            PlayerObject.Movement(_state, _mouseState);
+            PlayerObject.CameraUpdate(gameTime);
         }
         private XMLScene DeserializeFromXML()
         {
