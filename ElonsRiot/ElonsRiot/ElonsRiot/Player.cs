@@ -55,6 +55,7 @@ namespace ElonsRiot
             {
                 ChangePosition(new Vector3(0, 0, -elonState.VelocitySide));
             }
+
             //obracanie playera
             if (!(elonState.State == State.idle))
             {
@@ -74,12 +75,12 @@ namespace ElonsRiot
 
                 if (delta < 0)
                 {
-                    angle -= 6.1f;
+                    angle -= 5.1f;
                     //angle += delta / 10;
                 }
                 else if (delta > 0)
                 {
-                    angle += 6.1f;
+                    angle += 5.1f;
                     //angle -= delta / 10;
                 }
                 ChangeRotation(new Vector3(0, angle, 0));
@@ -87,6 +88,8 @@ namespace ElonsRiot
                 isMouseMovement = false;
                 angle = 0;
             }
+
+
         }
         public void CameraUpdate(GameTime gameTime)
         {

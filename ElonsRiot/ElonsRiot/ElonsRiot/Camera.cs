@@ -21,6 +21,7 @@ namespace ElonsRiot
         private Vector2 smoothedMouseMovement;
         private MouseState currentMouseState;
         private MouseState previousMouseState;
+        private int previousScrollValue;
 
         public Vector3 position;
         private Vector3 target;
@@ -32,7 +33,6 @@ namespace ElonsRiot
         private Vector3 desiredPosition;
         private Vector3 desiredTarget;
         public Vector3 offsetDistance;
-
         public Camera()
         {
             ResetCamera();
@@ -55,6 +55,7 @@ namespace ElonsRiot
             desiredPosition = position;
             desiredTarget = target;
             offsetDistance = new Vector3(0, -20, 10);
+            
         }
 
         public void Rotate()
@@ -129,11 +130,11 @@ namespace ElonsRiot
             {
                 cameraRotation.Forward.Normalize();
 
-                
+
 
                 desiredPosition = Vector3.Transform(offsetDistance, cameraRotation);
                 desiredPosition += chasedObjectsWorld.Translation;
-                //position = desiredPosition;
+                position = desiredPosition;
                 cameraRotation = Matrix.CreateRotationX(pitch) * Matrix.CreateRotationY(yaw) * Matrix.CreateFromAxisAngle(cameraRotation.Forward, roll);
                 target = chasedObjectsWorld.Translation;
                 target.Y += 7;
@@ -145,11 +146,9 @@ namespace ElonsRiot
 
         private void HandleInput(CharacterState elonState, Vector3 rotation)
         {
-
+            previousScrollValue = previousMouseState.ScrollWheelValue;
             previousMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
-
-           // Rectangle clientBounds = Game1.Instance.Window.ClientBounds;
 
             int centerX = 800 / 2;
             int centerY = 600 / 2;
@@ -158,9 +157,32 @@ namespace ElonsRiot
 
             smoothedMouseMovement.X = (float)deltaX;
             smoothedMouseMovement.Y = (float)deltaY;
-
             if (elonState.State == State.run || elonState.State == State.walk || elonState.State == State.jump)
-                rotation.Y = -smoothedMouseMovement.X / 100;
+            {
+                position.Y += smoothedMouseMovement.Y / 60 - 5;
+
+                if (position.Y > 20)
+                    position.Y = 20;
+                else if (position.Y < 0)
+                    position.Y = 0;
+            }
+
+            if(currentMouseState.ScrollWheelValue < previousScrollValue)
+            {
+                offsetDistance.Y -= 2.0f;
+            }
+            else if (currentMouseState.ScrollWheelValue > previousScrollValue)
+            {
+                offsetDistance.Y += 2.0f;
+            }
+
+            if (offsetDistance.Y > -20)
+                offsetDistance.Y = -20;
+            else if (offsetDistance.Y < -60)
+                offsetDistance.Y = -60;
+
+            previousScrollValue = currentMouseState.ScrollWheelValue;
+            
         }
     }
 }
