@@ -94,39 +94,5 @@ namespace ElonsRiot
             camera.UpdateCamera(gameTime);
 
         }
-        //private void Movement()
-        //{
-        //    MouseState newState = Mouse.GetState();
-        //    int newMouseX = newState.X;
-        //    int newMouseY = newState.Y;
-        //    if((newMouseX != oldMouseX) || (newMouseY != oldMouseY))
-        //    {
-        //        isMouseMovement = true;
-        //    }
-        //    if(hayleyState == HayleyState.lifting)
-        //    {
-        //        float delta = 0;
-        //        if(isMouseMovement == true)
-        //        {
-        //            delta = oldMouseX - newMouseX;
-        //        }
-        //        position += Vector3.Transform(new Vector3(0.0f, 0.02f, 0), Matrix.CreateRotationY(MathHelper.ToRadians(90) + angle));
-        //        if ( delta < 0)
-        //        {
-        //            angle += delta / 100;
-        //        }
-        //        else if (delta > 0)
-        //        {
-        //            angle += delta / 100;
-
-        //        }
-        //        if (state.IsKeyDown(Keys.W))
-        //        {
-        //            position += Vector3.Transform(new Vector3(0.04f, 0, 0), Matrix.CreateRotationY(MathHelper.ToRadians(90) + angle));
-        //        }
-        //    isMouseMovement = false;
-        //    oldMouseX = newMouseX;
-        //    oldMouseY = newMouseY;
-        //}
     }
 }

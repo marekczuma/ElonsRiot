@@ -37,7 +37,8 @@ namespace ElonsRiot
             LoadElon();
             foreach (var elem in GameObjects)
             {
-                elem.GameObjectModel = ContentManager.Load<Model>(elem.ObjectPath);
+                if(!string.IsNullOrEmpty(elem.ObjectPath))
+                    elem.GameObjectModel = ContentManager.Load<Model>(elem.ObjectPath);
             }
 
         }
@@ -90,7 +91,7 @@ namespace ElonsRiot
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
-            Elon.Position = new Vector3(0, 2, 0);
+            Elon.Position = new Vector3(-150, 2,0);
             Elon.Rotation = new Vector3(-90, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);

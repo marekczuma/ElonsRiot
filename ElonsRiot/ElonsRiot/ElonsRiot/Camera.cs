@@ -54,7 +54,7 @@ namespace ElonsRiot
 
             desiredPosition = position;
             desiredTarget = target;
-            offsetDistance = new Vector3(0, -50, 30);
+            offsetDistance = new Vector3(0, -20, 10);
         }
 
         public void Rotate()
@@ -113,6 +113,7 @@ namespace ElonsRiot
                 cameraRotation = Matrix.CreateRotationX(pitch) * Matrix.CreateRotationY(yaw) * Matrix.CreateFromAxisAngle(cameraRotation.Forward, roll);
 
                 desiredTarget = chasedObjectsWorld.Translation;
+                desiredTarget.Y += 7;
                 target = desiredTarget;
 
 
@@ -135,7 +136,7 @@ namespace ElonsRiot
                 //position = desiredPosition;
                 cameraRotation = Matrix.CreateRotationX(pitch) * Matrix.CreateRotationY(yaw) * Matrix.CreateFromAxisAngle(cameraRotation.Forward, roll);
                 target = chasedObjectsWorld.Translation;
-
+                target.Y += 7;
                 roll = MathHelper.SmoothStep(roll, 0f, 0.2f);
             }
 

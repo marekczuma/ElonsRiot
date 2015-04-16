@@ -1,6 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <GameObject Name="hayleyCopter" Path="3D/helicopter/Helicopter">
+  <GameObject Name="terrain" Path="3D/Ziemia/bigFloor">
+    <Position>
+      <X>0</X>
+      <Y>-3</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="ceiling" Path="3D/Ziemia/bigFloor">
+    <Position>
+      <X>0</X>
+      <Y>70</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="wall1" Path="3D/sciana/bigWall">
+    <Position>
+      <X>-250</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="wall2" Path="3D/sciana/bigWall">
+    <Position>
+      <X>250</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="wall3" Path="3D/sciana/bigWall">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>250</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="wall4" Path="3D/sciana/bigWall">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>-250</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //Dom1
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>220</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall2" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>150</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall3" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-225</X>
+      <Y>0</Y>
+      <Z>130</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="komputer" Path="3D/komputer/computer">
+    <Position>
+      <X>-225</X>
+      <Y>0</Y>
+      <Z>230</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //Dom2
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>100</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall2" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>30</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall3" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-225</X>
+      <Y>0</Y>
+      <Z>10</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //Dom3
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>-20</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall2" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>-90</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall3" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-225</X>
+      <Y>0</Y>
+      <Z>-110</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //Dom4
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>-140</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall2" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-198</X>
+      <Y>0</Y>
+      <Z>-210</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall3" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-225</X>
+      <Y>0</Y>
+      <Z>-230</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //Na środku
+  <GameObject Name="miniWall3" Path="3D/sciana/middleWall">
     <Position>
       <X>0</X>
       <Y>0</Y>
@@ -12,11 +245,137 @@
       <Z>0</Z>
     </Rotation>
   </GameObject>
-  <GameObject Name="terrain" Path="3D/Ziemia/terrain">
+  //Te średnie w poprzek
+  <GameObject Name="MiddleWall1" Path="3D/sciana/middleWallMini">
     <Position>
       <X>0</X>
       <Y>0</Y>
+      <Z>140</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
       <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="MiddleWall2" Path="3D/sciana/middleWallMini">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>20</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="MiddleWall2" Path="3D/sciana/middleWallMini">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>-100</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>90</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //Ściany z drzwiami
+  //1 pokój
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-80</X>
+      <Y>0</Y>
+      <Z>115</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-80</X>
+      <Y>0</Y>
+      <Z>45</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //1.1 pokój
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>80</X>
+      <Y>0</Y>
+      <Z>115</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>80</X>
+      <Y>0</Y>
+      <Z>45</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //2 pokój
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-80</X>
+      <Y>0</Y>
+      <Z>-5</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>-80</X>
+      <Y>0</Y>
+      <Z>-75</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  //2.2 pokój
+  <GameObject Name="miniWall2" Path="3D/sciana/miniWall">
+    <Position>
+      <X>80</X>
+      <Y>0</Y>
+      <Z>-5</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+  </GameObject>
+  <GameObject Name="miniWall1" Path="3D/sciana/miniWall">
+    <Position>
+      <X>80</X>
+      <Y>0</Y>
+      <Z>-75</Z>
     </Position>
     <Rotation>
       <X>-90</X>
