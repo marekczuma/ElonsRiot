@@ -129,9 +129,6 @@ namespace ElonsRiot
             else
             {
                 cameraRotation.Forward.Normalize();
-
-
-
                 desiredPosition = Vector3.Transform(offsetDistance, cameraRotation);
                 desiredPosition += chasedObjectsWorld.Translation;
                 position = desiredPosition;

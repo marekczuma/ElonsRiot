@@ -21,6 +21,8 @@ namespace ElonsRiot
         public string ObjectPath { get; set; }
         [XmlElement("GameObject")]
         public List<GameObject> GameObjects { get; set; }
+        [XmlElement("Scale")]
+        public float Scale { get; set; }
         public Matrix MatrixWorld { get; set; }
         //public Matrix MatrixView { get; set; }
         //public Matrix MatrixProjection { get; set; }
@@ -31,25 +33,19 @@ namespace ElonsRiot
         {
             //Rotation = new Vector3(-90, 0, 0);
             //Position = new Vector3(0, 0, 0);
-            MatrixWorld = Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateTranslation(Position) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z));
+            MatrixWorld = Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateTranslation(Position) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateScale(Scale);
             //MatrixView = Matrix.CreateLookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), Vector3.UnitY);
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
         }
         public GameObject(Vector3 _position)
         {
-            //Rotation = new Vector3(-90, 0, 0);
-            //Position = _position;
-            MatrixWorld = Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateTranslation(Position) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z));
-            //MatrixView = Matrix.CreateLookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), Vector3.UnitY);
-            //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
+            MatrixWorld = Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateTranslation(Position) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateScale(Scale);
             GameObjects = new List<GameObject>();
         }
         public void RefreshMatrix()
         {
-            MatrixWorld = Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
-            //MatrixView = Matrix.CreateLookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), Vector3.UnitY);
-            //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
+            MatrixWorld = Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position) * Matrix.CreateScale(Scale);
         }
         public void ChangePosition(Vector3 _position)
         {
@@ -70,6 +66,11 @@ namespace ElonsRiot
         {
             Rotation = _rotation;
             MatrixWorld = Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateTranslation(Position) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z));
+        }
+        public void setScale(float _scale)
+        {
+            Scale = _scale;
+            MatrixWorld = Matrix.CreateScale(Scale);
         }
     }
 

@@ -91,6 +91,7 @@ namespace ElonsRiot
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
+            Elon.Scale = 1;
             Elon.Position = new Vector3(-150, 2,0);
             Elon.Rotation = new Vector3(-90, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
