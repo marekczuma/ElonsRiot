@@ -82,6 +82,11 @@ namespace ElonsRiot
             Scale = _scale;
             MatrixWorld = Matrix.CreateScale(Scale);
         }
+        public void Initialize()
+        {
+            boneTransformations = new Matrix[GameObjectModel.Bones.Count];
+            this.GameObjectModel.CopyAbsoluteBoneTransformsTo(boneTransformations);
+        }
         public void createBoudingBox()
         {
             boneTransformations = new Matrix[GameObjectModel.Bones.Count];
@@ -94,9 +99,9 @@ namespace ElonsRiot
 
             foreach (ModelMesh mesh in GameObjectModel.Meshes)
             {
-                meshTransform = Matrix.CreateScale(0.4f) * Matrix.CreateRotationX(MathHelper.ToRadians(-Rotation.X))
+                meshTransform = Matrix.CreateScale(0.4f) * Matrix.CreateTranslation(new Vector3(0, 0, Position.Z))* Matrix.CreateRotationX(MathHelper.ToRadians(-Rotation.X))
                     * Matrix.CreateRotationZ(MathHelper.ToRadians(-Rotation.Z)) * boneTransformations[mesh.ParentBone.Index];
-
+                
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
 
@@ -131,7 +136,10 @@ namespace ElonsRiot
                 meshMin.Y -= 4;
             }
             boundingBox = new BoundingBox(meshMin, meshMax);
+            
+        }
+        
         }
     }
 
-}
+

@@ -19,6 +19,7 @@ namespace ElonsRiot
 
         private Player PlayerObject;
         private BasicEffect basicEffect;
+        private Physic physic;
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
@@ -30,7 +31,7 @@ namespace ElonsRiot
             GameObjects = new List<GameObject>();
             XMLScene = new XMLScene();
         }
-        
+
         public void LoadAllContent(GraphicsDevice graphic)
         {
             XMLScene = DeserializeFromXML();
@@ -38,23 +39,30 @@ namespace ElonsRiot
             LoadElon();
             foreach (var elem in GameObjects)
             {
-                if(!string.IsNullOrEmpty(elem.ObjectPath))
+                if (!string.IsNullOrEmpty(elem.ObjectPath))
                     elem.GameObjectModel = ContentManager.Load<Model>(elem.ObjectPath);
+                  //  elem.Initialize();
+                   // elem.RefreshMatrix();
             }
             basicEffect = new BasicEffect(graphic);
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
-            foreach(var elem in GameObjects)
-            {
-                DrawSimpleModel(elem.GameObjectModel, elem.MatrixWorld, PlayerObject.camera.viewMatrix, PlayerObject.camera.projectionMatrix);
-                elem.RefreshMatrix();
-            }
+             foreach(var elem in GameObjects)
+              {
+                 DrawSimpleModel(elem.GameObjectModel, elem.MatrixWorld, PlayerObject.camera.viewMatrix, PlayerObject.camera.projectionMatrix);
+              
+                  elem.RefreshMatrix();
+              }
             foreach (GameObject gObj in this.GameObjects)
             {
+              //  DrawModel(gObj);
                 gObj.createBoudingBox();
+                gObj.RefreshMatrix();
             }
             DrawBoudingBox(graphic);
+            physic = new Physic(GameObjects);
+            physic.DetectCollision(PlayerObject);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
@@ -98,7 +106,7 @@ namespace ElonsRiot
             Player Elon = new Player();
             Elon.Name = "Elon";
             Elon.Scale = 1;
-            Elon.Position = new Vector3(-150, 2,0);
+            Elon.Position = new Vector3(-150, 2, 0);
             Elon.Rotation = new Vector3(-90, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
@@ -114,6 +122,7 @@ namespace ElonsRiot
 
                 //draw bouding box 
                 Vector3[] corners = gameObj.boundingBox.GetCorners();
+
                 VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
                 // Assign the 8 box vertices
@@ -138,5 +147,24 @@ namespace ElonsRiot
                 }
             }
         }
+      /*  public void DrawModel(GameObject gameObj)
+        {
+
+            foreach (ModelMesh mesh in gameObj.GameObjectModel.Meshes)
+            {
+
+                foreach (BasicEffect effect2 in mesh.Effects)
+                {
+                    effect2.World = Matrix.CreateScale(0.4f) *Matrix.CreateRotationX(MathHelper.ToRadians(-gameObj.Rotation.X))
+                    * Matrix.CreateRotationZ(MathHelper.ToRadians(-gameObj.Rotation.Z)) * gameObj.boneTransformations[mesh.ParentBone.Index] * gameObj.MatrixWorld;
+                    effect2.View = this.PlayerObject.camera.viewMatrix;
+                    effect2.Projection = this.PlayerObject.camera.projectionMatrix;
+                    effect2.EnableDefaultLighting();
+
+                }
+                mesh.Draw();
+
+            }
+        }*/
     }
 }
