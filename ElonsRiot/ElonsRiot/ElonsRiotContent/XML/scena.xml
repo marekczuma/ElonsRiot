@@ -12,7 +12,7 @@
       <Z>0</Z>
     </Rotation>
 	<Scale>1</Scale>
-  </GameObject>
+  </GameObject> 
   <GameObject Name="wall1" Path="3D/sciana/bigWall">
     <Position>
       <X>-250</X>
@@ -24,6 +24,6 @@
       <Y>0</Y>
       <Z>0</Z>
     </Rotation>
-	<Scale> 0.1 </Scale>
+	<Scale> 0.1</Scale>
   </GameObject>
 </Scene>

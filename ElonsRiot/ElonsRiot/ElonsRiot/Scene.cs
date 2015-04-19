@@ -18,6 +18,7 @@ namespace ElonsRiot
         public XMLScene XMLScene { get; set; }
 
         private Player PlayerObject;
+        private BasicEffect basicEffect;
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
@@ -30,7 +31,7 @@ namespace ElonsRiot
             XMLScene = new XMLScene();
         }
         
-        public void LoadAllContent()
+        public void LoadAllContent(GraphicsDevice graphic)
         {
             XMLScene = DeserializeFromXML();
             GameObjects = XMLScene.GameObjects;
@@ -40,15 +41,20 @@ namespace ElonsRiot
                 if(!string.IsNullOrEmpty(elem.ObjectPath))
                     elem.GameObjectModel = ContentManager.Load<Model>(elem.ObjectPath);
             }
-
+            basicEffect = new BasicEffect(graphic);
         }
-        public void DrawAllContent()
+        public void DrawAllContent(GraphicsDevice graphic)
         {
             foreach(var elem in GameObjects)
             {
                 DrawSimpleModel(elem.GameObjectModel, elem.MatrixWorld, PlayerObject.camera.viewMatrix, PlayerObject.camera.projectionMatrix);
                 elem.RefreshMatrix();
             }
+            foreach (GameObject gObj in this.GameObjects)
+            {
+                gObj.createBoudingBox();
+            }
+            DrawBoudingBox(graphic);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
@@ -97,6 +103,40 @@ namespace ElonsRiot
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
+        }
+        public void DrawBoudingBox(GraphicsDevice graphic)
+        {
+            foreach (GameObject gameObj in this.GameObjects)
+            {
+
+                gameObj.boneTransformations = new Matrix[gameObj.GameObjectModel.Bones.Count];
+                gameObj.GameObjectModel.CopyAbsoluteBoneTransformsTo(gameObj.boneTransformations);
+
+                //draw bouding box 
+                Vector3[] corners = gameObj.boundingBox.GetCorners();
+                VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
+
+                // Assign the 8 box vertices
+                for (int i = 0; i < corners.Length; i++)
+                {
+                    primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
+                }
+
+
+                basicEffect.World = gameObj.MatrixWorld;
+                basicEffect.View = PlayerObject.camera.viewMatrix;
+                basicEffect.Projection = PlayerObject.camera.projectionMatrix;
+                basicEffect.TextureEnabled = false;
+
+                // Draw the box with a LineList
+                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    graphic.DrawUserIndexedPrimitives(
+                        PrimitiveType.LineList, primitiveList, 0, 8,
+                        gameObj.bBoxIndices, 0, 12);
+                }
+            }
         }
     }
 }
