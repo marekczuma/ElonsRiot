@@ -25,5 +25,21 @@
 		<Scale> 0.1 </Scale>
 	</GameObject>
 	<Scale>1</Scale>
+<<<<<<< HEAD
+=======
+  </GameObject> 
+  <GameObject Name="wall1" Path="3D/sciana/bigWall">
+    <Position>
+      <X>-250</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Rotation>
+      <X>-90</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Rotation>
+	<Scale> 0.1</Scale>
+>>>>>>> 42d3d4e5068a6464c73f134a70f31afc38ca84d3
   </GameObject>
 </Scene>

@@ -36,7 +36,7 @@ namespace ElonsRiot
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            MyScene.LoadAllContent();
+            MyScene.LoadAllContent(graphics.GraphicsDevice);
         }
         protected override void UnloadContent()
         {
@@ -56,7 +56,7 @@ namespace ElonsRiot
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            MyScene.DrawAllContent();
+            MyScene.DrawAllContent(graphics.GraphicsDevice);
             base.Draw(gameTime);
         }
     }

@@ -28,6 +28,16 @@ namespace ElonsRiot
         //public Matrix MatrixProjection { get; set; }
         [XmlIgnore]
         public Model GameObjectModel { get; set; }
+         [XmlIgnore]
+        public BoundingBox boundingBox;
+        [XmlIgnore]
+        public Matrix[] boneTransformations;
+        [XmlIgnore]
+        public short[] bBoxIndices ={
+                0, 1, 1, 2, 2, 3, 3, 0, // Front edges
+                4, 5, 5, 6, 6, 7, 7, 4, // Back edges
+                0, 4, 1, 5, 2, 6, 3, 7 // Side edges connecting front and back
+            };
 
         public GameObject()
         {
@@ -71,6 +81,56 @@ namespace ElonsRiot
         {
             Scale = _scale;
             MatrixWorld = Matrix.CreateScale(Scale);
+        }
+        public void createBoudingBox()
+        {
+            boneTransformations = new Matrix[GameObjectModel.Bones.Count];
+            this.GameObjectModel.CopyAbsoluteBoneTransformsTo(boneTransformations);
+
+
+            Vector3 meshMax = new Vector3(float.MinValue);
+            Vector3 meshMin = new Vector3(float.MaxValue);
+            Matrix meshTransform = new Matrix();
+
+            foreach (ModelMesh mesh in GameObjectModel.Meshes)
+            {
+                meshTransform = Matrix.CreateScale(0.4f) * Matrix.CreateRotationX(MathHelper.ToRadians(-Rotation.X))
+                    * Matrix.CreateRotationZ(MathHelper.ToRadians(-Rotation.Z)) * boneTransformations[mesh.ParentBone.Index];
+
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+
+                    // The stride is how big, in bytes, one vertex is in the vertex buffer
+                    // We have to use this as we do not know the make up of the vertex
+                    int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
+
+                    VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[part.NumVertices];
+                    part.VertexBuffer.GetData(part.VertexOffset * stride, vertexData, 0, part.NumVertices, stride);
+
+                    // Find minimum and maximum xyz values for this mesh part
+                    Vector3 vertPosition = new Vector3();
+
+                    for (int i = 0; i < vertexData.Length; i++)
+                    {
+                        vertPosition = vertexData[i].Position;
+
+                        // update our values from this vertex
+                        meshMin = Vector3.Min(meshMin, vertPosition);
+                        meshMax = Vector3.Max(meshMax, vertPosition);
+                    }
+                }
+
+                // transform by mesh bone matrix
+                meshMin = Vector3.Transform(meshMin, meshTransform);
+                meshMax = Vector3.Transform(meshMax, meshTransform);
+
+            }
+            if (this.ObjectPath == "3D/sciana/miniWall")
+            {
+                meshMax.Y -= 4;
+                meshMin.Y -= 4;
+            }
+            boundingBox = new BoundingBox(meshMin, meshMax);
         }
     }
 
