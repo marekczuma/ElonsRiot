@@ -22,7 +22,7 @@
 		  <Y>0</Y>
 		  <Z>0</Z>
 		</Rotation>
-		<Scale> 1 </Scale>
+		<Scale> 0.1 </Scale>
 	</GameObject>
 	<Scale>1</Scale>
   </GameObject> 

@@ -66,6 +66,17 @@ namespace ElonsRiot
                 }
             }
         }
+        public void DrawModels(ContentManager _contentManager, Player _playerObject)
+        {
+            DrawSimpleModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix);
+            if( GameObjects != null)
+            {
+                foreach(var elem in GameObjects)
+                {
+                    elem.DrawModels(_contentManager, _playerObject);
+                }
+            }
+        }
         public void RefreshMatrix()
         {
             MatrixWorld = Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position) * Matrix.CreateScale(Scale);
@@ -150,6 +161,25 @@ namespace ElonsRiot
             }
             boundingBox = new BoundingBox(meshMin, meshMax);
             
+        }
+
+        private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
+        {
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.World = world;
+                    effect.View = view;
+                    effect.Projection = projection;
+                    if (newTexture != null)
+                    {
+                        effect.Texture = newTexture;
+                    }
+                }
+
+                mesh.Draw();
+            }
         }
         
     }

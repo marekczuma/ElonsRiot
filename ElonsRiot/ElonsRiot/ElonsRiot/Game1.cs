@@ -48,7 +48,6 @@ namespace ElonsRiot
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             state = Keyboard.GetState();
-            
             MyScene.PlayerControll(state, gameTime, CurrentMouseState);
             CurrentMouseState = Mouse.GetState();
             base.Update(gameTime);

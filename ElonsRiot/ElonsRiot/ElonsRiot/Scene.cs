@@ -17,7 +17,7 @@ namespace ElonsRiot
         public List<GameObject> GameObjects { get; set; }
         public XMLScene XMLScene { get; set; }
 
-        private Player PlayerObject;
+        public Player PlayerObject { get; set; }
         private BasicEffect basicEffect;
         private Physic physic;
         public Scene(ContentManager _contentManager)
@@ -51,11 +51,10 @@ namespace ElonsRiot
         public void DrawAllContent(GraphicsDevice graphic)
         {
              foreach(var elem in GameObjects)
-              {
-                 DrawSimpleModel(elem.GameObjectModel, elem.MatrixWorld, PlayerObject.camera.viewMatrix, PlayerObject.camera.projectionMatrix);
-              
-                  elem.RefreshMatrix();
-              }
+             {
+                elem.DrawModels(ContentManager, PlayerObject);               
+                elem.RefreshMatrix();
+             }
             foreach (GameObject gObj in this.GameObjects)
             {
               //  DrawModel(gObj);
@@ -81,24 +80,7 @@ namespace ElonsRiot
             textReader.Close();
             return tmpGO;
         }
-        private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
-        {
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.World = world;
-                    effect.View = view;
-                    effect.Projection = projection;
-                    if (newTexture != null)
-                    {
-                        effect.Texture = newTexture;
-                    }
-                }
-
-                mesh.Draw();
-            }
-        }
+        
         private void ChangeXMLToStructure()
         {
 
@@ -107,12 +89,19 @@ namespace ElonsRiot
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
-            Elon.Scale = 1;
-            Elon.Position = new Vector3(-150, 2, 0);
+            Elon.Scale = 2.1f;
+            Elon.Position = new Vector3(0, 2, 0);
             Elon.Rotation = new Vector3(-90, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
+            GameObject Elon2 = new GameObject();
+            Elon2.Name = "Elon2";
+            Elon2.Scale = 10.0f;
+            Elon2.Position = new Vector3(0, 2, 0);
+            Elon2.Rotation = new Vector3(-90, 0, 0);
+            Elon2.ObjectPath = "3D/ludzik/elon";
+            GameObjects.Add(Elon2);
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {

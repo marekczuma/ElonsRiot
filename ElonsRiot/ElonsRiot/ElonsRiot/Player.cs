@@ -85,6 +85,7 @@ namespace ElonsRiot
             _oldMouseState = newState;
             isMouseMovement = false;
             angle = 0;
+            RefreshMatrix();
         }
         public void CameraUpdate(GameTime gameTime)
         {
