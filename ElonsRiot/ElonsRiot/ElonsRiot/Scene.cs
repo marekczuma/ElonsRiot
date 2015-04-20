@@ -40,9 +40,11 @@ namespace ElonsRiot
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
-                    elem.GameObjectModel = ContentManager.Load<Model>(elem.ObjectPath);
-                  //  elem.Initialize();
-                   // elem.RefreshMatrix();
+                {
+                    elem.LoadModels(ContentManager);
+                    //elem.Initialize();
+                    //elem.RefreshMatrix();
+                }
             }
             basicEffect = new BasicEffect(graphic);
         }

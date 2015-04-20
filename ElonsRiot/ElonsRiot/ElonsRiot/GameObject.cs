@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,18 @@ namespace ElonsRiot
             MatrixWorld = Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateTranslation(Position) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateScale(Scale);
             GameObjects = new List<GameObject>();
         }
+        public void LoadModels(ContentManager _contentManager)
+        {
+            GameObjectModel = _contentManager.Load<Model>(ObjectPath);
+            RefreshMatrix();
+            if( GameObjects != null)
+            {
+                foreach(var elem in GameObjects)
+                {
+                    elem.LoadModels(_contentManager);
+                }
+            }
+        }
         public void RefreshMatrix()
         {
             MatrixWorld = Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position) * Matrix.CreateScale(Scale);
@@ -99,7 +112,7 @@ namespace ElonsRiot
 
             foreach (ModelMesh mesh in GameObjectModel.Meshes)
             {
-                meshTransform = Matrix.CreateScale(0.4f) * Matrix.CreateTranslation(new Vector3(0, 0, Position.Z))* Matrix.CreateRotationX(MathHelper.ToRadians(-Rotation.X))
+                meshTransform = Matrix.CreateScale(0.4f) * Matrix.CreateRotationX(MathHelper.ToRadians(-Rotation.X))
                     * Matrix.CreateRotationZ(MathHelper.ToRadians(-Rotation.Z)) * boneTransformations[mesh.ParentBone.Index];
                 
                 foreach (ModelMeshPart part in mesh.MeshParts)
@@ -139,7 +152,7 @@ namespace ElonsRiot
             
         }
         
-        }
     }
+}
 
 
