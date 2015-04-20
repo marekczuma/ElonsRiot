@@ -57,39 +57,34 @@ namespace ElonsRiot
             }
 
             //obracanie playera
-            if (!(elonState.State == State.idle))
+            MouseState newState;
+            newState = Mouse.GetState();
+            int newMouseX = newState.X;
+            int oldMouseX = _oldMouseState.X;
+            float delta = 0;
+            if ((oldMouseX - newMouseX) != 0)
             {
-                MouseState newState;
-                newState = Mouse.GetState();
-                int newMouseX = newState.X;
-                int oldMouseX = _oldMouseState.X;
-                float delta = 0;
-                if ((oldMouseX - newMouseX) != 0)
-                {
-                    isMouseMovement = true;
-                }
-                if (isMouseMovement)
-                {
-                    delta = oldMouseX - newMouseX;
-                }
-
-                if (delta < 0)
-                {
-                    angle -= 5.1f;
-                    //angle += delta / 10;
-                }
-                else if (delta > 0)
-                {
-                    angle += 5.1f;
-                    //angle -= delta / 10;
-                }
-                ChangeRotation(new Vector3(0, angle, 0));
-                _oldMouseState = newState;
-                isMouseMovement = false;
-                angle = 0;
+                isMouseMovement = true;
+            }
+            if (isMouseMovement)
+            {
+                delta = oldMouseX - newMouseX;
             }
 
-
+            if (delta < 0)
+            {
+                angle -= 5.1f;
+                //angle += delta / 10;
+            }
+            else if (delta > 0)
+            {
+                angle += 5.1f;
+                //angle -= delta / 10;
+            }
+            ChangeRotation(new Vector3(0, angle, 0));
+            _oldMouseState = newState;
+            isMouseMovement = false;
+            angle = 0;
         }
         public void CameraUpdate(GameTime gameTime)
         {

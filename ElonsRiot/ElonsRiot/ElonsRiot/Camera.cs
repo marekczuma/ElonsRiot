@@ -105,8 +105,6 @@ namespace ElonsRiot
 
         private void UpdateViewMatrix(Matrix chasedObjectsWorld, CharacterState elonState)
         {
-            if (elonState.State == State.run || elonState.State == State.walk || elonState.State == State.jump)
-            {
                 cameraRotation.Forward.Normalize();
                 chasedObjectsWorld.Right.Normalize();
                 chasedObjectsWorld.Up.Normalize();
@@ -124,19 +122,6 @@ namespace ElonsRiot
                 yaw = MathHelper.SmoothStep(yaw, 0.0f, 0.1f);
                 pitch = MathHelper.SmoothStep(pitch, 0.0f, 0.1f);
                 roll = MathHelper.SmoothStep(roll, 0.0f, 0.2f);
-            }
-
-            else
-            {
-                cameraRotation.Forward.Normalize();
-                desiredPosition = Vector3.Transform(offsetDistance, cameraRotation);
-                desiredPosition += chasedObjectsWorld.Translation;
-                position = desiredPosition;
-                cameraRotation = Matrix.CreateRotationX(pitch) * Matrix.CreateRotationY(yaw) * Matrix.CreateFromAxisAngle(cameraRotation.Forward, roll);
-                target = chasedObjectsWorld.Translation;
-                target.Y += 7;
-                roll = MathHelper.SmoothStep(roll, 0f, 0.2f);
-            }
 
             viewMatrix = Matrix.CreateLookAt(position, target, Vector3.Up);
         }
@@ -154,15 +139,15 @@ namespace ElonsRiot
 
             smoothedMouseMovement.X = (float)deltaX;
             smoothedMouseMovement.Y = (float)deltaY;
-            if (elonState.State == State.run || elonState.State == State.walk || elonState.State == State.jump)
-            {
+            //if (elonState.State == State.run || elonState.State == State.walk || elonState.State == State.jump)
+            //{
                 position.Y += smoothedMouseMovement.Y / 60 - 5;
 
                 if (position.Y > 20)
                     position.Y = 20;
                 else if (position.Y < 0)
                     position.Y = 0;
-            }
+            //}
 
             if(currentMouseState.ScrollWheelValue < previousScrollValue)
             {
