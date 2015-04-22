@@ -14,7 +14,7 @@
 	<GameObject Name="wall1" Path="3D/sciana/bigWall">
 		<Position>
 		  <X>-250</X>
-		  <Y>0</Y>
+		  <Y>100</Y>
 		  <Z>0</Z>
 		</Position>
 		<Rotation>
@@ -22,6 +22,19 @@
 		  <Y>0</Y>
 		  <Z>0</Z>
 		</Rotation>
+		<GameObject Name="wall1" Path="3D/sciana/bigWall">
+			<Position>
+			  <X>-250</X>
+			  <Y>0</Y>
+			  <Z>0</Z>
+			</Position>
+			<Rotation>
+			  <X>-90</X>
+			  <Y>0</Y>
+			  <Z>0</Z>
+			</Rotation>
+			<Scale> 0.3 </Scale>
+		</GameObject>
 		<Scale> 0.1 </Scale>
 	</GameObject>
 	<Scale>1</Scale>
