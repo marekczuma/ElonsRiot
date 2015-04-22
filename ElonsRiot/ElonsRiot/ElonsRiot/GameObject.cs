@@ -54,6 +54,7 @@ namespace ElonsRiot
             //MatrixView = Matrix.CreateLookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), Vector3.UnitY);
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
+            AAbox = new Box();
         }
         public GameObject(Vector3 _position)
         {
@@ -202,13 +203,13 @@ namespace ElonsRiot
 
                     Vector3 vecAB = vertexData[1].Position - vertexData[0].Position;
                     Vector3 vecAC = vertexData[2].Position - vertexData[0].Position;
-
+                    
                     // Cross vecAB and vecAC
                     normal = Vector3.Cross(vecAB, vecAC);
                     normal.Normalize();
 
-                    Vector3 tmp = vertexData[8].Position;
-                    dotProduct = Vector3.Dot(normal, tmp);
+                    Vector3 tmp = vertexData[0].Position;
+                    dotProduct = Vector3.Dot(-normal, tmp);
 
                 }
             }

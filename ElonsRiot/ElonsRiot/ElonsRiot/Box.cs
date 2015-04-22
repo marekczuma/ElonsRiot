@@ -10,6 +10,16 @@ namespace ElonsRiot
 {
     public class Box
     {
+        public Box() 
+        {
+            ActualCorners = null;
+            this.referencePlayer = null;
+            this.corners = null;
+            this.min = new Vector3(0,0,0);
+            this.max = new Vector3(0, 0, 0);
+            this.center = new Vector3(0, 0, 0);
+            this.actualRadiuses = null;
+        }
         public Vector3 center;
         public Vector3 center2;
         Vector3 halfWidth;
@@ -18,6 +28,7 @@ namespace ElonsRiot
         public Vector3[] ActualCorners;
         public Vector3[] actualRadiuses;
         public Vector3[] corners;
+        public Vector3 min, max;
         public int length;
         public Box(Player gameObj)
         {
@@ -25,6 +36,8 @@ namespace ElonsRiot
             this.referencePlayer = gameObj;
             this.corners = new Vector3[8];
             this.corners = gameObj.boundingBox.GetCorners();
+            this.min = gameObj.boundingBox.Min;
+            this.max = gameObj.boundingBox.Max;
             this.center = gameObj.center;
             this.actualRadiuses = new Vector3[2];
 
@@ -35,6 +48,8 @@ namespace ElonsRiot
             this.referenceObject = gameObj;
             this.corners = new Vector3[8];
             this.corners = gameObj.boundingBox.GetCorners();
+            this.min = gameObj.boundingBox.Min;
+            this.max = gameObj.boundingBox.Max;
             this.referencePlayer = pla;
             this.center = gameObj.center;
             this.actualRadiuses = new Vector3[2];

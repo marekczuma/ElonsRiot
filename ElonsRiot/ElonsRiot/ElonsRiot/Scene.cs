@@ -86,13 +86,17 @@ namespace ElonsRiot
         {
 
         }
-        public void Update(Player player, GameObject gObj)
+        public void Update(Player player)
         {
-           // player.Initialize();
-           // player.RefreshMatrix();
-            //player.GetCentre();
+            player.Initialize();
+            player.createBoudingBox();
+            player.RefreshMatrix();
+            physic = new Physic(GameObjects);
+            player.AAbox = new Box(player);
+            player.AAbox.CheckWhichCorners();
 
             boxesCollision = new BoxBoxCollision();
+
             foreach (GameObject obj in GameObjects)
             {
                 
@@ -108,39 +112,53 @@ namespace ElonsRiot
                 {
                     obj.createBoudingBox();
                     obj.RefreshMatrix();
+                    obj.AAbox = new Box(obj, player);
+                    obj.AAbox.CheckWhichCornersForObjects();
                 }
             }
 
+            
+                if (boxesCollision.CheckCollision(player, GameObjects, player.AAbox.length))
+                {
+                    Debug.WriteLine("dziala");
+                    player.Position = player.oldPosition;
+                }
+           
+       /*    foreach(GameObject gObject in GameObjects)
+           {
+               if (gObject.ObjectPath == "3D/Ziemia/bigFloor")
+               {
+                   int result = boxesCollision.AabbToPlaneCollision(gObject.plane, player.AAbox);
+                   if(result == 3)
+                   {
+                       Debug.WriteLine("Colizja z ziemią");
+                   }
+                   else if(result == 2)
+                   {
+                       Debug.WriteLine("Jest za ziemią");
+                   }
+                   else if(result == 1)
+                   {
+                       Debug.WriteLine("Jest ponad ziemią!!!");
+                   }
 
-            player.createBoudingBox();
-            player.RefreshMatrix();
-
-            physic = new Physic(GameObjects);
-            player.Initialize();
-            player.AAbox = new Box(player);
-            player.AAbox.CheckWhichCorners();
-            gObj.AAbox = new Box(gObj, player);
-            gObj.AAbox.CheckWhichCornersForObjects();
-            if (boxesCollision.CheckCollision(player.AAbox, gObj.AAbox, player.AAbox.length))
-            {
-                Debug.WriteLine("dziala");
-                player.Position = player.oldPosition;
-            }
+               }
+           }*/
         }
         private void LoadElon()
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
             Elon.Scale = 0.5f;
-            Elon.Position = new Vector3(-50,10, 0);
+            Elon.Position = new Vector3(-50,8, 0);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
             GameObject Elon2 = new GameObject();
-            Elon2.Name = "Elon2";
+            Elon2.Name = "Jasper";
             Elon2.Scale = 0.5f;
-            Elon2.Position = new Vector3(0, 10, 0);
+            Elon2.Position = new Vector3(0, 8, 0);
             Elon2.Rotation = new Vector3(0, 0, 0);
             Elon2.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon2);
