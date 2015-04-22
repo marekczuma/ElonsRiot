@@ -72,6 +72,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Box.cs" />
+    <Compile Include="BoxBoxCollision.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterState.cs" />
     <Compile Include="GameObject.cs" />

@@ -54,7 +54,7 @@ namespace ElonsRiot
 
             desiredPosition = position;
             desiredTarget = target;
-            offsetDistance = new Vector3(0, -20, 10);
+            offsetDistance = new Vector3(0, 10, 50);
             
         }
 
@@ -151,17 +151,17 @@ namespace ElonsRiot
 
             if(currentMouseState.ScrollWheelValue < previousScrollValue)
             {
-                offsetDistance.Y -= 2.0f;
+                offsetDistance.Z += 2.0f;
             }
             else if (currentMouseState.ScrollWheelValue > previousScrollValue)
             {
-                offsetDistance.Y += 2.0f;
+                offsetDistance.Z -= 2.0f;
             }
 
-            if (offsetDistance.Y > -20)
-                offsetDistance.Y = -20;
-            else if (offsetDistance.Y < -60)
-                offsetDistance.Y = -60;
+            if (offsetDistance.Z > 80)
+                offsetDistance.Z = 80;
+            else if (offsetDistance.Z < 30)
+                offsetDistance.Z = 30;
 
             previousScrollValue = currentMouseState.ScrollWheelValue;
             

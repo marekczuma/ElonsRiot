@@ -14,6 +14,7 @@ namespace ElonsRiot
 
         private bool isMouseMovement;
         private float angle;
+        public Vector3 oldPosition, newPosition;
         public Player()
         {
             elonState = new CharacterState(State.idle);
@@ -39,6 +40,7 @@ namespace ElonsRiot
         }
         public void Movement(KeyboardState state, MouseState _oldMouseState)
         {
+            oldPosition = Position;
             if (state.IsKeyDown(Keys.W))
             {
                 ChangePosition(new Vector3(elonState.VelocityForward, 0,0 ));
@@ -86,6 +88,7 @@ namespace ElonsRiot
             isMouseMovement = false;
             angle = 0;
             RefreshMatrix();
+            newPosition = Position;
         }
         public void CameraUpdate(GameTime gameTime)
         {

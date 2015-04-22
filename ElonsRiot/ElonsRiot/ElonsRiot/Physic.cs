@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,23 +15,6 @@ namespace ElonsRiot
         {
             this.gameObject = gobj;
         }
-        public bool DetectCollision(Player player)
-        {
-            foreach (GameObject gObj in gameObject)
-            {
-                if (gObj.ObjectPath != "3D/ludzik/elon")
-                {
-                    if (gObj.ObjectPath != "3D/Ziemia/bigFloor")
-                    {
-                        if (player.boundingBox.Intersects(gObj.boundingBox))
-                        {
-                            Debug.WriteLine("collision");
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
+
     }
 }

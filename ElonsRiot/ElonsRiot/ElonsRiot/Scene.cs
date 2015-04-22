@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace ElonsRiot
         public Player PlayerObject { get; set; }
         private BasicEffect basicEffect;
         private Physic physic;
+        private BoxBoxCollision boxesCollision;
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
@@ -63,7 +65,6 @@ namespace ElonsRiot
             }
             DrawBoudingBox(graphic);
             physic = new Physic(GameObjects);
-            physic.DetectCollision(PlayerObject);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
@@ -85,25 +86,90 @@ namespace ElonsRiot
         {
 
         }
+        public void Update(Player player)
+        {
+            player.Initialize();
+            player.createBoudingBox();
+            player.RefreshMatrix();
+            physic = new Physic(GameObjects);
+            player.AAbox = new Box(player);
+            player.AAbox.CheckWhichCorners();
+
+            boxesCollision = new BoxBoxCollision();
+
+            foreach (GameObject obj in GameObjects)
+            {
+                
+                obj.Initialize();
+                obj.RefreshMatrix();
+                obj.GetCentre();
+                if (obj.ObjectPath == "3D/Ziemia/bigFloor")
+                {
+                    obj.createPlane();
+                    obj.RefreshMatrix();
+                }
+                else
+                {
+                    obj.createBoudingBox();
+                    obj.RefreshMatrix();
+                    obj.AAbox = new Box(obj, player);
+                    obj.AAbox.CheckWhichCornersForObjects();
+                }
+            }
+
+            
+                if (boxesCollision.CheckCollision(player, GameObjects, player.AAbox.length))
+                {
+                    Debug.WriteLine("dziala");
+                    player.Position = player.oldPosition;
+                }
+           
+       /*    foreach(GameObject gObject in GameObjects)
+           {
+               if (gObject.ObjectPath == "3D/Ziemia/bigFloor")
+               {
+                   int result = boxesCollision.AabbToPlaneCollision(gObject.plane, player.AAbox);
+                   if(result == 3)
+                   {
+                       Debug.WriteLine("Colizja z ziemią");
+                   }
+                   else if(result == 2)
+                   {
+                       Debug.WriteLine("Jest za ziemią");
+                   }
+                   else if(result == 1)
+                   {
+                       Debug.WriteLine("Jest ponad ziemią!!!");
+                   }
+
+               }
+           }*/
+        }
         private void LoadElon()
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
-            Elon.Scale = 2.1f;
-            Elon.Position = new Vector3(0, 2, 0);
-            Elon.Rotation = new Vector3(-90, 0, 0);
+            Elon.Scale = 0.5f;
+            Elon.Position = new Vector3(-50,8, 0);
+            Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
-
+            GameObject Elon2 = new GameObject();
+            Elon2.Name = "Jasper";
+            Elon2.Scale = 0.5f;
+            Elon2.Position = new Vector3(0, 8, 0);
+            Elon2.Rotation = new Vector3(0, 0, 0);
+            Elon2.ObjectPath = "3D/ludzik/elon";
+            GameObjects.Add(Elon2);
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {
             foreach (GameObject gameObj in this.GameObjects)
             {
 
-                gameObj.boneTransformations = new Matrix[gameObj.GameObjectModel.Bones.Count];
-                gameObj.GameObjectModel.CopyAbsoluteBoneTransformsTo(gameObj.boneTransformations);
+                //   gameObj.boneTransformations = new Matrix[gameObj.GameObjectModel.Bones.Count];
+                // gameObj.GameObjectModel.CopyAbsoluteBoneTransformsTo(gameObj.boneTransformations);
 
                 //draw bouding box 
                 Vector3[] corners = gameObj.boundingBox.GetCorners();
@@ -116,8 +182,7 @@ namespace ElonsRiot
                     primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
                 }
 
-
-                basicEffect.World = gameObj.MatrixWorld;
+                basicEffect.World = Matrix.Identity;
                 basicEffect.View = PlayerObject.camera.viewMatrix;
                 basicEffect.Projection = PlayerObject.camera.projectionMatrix;
                 basicEffect.TextureEnabled = false;
@@ -132,6 +197,7 @@ namespace ElonsRiot
                 }
             }
         }
+      
       /*  public void DrawModel(GameObject gameObj)
         {
 
