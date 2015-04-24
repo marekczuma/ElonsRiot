@@ -50,7 +50,7 @@ namespace ElonsRiot
             state = Keyboard.GetState();
             MyScene.PlayerControll(state, gameTime, CurrentMouseState);
             CurrentMouseState = Mouse.GetState();
-            MyScene.Update(MyScene.PlayerObject);
+            MyScene.Update(MyScene.PlayerObject, gameTime);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)

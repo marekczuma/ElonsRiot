@@ -26,4 +26,17 @@
 		</Rotation>
 		<Scale> 0.5 </Scale>
 	</GameObject>
+	<GameObject Name="dude" Path="3D/ludzik/elon">
+		<Position>
+		  <X>50</X>
+		  <Y>8</Y>
+		  <Z>0</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 0.5 </Scale>
+	</GameObject>
 </Scene>

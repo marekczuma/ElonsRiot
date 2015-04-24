@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using SkinnedModel;
 
 namespace ElonsRiot
 {
@@ -22,6 +23,8 @@ namespace ElonsRiot
         private BasicEffect basicEffect;
         private Physic physic;
         private BoxBoxCollision boxesCollision;
+        AnimationPlayer animationPlayer;
+
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
@@ -48,13 +51,27 @@ namespace ElonsRiot
                     //elem.RefreshMatrix();
                 }
             }
+            int index = 0;
+            for (int i=0; i<GameObjects.Count; i++)
+            {
+                if (GameObjects[i].Name == "Elon")
+                    index = i;
+            }
+            SkinningData skinningData = GameObjects[index].GameObjectModel.Tag as SkinningData;
+            animationPlayer = new AnimationPlayer(skinningData);
+            AnimationClip clip = skinningData.AnimationClips["Take 001"];
+
+            animationPlayer.StartClip(clip);
             basicEffect = new BasicEffect(graphic);
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
              foreach(var elem in GameObjects)
              {
-                elem.DrawModels(ContentManager, PlayerObject);               
+                 if (elem.Name == "Elon")
+                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
+                 else
+                    elem.DrawModels(ContentManager, PlayerObject);               
                 elem.RefreshMatrix();
              }
             foreach (GameObject gObj in this.GameObjects)
@@ -86,7 +103,7 @@ namespace ElonsRiot
         {
 
         }
-        public void Update(Player player)
+        public void Update(Player player, GameTime gameTime)
         {
             player.Initialize();
             player.createBoudingBox();
@@ -123,6 +140,8 @@ namespace ElonsRiot
                     Debug.WriteLine("dziala");
                     player.Position = player.oldPosition;
                 }
+
+                animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
            
        /*    foreach(GameObject gObject in GameObjects)
            {
@@ -149,19 +168,19 @@ namespace ElonsRiot
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
-            Elon.Scale = 0.5f;
+            Elon.Scale = 0.1f;
             Elon.Position = new Vector3(-50,8, 0);
             Elon.Rotation = new Vector3(0, 0, 0);
-            Elon.ObjectPath = "3D/ludzik/elon";
+            Elon.ObjectPath = "3D/ludzik/dude";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
-            GameObject Elon2 = new GameObject();
-            Elon2.Name = "Jasper";
-            Elon2.Scale = 0.5f;
-            Elon2.Position = new Vector3(0, 8, 0);
-            Elon2.Rotation = new Vector3(0, 0, 0);
-            Elon2.ObjectPath = "3D/ludzik/elon";
-            GameObjects.Add(Elon2);
+            //GameObject Elon2 = new GameObject();
+            //Elon2.Name = "Jasper";
+            //Elon2.Scale = 0.5f;
+            //Elon2.Position = new Vector3(0, 8, 0);
+            //Elon2.Rotation = new Vector3(0, 0, 0);
+            //Elon2.ObjectPath = "3D/ludzik/elon";
+            //GameObjects.Add(Elon2);
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {
