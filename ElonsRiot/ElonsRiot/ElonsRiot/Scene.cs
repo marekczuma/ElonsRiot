@@ -117,10 +117,10 @@ namespace ElonsRiot
                 }
             }
 
-            
-                if (boxesCollision.CheckCollision(player, GameObjects, player.AAbox.length))
+
+            if (boxesCollision.CheckCollision(player, GameObjects))
                 {
-                    Debug.WriteLine("dziala");
+                    Debug.WriteLine("dziala xxx");
                     player.Position = player.oldPosition;
                 }
            
@@ -150,18 +150,18 @@ namespace ElonsRiot
             Player Elon = new Player();
             Elon.Name = "Elon";
             Elon.Scale = 0.5f;
-            Elon.Position = new Vector3(-50,8, 0);
+            Elon.Position = new Vector3(50,8, 0);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
-            GameObject Elon2 = new GameObject();
-            Elon2.Name = "Jasper";
+           GameObject Elon2 = new GameObject();
+         /*   Elon2.Name = "Jasper";
             Elon2.Scale = 0.5f;
             Elon2.Position = new Vector3(0, 8, 0);
             Elon2.Rotation = new Vector3(0, 0, 0);
             Elon2.ObjectPath = "3D/ludzik/elon";
-            GameObjects.Add(Elon2);
+            GameObjects.Add(Elon2);*/
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {

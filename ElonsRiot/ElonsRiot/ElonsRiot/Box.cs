@@ -26,7 +26,7 @@ namespace ElonsRiot
         Player referencePlayer;
         GameObject referenceObject;
         public Vector3[] ActualCorners;
-        public Vector3[] actualRadiuses;
+        public List<Vector3> actualRadiuses;
         public Vector3[] corners;
         public Vector3 min, max;
         public int length;
@@ -39,7 +39,7 @@ namespace ElonsRiot
             this.min = gameObj.boundingBox.Min;
             this.max = gameObj.boundingBox.Max;
             this.center = gameObj.center;
-            this.actualRadiuses = new Vector3[2];
+            this.actualRadiuses = new List<Vector3>();
 
         }
         public Box(GameObject gameObj, Player pla)
@@ -52,7 +52,7 @@ namespace ElonsRiot
             this.max = gameObj.boundingBox.Max;
             this.referencePlayer = pla;
             this.center = gameObj.center;
-            this.actualRadiuses = new Vector3[2];
+            this.actualRadiuses = new List<Vector3>();
         }
 
 
@@ -66,6 +66,7 @@ namespace ElonsRiot
         public void CheckWhichCorners()
         {
             GetRadius();
+            Vector3 tmp = new Vector3(0, 0, 0);
             //ruszyl się w lewo (-x)
             if (referencePlayer.oldPosition.X > referencePlayer.newPosition.X)
             {
@@ -73,32 +74,40 @@ namespace ElonsRiot
                 {
                     //i w tył (+z) ok
                     length = 2;
-                    actualRadiuses[0].X = (corners[4].X + corners[6].X) / 2;
-                    actualRadiuses[0].Y = (corners[4].Y + corners[6].Y) / 2;
-                    actualRadiuses[0].Z = (corners[4].Z + corners[6].Z) / 2;
-                    actualRadiuses[1].X = (corners[4].X + corners[3].X) / 2;
-                    actualRadiuses[1].Y = (corners[4].Y + corners[3].Y) / 2;
-                    actualRadiuses[1].Z = (corners[4].Z + corners[3].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[4].X + corners[6].X) / 2;
+                    tmp.Y = (corners[4].Y + corners[6].Y) / 2;
+                    tmp.Z = (corners[4].Z + corners[6].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[4].X + corners[3].X) / 2;
+                    tmp.Y = (corners[4].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[4].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (-z) ok
                     length = 2;
-                    actualRadiuses[0].X = (corners[1].X + corners[3].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[3].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[3].Z) / 2;
-                    actualRadiuses[1].X = (corners[4].X + corners[3].X) / 2;
-                    actualRadiuses[1].Y = (corners[4].Y + corners[3].Y) / 2;
-                    actualRadiuses[1].Z = (corners[4].Z + corners[3].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[3].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[4].X + corners[3].X) / 2;
+                    tmp.Y = (corners[4].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[4].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
 
                 }
                 else
                 {
                     //tylko w lewo (-x) ok
                     length = 1;
-                    actualRadiuses[0].X = (corners[0].X + corners[7].X) / 2;
-                    actualRadiuses[0].Y = (corners[0].Y + corners[7].Y) / 2;
-                    actualRadiuses[0].Z = (corners[0].Z + corners[7].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[0].X + corners[7].X) / 2;
+                    tmp.Y = (corners[0].Y + corners[7].Y) / 2;
+                    tmp.Z = (corners[0].Z + corners[7].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
             }
             //ruszyl sie w prawo.. (+x) ok
@@ -108,31 +117,39 @@ namespace ElonsRiot
                 {
                     //i w tył (+z) ok
                     length = 2;
-                    actualRadiuses[0].X = (corners[5].X + corners[2].X) / 2;
-                    actualRadiuses[0].Y = (corners[5].Y + corners[2].Y) / 2;
-                    actualRadiuses[0].Z = (corners[5].Z + corners[2].Z) / 2;
-                    actualRadiuses[1].X = (corners[5].X + corners[7].X) / 2;
-                    actualRadiuses[1].Y = (corners[5].Y + corners[7].Y) / 2;
-                    actualRadiuses[1].Z = (corners[5].Z + corners[7].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[5].X + corners[2].X) / 2;
+                    tmp.Y = (corners[5].Y + corners[2].Y) / 2;
+                    tmp.Z = (corners[5].Z + corners[2].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[5].X + corners[7].X) / 2;
+                    tmp.Y = (corners[5].Y + corners[7].Y) / 2;
+                    tmp.Z = (corners[5].Z + corners[7].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (-z) ok
                     length = 2;
-                    actualRadiuses[0].X = (corners[1].X + corners[3].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[3].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[3].Z) / 2;
-                    actualRadiuses[1].X = (corners[1].X + corners[6].X) / 2;
-                    actualRadiuses[1].Y = (corners[1].Y + corners[6].Y) / 2;
-                    actualRadiuses[1].Z = (corners[1].Z + corners[6].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[3].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[1].X + corners[6].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[6].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[6].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else
                 {
                     //tylko w prawo (+x) ok
-                    length = 4;
-                    actualRadiuses[0].X = (corners[1].X + corners[6].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[6].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[6].Z) / 2;
+                    length = 1;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[6].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[6].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[6].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
             }
             else
@@ -141,17 +158,21 @@ namespace ElonsRiot
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
                     length = 1;
-                    actualRadiuses[0].X = (corners[5].X + corners[7].X) / 2;
-                    actualRadiuses[0].Y = (corners[5].Y + corners[7].Y) / 2;
-                    actualRadiuses[0].Z = (corners[5].Z + corners[7].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[5].X + corners[7].X) / 2;
+                    tmp.Y = (corners[5].Y + corners[7].Y) / 2;
+                    tmp.Z = (corners[5].Z + corners[7].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 //ruszył się w przód (-z) ok
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     length = 1;
-                    actualRadiuses[0].X = (corners[1].X + corners[3].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[3].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[3].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else
                 {
@@ -163,42 +184,48 @@ namespace ElonsRiot
 
         public void CheckWhichCornersForObjects()
         {
-
+            Vector3 tmp = new Vector3(0, 0, 0);
+            GetRadius();
             //ruszyl się w lewo (-x)
             if (referencePlayer.oldPosition.X > referencePlayer.newPosition.X)
             {
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
                     //i w tył (+z) ok
-                    length = 6;
-
-                    actualRadiuses[1].X = (corners[1].X + corners[3].X) / 2;
-                    actualRadiuses[1].Y = (corners[1].Y + corners[3].Y) / 2;
-                    actualRadiuses[1].Z = (corners[1].Z + corners[3].Z) / 2;
-                    actualRadiuses[0].X = (corners[1].X + corners[6].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[6].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[6].Z) / 2;
+                    length = 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[3].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[1].X + corners[6].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[6].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[6].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (-z) ok
-                    length = 6;
-                    actualRadiuses[1].X = (corners[5].X + corners[2].X) / 2;
-                    actualRadiuses[1].Y = (corners[5].Y + corners[2].Y) / 2;
-                    actualRadiuses[1].Z = (corners[5].Z + corners[2].Z) / 2;
-                    actualRadiuses[0].X = (corners[5].X + corners[7].X) / 2;
-                    actualRadiuses[0].Y = (corners[5].Y + corners[7].Y) / 2;
-                    actualRadiuses[0].Z = (corners[5].Z + corners[7].Z) / 2;
-
+                    length = 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[5].X + corners[2].X) / 2;
+                    tmp.Y = (corners[5].Y + corners[2].Y) / 2;
+                    tmp.Z = (corners[5].Z + corners[2].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[5].X + corners[7].X) / 2;
+                    tmp.Y = (corners[5].Y + corners[7].Y) / 2;
+                    tmp.Z = (corners[5].Z + corners[7].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else
                 {
                     //tylko w lewo (-x) ok
-                    length = 4;
-
-                    actualRadiuses[0].X = (corners[1].X + corners[6].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[6].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[6].Z) / 2;
+                    length = 1;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[6].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[6].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[6].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
             }
             //ruszyl sie w prawo.. (+x) ok
@@ -207,32 +234,40 @@ namespace ElonsRiot
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
                     //i w tył (+z) ok
-                    length = 6;
-                    actualRadiuses[1].X = (corners[1].X + corners[3].X) / 2;
-                    actualRadiuses[1].Y = (corners[1].Y + corners[3].Y) / 2;
-                    actualRadiuses[1].Z = (corners[1].Z + corners[3].Z) / 2;
-                    actualRadiuses[0].X = (corners[4].X + corners[3].X) / 2;
-                    actualRadiuses[0].Y = (corners[4].Y + corners[3].Y) / 2;
-                    actualRadiuses[0].Z = (corners[4].Z + corners[3].Z) / 2;
+                    length = 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[3].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[4].X + corners[3].X) / 2;
+                    tmp.Y = (corners[4].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[4].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (-z) ok
-                    length = 6;
-                    actualRadiuses[0].X = (corners[4].X + corners[6].X) / 2;
-                    actualRadiuses[0].Y = (corners[4].Y + corners[6].Y) / 2;
-                    actualRadiuses[0].Z = (corners[4].Z + corners[6].Z) / 2;
-                    actualRadiuses[1].X = (corners[4].X + corners[3].X) / 2;
-                    actualRadiuses[1].Y = (corners[4].Y + corners[3].Y) / 2;
-                    actualRadiuses[1].Z = (corners[4].Z + corners[3].Z) / 2;
+                    length = 2;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[4].X + corners[6].X) / 2;
+                    tmp.Y = (corners[4].Y + corners[6].Y) / 2;
+                    tmp.Z = (corners[4].Z + corners[6].Z) / 2;
+                    actualRadiuses.Add(tmp);
+                    tmp.X = (corners[4].X + corners[3].X) / 2;
+                    tmp.Y = (corners[4].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[4].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else
                 {
                     //tylko w prawo (+x)
-                    length = 4;
-                    actualRadiuses[0].X = (corners[0].X + corners[7].X) / 2;
-                    actualRadiuses[0].Y = (corners[0].Y + corners[7].Y) / 2;
-                    actualRadiuses[0].Z = (corners[0].Z + corners[7].Z) / 2;
+                    length = 1;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[0].X + corners[7].X) / 2;
+                    tmp.Y = (corners[0].Y + corners[7].Y) / 2;
+                    tmp.Z = (corners[0].Z + corners[7].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
             }
             else
@@ -240,18 +275,22 @@ namespace ElonsRiot
                 //ruszyl sie w tyl (+z)
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
-                    length = 4;
-                    actualRadiuses[0].X = (corners[1].X + corners[3].X) / 2;
-                    actualRadiuses[0].Y = (corners[1].Y + corners[3].Y) / 2;
-                    actualRadiuses[0].Z = (corners[1].Z + corners[3].Z) / 2;
+                    length = 1;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[1].X + corners[3].X) / 2;
+                    tmp.Y = (corners[1].Y + corners[3].Y) / 2;
+                    tmp.Z = (corners[1].Z + corners[3].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 //ruszył się w przód (-z)
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
-                    length = 4;
-                    actualRadiuses[0].X = (corners[5].X + corners[7].X) / 2;
-                    actualRadiuses[0].Y = (corners[5].Y + corners[7].Y) / 2;
-                    actualRadiuses[0].Z = (corners[5].Z + corners[7].Z) / 2;
+                    length = 1;
+                    actualRadiuses.Clear();
+                    tmp.X = (corners[5].X + corners[7].X) / 2;
+                    tmp.Y = (corners[5].Y + corners[7].Y) / 2;
+                    tmp.Z = (corners[5].Z + corners[7].Z) / 2;
+                    actualRadiuses.Add(tmp);
                 }
                 else
                 {
