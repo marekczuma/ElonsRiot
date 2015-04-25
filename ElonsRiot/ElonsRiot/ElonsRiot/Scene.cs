@@ -115,6 +115,8 @@ namespace ElonsRiot
             boxesCollision = new BoxBoxCollision();
             List<GameObject> PositiveObj = new List<GameObject>();
             List<GameObject> NegativeObj = new List<GameObject>();
+            List<GameObject> RotationFar = new List<GameObject>();
+            List<GameObject> RotationNear = new List<GameObject>();
             Debug.WriteLine(player.AAbox.center2.X);
             foreach (GameObject obj in GameObjects)
             {
@@ -136,26 +138,44 @@ namespace ElonsRiot
                         obj.AAbox = new Box(obj, player);
                         obj.AAbox.CheckWhichCornersForObjects();
                     }
-                    if ((obj.AAbox.max.X >= player.AAbox.min.X) && obj.ObjectPath != "3D/Ziemia/bigFloor")
+                    if ((obj.AAbox.max.X >= player.AAbox.min.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y == 0)
                     {
                         PositiveObj.Add(obj);
                     }
-                    if ((obj.AAbox.min.X < player.AAbox.max.X) && obj.ObjectPath != "3D/Ziemia/bigFloor")
+                    if ((obj.AAbox.min.X < player.AAbox.max.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y == 0 )
                     {
                         NegativeObj.Add(obj);
+                    }
+                    if (obj.Rotation.Y !=0 &&(obj.AAbox.max.Z > player.AAbox.max.Z))
+                    {
+                        RotationNear.Add(obj);
+                    }
+                    if (obj.Rotation.Y != 0 &&(obj.AAbox.min.Z < player.AAbox.min.Z))
+                    {
+                        RotationFar.Add(obj);
                     }
                  }
             }
             
 
-            if (boxesCollision.CheckCollision(player, PositiveObj,true))
+            if (boxesCollision.CheckCollision(player, PositiveObj,0))
                 {
                     Debug.WriteLine("dziala positive");
                     player.Position = player.oldPosition;
                 }
-            if (boxesCollision.CheckCollision(player, NegativeObj,false))
+            if (boxesCollision.CheckCollision(player, NegativeObj,1))
             {
                 Debug.WriteLine("dziala negative");
+                player.Position = player.oldPosition;
+            }
+            if (boxesCollision.CheckCollision(player, RotationNear, 2))
+            {
+                Debug.WriteLine("dziala near ");
+                player.Position = player.oldPosition;
+            }
+            if (boxesCollision.CheckCollision(player, RotationFar, 3))
+            {
+                Debug.WriteLine("dziala far");
                 player.Position = player.oldPosition;
             }
 

@@ -77,25 +77,25 @@ namespace ElonsRiot
                     //i w tył (-z) ok
                     length = 2;
                     actualRadiuses.Clear();
-                    /*  tmp.X = (corners[4].X + corners[6].X) / 2;
+                      tmp.X = (corners[4].X + corners[6].X) / 2;
                       tmp.Y = (corners[4].Y + corners[6].Y) / 2;
                       tmp.Z = (corners[4].Z + corners[6].Z) / 2;
                       actualRadiuses.Add(tmp);
                       tmp.X = (corners[4].X + corners[3].X) / 2;
                       tmp.Y = (corners[4].Y + corners[3].Y) / 2;
                       tmp.Z = (corners[4].Z + corners[3].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Add(corners[4]);
+                      actualRadiuses.Add(tmp);
+                 /*   actualRadiuses.Add(corners[4]);
                     actualRadiuses.Add(corners[7]);
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[1]);
-                    actualRadiuses.Add(corners[2]);
+                    actualRadiuses.Add(corners[2]);*/
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (+z) ok
-                    /* length = 2;
+                     length = 2;
                      actualRadiuses.Clear();
                      tmp.X = (corners[1].X + corners[3].X) / 2;
                      tmp.Y = (corners[1].Y + corners[3].Y) / 2;
@@ -104,30 +104,30 @@ namespace ElonsRiot
                      tmp.X = (corners[4].X + corners[3].X) / 2;
                      tmp.Y = (corners[4].Y + corners[3].Y) / 2;
                      tmp.Z = (corners[4].Z + corners[3].Z) / 2;
-                     actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                     actualRadiuses.Add(tmp);
+               /*   actualRadiuses.Clear();
                     actualRadiuses.Add(corners[5]);
                     actualRadiuses.Add(corners[6]);
                     actualRadiuses.Add(corners[4]);
                     actualRadiuses.Add(corners[7]);
                     actualRadiuses.Add(corners[0]);
-                    actualRadiuses.Add(corners[3]);
+                    actualRadiuses.Add(corners[3]);*/
 
                 }
                 else
                 {
                     //tylko w lewo (-x) ok
-                    /*  length = 1;
+                      length = 1;
                       actualRadiuses.Clear();
                       tmp.X = (corners[0].X + corners[7].X) / 2;
                       tmp.Y = (corners[0].Y + corners[7].Y) / 2;
                       tmp.Z = (corners[0].Z + corners[7].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
+                      actualRadiuses.Add(tmp);
                     actualRadiuses.Clear();
-                    actualRadiuses.Add(corners[4]);
+            /*        actualRadiuses.Add(corners[4]);
                     actualRadiuses.Add(corners[7]);
                     actualRadiuses.Add(corners[0]);
-                    actualRadiuses.Add(corners[3]);
+                    actualRadiuses.Add(corners[3]);*/
                 }
             }
             //ruszyl sie w prawo.. (+x) ok
@@ -136,7 +136,7 @@ namespace ElonsRiot
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
                     //i w tył (-z) ok
-                    /*  length = 2;
+                     length = 2;
                       actualRadiuses.Clear();
                       tmp.X = (corners[5].X + corners[2].X) / 2;
                       tmp.Y = (corners[5].Y + corners[2].Y) / 2;
@@ -145,19 +145,19 @@ namespace ElonsRiot
                       tmp.X = (corners[5].X + corners[7].X) / 2;
                       tmp.Y = (corners[5].Y + corners[7].Y) / 2;
                       tmp.Z = (corners[5].Z + corners[7].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                      actualRadiuses.Add(tmp);
+                 /*   actualRadiuses.Clear();
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[1]);
                     actualRadiuses.Add(corners[2]);
                     actualRadiuses.Add(corners[5]);
-                    actualRadiuses.Add(corners[6]);
+                    actualRadiuses.Add(corners[6]);*/
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (+z) ok
-                    /*   length = 2;
+                       length = 2;
                        actualRadiuses.Clear();
                        tmp.X = (corners[1].X + corners[3].X) / 2;
                        tmp.Y = (corners[1].Y + corners[3].Y) / 2;
@@ -166,29 +166,29 @@ namespace ElonsRiot
                        tmp.X = (corners[1].X + corners[6].X) / 2;
                        tmp.Y = (corners[1].Y + corners[6].Y) / 2;
                        tmp.Z = (corners[1].Z + corners[6].Z) / 2;
-                       actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                       actualRadiuses.Add(tmp);
+             /*       actualRadiuses.Clear();
                     actualRadiuses.Add(corners[1]);
                     actualRadiuses.Add(corners[2]);
                     actualRadiuses.Add(corners[5]);
                     actualRadiuses.Add(corners[6]);
                     actualRadiuses.Add(corners[4]);
-                    actualRadiuses.Add(corners[7]);
+                    actualRadiuses.Add(corners[7]);*/
                 }
                 else
                 {
                     //tylko w prawo (+x) ok
-                    /*length = 1;
+                    length = 1;
                     actualRadiuses.Clear();
                     tmp.X = (corners[1].X + corners[6].X) / 2;
                     tmp.Y = (corners[1].Y + corners[6].Y) / 2;
                     tmp.Z = (corners[1].Z + corners[6].Z) / 2;
-                    actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                    actualRadiuses.Add(tmp);
+              /*      actualRadiuses.Clear();
                     actualRadiuses.Add(corners[1]);
                     actualRadiuses.Add(corners[2]);
                     actualRadiuses.Add(corners[5]);
-                    actualRadiuses.Add(corners[6]);
+                    actualRadiuses.Add(corners[6]);*/
                 }
             }
             else
@@ -196,32 +196,32 @@ namespace ElonsRiot
                 //ruszyl sie w tyl (-z) ok
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
-                    /* length = 1;
+                     length = 1;
                      actualRadiuses.Clear();
                      tmp.X = (corners[5].X + corners[7].X) / 2;
                      tmp.Y = (corners[5].Y + corners[7].Y) / 2;
                      tmp.Z = (corners[5].Z + corners[7].Z) / 2;
-                     actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                     actualRadiuses.Add(tmp);
+                   /* actualRadiuses.Clear();
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[1]);
-                    actualRadiuses.Add(corners[2]);
+                    actualRadiuses.Add(corners[2]);*/
                 }
                 //ruszył się w przód (+z) ok
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
-                    /* length = 1;
+                     length = 1;
                      actualRadiuses.Clear();
                      tmp.X = (corners[1].X + corners[3].X) / 2;
                      tmp.Y = (corners[1].Y + corners[3].Y) / 2;
                      tmp.Z = (corners[1].Z + corners[3].Z) / 2;
-                     actualRadiuses.Add(tmp); */
-                    actualRadiuses.Clear();
+                     actualRadiuses.Add(tmp); 
+             /*       actualRadiuses.Clear();
                     actualRadiuses.Add(corners[5]);
                     actualRadiuses.Add(corners[6]);
                     actualRadiuses.Add(corners[4]);
-                    actualRadiuses.Add(corners[7]);
+                    actualRadiuses.Add(corners[7]);*/
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace ElonsRiot
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
                     //i w tył (-z) ok
-                    /*    length = 2;
+                        length = 2;
                         actualRadiuses.Clear();
                         tmp.X = (corners[1].X + corners[3].X) / 2;
                         tmp.Y = (corners[1].Y + corners[3].Y) / 2;
@@ -250,19 +250,19 @@ namespace ElonsRiot
                         tmp.X = (corners[1].X + corners[6].X) / 2;
                         tmp.Y = (corners[1].Y + corners[6].Y) / 2;
                         tmp.Z = (corners[1].Z + corners[6].Z) / 2;
-                        actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                        actualRadiuses.Add(tmp);
+                  /*  actualRadiuses.Clear();
                     actualRadiuses.Add(corners[1]);
                     actualRadiuses.Add(corners[2]);
                     actualRadiuses.Add(corners[5]);
                     actualRadiuses.Add(corners[6]);
                     actualRadiuses.Add(corners[4]);
-                    actualRadiuses.Add(corners[7]);
+                    actualRadiuses.Add(corners[7]);*/
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (+z) ok
-                    /*  length = 2;
+                      length = 2;
                       actualRadiuses.Clear();
                       tmp.X = (corners[5].X + corners[2].X) / 2;
                       tmp.Y = (corners[5].Y + corners[2].Y) / 2;
@@ -271,29 +271,29 @@ namespace ElonsRiot
                       tmp.X = (corners[5].X + corners[7].X) / 2;
                       tmp.Y = (corners[5].Y + corners[7].Y) / 2;
                       tmp.Z = (corners[5].Z + corners[7].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                      actualRadiuses.Add(tmp);
+                 /*   actualRadiuses.Clear();
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[1]);
                     actualRadiuses.Add(corners[2]);
                     actualRadiuses.Add(corners[5]);
-                    actualRadiuses.Add(corners[6]);
+                    actualRadiuses.Add(corners[6]);*/
                 }
                 else
                 {
                     //tylko w lewo (-x) ok
-                    /*  length = 1;
+                     length = 1;
                       actualRadiuses.Clear();
                       tmp.X = (corners[1].X + corners[6].X) / 2;
                       tmp.Y = (corners[1].Y + corners[6].Y) / 2;
                       tmp.Z = (corners[1].Z + corners[6].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                      actualRadiuses.Add(tmp);
+                /*    actualRadiuses.Clear();
                     actualRadiuses.Add(corners[1]);
                     actualRadiuses.Add(corners[2]);
                     actualRadiuses.Add(corners[5]);
-                    actualRadiuses.Add(corners[6]);
+                    actualRadiuses.Add(corners[6]);*/
                 }
             }
             //ruszyl sie w prawo.. (+x) ok
@@ -302,7 +302,7 @@ namespace ElonsRiot
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
                     //i w tył (-z) ok
-                    /*  length = 2;
+                      length = 2;
                       actualRadiuses.Clear();
                       tmp.X = (corners[1].X + corners[3].X) / 2;
                       tmp.Y = (corners[1].Y + corners[3].Y) / 2;
@@ -311,19 +311,19 @@ namespace ElonsRiot
                       tmp.X = (corners[4].X + corners[3].X) / 2;
                       tmp.Y = (corners[4].Y + corners[3].Y) / 2;
                       tmp.Z = (corners[4].Z + corners[3].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                      actualRadiuses.Add(tmp);
+              /*      actualRadiuses.Clear();
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[5]);
                     actualRadiuses.Add(corners[6]);
                     actualRadiuses.Add(corners[4]);
-                    actualRadiuses.Add(corners[7]);
+                    actualRadiuses.Add(corners[7]);*/
                 }
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
                     //i w przód (+z) ok
-                    /*  length = 2;
+                     length = 2;
                       actualRadiuses.Clear();
                       tmp.X = (corners[4].X + corners[6].X) / 2;
                       tmp.Y = (corners[4].Y + corners[6].Y) / 2;
@@ -332,29 +332,29 @@ namespace ElonsRiot
                       tmp.X = (corners[4].X + corners[3].X) / 2;
                       tmp.Y = (corners[4].Y + corners[3].Y) / 2;
                       tmp.Z = (corners[4].Z + corners[3].Z) / 2;
-                      actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                      actualRadiuses.Add(tmp);
+                  /*  actualRadiuses.Clear();
                     actualRadiuses.Add(corners[4]);
                     actualRadiuses.Add(corners[7]);
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[1]);
-                    actualRadiuses.Add(corners[2]);
+                    actualRadiuses.Add(corners[2]);*/
                 }
                 else
                 {
                     //tylko w prawo (+x)
-                    /* length = 1;
+                     length = 1;
                      actualRadiuses.Clear();
                      tmp.X = (corners[0].X + corners[7].X) / 2;
                      tmp.Y = (corners[0].Y + corners[7].Y) / 2;
                      tmp.Z = (corners[0].Z + corners[7].Z) / 2;
-                     actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                     actualRadiuses.Add(tmp);
+                 /*   actualRadiuses.Clear();
                     actualRadiuses.Add(corners[4]);
                     actualRadiuses.Add(corners[7]);
                     actualRadiuses.Add(corners[0]);
-                    actualRadiuses.Add(corners[3]);
+                    actualRadiuses.Add(corners[3]);*/
                 }
             }
             else
@@ -362,32 +362,32 @@ namespace ElonsRiot
                 //ruszyl sie w tyl (-z)
                 if (referencePlayer.oldPosition.Z > referencePlayer.newPosition.Z)
                 {
-                    /* length = 1;
+                    length = 1;
                      actualRadiuses.Clear();
                      tmp.X = (corners[1].X + corners[3].X) / 2;
                      tmp.Y = (corners[1].Y + corners[3].Y) / 2;
                      tmp.Z = (corners[1].Z + corners[3].Z) / 2;
-                     actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                     actualRadiuses.Add(tmp);
+               /*     actualRadiuses.Clear();
                     actualRadiuses.Add(corners[5]);
                     actualRadiuses.Add(corners[6]);
                     actualRadiuses.Add(corners[4]);
-                    actualRadiuses.Add(corners[7]);
+                    actualRadiuses.Add(corners[7]);*/
                 }
                 //ruszył się w przód (+z)
                 else if (referencePlayer.oldPosition.Z < referencePlayer.newPosition.Z)
                 {
-                    /* length = 1;
+                     length = 1;
                      actualRadiuses.Clear();
                      tmp.X = (corners[5].X + corners[7].X) / 2;
                      tmp.Y = (corners[5].Y + corners[7].Y) / 2;
                      tmp.Z = (corners[5].Z + corners[7].Z) / 2;
-                     actualRadiuses.Add(tmp);*/
-                    actualRadiuses.Clear();
+                     actualRadiuses.Add(tmp);
+                   /* actualRadiuses.Clear();
                     actualRadiuses.Add(corners[0]);
                     actualRadiuses.Add(corners[3]);
                     actualRadiuses.Add(corners[1]);
-                    actualRadiuses.Add(corners[2]);
+                    actualRadiuses.Add(corners[2]);*/
                 }
                 else
                 {

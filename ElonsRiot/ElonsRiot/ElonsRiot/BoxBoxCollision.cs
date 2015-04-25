@@ -10,12 +10,12 @@ namespace ElonsRiot
     {
         public BoxBoxCollision() { }
 
-        public bool CheckCollision(Player player, List<GameObject> gameObjects, bool isPositive)
+        public bool CheckCollision(Player player, List<GameObject> gameObjects, int mode)
         {
             foreach (GameObject gameObject in gameObjects)
             {
 
-                if (gameObject.AAbox.corners != null && gameObject.Name != player.Name && isPositive == true)
+                if (gameObject.AAbox.corners != null && gameObject.Name != player.Name && mode == 0)
                 {
 
                     if ((player.AAbox.max.X > gameObject.AAbox.min.X) || (player.AAbox.min.X > gameObject.AAbox.max.X)) return Testcenter2sDistance(player, gameObject);
@@ -23,13 +23,21 @@ namespace ElonsRiot
              //       if ((player.AAbox.max.Z > gameObject.AAbox.min.Z) || (player.AAbox.min.Z < gameObject.AAbox.max.Z)) return Testcenter2sDistance(player, gameObject);
 
                 }
-                else if (gameObject.AAbox.corners != null && gameObject.Name != player.Name && isPositive == false)
+                else if (gameObject.AAbox.corners != null && gameObject.Name != player.Name && mode == 1)
                 {
 
                     if ((player.AAbox.max.X < gameObject.AAbox.min.X) || (player.AAbox.min.X < gameObject.AAbox.max.X)) return Testcenter2sDistance(player, gameObject);
                     if ((player.AAbox.max.Y < gameObject.AAbox.min.Y) || (player.AAbox.min.Y > gameObject.AAbox.max.Y)) return Testcenter2sDistance(player, gameObject);
             //        if ((player.AAbox.max.Z > gameObject.AAbox.min.Z) || (player.AAbox.min.Z < gameObject.AAbox.max.Z)) return Testcenter2sDistance(player, gameObject);
 
+                }
+                else if(gameObject.AAbox.corners != null && gameObject.Name != player.Name && mode ==2 )
+                {
+                  if ((player.AAbox.max.Z > gameObject.AAbox.min.Z) || (player.AAbox.min.Z > gameObject.AAbox.max.Z)) return Testcenter2sDistance(player, gameObject);
+                }
+                else if(gameObject.AAbox.corners != null && gameObject.Name != player.Name && mode ==3 )
+                {
+                    if ((player.AAbox.max.Z < gameObject.AAbox.min.Z) || (player.AAbox.min.Z < gameObject.AAbox.max.Z)) return Testcenter2sDistance(player, gameObject);
                 }
 
             }

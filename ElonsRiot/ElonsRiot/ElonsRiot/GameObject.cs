@@ -136,7 +136,15 @@ namespace ElonsRiot
         {
             Initialize();
             Matrix tmp = Matrix.Identity;
-            tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
+            if(Rotation.Y !=0 && this.ObjectPath !="3D/ludzik/dude")
+            {
+                tmp = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(-Rotation.Y)) * Matrix.CreateTranslation(Position);
+            }
+            else
+            {
+                tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
+            }
+            
 
             Vector3 meshMax = new Vector3(float.MinValue);
             Vector3 meshMin = new Vector3(float.MaxValue);
