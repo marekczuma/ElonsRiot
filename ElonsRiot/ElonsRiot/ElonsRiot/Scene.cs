@@ -113,33 +113,51 @@ namespace ElonsRiot
             player.AAbox.CheckWhichCorners();
 
             boxesCollision = new BoxBoxCollision();
-
+            List<GameObject> PositiveObj = new List<GameObject>();
+            List<GameObject> NegativeObj = new List<GameObject>();
+            Debug.WriteLine(player.AAbox.center2.X);
             foreach (GameObject obj in GameObjects)
             {
-                
-                obj.Initialize();
-                obj.RefreshMatrix();
-                obj.GetCentre();
-                if (obj.ObjectPath == "3D/Ziemia/bigFloor")
+                if(obj.Name != player.Name)
                 {
-                    obj.createPlane();
+
+                    obj.Initialize();
                     obj.RefreshMatrix();
-                }
-                else
-                {
-                    obj.createBoudingBox();
-                    obj.RefreshMatrix();
-                    obj.AAbox = new Box(obj, player);
-                    obj.AAbox.CheckWhichCornersForObjects();
-                }
+                    obj.GetCentre();
+                    if (obj.ObjectPath == "3D/Ziemia/bigFloor")
+                    {
+                        obj.createPlane();
+                        obj.RefreshMatrix();
+                    }
+                    else
+                    {
+                        obj.createBoudingBox();
+                        obj.RefreshMatrix();
+                        obj.AAbox = new Box(obj, player);
+                        obj.AAbox.CheckWhichCornersForObjects();
+                    }
+                    if ((obj.AAbox.max.X >= player.AAbox.min.X) && obj.ObjectPath != "3D/Ziemia/bigFloor")
+                    {
+                        PositiveObj.Add(obj);
+                    }
+                    if ((obj.AAbox.min.X < player.AAbox.max.X) && obj.ObjectPath != "3D/Ziemia/bigFloor")
+                    {
+                        NegativeObj.Add(obj);
+                    }
+                 }
             }
+            
 
-
-            if (boxesCollision.CheckCollision(player, GameObjects))
+            if (boxesCollision.CheckCollision(player, PositiveObj,true))
                 {
-                    Debug.WriteLine("dziala xxx");
+                    Debug.WriteLine("dziala positive");
                     player.Position = player.oldPosition;
                 }
+            if (boxesCollision.CheckCollision(player, NegativeObj,false))
+            {
+                Debug.WriteLine("dziala negative");
+                player.Position = player.oldPosition;
+            }
 
                 animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
            
