@@ -38,6 +38,7 @@ namespace ElonsRiot
         {
             XMLScene = DeserializeFromXML();
             GameObjects = XMLScene.GameObjects;
+            LoadPalo();
             LoadElon();
             foreach (var elem in GameObjects)
             {
@@ -72,6 +73,17 @@ namespace ElonsRiot
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
         }
+        public int FindGO(string name)
+        {
+            for(int i=0; i<GameObjects.Count;i++)
+            {
+                if(GameObjects[i].Name == name)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
         private XMLScene DeserializeFromXML()
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(XMLScene));
@@ -81,20 +93,17 @@ namespace ElonsRiot
             textReader.Close();
             return tmpGO;
         }
-        
-        private void ChangeXMLToStructure()
-        {
 
-        }
         public void Update(Player player)
         {
+            PaloCharacter palo = (PaloCharacter)GameObjects[FindGO("Palo")];
             player.Initialize();
             player.createBoudingBox();
             player.RefreshMatrix();
             physic = new Physic(GameObjects);
             player.AAbox = new Box(player);
             player.AAbox.CheckWhichCorners();
-
+            palo.WalkForward();
             boxesCollision = new BoxBoxCollision();
 
             foreach (GameObject obj in GameObjects)
@@ -155,13 +164,16 @@ namespace ElonsRiot
             Elon.ObjectPath = "3D/ludzik/elon";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
-           GameObject Elon2 = new GameObject();
-         /*   Elon2.Name = "Jasper";
-            Elon2.Scale = 0.5f;
-            Elon2.Position = new Vector3(0, 8, 0);
-            Elon2.Rotation = new Vector3(0, 0, 0);
-            Elon2.ObjectPath = "3D/ludzik/elon";
-            GameObjects.Add(Elon2);*/
+        }
+        private void LoadPalo()
+        {
+            PaloCharacter Palo = new PaloCharacter();
+            Palo.Name = "Palo";
+            Palo.ObjectPath = "3D/Car/Car";
+            Palo.Position = new Vector3(100, 8, -40);
+            Palo.Scale = 0.2F;
+            GameObjects.Add(Palo);
+
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {

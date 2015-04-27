@@ -77,6 +77,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterState.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="PaloCharacter.cs" />
     <Compile Include="Physic.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
