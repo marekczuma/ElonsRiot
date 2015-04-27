@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using SkinnedModel;
 namespace ElonsRiot
 {
     [Serializable]
@@ -75,12 +76,25 @@ namespace ElonsRiot
         }
         public void DrawModels(ContentManager _contentManager, Player _playerObject)
         {
+
             DrawSimpleModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix);
             if( GameObjects != null)
             {
                 foreach(var elem in GameObjects)
                 {
                     elem.DrawModels(_contentManager, _playerObject);
+                }
+            }
+        }
+
+        public void DrawAnimatedModels(ContentManager _contentManager, Player _playerObject, AnimationPlayer animationPlayer)
+        {
+            DrawAnimatedModel(GameObjectModel, animationPlayer, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix);
+            if (GameObjects != null)
+            {
+                foreach (var elem in GameObjects)
+                {
+                    elem.DrawAnimatedModels(_contentManager, _playerObject, animationPlayer);
                 }
             }
         }
@@ -122,7 +136,15 @@ namespace ElonsRiot
         {
             Initialize();
             Matrix tmp = Matrix.Identity;
-            tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
+            if(Rotation.Y !=0 && this.ObjectPath !="3D/ludzik/dude")
+            {
+                tmp = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(-Rotation.Y)) * Matrix.CreateTranslation(Position);
+            }
+            else
+            {
+                tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
+            }
+            
 
             Vector3 meshMax = new Vector3(float.MinValue);
             Vector3 meshMin = new Vector3(float.MaxValue);
@@ -218,7 +240,6 @@ namespace ElonsRiot
 
         private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
         {
-
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -226,6 +247,30 @@ namespace ElonsRiot
                     effect.World = mesh.ParentBone.Transform * world;
                     effect.View = view;
                     effect.Projection = projection;
+                    if (newTexture != null)
+                    {
+                        effect.Texture = newTexture;
+                    }
+                }
+
+                mesh.Draw();
+            }
+        }
+
+        private void DrawAnimatedModel(Model currentModel, AnimationPlayer animationPlayer, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
+        {
+            Matrix[] bones = animationPlayer.GetSkinTransforms();
+
+            foreach (ModelMesh mesh in currentModel.Meshes)
+            {
+                foreach (SkinnedEffect effect in mesh.Effects)
+                {
+                    effect.SetBoneTransforms(bones);
+
+                    effect.World = mesh.ParentBone.Transform * world;
+                    effect.View = view;
+                    effect.Projection = projection;
+
                     if (newTexture != null)
                     {
                         effect.Texture = newTexture;
