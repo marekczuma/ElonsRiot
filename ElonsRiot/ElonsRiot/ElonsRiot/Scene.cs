@@ -18,13 +18,13 @@ namespace ElonsRiot
         public ContentManager ContentManager { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public XMLScene XMLScene { get; set; }
-
         public Player PlayerObject { get; set; }
+        public PaloCharacter PaloObject { get; set; }
         private BasicEffect basicEffect;
         private Physic physic;
         private BoxBoxCollision boxesCollision;
         AnimationPlayer animationPlayer;
-
+        AnimationPlayer animationPlayerPalo;
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
@@ -42,6 +42,7 @@ namespace ElonsRiot
             XMLScene = DeserializeFromXML();
             GameObjects = XMLScene.GameObjects;
             LoadElon();
+            LoadPalo();
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
@@ -51,24 +52,36 @@ namespace ElonsRiot
                     //elem.RefreshMatrix();
                 }
             }
-            int index = 0;
+            int indexElon = 0;
+            int indexPalo = 0;
             for (int i=0; i<GameObjects.Count; i++)
             {
                 if (GameObjects[i].Name == "Elon")
-                    index = i;
+                    indexElon = i;
             }
-            SkinningData skinningData = GameObjects[index].GameObjectModel.Tag as SkinningData;
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                if (GameObjects[i].Name == "Palo")
+                    indexPalo = i;
+            }
+            //Elon - DO UCYWILIZOWANIA!
+            SkinningData skinningData = GameObjects[indexElon].GameObjectModel.Tag as SkinningData;
             animationPlayer = new AnimationPlayer(skinningData);
             AnimationClip clip = skinningData.AnimationClips["Take 001"];
+            //Palo anim
+            SkinningData skinningDataPalo = GameObjects[indexPalo].GameObjectModel.Tag as SkinningData;
+            animationPlayerPalo = new AnimationPlayer(skinningDataPalo);
+            AnimationClip clipPalo = skinningDataPalo.AnimationClips["Take 001"];
 
             animationPlayer.StartClip(clip);
+            animationPlayerPalo.StartClip(clipPalo);
             basicEffect = new BasicEffect(graphic);
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
              foreach(var elem in GameObjects)
              {
-                 if (elem.Name == "Elon")
+                 if ((elem.Name == "Elon") || (elem.Name == "Palo"))
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
                  else
                     elem.DrawModels(ContentManager, PlayerObject);               
@@ -97,11 +110,6 @@ namespace ElonsRiot
             tmpGO = (XMLScene)deserializer.Deserialize(textReader);
             textReader.Close();
             return tmpGO;
-        }
-        
-        private void ChangeXMLToStructure()
-        {
-
         }
         public void Update(Player player, GameTime gameTime)
         {
@@ -201,6 +209,7 @@ namespace ElonsRiot
 
                }
            }*/
+                PaloControl();
         }
         private void LoadElon()
         {
@@ -212,6 +221,28 @@ namespace ElonsRiot
             Elon.ObjectPath = "3D/ludzik/dude";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
+        }
+        private void LoadPalo()
+        {
+            int indexElon = 0;
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                if (GameObjects[i].Name == "Elon")
+                    indexElon = i;
+            }
+            PaloCharacter Palo = new PaloCharacter();
+            Palo.Name = "Palo";
+            Palo.Scale = 0.15f;
+            Palo.Position = new Vector3(70, 8, 0);
+            Palo.Rotation = new Vector3(0, 0, 0);
+            Palo.ObjectPath = "3D/ludzik/dude";
+            Palo.Elon = (Player)GameObjects[indexElon];
+            PaloObject = Palo;
+            GameObjects.Add(Palo);
+        }
+        private void PaloControl()
+        {
+            PaloObject.WalkToPlayer();
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {

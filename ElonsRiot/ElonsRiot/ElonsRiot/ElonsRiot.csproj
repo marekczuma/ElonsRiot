@@ -71,6 +71,9 @@
     <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
+    <Reference Include="SkinnedModel">
+      <HintPath>Animation\SkinnedModel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -99,10 +102,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SkinnedModel\SkinnedModel.csproj">
-      <Project>{2702df0b-efa3-4aa0-b0a6-170f2eccad1b}</Project>
-      <Name>SkinnedModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ElonsRiotContent\ElonsRiotContent.contentproj">
       <Name>ElonsRiotContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

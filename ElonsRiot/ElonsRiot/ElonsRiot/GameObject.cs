@@ -112,6 +112,10 @@ namespace ElonsRiot
             Position = _position;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
+        public void LookAt(GameObject _obj)
+        {
+            MatrixWorld = Matrix.CreateScale(Scale) *  Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateLookAt(Position,_obj.Position, Vector3.Up) * Matrix.CreateTranslation(Position);
+        }
         public void ChangeRotation(Vector3 _rotation)
         {
             Rotation += Vector3.Transform(_rotation, Matrix.Identity);
@@ -131,6 +135,10 @@ namespace ElonsRiot
         {
             boneTransformations = new Matrix[GameObjectModel.Bones.Count];
             this.GameObjectModel.CopyAbsoluteBoneTransformsTo(boneTransformations);
+        }
+        public float getDistance(GameObject _target)
+        {
+            return Vector3.Distance(_target.Position, Position);
         }
         public void createBoudingBox()
         {
