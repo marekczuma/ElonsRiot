@@ -11,7 +11,7 @@ namespace ElonsRiot
     {
         public CharacterState elonState {get; set;}    //STAN ELONA - TO JEST KLASA KUŹWA!
         public Camera camera;
-
+        public float health;
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
@@ -21,6 +21,7 @@ namespace ElonsRiot
             camera = new Camera();
             isMouseMovement = false;
             angle = 0;
+            health = 100.0f;
         }
 
         public void SetState(KeyboardState state)
@@ -95,6 +96,22 @@ namespace ElonsRiot
             camera.Update(this.MatrixWorld, elonState, this.Rotation);
             camera.UpdateCamera(gameTime);
 
+        }
+
+        public void ChangeHealth(KeyboardState state)
+        {
+            if (state.IsKeyDown(Keys.H))
+            {
+                health -= 1;
+                if (health <= 0)
+                    health = 0;
+            }
+            else if (state.IsKeyDown(Keys.J))
+            {
+                health += 1;
+                if (health >= 100)
+                    health = 100;
+            }
         }
     }
 }
