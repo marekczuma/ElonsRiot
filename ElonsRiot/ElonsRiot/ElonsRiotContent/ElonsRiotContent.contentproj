@@ -107,8 +107,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\sciana\wall.FBX">
-      <Name>wall</Name>
+    <Compile Include="3D\sciana\sciana.FBX">
+      <Name>sciana</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>

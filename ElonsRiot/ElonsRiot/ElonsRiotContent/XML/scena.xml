@@ -13,7 +13,7 @@
     </Rotation>
 	<Scale>1</Scale>
   </GameObject> 
-	<GameObject Name="wall1" Path="3D/sciana/wall">
+	<GameObject Name="scianka" Path="3D/sciana/sciana">
 		<Position>
 		  <X>-50</X>
 		  <Y>0</Y>
