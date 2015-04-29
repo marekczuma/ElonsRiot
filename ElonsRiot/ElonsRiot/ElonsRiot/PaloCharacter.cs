@@ -34,9 +34,13 @@ namespace ElonsRiot
             Vector3 toPlayer = Vector3.Normalize((Elon.Position - Position));
             Vector3 currentDirection = Vector3.Normalize(MatrixWorld.Forward);
             float angle = (float)Math.Atan2(Convert.ToDouble(toPlayer.X - currentDirection.X), Convert.ToDouble(toPlayer.Z - currentDirection.Z));
-            ChangeRotation(new Vector3(0,angle,0));
+            //if (angle > 45)
+            //{
+            //    SetRotation(new Vector3( 0, 10, 0));
+            //}
+            ChangeRotation(new Vector3(0, angle, 0));
 
-            if (getDistance(Elon) > 13)
+            if (getDistance(Elon) > 15)
             {
                 WalkForward();
             }
