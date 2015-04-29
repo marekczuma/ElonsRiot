@@ -46,7 +46,8 @@ namespace ElonsRiot
         public Vector3 center;
         [XmlIgnore]
         public Plane plane;
-
+        [XmlIgnore]
+        public BoundingBox obbox;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -56,6 +57,7 @@ namespace ElonsRiot
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
             AAbox = new Box();
+           
         }
         public GameObject(Vector3 _position)
         {
@@ -73,6 +75,7 @@ namespace ElonsRiot
                     elem.LoadModels(_contentManager);
                 }
             }
+           
         }
         public void DrawModels(ContentManager _contentManager, Player _playerObject)
         {
@@ -110,6 +113,11 @@ namespace ElonsRiot
         public void SetPosition(Vector3 _position)
         {
             Position = _position;
+            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+        }
+        public void MovePosition(Vector3 _position)
+        {
+            Position += _position;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
         public void ChangeRotation(Vector3 _rotation)
@@ -181,12 +189,11 @@ namespace ElonsRiot
                 meshMax = Vector3.Transform(meshMax, meshTransform);
 
             }
-            float x, y, z;
-            x = Math.Abs(meshMin.X - meshMax.X) * Scale / Scale * 4;
-            y = Math.Abs(meshMin.Y - meshMax.Y) * Scale / Scale * 4;
-            z = Math.Abs(meshMin.Z - meshMax.Z) * Scale / Scale * 4;
-
-            // boundingBox = new BoundingBox(new Vector3(-x/2,-y/2,-z/2),new Vector3(x/2,y/2,z/2));
+            if (this.ObjectPath == "3D/ludzik/dude")
+            {
+                meshMax.Z += 2;
+                meshMin.Z -= 2;
+            }
             boundingBox = new BoundingBox(meshMin, meshMax);
         }
         public void GetCentre()
@@ -212,9 +219,12 @@ namespace ElonsRiot
         {
             float dotProduct = 0;
             Vector3 normal = new Vector3(0, 0, 0);
+            Matrix meshTransform = new Matrix();
+
 
             foreach (ModelMesh mesh in GameObjectModel.Meshes)
             {
+                meshTransform = boneTransformations[mesh.ParentBone.Index] * MatrixWorld;
                 foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
 
@@ -222,17 +232,19 @@ namespace ElonsRiot
 
                     VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[meshPart.NumVertices];
                     meshPart.VertexBuffer.GetData(meshPart.VertexOffset * stride, vertexData, 0, meshPart.NumVertices, stride);
+                    for(int i = 0 ; i < vertexData.Length;i++)
+                    {
+                        vertexData[i].Position = Vector3.Transform(vertexData[i].Position, meshTransform);
+                    }
 
-                    Vector3 vecAB = vertexData[1].Position - vertexData[0].Position;
-                    Vector3 vecAC = vertexData[2].Position - vertexData[0].Position;
+
+                    Vector3 vecAB = vertexData[5].Position - vertexData[0].Position;
+                    Vector3 vecAC = vertexData[13].Position - vertexData[0].Position;
                     
                     // Cross vecAB and vecAC
                     normal = Vector3.Cross(vecAB, vecAC);
                     normal.Normalize();
-
-                    Vector3 tmp = vertexData[0].Position;
-                    dotProduct = Vector3.Dot(-normal, tmp);
-
+                    dotProduct = Vector3.Dot(normal, vertexData[0].Position);
                 }
             }
             plane = new Plane(normal, dotProduct);

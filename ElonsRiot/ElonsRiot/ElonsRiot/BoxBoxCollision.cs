@@ -95,5 +95,43 @@ namespace ElonsRiot
             return SphereToPlaneCollision(plane, sphere);
         }
 
+
+        // Test if OBB b intersects plane p
+        public bool TestOBBPlane(GameObject player, Plane p)
+        {
+            Vector3[] u = new Vector3[3];
+            Vector3[] corners = player.obbox.GetCorners();
+            u[0] = corners[7] - corners[6]; //x
+            u[1] = corners[7] - corners[4]; //y
+            u[2] = corners[7] - corners[3]; //z
+          /*  float[] e = new float[3];
+            e[0] = u[0].Length();
+            e[1] = u[1].Length();
+            e[2] = u[2].Length();*/
+            Vector3 c = (player.AAbox.max + player.AAbox.min) * 0.5f; // Compute AABB center
+            Vector3 e = player.AAbox.max - c; // Compute positive extents
+            // Compute the projection interval radius of b onto L(t) = b.c + t * p.n
+            float r = e.X* Math.Abs(Vector3.Dot(p.Normal,u[0])) +
+            e.Y * Math.Abs(Vector3.Dot(p.Normal, u[1])) +
+            e.Z * Math.Abs(Vector3.Dot(p.Normal,u[2]));
+            // Compute distance of box center from plane
+            float s = Vector3.Dot(p.Normal, player.AAbox.center2) - p.D;
+            // Intersection occurs when distance s falls within [-r,+r] interval
+            return Math.Abs(s) <= r;
+        }
+
+        // Test if AABB b intersects plane p
+        public bool TestAABBPlane(GameObject player, Plane p)
+        {
+            // These two lines not necessary with a (center, extents) AABB representation
+            Vector3 c = (player.AAbox.max + player.AAbox.min) * 0.5f; // Compute AABB center
+            Vector3 e = player.AAbox.max - c; // Compute positive extents
+            // Compute the projection interval radius of b onto L(t) = b.c + t * p.n
+            float r = e.X * Math.Abs(p.Normal.X) + e.Y * Math.Abs(p.Normal.Y) + e.Z * Math.Abs(p.Normal.Z);
+            // Compute distance of box center from plane
+            float s = Vector3.Dot(p.Normal, c) - p.D;
+            // Intersection occurs when distance s falls within [-r,+r] interval
+            return Math.Abs(s) <= r;
+        }
     }
 }

@@ -63,6 +63,7 @@ namespace ElonsRiot
 
             animationPlayer.StartClip(clip);
             basicEffect = new BasicEffect(graphic);
+            physic = new Physic();
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
@@ -81,7 +82,6 @@ namespace ElonsRiot
                 gObj.RefreshMatrix();
             }
             DrawBoudingBox(graphic);
-            physic = new Physic(GameObjects);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
@@ -105,102 +105,8 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime)
         {
-            player.Initialize();
-            player.createBoudingBox();
-            player.RefreshMatrix();
-            physic = new Physic(GameObjects);
-            player.AAbox = new Box(player);
-            player.AAbox.CheckWhichCorners();
-
-            boxesCollision = new BoxBoxCollision();
-            List<GameObject> PositiveObj = new List<GameObject>();
-            List<GameObject> NegativeObj = new List<GameObject>();
-            List<GameObject> RotationFar = new List<GameObject>();
-            List<GameObject> RotationNear = new List<GameObject>();
-            Debug.WriteLine(player.AAbox.center2.X);
-            foreach (GameObject obj in GameObjects)
-            {
-                if(obj.Name != player.Name)
-                {
-
-                    obj.Initialize();
-                    obj.RefreshMatrix();
-                    obj.GetCentre();
-                    if (obj.ObjectPath == "3D/Ziemia/bigFloor")
-                    {
-                        obj.createPlane();
-                        obj.RefreshMatrix();
-                    }
-                    else
-                    {
-                        obj.createBoudingBox();
-                        obj.RefreshMatrix();
-                        obj.AAbox = new Box(obj, player);
-                        obj.AAbox.CheckWhichCornersForObjects();
-                    }
-                    if ((obj.AAbox.max.X >= player.AAbox.min.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y == 0)
-                    {
-                        PositiveObj.Add(obj);
-                    }
-                    if ((obj.AAbox.min.X < player.AAbox.max.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y == 0 )
-                    {
-                        NegativeObj.Add(obj);
-                    }
-                    if (obj.Rotation.Y !=0 &&(obj.AAbox.max.Z > player.AAbox.max.Z))
-                    {
-                        RotationNear.Add(obj);
-                    }
-                    if (obj.Rotation.Y != 0 &&(obj.AAbox.min.Z < player.AAbox.min.Z))
-                    {
-                        RotationFar.Add(obj);
-                    }
-                 }
-            }
-            
-
-            if (boxesCollision.CheckCollision(player, PositiveObj,0))
-                {
-                    Debug.WriteLine("dziala positive");
-                    player.Position = player.oldPosition;
-                }
-            if (boxesCollision.CheckCollision(player, NegativeObj,1))
-            {
-                Debug.WriteLine("dziala negative");
-                player.Position = player.oldPosition;
-            }
-            if (boxesCollision.CheckCollision(player, RotationNear, 2))
-            {
-                Debug.WriteLine("dziala near ");
-                player.Position = player.oldPosition;
-            }
-            if (boxesCollision.CheckCollision(player, RotationFar, 3))
-            {
-                Debug.WriteLine("dziala far");
-                player.Position = player.oldPosition;
-            }
-
-                animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-           
-       /*    foreach(GameObject gObject in GameObjects)
-           {
-               if (gObject.ObjectPath == "3D/Ziemia/bigFloor")
-               {
-                   int result = boxesCollision.AabbToPlaneCollision(gObject.plane, player.AAbox);
-                   if(result == 3)
-                   {
-                       Debug.WriteLine("Colizja z ziemią");
-                   }
-                   else if(result == 2)
-                   {
-                       Debug.WriteLine("Jest za ziemią");
-                   }
-                   else if(result == 1)
-                   {
-                       Debug.WriteLine("Jest ponad ziemią!!!");
-                   }
-
-               }
-           }*/
+          physic.update(gameTime,GameObjects,PlayerObject);
+          animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
         }
         private void LoadElon()
         {
@@ -223,7 +129,7 @@ namespace ElonsRiot
 
                 //draw bouding box 
                 Vector3[] corners = gameObj.boundingBox.GetCorners();
-
+                //Vector3[] corners = gameObj.obbox.GetCorners();
                 VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
                 // Assign the 8 box vertices
