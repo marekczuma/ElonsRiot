@@ -24,7 +24,7 @@ namespace ElonsRiot
         [XmlElement("GameObject")]
         public List<GameObject> GameObjects { get; set; }
         [XmlElement("Scale")]
-        public float Scale { get; set; }
+        public Vector3 Scale { get; set; }
         public Matrix MatrixWorld { get; set; }
         //public Matrix MatrixView { get; set; }
         //public Matrix MatrixProjection { get; set; }
@@ -126,7 +126,7 @@ namespace ElonsRiot
             Rotation = _rotation;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
-        public void setScale(float _scale)
+        public void setScale(Vector3 _scale)
         {
             Scale = _scale;
             MatrixWorld = Matrix.CreateScale(Scale);
@@ -190,9 +190,9 @@ namespace ElonsRiot
 
             }
             float x, y, z;
-            x = Math.Abs(meshMin.X - meshMax.X) * Scale / Scale * 4;
-            y = Math.Abs(meshMin.Y - meshMax.Y) * Scale / Scale * 4;
-            z = Math.Abs(meshMin.Z - meshMax.Z) * Scale / Scale * 4;
+            x = Math.Abs(meshMin.X - meshMax.X) * Scale.X / Scale.X * 4;
+            y = Math.Abs(meshMin.Y - meshMax.Y) * Scale.Y / Scale.Y * 4;
+            z = Math.Abs(meshMin.Z - meshMax.Z) * Scale.Z / Scale.Z * 4;
 
             // boundingBox = new BoundingBox(new Vector3(-x/2,-y/2,-z/2),new Vector3(x/2,y/2,z/2));
             boundingBox = new BoundingBox(meshMin, meshMax);

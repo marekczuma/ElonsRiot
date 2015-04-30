@@ -11,11 +11,15 @@
       <Y>0</Y>
       <Z>0</Z>
     </Rotation>
-	<Scale>1</Scale>
+		<Scale> 
+		  <X>1</X>
+		  <Y>1</Y>
+		  <Z>1</Z>
+		</Scale>
   </GameObject> 
-	<GameObject Name="scianka" Path="3D/sciana/sciana">
+	<GameObject Name="scianka" Path="3D/sciana/middleWall">
 		<Position>
-		  <X>-50</X>
+		  <X>0</X>
 		  <Y>0</Y>
 		  <Z>0</Z>
 		</Position>
@@ -24,6 +28,10 @@
 		  <Y>0</Y>
 		  <Z>0</Z>
 		</Rotation>
-		<Scale> 1 </Scale>
+		<Scale> 
+		  <X>0.13</X>
+		  <Y>0.13</Y>
+		  <Z>0.13</Z>
+		</Scale>
 	</GameObject>
 </Scene>

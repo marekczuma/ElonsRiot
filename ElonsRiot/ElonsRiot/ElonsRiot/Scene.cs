@@ -216,12 +216,20 @@ namespace ElonsRiot
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
-            Elon.Scale = 0.1f;
+            Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
             Elon.Position = new Vector3(50,8, 0);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
+            //GameObject sciana = new GameObject();
+            //sciana.Name = "Sciana2";
+            //sciana.Scale = 1;
+            //sciana.Position = new Vector3(0, 0, 20);
+            //sciana.Rotation = new Vector3(0, 0, 0);
+            //sciana.ObjectPath = "3D/sciana/sciana";
+            //GameObjects.Add(sciana);
+
         }
         private void LoadPalo()
         {
@@ -233,7 +241,7 @@ namespace ElonsRiot
             }
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "Palo";
-            Palo.Scale = 0.15f;
+            Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
             Palo.Position = new Vector3(70, 8, 0);
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
