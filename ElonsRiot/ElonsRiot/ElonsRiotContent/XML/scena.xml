@@ -16,6 +16,7 @@
 		    <Y>1</Y>
 		    <Z>1</Z>
 	</Scale>
+	<Interactive>false</Interactive>
 </GameObject> 
  <GameObject Name="ceil" Path="3D/Ziemia/bigFloor">
     <Position>
@@ -33,6 +34,7 @@
 		    <Y>1</Y>
 		    <Z>1</Z>
 	</Scale>
+	<Interactive>false</Interactive>
 </GameObject> 
 	//magazyn
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
@@ -51,6 +53,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
 		<Position>
@@ -68,6 +71,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall3" Path="3D/placeholders/Wall3">
 		<Position>
@@ -85,6 +89,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
 		<Position>
@@ -102,6 +107,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall4" Path="3D/placeholders/Wall4">
 		<Position>
@@ -119,6 +125,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="door1" Path="3D/placeholders/Wall5">
 		<Position>
@@ -136,6 +143,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>true</Interactive>
 	</GameObject>
 	//Strzelnica
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
@@ -154,6 +162,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
 		<Position>
@@ -171,6 +180,7 @@
 		  <Y>0.3</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
 		<Position>
@@ -188,6 +198,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall6" Path="3D/placeholders/Wall6">
 		<Position>
@@ -205,6 +216,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall4" Path="3D/placeholders/Wall4">
 		<Position>
@@ -222,6 +234,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="door2" Path="3D/placeholders/Wall5">
 		<Position>
@@ -239,6 +252,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>true</Interactive>
 	</GameObject>
 	//Super pokój
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
@@ -274,6 +288,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	//Otaczanie sceny
 	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
@@ -292,6 +307,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
 		<Position>
@@ -309,6 +325,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
 		<Position>
@@ -326,6 +343,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	//Filary
 	<GameObject Name="filar" Path="3D/placeholders/Wall4">
@@ -344,6 +362,7 @@
 		  <Y>1</Y>
 		  <Z>5</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="filar" Path="3D/placeholders/Wall4">
 		<Position>
@@ -361,6 +380,7 @@
 		  <Y>1</Y>
 		  <Z>5</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 	<GameObject Name="filar" Path="3D/placeholders/Wall4">
 		<Position>
@@ -378,5 +398,6 @@
 		  <Y>1</Y>
 		  <Z>5</Z>
 		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 </Scene>

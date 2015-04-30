@@ -75,7 +75,7 @@ namespace ElonsRiot
             if (_state.IsKeyDown(Keys.E))
             {
                 Ray pickRay = GetPickRay();
-                float selectedDistance = 50.0f;
+                float selectedDistance = float.MaxValue;
                 for (int i = 0; i < MyScene.GameObjects.Count; i++)
                 {
                     if (MyScene.GameObjects[i].Interactive == true)
@@ -85,20 +85,47 @@ namespace ElonsRiot
                         {
                             if (result.Value < selectedDistance)
                             {
-                                MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 3f, 0f));
+                                MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
                             }
                         }
                     }
                 }
-
+            }
+            else
+            {
+                Ray pickCameraRay = GetPickRayCamera();
+                float selectedDistance = 2;
+                for (int i = 0; i < MyScene.GameObjects.Count; i++)
+                {
+                    Nullable<float> result = pickCameraRay.Intersects(MyScene.GameObjects[i].boundingBox);
+                    if (result.HasValue == true)
+                    {
+                        if (result.Value < selectedDistance)
+                        {
+                            selectedDistance = result.Value;
+                            MyScene.PlayerObject.camera.offsetDistance.Z = 20;
+                        }
+                    }
+                }
             }
         }
 
         Ray GetPickRay()
         {
-            Matrix world = Matrix.CreateTranslation(0, 0, 0);
+            Matrix world = Matrix.CreateTranslation(10, 0, 0);
             Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
             Vector3 farPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.target, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
+            Vector3 direction = farPoint - nearPoint;
+            direction.Normalize();
+            Ray pickRay = new Ray(nearPoint, direction);
+            return pickRay;
+        }
+
+        Ray GetPickRayCamera()
+        {
+            Matrix world = Matrix.CreateTranslation(0, 0, 0);
+            Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
+            Vector3 farPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.Position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
             Vector3 direction = farPoint - nearPoint;
             direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction);
