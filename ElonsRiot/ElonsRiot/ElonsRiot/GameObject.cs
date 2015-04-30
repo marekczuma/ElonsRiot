@@ -46,8 +46,7 @@ namespace ElonsRiot
         public Vector3 center;
         [XmlIgnore]
         public Plane plane;
-        [XmlIgnore]
-        public BoundingBox obbox;
+
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -57,7 +56,6 @@ namespace ElonsRiot
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
             AAbox = new Box();
-           
         }
         public GameObject(Vector3 _position)
         {
@@ -75,7 +73,6 @@ namespace ElonsRiot
                     elem.LoadModels(_contentManager);
                 }
             }
-           
         }
         public void DrawModels(ContentManager _contentManager, Player _playerObject)
         {
@@ -115,10 +112,9 @@ namespace ElonsRiot
             Position = _position;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
-        public void MovePosition(Vector3 _position)
+        public void LookAt(GameObject _obj)
         {
-            Position += _position;
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            MatrixWorld = Matrix.CreateScale(Scale) *  Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateLookAt(Position,_obj.Position, Vector3.Up) * Matrix.CreateTranslation(Position);
         }
         public void ChangeRotation(Vector3 _rotation)
         {
@@ -140,13 +136,17 @@ namespace ElonsRiot
             boneTransformations = new Matrix[GameObjectModel.Bones.Count];
             this.GameObjectModel.CopyAbsoluteBoneTransformsTo(boneTransformations);
         }
+        public float getDistance(GameObject _target)
+        {
+            return Vector3.Distance(_target.Position, Position);
+        }
         public void createBoudingBox()
         {
             Initialize();
             Matrix tmp = Matrix.Identity;
             if(Rotation.Y !=0 && this.ObjectPath !="3D/ludzik/dude")
             {
-                tmp = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(-Rotation.Y)) * Matrix.CreateTranslation(Position);
+                tmp = MatrixWorld;
             }
             else
             {
@@ -189,10 +189,15 @@ namespace ElonsRiot
                 meshMax = Vector3.Transform(meshMax, meshTransform);
 
             }
-            if (this.ObjectPath == "3D/ludzik/dude")
+            if(this.ObjectPath == "3D/ludzik/dude")
             {
                 meshMax.Z += 2;
                 meshMin.Z -= 2;
+            }
+            if (this.ObjectPath == "3D/sciana/wall")
+            {
+                
+                meshMin.X += 2;
             }
             boundingBox = new BoundingBox(meshMin, meshMax);
         }
@@ -219,12 +224,9 @@ namespace ElonsRiot
         {
             float dotProduct = 0;
             Vector3 normal = new Vector3(0, 0, 0);
-            Matrix meshTransform = new Matrix();
-
 
             foreach (ModelMesh mesh in GameObjectModel.Meshes)
             {
-                meshTransform = boneTransformations[mesh.ParentBone.Index] * MatrixWorld;
                 foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
 
@@ -232,19 +234,17 @@ namespace ElonsRiot
 
                     VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[meshPart.NumVertices];
                     meshPart.VertexBuffer.GetData(meshPart.VertexOffset * stride, vertexData, 0, meshPart.NumVertices, stride);
-                    for(int i = 0 ; i < vertexData.Length;i++)
-                    {
-                        vertexData[i].Position = Vector3.Transform(vertexData[i].Position, meshTransform);
-                    }
 
-
-                    Vector3 vecAB = vertexData[5].Position - vertexData[0].Position;
-                    Vector3 vecAC = vertexData[13].Position - vertexData[0].Position;
+                    Vector3 vecAB = vertexData[1].Position - vertexData[0].Position;
+                    Vector3 vecAC = vertexData[2].Position - vertexData[0].Position;
                     
                     // Cross vecAB and vecAC
                     normal = Vector3.Cross(vecAB, vecAC);
                     normal.Normalize();
-                    dotProduct = Vector3.Dot(normal, vertexData[0].Position);
+
+                    Vector3 tmp = vertexData[0].Position;
+                    dotProduct = Vector3.Dot(-normal, tmp);
+
                 }
             }
             plane = new Plane(normal, dotProduct);

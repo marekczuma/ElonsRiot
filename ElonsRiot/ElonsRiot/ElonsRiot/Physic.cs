@@ -12,10 +12,6 @@ namespace ElonsRiot
     {
         BoxBoxCollision boxesCollision;
         List<GameObject> gameObject;
-        List<GameObject> PositiveObj = new List<GameObject>();
-        List<GameObject> NegativeObj = new List<GameObject>();
-        List<GameObject> RotationFar = new List<GameObject>();
-        List<GameObject> RotationNear = new List<GameObject>();
         List<GameObject> Items = new List<GameObject>();
         public Physic()
         {
@@ -24,6 +20,11 @@ namespace ElonsRiot
         }
         public void update(GameTime gameTime,List<GameObject> gameO,Player player)
         {
+
+            List<GameObject> PositiveObj = new List<GameObject>();
+            List<GameObject> NegativeObj = new List<GameObject>();
+            List<GameObject> RotationFar = new List<GameObject>();
+            List<GameObject> RotationNear = new List<GameObject>();
             this.gameObject = gameO;
             player.Initialize();
             player.createBoudingBox();
@@ -56,20 +57,23 @@ namespace ElonsRiot
                         obj.AAbox = new Box(obj, player);
                         obj.AAbox.CheckWhichCornersForObjects();
                     }
-                    if ((obj.AAbox.max.X >= player.AAbox.min.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y == 0)
+                    if ((obj.AAbox.max.X >= player.AAbox.min.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y != 0)
                     {
                         PositiveObj.Add(obj);
                     }
-                    if ((obj.AAbox.min.X < player.AAbox.max.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y == 0)
+                    if ((obj.AAbox.min.X < player.AAbox.max.X) && obj.ObjectPath != "3D/Ziemia/bigFloor" && obj.Rotation.Y != 0)
                     {
+
                         NegativeObj.Add(obj);
                     }
-                    if (obj.Rotation.Y != 0 && (obj.AAbox.max.Z > player.AAbox.max.Z))
+                    if (obj.Rotation.Y == 0 && obj.ObjectPath != "3D/Ziemia/bigFloor")//&& (obj.AAbox.max.Z > player.AAbox.max.Z))
                     {
+                        
                         RotationNear.Add(obj);
                     }
-                    if (obj.Rotation.Y != 0 && (obj.AAbox.min.Z < player.AAbox.min.Z))
+                    if (obj.Rotation.Y == 0 && obj.ObjectPath != "3D/Ziemia/bigFloor")//&& (obj.AAbox.min.Z < player.AAbox.min.Z))
                     {
+                        
                         RotationFar.Add(obj);
                     }
                 }
@@ -92,7 +96,16 @@ namespace ElonsRiot
                     }
                 }*/
             }
-               if (boxesCollision.CheckCollision(player, PositiveObj,0))
+            foreach(GameObject game in gameObject)
+            {
+                if (boxesCollision.TestAABBAABB(player, game))
+                {
+                    Debug.WriteLine(" -.------'''");
+                    player.Position = player.oldPosition;
+                }
+            }
+           
+              /* if (boxesCollision.CheckCollision(player, PositiveObj,0))
                 {
                     Debug.WriteLine("dziala positive");
                     player.Position = player.oldPosition;
@@ -111,7 +124,7 @@ namespace ElonsRiot
             {
                 Debug.WriteLine("dziala far");
                 player.Position = player.oldPosition;
-            }
+            }*/
         }
     }
 }
