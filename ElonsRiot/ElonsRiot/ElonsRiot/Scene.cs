@@ -100,6 +100,7 @@ namespace ElonsRiot
             PlayerObject.SetState(_state);
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
+            PlayerObject.ChangeHealth(_state);
         }
         private XMLScene DeserializeFromXML()
         {
