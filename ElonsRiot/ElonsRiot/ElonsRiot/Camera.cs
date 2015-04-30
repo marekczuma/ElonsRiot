@@ -24,7 +24,7 @@ namespace ElonsRiot
         private int previousScrollValue;
 
         public Vector3 position;
-        private Vector3 target;
+        public Vector3 target;
         public Matrix viewMatrix, projectionMatrix;
 
         private float yaw, pitch, roll;
@@ -145,8 +145,8 @@ namespace ElonsRiot
 
                 if (position.Y > 20)
                     position.Y = 20;
-                else if (position.Y < 0)
-                    position.Y = 0;
+                else if (position.Y < 10)
+                    position.Y = 10;
             //}
 
             if(currentMouseState.ScrollWheelValue < previousScrollValue)

@@ -114,7 +114,8 @@ namespace ElonsRiot
         public void Update(Player player, GameTime gameTime)
         {
             physic.update(gameTime, GameObjects, PlayerObject);
-                PaloControl();
+            PaloControl();
+            animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
         }
         private void LoadElon()
         {

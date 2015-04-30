@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-<!--  <GameObject Name="terrain" Path="3D/Ziemia/bigFloor">
+<GameObject Name="terrain" Path="3D/Ziemia/bigFloor">
     <Position>
       <X>0</X>
       <Y>-3</Y>
@@ -12,6 +12,7 @@
       <Z>0</Z>
     </Rotation>
 	<Scale>1</Scale>
+	<Interactive>true</Interactive>
   </GameObject> 
 	<GameObject Name="wall1" Path="3D/sciana/wall">
 		<Position>
@@ -26,7 +27,7 @@
 		</Rotation>
 		<Scale> 1 </Scale>
 	</GameObject>
-	<GameObject Name="wall1" Path="3D/sciana/wall">
+<!--	<GameObject Name="wall1" Path="3D/sciana/wall">
 		<Position>
 		  <X>50</X>
 		  <Y>0</Y>
