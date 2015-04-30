@@ -114,14 +114,15 @@ namespace ElonsRiot
         public void Update(Player player, GameTime gameTime)
         {
             physic.update(gameTime, GameObjects, PlayerObject);
-                PaloControl();
+            PaloControl();
+            animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
         }
         private void LoadElon()
         {
             Player Elon = new Player();
             Elon.Name = "Elon";
             Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            Elon.Position = new Vector3(50,8, 0);
+            Elon.Position = new Vector3(60,4 , -40);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
             GameObjects.Add(Elon);
@@ -146,7 +147,7 @@ namespace ElonsRiot
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "Palo";
             Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
-            Palo.Position = new Vector3(70, 8, 0);
+            Palo.Position = new Vector3(70, 4, 0);
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
             Palo.Elon = (Player)GameObjects[indexElon];
