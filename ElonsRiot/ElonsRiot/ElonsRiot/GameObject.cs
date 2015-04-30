@@ -24,7 +24,7 @@ namespace ElonsRiot
         [XmlElement("GameObject")]
         public List<GameObject> GameObjects { get; set; }
         [XmlElement("Scale")]
-        public float Scale { get; set; }
+        public Vector3 Scale { get; set; }
         public Matrix MatrixWorld { get; set; }
         //public Matrix MatrixView { get; set; }
         //public Matrix MatrixProjection { get; set; }
@@ -128,7 +128,7 @@ namespace ElonsRiot
             Rotation = _rotation;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
-        public void setScale(float _scale)
+        public void setScale(Vector3 _scale)
         {
             Scale = _scale;
             MatrixWorld = Matrix.CreateScale(Scale);
