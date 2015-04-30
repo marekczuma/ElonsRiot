@@ -24,7 +24,7 @@ namespace ElonsRiot
         [XmlElement("GameObject")]
         public List<GameObject> GameObjects { get; set; }
         [XmlElement("Scale")]
-        public Vector3 Scale { get; set; }
+        public float Scale { get; set; }
         public Matrix MatrixWorld { get; set; }
         //public Matrix MatrixView { get; set; }
         //public Matrix MatrixProjection { get; set; }
@@ -126,7 +126,7 @@ namespace ElonsRiot
             Rotation = _rotation;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
-        public void setScale(Vector3 _scale)
+        public void setScale(float _scale)
         {
             Scale = _scale;
             MatrixWorld = Matrix.CreateScale(Scale);
@@ -146,7 +146,7 @@ namespace ElonsRiot
             Matrix tmp = Matrix.Identity;
             if(Rotation.Y !=0 && this.ObjectPath !="3D/ludzik/dude")
             {
-                tmp = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(-Rotation.Y)) * Matrix.CreateTranslation(Position);
+                tmp = MatrixWorld;
             }
             else
             {
@@ -189,12 +189,16 @@ namespace ElonsRiot
                 meshMax = Vector3.Transform(meshMax, meshTransform);
 
             }
-            float x, y, z;
-            x = Math.Abs(meshMin.X - meshMax.X) * Scale.X / Scale.X * 4;
-            y = Math.Abs(meshMin.Y - meshMax.Y) * Scale.Y / Scale.Y * 4;
-            z = Math.Abs(meshMin.Z - meshMax.Z) * Scale.Z / Scale.Z * 4;
-
-            // boundingBox = new BoundingBox(new Vector3(-x/2,-y/2,-z/2),new Vector3(x/2,y/2,z/2));
+            if(this.ObjectPath == "3D/ludzik/dude")
+            {
+                meshMax.Z += 2;
+                meshMin.Z -= 2;
+            }
+            if (this.ObjectPath == "3D/sciana/wall")
+            {
+                
+                meshMin.X += 2;
+            }
             boundingBox = new BoundingBox(meshMin, meshMax);
         }
         public void GetCentre()

@@ -18,9 +18,11 @@ namespace ElonsRiot
             this.min = new Vector3(0, 0, 0);
             this.max = new Vector3(0, 0, 0);
             this.center = new Vector3(0, 0, 0);
+            this.radiuses = new float[3];
             this.actualRadiuses = null;
         }
         public Vector3 center;
+        public float[] radiuses;
         public Vector3 center2;
         Vector3 halfWidth;
         Player referencePlayer;
@@ -40,7 +42,9 @@ namespace ElonsRiot
             this.max = gameObj.boundingBox.Max;
             this.center = gameObj.center;
             this.actualRadiuses = new List<Vector3>();
+            this.radiuses = new float[3];
             GetRadius();
+            CreateRadiuses();
 
         }
         public Box(GameObject gameObj, Player pla)
@@ -54,7 +58,9 @@ namespace ElonsRiot
             this.referencePlayer = pla;
             this.center = gameObj.center;
             this.actualRadiuses = new List<Vector3>();
+            this.radiuses = new float[3];
             GetRadius();
+            CreateRadiuses();
         }
 
 
@@ -397,7 +403,18 @@ namespace ElonsRiot
 
         }
 
-
+        public void CreateRadiuses()
+        {
+            radiuses[0] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[6].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[6].Y), 2)
+             +   Math.Pow(Convert.ToDouble(corners[7].Z - corners[6].Z),2));//x
+            radiuses[1] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[4].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[4].Y), 2)
+             + Math.Pow(Convert.ToDouble(corners[7].Z - corners[4].Z), 2));//y
+            radiuses[2] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[3].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[3].Y), 2)
+             + Math.Pow(Convert.ToDouble(corners[7].Z - corners[3].Z), 2));//z
+            radiuses[0] = radiuses[0] / 2;
+            radiuses[1] = radiuses[1] / 2;
+            radiuses[2] = radiuses[2] / 2;
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <GameObject Name="terrain" Path="3D/Ziemia/bigFloor">
+<!--  <GameObject Name="terrain" Path="3D/Ziemia/bigFloor">
     <Position>
       <X>0</X>
       <Y>-3</Y>
@@ -25,7 +25,7 @@
 		</Position>
 		<Rotation>
 		  <X>0</X>
-		  <Y>0</Y>
+		  <Y>90</Y>
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
@@ -34,4 +34,56 @@
 		  <Z>0.13</Z>
 		</Scale>
 	</GameObject>
+	<GameObject Name="wall1" Path="3D/sciana/wall">
+		<Position>
+		  <X>50</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 1 </Scale> 
+	</GameObject> -->
+<!--	<GameObject Name="wall1" Path="3D/sciana/wall">
+		<Position>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>50</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 1 </Scale>
+	</GameObject> -->
+	<GameObject Name="wall1" Path="3D/sciana/wall">
+		<Position>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>-50</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 1 </Scale>
+	</GameObject> 
+<GameObject Name="wall1" Path="3D/Boxes/marekWall">
+		<Position>
+		  <X>15</X>
+		  <Y>0</Y>
+		  <Z>-20</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 1 </Scale>
+	</GameObject> 
 </Scene>
