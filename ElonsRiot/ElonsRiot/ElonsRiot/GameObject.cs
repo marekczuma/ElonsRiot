@@ -121,6 +121,13 @@ namespace ElonsRiot
             Rotation += Vector3.Transform(_rotation, Matrix.Identity);
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
+        public void RotateQuaternions(float angle)
+        {
+            Vector3 y = new Vector3(0,1,0);
+            Quaternion rotationQ = Quaternion.Identity;
+            Quaternion.CreateFromAxisAngle(ref y, angle, out rotationQ);
+            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(rotationQ) * Matrix.CreateTranslation(Position) ;
+        }
         public void SetRotation(Vector3 _rotation)
         {
             Rotation = _rotation;
