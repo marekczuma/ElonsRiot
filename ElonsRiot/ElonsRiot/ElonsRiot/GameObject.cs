@@ -28,6 +28,8 @@ namespace ElonsRiot
         public Matrix MatrixWorld { get; set; }
         //public Matrix MatrixView { get; set; }
         //public Matrix MatrixProjection { get; set; }
+        [XmlElement("Interactive")]
+        public bool Interactive { get; set; }
         [XmlIgnore]
         public Model GameObjectModel { get; set; }
          [XmlIgnore]
