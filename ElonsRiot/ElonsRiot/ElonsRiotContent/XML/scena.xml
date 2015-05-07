@@ -18,7 +18,7 @@
 	</Scale>
 	<Interactive>false</Interactive>
 </GameObject> 
-<!-- <GameObject Name="ceil" Path="3D/Ziemia/bigFloor">
+<GameObject Name="ceil" Path="3D/Ziemia/bigFloor">
     <Position>
       <X>0</X>
       <Y>20</Y>
@@ -399,8 +399,8 @@
 		  <Z>5</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject> -->
-	<GameObject Name="stairs" Path="3D/Boxes/stairs2">
+	</GameObject> 
+<!--	<GameObject Name="stairs" Path="3D/Boxes/stairs2">
 		<Position>
 		  <X>70</X>
 		  <Y>4</Y>
@@ -435,5 +435,5 @@
 		  <Z>0.05</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> -->
 </Scene>
