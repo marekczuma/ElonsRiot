@@ -48,7 +48,8 @@ namespace ElonsRiot
         public Vector3 center;
         [XmlIgnore]
         public Plane plane;
-
+        [XmlIgnore]
+        public List<Box> AAboxes;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -58,6 +59,8 @@ namespace ElonsRiot
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
             AAbox = new Box();
+            AAboxes = new List<Box>();
+            
         }
         public GameObject(Vector3 _position)
         {
@@ -142,67 +145,7 @@ namespace ElonsRiot
         {
             return Vector3.Distance(_target.Position, Position);
         }
-        public void createBoudingBox()
-        {
-            Initialize();
-            Matrix tmp = Matrix.Identity;
-            if(Rotation.Y !=0 && this.ObjectPath !="3D/ludzik/dude")
-            {
-                tmp = MatrixWorld;
-            }
-            else
-            {
-                tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
-            }
-            
-
-            Vector3 meshMax = new Vector3(float.MinValue);
-            Vector3 meshMin = new Vector3(float.MaxValue);
-            Matrix meshTransform = new Matrix();
-            foreach (ModelMesh mesh in GameObjectModel.Meshes)
-            {
-                meshTransform = boneTransformations[mesh.ParentBone.Index] * tmp;
-
-                foreach (ModelMeshPart part in mesh.MeshParts)
-                {
-
-                    // The stride is how big, in bytes, one vertex is in the vertex buffer
-                    // We have to use this as we do not know the make up of the vertex
-                    int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
-
-                    VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[part.NumVertices];
-                    part.VertexBuffer.GetData(part.VertexOffset * stride, vertexData, 0, part.NumVertices, stride);
-
-                    // Find minimum and maximum xyz values for this mesh part
-                    Vector3 vertPosition = new Vector3();
-
-                    for (int i = 0; i < vertexData.Length; i++)
-                    {
-                        vertPosition = vertexData[i].Position;
-
-                        // update our values from this vertex
-                        meshMin = Vector3.Min(meshMin, vertPosition);
-                        meshMax = Vector3.Max(meshMax, vertPosition);
-                    }
-                }
-
-                // transform by mesh bone matrix
-                meshMin = Vector3.Transform(meshMin, meshTransform);
-                meshMax = Vector3.Transform(meshMax, meshTransform);
-
-            }
-            if(this.ObjectPath == "3D/ludzik/dude")
-            {
-                meshMax.Z += 2;
-                meshMin.Z -= 2;
-            }
-            if (this.ObjectPath == "3D/sciana/wall")
-            {
-                
-                meshMin.X += 2;
-            }
-            boundingBox = new BoundingBox(meshMin, meshMax);
-        }
+       
         public void GetCentre()
         {
             BoundingSphere sphere = new BoundingSphere();
@@ -226,9 +169,10 @@ namespace ElonsRiot
         {
             float dotProduct = 0;
             Vector3 normal = new Vector3(0, 0, 0);
-
+            Matrix meshTransform = new Matrix();
             foreach (ModelMesh mesh in GameObjectModel.Meshes)
             {
+                meshTransform = boneTransformations[mesh.ParentBone.Index] * MatrixWorld;
                 foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
 
@@ -236,15 +180,18 @@ namespace ElonsRiot
 
                     VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[meshPart.NumVertices];
                     meshPart.VertexBuffer.GetData(meshPart.VertexOffset * stride, vertexData, 0, meshPart.NumVertices, stride);
-
-                    Vector3 vecAB = vertexData[1].Position - vertexData[0].Position;
-                    Vector3 vecAC = vertexData[2].Position - vertexData[0].Position;
+                    for(int i = 0 ; i < vertexData.Count(); i++)
+                    {
+                        vertexData[i].Position = Vector3.Transform(vertexData[i].Position, meshTransform);
+                    }
+                    Vector3 vecAB = vertexData[8].Position - vertexData[0].Position;
+                    Vector3 vecAC = vertexData[13].Position - vertexData[0].Position;
                     
                     // Cross vecAB and vecAC
-                    normal = Vector3.Cross(vecAB, vecAC);
-                    normal.Normalize();
-
-                    Vector3 tmp = vertexData[0].Position;
+                   normal = Vector3.Cross(vecAB, vecAC);
+                   normal.Normalize();
+                 
+                    Vector3 tmp = vertexData[0].Position; //1256910131416-19
                     dotProduct = Vector3.Dot(-normal, tmp);
 
                 }

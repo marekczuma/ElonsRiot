@@ -90,7 +90,7 @@ namespace ElonsRiot
             foreach (GameObject gObj in this.GameObjects)
             {
               //  DrawModel(gObj);
-                gObj.createBoudingBox();
+             //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
             }
             DrawBoudingBox(graphic);
@@ -122,7 +122,7 @@ namespace ElonsRiot
             Player Elon = new Player();
             Elon.Name = "Elon";
             Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            Elon.Position = new Vector3(60,4 , -40);
+            Elon.Position = new Vector3(60,4, -40);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
             GameObjects.Add(Elon);
@@ -162,37 +162,37 @@ namespace ElonsRiot
         {
             foreach (GameObject gameObj in this.GameObjects)
             {
+              //  foreach (BoundingBox box in gameObj.boundingBoxes)
+            //    {
+                    //draw bouding box 
+                    Vector3[] corners = gameObj.boundingBox.GetCorners();
+                //    Vector3[] corners = box.GetCorners();
 
-                //   gameObj.boneTransformations = new Matrix[gameObj.GameObjectModel.Bones.Count];
-                // gameObj.GameObjectModel.CopyAbsoluteBoneTransformsTo(gameObj.boneTransformations);
+                    VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
-                //draw bouding box 
-                Vector3[] corners = gameObj.boundingBox.GetCorners();
+                    // Assign the 8 box vertices
+                    for (int i = 0; i < corners.Length; i++)
+                    {
+                        primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
+                    }
 
-                VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
+                    basicEffect.World = Matrix.Identity;
+                    basicEffect.View = PlayerObject.camera.viewMatrix;
+                    basicEffect.Projection = PlayerObject.camera.projectionMatrix;
+                    basicEffect.TextureEnabled = false;
 
-                // Assign the 8 box vertices
-                for (int i = 0; i < corners.Length; i++)
-                {
-                    primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
-                }
-
-                basicEffect.World = Matrix.Identity;
-                basicEffect.View = PlayerObject.camera.viewMatrix;
-                basicEffect.Projection = PlayerObject.camera.projectionMatrix;
-                basicEffect.TextureEnabled = false;
-
-                // Draw the box with a LineList
-                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    graphic.DrawUserIndexedPrimitives(
-                        PrimitiveType.LineList, primitiveList, 0, 8,
-                        gameObj.bBoxIndices, 0, 12);
-                }
+                    // Draw the box with a LineList
+                    foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+                        graphic.DrawUserIndexedPrimitives(
+                            PrimitiveType.LineList, primitiveList, 0, 8,
+                            gameObj.bBoxIndices, 0, 12);
+                    }
+              //  }
             }
         }
-      
+     
       /*  public void DrawModel(GameObject gameObj)
         {
 

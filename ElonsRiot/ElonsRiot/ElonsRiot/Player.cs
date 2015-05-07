@@ -15,6 +15,12 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
+        private float gravity;
+        public float Gravity
+        {
+            get { return gravity; }
+            set { gravity = value; }
+        }
         public Player()
         {
             elonState = new CharacterState(State.idle);
@@ -22,6 +28,7 @@ namespace ElonsRiot
             isMouseMovement = false;
             angle = 0;
             health = 100.0f;
+            gravity = -0.2f;
         }
 
         public void SetState(KeyboardState state)
@@ -41,6 +48,7 @@ namespace ElonsRiot
         }
         public void Movement(KeyboardState state, MouseState _oldMouseState)
         {
+            
             oldPosition = Position;
             if (state.IsKeyDown(Keys.W))
             {
@@ -58,7 +66,8 @@ namespace ElonsRiot
             {
                 ChangePosition(new Vector3(0, 0, -elonState.VelocitySide));
             }
-
+            //grawitacja
+            ChangePosition(new Vector3(0, Gravity, 0));
             //obracanie playera
             MouseState newState;
             newState = Mouse.GetState();
