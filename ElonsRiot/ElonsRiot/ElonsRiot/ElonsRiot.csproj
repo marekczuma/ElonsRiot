@@ -96,7 +96,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="TriangleBB.cs" />
     <Compile Include="XMLScene.cs" />
   </ItemGroup>
   <ItemGroup>

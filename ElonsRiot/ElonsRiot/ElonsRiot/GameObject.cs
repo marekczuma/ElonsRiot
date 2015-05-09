@@ -166,40 +166,7 @@ namespace ElonsRiot
             }
             this.center = sphere.Center;
         }
-        public void createPlane()
-        {
-            float dotProduct = 0;
-            Vector3 normal = new Vector3(0, 0, 0);
-            Matrix meshTransform = new Matrix();
-            foreach (ModelMesh mesh in GameObjectModel.Meshes)
-            {
-                meshTransform = boneTransformations[mesh.ParentBone.Index] * MatrixWorld;
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                {
-
-                    int stride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
-
-                    VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[meshPart.NumVertices];
-                    meshPart.VertexBuffer.GetData(meshPart.VertexOffset * stride, vertexData, 0, meshPart.NumVertices, stride);
-                    for(int i = 0 ; i < vertexData.Count(); i++)
-                    {
-                        vertexData[i].Position = Vector3.Transform(vertexData[i].Position, meshTransform);
-                    }
-                    Vector3 vecAB = vertexData[8].Position - vertexData[0].Position;
-                    Vector3 vecAC = vertexData[13].Position - vertexData[0].Position;
-                    
-                    // Cross vecAB and vecAC
-                   normal = Vector3.Cross(vecAB, vecAC);
-                   normal.Normalize();
-                 
-                    Vector3 tmp = vertexData[0].Position; //1256910131416-19
-                    dotProduct = Vector3.Dot(-normal, tmp);
-
-                }
-            }
-            plane = new Plane(normal, dotProduct);
-        }
-
+       
         private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
         {
             foreach (ModelMesh mesh in model.Meshes)

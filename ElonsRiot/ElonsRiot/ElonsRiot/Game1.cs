@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace ElonsRiot
 {
@@ -86,6 +87,7 @@ namespace ElonsRiot
                             if (result.Value < selectedDistance)
                             {
                                 MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                                
                             }
                         }
                     }
