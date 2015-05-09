@@ -8,53 +8,66 @@ using System.Text;
 
 namespace ElonsRiot
 {
-    class Physic
+   public class Physic
     {
         BoxBoxCollision boxesCollision;
         List<GameObject> InteractiveGameObject;
         List<GameObject> NotInteractiveGameObject;
         GameObject floor;
         GameObject Palo;
-
-        int flag, flag2;
-        bool isFirstTimeInitialization;
+        Player Elon;
+        bool isFirstTimeInitialization, isStart;
+        int  flag2 = 1;
         public Physic()
         {
             boxesCollision = new BoxBoxCollision();
-            flag = 1;
-            flag2 = 1;
             isFirstTimeInitialization = false;
+            isStart = true;
             InteractiveGameObject = new List<GameObject>();
             NotInteractiveGameObject = new List<GameObject>();
         }
         public void update(GameTime gameTime, List<GameObject> gameO, Player player)
         {
-           foreach ( GameObject gObj in gameO)
-           {
-               if(gObj.Interactive == true)
-               {
-                   if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
-                   {
-                       InteractiveGameObject.Add(gObj);
-                   }
-               }
-               else
-               {
-                   if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
-                   {
-                       NotInteractiveGameObject.Add(gObj);
-                   }
-               }
-               if(gObj.Name == "terrain")
-               {
-                   floor = gObj;
-               }
-               
-               if (gObj.Name == "Palo")
-               {
-                   Palo = gObj;
-               }
-           }
+            if (isStart == true)
+            {
+                foreach (GameObject gObj in gameO)
+                {
+                    if (gObj.Interactive == true)
+                    {
+
+
+                        if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
+                        {
+                            InteractiveGameObject.Add(gObj);
+                        }
+                    }
+                    else
+                    {
+                        if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
+                        {
+                            NotInteractiveGameObject.Add(gObj);
+                        }
+                    }
+                    if (gObj.Name == "terrain")
+                    {
+                        floor = gObj;
+                    }
+
+                    if (gObj.Name == "Palo")
+                    {
+                        Palo = gObj;
+                    }
+                    if (gObj.Name == "Elon")
+                    {
+                        Elon = (Player)gObj;
+                    }
+                }
+                isStart = false;
+            }
+            //aktywowanie gravitacji
+       //    ActivateGravity(player, floor.plane);
+       //    ActivateGravity(Palo, floor.plane);
+
             //aktualizowanie AAboxów dla Palo i Elona
             player.Initialize();
             player.RefreshMatrix();
@@ -66,6 +79,8 @@ namespace ElonsRiot
             Palo.RefreshMatrix();
             Palo.GetCentre();
             Palo.AAbox = new Box(Palo, player);
+            Palo.AAbox.createBoudingBox();
+            Palo.AAbox.CheckWhichCorners();
             
             //inicjalizacja dla obiektów nieruchomych 
             if (isFirstTimeInitialization == false && NotInteractiveGameObject.Count != 0)
@@ -108,6 +123,11 @@ namespace ElonsRiot
                 gObj.AAbox.CheckWhichCornersForObjects();
                 gObj.AAbox.GetRadius();
             }
+            //kolija Palo i Elona
+            if (boxesCollision.TestAABBAABB(player, Palo))
+            {
+                player.Position = player.oldPosition;
+            }
             //kolizja elemetów nie interaktywnych,które nie są schodami z Elonem i Palo
             foreach(GameObject gObj in NotInteractiveGameObject)
             {
@@ -117,6 +137,7 @@ namespace ElonsRiot
                     {
                         player.Position = player.oldPosition;
                     }
+                   
 
                 }
                 else {
@@ -128,13 +149,13 @@ namespace ElonsRiot
                         
                          if(boxesCollision.TestAABBPlane(player,gObj.AAbox.plane) && flag2 == 0)
                          {
-                             
-                             float step = (Math.Abs(gObj.AAbox.max.Y - gObj.AAbox.min.Y)) /200;
-                             if (player.Position.Y < gObj.AAbox.max.Y)
+                             player.gravity = 0;
+                             float step = (Math.Abs(gObj.AAbox.max.Y - gObj.AAbox.min.Y))/200;
+                             do
                              {
                                  player.ChangePosition(new Vector3(0, step, 0));
                                  player.camera.position.Y += step;
-                             }
+                             } while (player.Position.Y < gObj.AAbox.max.Y);
                              
 
                         }
@@ -147,12 +168,31 @@ namespace ElonsRiot
                 
                 player.Position = new Vector3(player.Position.X, player.oldPosition.Y, player.Position.Z);
             }
-
+            
 
       
         }
 
 
-
+        public void ActivateGravity(GameObject gameObj, Plane floor)
+        {
+           
+                if (boxesCollision.TestAABBPlane(gameObj, floor))
+                {
+                    gameObj.ChangePosition(new Vector3(0, gameObj.gravity, 0));
+                }
+            
+        }
+        public void MakeMovement()
+        {
+            foreach(GameObject gameObj in InteractiveGameObject)
+            {
+                if(boxesCollision.TestAABBAABB(Elon,gameObj))
+                {
+                    gameObj.ChangePosition(new Vector3(0.5f,0,0));
+                    
+                }
+            }
+        }
     }
 }

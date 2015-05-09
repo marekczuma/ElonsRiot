@@ -49,7 +49,9 @@ namespace ElonsRiot
         [XmlIgnore]
         public Plane plane;
         [XmlIgnore]
-        public List<Box> AAboxes;
+        public float gravity;
+        [XmlElement("Mass")]
+        public float mass;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -59,7 +61,6 @@ namespace ElonsRiot
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
             AAbox = new Box();
-            AAboxes = new List<Box>();
             
         }
         public GameObject(Vector3 _position)

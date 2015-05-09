@@ -101,6 +101,7 @@ namespace ElonsRiot
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
             PlayerObject.ChangeHealth(_state);
+            PlayerObject.MoveBox(_state, physic);
         }
         private XMLScene DeserializeFromXML()
         {
@@ -125,6 +126,9 @@ namespace ElonsRiot
             Elon.Position = new Vector3(60,4, -40);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
+            Elon.Interactive = true;
+            Elon.gravity = -0.2f;
+            Elon.mass = 50; //kg
             GameObjects.Add(Elon);
             PlayerObject = Elon;
             //GameObject sciana = new GameObject();
@@ -150,6 +154,7 @@ namespace ElonsRiot
             Palo.Position = new Vector3(70, 4, 0);
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
+            Palo.Interactive = true;
             Palo.Elon = (Player)GameObjects[indexElon];
             PaloObject = Palo;
             GameObjects.Add(Palo);
@@ -160,7 +165,7 @@ namespace ElonsRiot
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {
-            foreach (GameObject gameObj in this.GameObjects)
+           foreach (GameObject gameObj in this.GameObjects)
             {
               //  foreach (BoundingBox box in gameObj.boundingBoxes)
             //    {
@@ -193,7 +198,7 @@ namespace ElonsRiot
             }
         }
      
-      /*  public void DrawModel(GameObject gameObj)
+        public void DrawModel(GameObject gameObj)
         {
 
             foreach (ModelMesh mesh in gameObj.GameObjectModel.Meshes)
@@ -211,6 +216,6 @@ namespace ElonsRiot
                 mesh.Draw();
 
             }
-        }*/
+        }
     }
 }
