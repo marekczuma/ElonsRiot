@@ -141,11 +141,10 @@ namespace ElonsRiot
                 meshMax.Y += 2;
                 meshMin.Y -= 2;
             }
-            if (referenceObject.ObjectPath == "3D/sciana/wall")
+         /*   if (referenceObject.ObjectPath == "3D/sciana/wall")
             {
-
                 meshMin.X += 2;
-            }
+            }*/
             referenceObject.boundingBox = new BoundingBox(meshMin, meshMax);
         }
         public void GetRadius()

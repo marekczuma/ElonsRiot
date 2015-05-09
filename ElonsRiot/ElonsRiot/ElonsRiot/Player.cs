@@ -115,12 +115,6 @@ namespace ElonsRiot
                     health = 100;
             }
         }
-        public void MoveBox(KeyboardState state, Physic phy)
-        {
-            if (state.IsKeyDown(Keys.M))
-            {
-                phy.MakeMovement();
-            }
-        }
+     
     }
 }

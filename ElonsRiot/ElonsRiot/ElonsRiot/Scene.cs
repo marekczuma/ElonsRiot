@@ -101,7 +101,6 @@ namespace ElonsRiot
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
             PlayerObject.ChangeHealth(_state);
-            PlayerObject.MoveBox(_state, physic);
         }
         private XMLScene DeserializeFromXML()
         {
