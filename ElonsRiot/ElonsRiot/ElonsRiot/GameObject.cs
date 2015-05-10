@@ -54,6 +54,10 @@ namespace ElonsRiot
         public InterationTypes interactionType;
         [XmlIgnore]
         public float mass;
+        [XmlIgnore]
+        public float velocity;
+        [XmlIgnore]
+        public string collisionCommunicat;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -114,6 +118,10 @@ namespace ElonsRiot
         {
             Position += Vector3.Transform(_position, Matrix.CreateRotationY(MathHelper.ToRadians(90) + MathHelper.ToRadians(Rotation.Y)));
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+        }
+        public void ChangeRelativePosition(Vector3 _position)
+        {
+            Position += _position;
         }
         public void SetPosition(Vector3 _position)
         {
@@ -226,6 +234,11 @@ namespace ElonsRiot
            }
         }
         
+        //aktualizacja danych fizycznych
+        public void update()
+       {
+         
+       }
     }
 }
 

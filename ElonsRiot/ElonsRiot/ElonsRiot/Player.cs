@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +16,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
+        public List<BoundingBox> boxes;
         
         public Player()
         {
@@ -23,6 +25,7 @@ namespace ElonsRiot
             isMouseMovement = false;
             angle = 0;
             health = 100.0f;
+            boxes = new List<BoundingBox>();
         }
 
         public void SetState(KeyboardState state)
@@ -47,20 +50,25 @@ namespace ElonsRiot
             if (state.IsKeyDown(Keys.W))
             {
                 ChangePosition(new Vector3(elonState.VelocityForward, 0,0 ));
+                velocity = elonState.VelocityForward;
+               
             }
             else if (state.IsKeyDown(Keys.S))
             {
                 ChangePosition(new Vector3(-elonState.VelocityBack, 0,0 ));
+                velocity = -elonState.VelocityBack;
             }
             if (state.IsKeyDown(Keys.D))
             {
                 ChangePosition(new Vector3(0, 0, elonState.VelocitySide));
+                velocity = elonState.VelocitySide;
             }
             else if (state.IsKeyDown(Keys.A))
             {
                 ChangePosition(new Vector3(0, 0, -elonState.VelocitySide));
+                velocity = -elonState.VelocitySide;
             }
-           
+            
             //obracanie playera
             MouseState newState;
             newState = Mouse.GetState();

@@ -89,6 +89,7 @@
     <Compile Include="HUD.cs" />
     <Compile Include="Interactions.cs" />
     <Compile Include="MyPlane.cs" />
+    <Compile Include="MyRay.cs" />
     <Compile Include="PaloCharacter.cs" />
     <Compile Include="Physic.cs" />
     <Compile Include="PhysicManager.cs" />

@@ -50,6 +50,7 @@ namespace ElonsRiot
             GetRadius();
             CreateRadiuses();
 
+
         }
         public Box(GameObject gameObj, Player pla)
         {
@@ -147,6 +148,53 @@ namespace ElonsRiot
             }*/
             referenceObject.boundingBox = new BoundingBox(meshMin, meshMax);
         }
+        public void createBoudingBoxes()
+        {
+            referencePlayer.Initialize();
+            Matrix tmp = Matrix.Identity;
+
+            tmp = Matrix.CreateScale(referencePlayer.Scale) * Matrix.CreateTranslation(referencePlayer.Position);
+
+            Vector3 meshMax = new Vector3(float.MinValue);
+            Vector3 meshMin = new Vector3(float.MaxValue);
+            Matrix meshTransform = new Matrix();
+            foreach (ModelMesh mesh in referencePlayer.GameObjectModel.Meshes)
+            {
+                meshTransform = referencePlayer.boneTransformations[mesh.ParentBone.Index] * tmp;
+
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+
+                    // The stride is how big, in bytes, one vertex is in the vertex buffer
+                    // We have to use this as we do not know the make up of the vertex
+                    int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
+
+                    VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[part.NumVertices];
+                    part.VertexBuffer.GetData(part.VertexOffset * stride, vertexData, 0, part.NumVertices, stride);
+
+                    // Find minimum and maximum xyz values for this mesh part
+                    Vector3 vertPosition = new Vector3();
+
+                    for (int i = 0; i < vertexData.Length; i++)
+                    {
+                        vertPosition = vertexData[i].Position;
+
+                        // update our values from this vertex
+                        meshMin = Vector3.Min(meshMin, vertPosition);
+                        meshMax = Vector3.Max(meshMax, vertPosition);
+                    }
+                }
+
+                // transform by mesh bone matrix
+                meshMin = Vector3.Transform(meshMin, meshTransform);
+                meshMax = Vector3.Transform(meshMax, meshTransform);
+                meshMax.X -= 1;
+                meshMin.X += 1;
+                referencePlayer.boxes.Clear();
+                referencePlayer.boxes.Add(new BoundingBox(meshMin, meshMax));
+            }
+           
+        }
         public void GetRadius()
         {
             center2.X = (corners[1].X + corners[7].X) / 2;
@@ -176,6 +224,7 @@ namespace ElonsRiot
                       tmp.Y = (corners[4].Y + corners[3].Y) / 2;
                       tmp.Z = (corners[4].Z + corners[3].Z) / 2;
                       actualRadiuses.Add(tmp);
+                   
                  /*   actualRadiuses.Add(corners[4]);
                     actualRadiuses.Add(corners[7]);
                     actualRadiuses.Add(corners[0]);

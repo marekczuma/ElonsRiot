@@ -39,12 +39,12 @@ namespace ElonsRiot
 
         public void LoadAllContent(GraphicsDevice graphic)
         {
-            physic = new Physic();
+          //  physic = new Physic();
             XMLScene = DeserializeFromXML();
             GameObjects = XMLScene.GameObjects;
             LoadElon();
             LoadPalo();
-            Methods.setPlayer(PlayerObject);
+            Methods.setPlayer(PlayerObject,GameObjects);
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
@@ -100,6 +100,7 @@ namespace ElonsRiot
                 gObj.RefreshMatrix();
             }
             DrawBoudingBox(graphic);
+            DrawBoudingBoxes(graphic);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
@@ -119,9 +120,14 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime)
         {
-            physic.update(gameTime, GameObjects, PlayerObject);
+            PhysicManager.update(gameTime, GameObjects, PlayerObject);
+            //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
             animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+            foreach(GameObject gObj in GameObjects)
+            {
+                gObj.update();
+            }
         }
         private void LoadElon()
         {
@@ -172,12 +178,9 @@ namespace ElonsRiot
         {
            foreach (GameObject gameObj in this.GameObjects)
             {
-              //  foreach (BoundingBox box in gameObj.boundingBoxes)
-            //    {
-                    //draw bouding box 
+              
                     Vector3[] corners = gameObj.boundingBox.GetCorners();
-                //    Vector3[] corners = box.GetCorners();
-
+                
                     VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
                     // Assign the 8 box vertices
@@ -199,10 +202,36 @@ namespace ElonsRiot
                             PrimitiveType.LineList, primitiveList, 0, 8,
                             gameObj.bBoxIndices, 0, 12);
                     }
-              //  }
             }
         }
-     
+        public void DrawBoudingBoxes(GraphicsDevice graphic)
+        {
+          
+                Vector3[] corners = PlayerObject.boxes[0].GetCorners();
+
+                VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
+
+                // Assign the 8 box vertices
+                for (int i = 0; i < corners.Length; i++)
+                {
+                    primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
+                }
+
+                basicEffect.World = Matrix.Identity;
+                basicEffect.View = PlayerObject.camera.viewMatrix;
+                basicEffect.Projection = PlayerObject.camera.projectionMatrix;
+                basicEffect.TextureEnabled = false;
+
+                // Draw the box with a LineList
+                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    graphic.DrawUserIndexedPrimitives(
+                        PrimitiveType.LineList, primitiveList, 0, 8,
+                        PlayerObject.bBoxIndices, 0, 12);
+                }
+            
+        }
         public void DrawModel(GameObject gameObj)
         {
 

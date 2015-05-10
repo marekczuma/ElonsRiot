@@ -47,32 +47,61 @@ namespace ElonsRiot
     public static class Methods
     {
         static Player referencePlayer;
-       public static void setPlayer(Player p)
+        static List<GameObject> gameObjects;
+        static bool isColliding;
+       public static void setPlayer(Player p,List<GameObject>objests)
        {
            referencePlayer = p;
-           k = 0;
+           gameObjects = objests;
        }
-       static int k;
+      
         internal static void MoveBox(GameObject gameObject)
         {
-            Vector3 newPosition = referencePlayer.newPosition - referencePlayer.oldPosition;
-            float x=0, y =0 , z =0;
-            if(newPosition.Z == 0)
+            isColliding = false;
+            Vector3 tmp = referencePlayer.newPosition - referencePlayer.oldPosition;
+            tmp = Vector3.Transform(tmp, referencePlayer.MatrixWorld);
+            tmp.Normalize();
+            BoxBoxCollision bbcol = new BoxBoxCollision();
+            if (bbcol.TestAABBAABB(referencePlayer, gameObject))
             {
-                z = 0;
-            }
-            else
-            {
-                if(newPosition.Z < 0)
+                if (bbcol.TestAABBAABBTMP(referencePlayer, gameObject))
                 {
-                    x =0.2f;
+                    if (gameObject.collisionCommunicat == "x")
+                    {
+                        if (referencePlayer.newPosition.X - referencePlayer.oldPosition.X < 0)
+                        {
+                            gameObject.ChangeRelativePosition(new Vector3(-referencePlayer.velocity, 0, 0));
+                        }
+                        else
+                        {
+                            gameObject.ChangeRelativePosition(new Vector3(referencePlayer.velocity, 0, 0));
+                        }
+                    } 
+                    else if (gameObject.collisionCommunicat == "z")
+                    {
+                        if (referencePlayer.newPosition.Z - referencePlayer.oldPosition.Z < 0)
+                        {
+                            gameObject.ChangeRelativePosition(new Vector3(0, 0, -referencePlayer.velocity));
+                        }
+                        else
+                        {
+                            gameObject.ChangeRelativePosition(new Vector3(0, 0, referencePlayer.velocity));
+                        }
+                    }
                 }
-                else { x=-0.2f;}
+               /* foreach(GameObject gameObj in gameObjects)
+                {
+                    if(gameObj.Name != gameObject.Name && gameObj.Name != "Elon")
+                    {
+                        if (bbcol.TestAABBAABB(gameObj, gameObject))
+                        {
+                            isColliding = true;
+                        }
+                    }
+                }*/
+
             }
-            gameObject.ChangePosition(new Vector3(x,y,z));
-           
-            Debug.WriteLine("sie zrobilem " + k);
-            k++;
+        //    Debug.WriteLine(gameObject.Position.ToString());
         }
 
         internal static void MoveDoor(GameObject gameObject)

@@ -33,6 +33,7 @@ namespace ElonsRiot
         }
         protected override void Initialize()
         {
+            PhysicManager.setElements();
             base.Initialize();
         }
 
@@ -42,6 +43,7 @@ namespace ElonsRiot
             spriteBatchHUD = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             myHUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
+            MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
         protected override void UnloadContent()
@@ -58,6 +60,7 @@ namespace ElonsRiot
             CurrentMouseState = Mouse.GetState();
             MyScene.Update(MyScene.PlayerObject, gameTime);
             CheckRay(state);
+            MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
 
             base.Update(gameTime);

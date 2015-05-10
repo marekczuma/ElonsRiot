@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,18 +7,20 @@ using System.Text;
 
 namespace ElonsRiot
 {
-   public class Physic
+    //monitoruje zdarzenia zachodzące w świecie 
+    public static class PhysicManager
     {
-        BoxBoxCollision boxesCollision;
-        List<GameObject> InteractiveGameObject;
-        List<GameObject> NotInteractiveGameObject;
-        List<GameObject> Boxes;
-        GameObject floor;
-        GameObject Palo;
-        Player Elon;
-        bool isFirstTimeInitialization, isStart;
-        int  flag2 = 1;
-        public Physic()
+        static BoxBoxCollision boxesCollision;
+        static List<GameObject> InteractiveGameObject;
+        static List<GameObject> NotInteractiveGameObject;
+        static List<GameObject> Boxes;
+        static GameObject floor;
+        static GameObject Palo;
+        static Player Elon;
+        static bool isFirstTimeInitialization, isStart;
+        static int flag2 = 1;
+
+        public static void setElements()
         {
             boxesCollision = new BoxBoxCollision();
             isFirstTimeInitialization = false;
@@ -28,7 +29,8 @@ namespace ElonsRiot
             NotInteractiveGameObject = new List<GameObject>();
             Boxes = new List<GameObject>();
         }
-        public void update(GameTime gameTime, List<GameObject> gameO, Player player)
+
+        public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
         {
             if (isStart == true)
             {
@@ -71,8 +73,8 @@ namespace ElonsRiot
                 isStart = false;
             }
             //aktywowanie gravitacji
-       //    ActivateGravity(player, floor.plane);
-       //    ActivateGravity(Palo, floor.plane);
+            //    ActivateGravity(player, floor.plane);
+            //    ActivateGravity(Palo, floor.plane);
 
             //aktualizowanie AAboxów dla Palo i Elona
             player.Initialize();
@@ -81,13 +83,15 @@ namespace ElonsRiot
             player.AAbox = new Box(player);
             player.AAbox.createBoudingBox();
             player.AAbox.CheckWhichCorners();
+            player.AAbox.createBoudingBoxes();
+            Debug.WriteLine(player.boxes[0].Max.ToString());
             Palo.Initialize();
             Palo.RefreshMatrix();
             Palo.GetCentre();
             Palo.AAbox = new Box(Palo, player);
             Palo.AAbox.createBoudingBox();
             Palo.AAbox.CheckWhichCorners();
-            
+
             //inicjalizacja dla obiektów nieruchomych 
             if (isFirstTimeInitialization == false && NotInteractiveGameObject.Count != 0)
             {
@@ -97,7 +101,7 @@ namespace ElonsRiot
                     gObj.GetCentre();
                     gObj.RefreshMatrix();
                     gObj.AAbox = new Box(gObj, player);
-                    if(gObj.Name == "stairs")
+                    if (gObj.Name == "stairs")
                     {
                         gObj.AAbox.createAAPlane();
                     }
@@ -110,10 +114,10 @@ namespace ElonsRiot
                 floor.RefreshMatrix();
                 isFirstTimeInitialization = true;
             }
-          //inicjalizja / aktualizacja obiektów ruchomych
-            if (InteractiveGameObject.Count !=0)
+            //inicjalizja / aktualizacja obiektów ruchomych
+            if (InteractiveGameObject.Count != 0)
             {
-                foreach(GameObject gObj in InteractiveGameObject)
+                foreach (GameObject gObj in InteractiveGameObject)
                 {
                     gObj.Initialize();
                     gObj.GetCentre();
@@ -124,7 +128,7 @@ namespace ElonsRiot
                 }
             }
             //aktualuzacja punktów kolidujących w obiektach interaktywnych
-            foreach(GameObject gObj in NotInteractiveGameObject)
+            foreach (GameObject gObj in NotInteractiveGameObject)
             {
                 gObj.AAbox.CheckWhichCornersForObjects();
                 gObj.AAbox.GetRadius();
@@ -135,18 +139,18 @@ namespace ElonsRiot
                 player.Position = player.oldPosition;
             }
             //kolizja obiektów interaktywnych
-            foreach(GameObject gObj in InteractiveGameObject)
+           /* foreach (GameObject gObj in InteractiveGameObject)
             {
-               
-                    if (boxesCollision.TestAABBAABB(player, gObj))
-                    {
-                        player.Position = player.oldPosition;
-                    }
-                   
 
+                if (boxesCollision.TestAABBAABB(player, gObj))
+                {
+                    player.Position = player.oldPosition;
                 }
+
+
+            }*/
             //kolizja elemetów nie interaktywnych,które nie są schodami z Elonem i Palo
-            foreach(GameObject gObj in NotInteractiveGameObject)
+            foreach (GameObject gObj in NotInteractiveGameObject)
             {
                 if (gObj.Name != "stairs")
                 {
@@ -154,79 +158,80 @@ namespace ElonsRiot
                     {
                         player.Position = player.oldPosition;
                     }
-                   
+
 
                 }
-                else {
+                else
+                {
 
-                        if (boxesCollision.TestAABBAABB(player, gObj))
-                        {
-                            flag2 = 0;
-                        }
-                        
-                         if(boxesCollision.TestAABBPlane(player,gObj.AAbox.plane) && flag2 == 0)
-                         {
-                             player.gravity = 0;
-                             float step = (Math.Abs(gObj.AAbox.max.Y - gObj.AAbox.min.Y))/200;
-                             do
-                             {
-                                 player.ChangePosition(new Vector3(0, step, 0));
-                                 player.camera.position.Y += step;
-                             } while (player.Position.Y < gObj.AAbox.max.Y);
-                             
-
-                        }
+                    if (boxesCollision.TestAABBAABB(player, gObj))
+                    {
+                        flag2 = 0;
                     }
+
+                    if (boxesCollision.TestAABBPlane(player, gObj.AAbox.plane) && flag2 == 0)
+                    {
+                        player.gravity = 0;
+                        float step = (Math.Abs(gObj.AAbox.max.Y - gObj.AAbox.min.Y)) / 200;
+                        do
+                        {
+                            player.ChangePosition(new Vector3(0, step, 0));
+                            player.camera.position.Y += step;
+                        } while (player.Position.Y < gObj.AAbox.max.Y);
+
+
+                    }
+                }
 
             }
 
-            if(boxesCollision.TestAABBPlane(player,floor.plane))
+            if (boxesCollision.TestAABBPlane(player, floor.plane))
             {
-                
+
                 player.Position = new Vector3(player.Position.X, player.oldPosition.Y, player.Position.Z);
             }
 
             CheckRay(Boxes);
-      
+
         }
 
 
-        public void ActivateGravity(GameObject gameObj, Plane floor)
+        public static  void ActivateGravity(GameObject gameObj, Plane floor)
         {
-           
-                if (boxesCollision.TestAABBPlane(gameObj, floor))
-                {
-                    gameObj.ChangePosition(new Vector3(0, gameObj.gravity, 0));
-                }
-            
-        }
-      
 
-
-
-          public void CheckRay(List<GameObject> Boxes)
-        {
-            
-           
-                Ray pickRay = MyRay.GetPickRay();
-                float selectedDistance = float.MaxValue;
-                foreach  (GameObject box in Boxes)
-                {
-                   
-                        Nullable<float> result = pickRay.Intersects(box.boundingBox);
-                        if (result.HasValue == true)
-                        {
-                            if (result.Value < selectedDistance)
-                            {
-
-                                Interactions interactionsClass = new Interactions(box.interactionType,box);
-                              //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
-                                interactionsClass.Add();
-                                interactionsClass.CallInteraction();
-                            }
-                        }
-                    
-                }
+            if (boxesCollision.TestAABBPlane(gameObj, floor))
+            {
+                gameObj.ChangePosition(new Vector3(0, gameObj.gravity, 0));
             }
+
+        }
+
+
+
+
+        public static void CheckRay(List<GameObject> Boxes)
+        {
+
+
+            Ray pickRay = MyRay.GetPickRay();
+            float selectedDistance = float.MaxValue;
+            foreach (GameObject box in Boxes)
+            {
+
+                Nullable<float> result = pickRay.Intersects(box.boundingBox);
+               /* if (result.HasValue == true)
+                {
+                    if (result.Value < selectedDistance)
+                    {
+                */
+                        Interactions interactionsClass = new Interactions(box.interactionType, box);
+                        //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                        interactionsClass.Add();
+                        interactionsClass.CallInteraction();
+                  /*  }
+                }*/
+
+            }
+        }
     }
 }
