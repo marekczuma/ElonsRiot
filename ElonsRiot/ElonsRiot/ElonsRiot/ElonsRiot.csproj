@@ -87,6 +87,7 @@
     <Compile Include="CharacterState.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="HUD.cs" />
+    <Compile Include="Interactions.cs" />
     <Compile Include="MyPlane.cs" />
     <Compile Include="PaloCharacter.cs" />
     <Compile Include="Physic.cs" />

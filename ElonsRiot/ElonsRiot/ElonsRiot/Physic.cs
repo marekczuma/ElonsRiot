@@ -128,6 +128,17 @@ namespace ElonsRiot
             {
                 player.Position = player.oldPosition;
             }
+            //kolizja obiektów interaktywnych
+            foreach(GameObject gObj in InteractiveGameObject)
+            {
+               
+                    if (boxesCollision.TestAABBAABB(player, gObj))
+                    {
+                        player.Position = player.oldPosition;
+                    }
+                   
+
+                }
             //kolizja elemetów nie interaktywnych,które nie są schodami z Elonem i Palo
             foreach(GameObject gObj in NotInteractiveGameObject)
             {

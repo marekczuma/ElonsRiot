@@ -73,6 +73,7 @@ namespace ElonsRiot
 
         public void CheckRay(KeyboardState _state)
         {
+            
             if (_state.IsKeyDown(Keys.E))
             {
                 Ray pickRay = GetPickRay();
@@ -86,8 +87,11 @@ namespace ElonsRiot
                         {
                             if (result.Value < selectedDistance)
                             {
-                                MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
                                 
+                                Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
+                              //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                                interactionsClass.Add();
+                                interactionsClass.CallInteraction();
                             }
                         }
                     }

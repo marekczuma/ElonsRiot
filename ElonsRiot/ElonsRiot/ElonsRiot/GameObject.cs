@@ -50,7 +50,9 @@ namespace ElonsRiot
         public Plane plane;
         [XmlIgnore]
         public float gravity;
-        [XmlElement("Mass")]
+        [XmlIgnore]
+        public InterationTypes interactionType;
+        [XmlIgnore]
         public float mass;
         public GameObject()
         {
@@ -208,6 +210,20 @@ namespace ElonsRiot
 
                 mesh.Draw();
             }
+        }
+        
+     //ustawianie rodzaju interakcji
+       public void setInteractionType()
+        {
+           if(this.Name == "door2")
+           {
+               interactionType = InterationTypes.door;
+           }
+           else if(this.Name == "box")
+           {
+               interactionType = InterationTypes.box;
+               
+           }
         }
         
     }

@@ -29,6 +29,7 @@ namespace ElonsRiot
             GameObjects = new List<GameObject>();
             ContentManager = _contentManager;
             XMLScene = new XMLScene();
+           
         }
         public Scene()
         {
@@ -43,11 +44,16 @@ namespace ElonsRiot
             GameObjects = XMLScene.GameObjects;
             LoadElon();
             LoadPalo();
+            Methods.setPlayer(PlayerObject);
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
                 {
                     elem.LoadModels(ContentManager);
+                    if(elem.Interactive == true)
+                    {
+                        elem.setInteractionType();
+                    }
                     //elem.Initialize();
                     //elem.RefreshMatrix();
                 }
