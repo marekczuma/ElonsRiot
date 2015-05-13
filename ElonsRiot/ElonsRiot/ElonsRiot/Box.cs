@@ -574,7 +574,7 @@ namespace ElonsRiot
         {
             
         }
-        public void drawPlane(BasicEffect basicEffect,GraphicsDevice graphic)
+   /*     public void drawPlane(BasicEffect basicEffect,GraphicsDevice graphic)
         {
              short[] bBoxIndices ={
                 0,3,3,2,1,
@@ -610,7 +610,7 @@ namespace ElonsRiot
                      PrimitiveType.LineList, primitiveList, 0, 3,
                      bBoxIndices, 0, 6);
              }
-        }
+        }*/
 
     }
 }

@@ -98,10 +98,10 @@ namespace ElonsRiot
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
-                if (gObj.Name.Contains("stairs"))
+             /*   if (gObj.Name.Contains("stairs"))
                 {
                     gObj.AAbox.drawPlane(basicEffect, graphic);
-                }
+                }*/
             }
          //   DrawBoudingBox(graphic);
        //     DrawBoudingBoxes(graphic);
