@@ -37,11 +37,10 @@ namespace ElonsRiot
                     Vector3 vecAB = vertexData[8].Position - vertexData[0].Position;
                     Vector3 vecAC = vertexData[13].Position - vertexData[0].Position;
 
-                    // Cross vecAB and vecAC
                     normal = Vector3.Cross(vecAB, vecAC);
                     normal.Normalize();
 
-                    Vector3 tmp = vertexData[0].Position; //1256910131416-19
+                    Vector3 tmp = vertexData[0].Position; 
                     dotProduct = Vector3.Dot(-normal, tmp);
 
                 }

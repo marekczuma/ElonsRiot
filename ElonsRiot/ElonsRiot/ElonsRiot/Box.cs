@@ -198,10 +198,10 @@ namespace ElonsRiot
             center2.X = (corners[1].X + corners[7].X) / 2;
             center2.Y = (corners[1].Y + corners[7].Y) / 2;
             center2.Z = (corners[1].Z + corners[7].Z) / 2;
-         //   max = referenceObject.boundingBox.Max;
+        //   max = referenceObject.boundingBox.Max;
            // min = referenceObject.boundingBox.Min;
         }
-
+      
         public void CheckWhichCorners()
         {
             GetRadius();
@@ -574,44 +574,7 @@ namespace ElonsRiot
         {
             
         }
-   /*     public void drawPlane(BasicEffect basicEffect,GraphicsDevice graphic)
-        {
-             short[] bBoxIndices ={
-                0,3,3,2,1,
-            };
-            
-             Vector3[] cornersPlane = new Vector3[4];
-             cornersPlane[0] = this.corners[0];
-             cornersPlane[1] = this.corners[2];
-             cornersPlane[2] = this.corners[5];
-             cornersPlane[3] = this.corners[7];
-
-             VertexPositionColor[] primitiveList = new VertexPositionColor[cornersPlane.Length];
-
-             // Assign the 8 box vertices
-             for (int i = 0; i < cornersPlane.Length; i++)
-             {
-                 cornersPlane[i].Y += 4;
-                 cornersPlane[i].X += 4;
-                 cornersPlane[i].Z += 4;
-                 primitiveList[i] = new VertexPositionColor(corners[i], Color.Red);
-             }
-
-             basicEffect.World = Matrix.Identity;
-             basicEffect.View = referencePlayer.camera.viewMatrix;
-             basicEffect.Projection = referencePlayer.camera.projectionMatrix;
-             basicEffect.TextureEnabled = false;
-
-             // Draw the box with a LineList
-             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
-             {
-                 pass.Apply();
-                 graphic.DrawUserIndexedPrimitives(
-                     PrimitiveType.LineList, primitiveList, 0, 3,
-                     bBoxIndices, 0, 6);
-             }
-        }*/
-
+  
     }
 }
 

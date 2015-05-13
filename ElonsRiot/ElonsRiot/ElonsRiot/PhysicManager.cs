@@ -78,10 +78,7 @@ namespace ElonsRiot
                 }
                 isStart = false;
             }
-            //aktywowanie gravitacji
-            //    ActivateGravity(player, floor.plane);
-            //    ActivateGravity(Palo, floor.plane);
-
+            
             //aktualizowanie AAboxów dla Palo i Elona
             player.Initialize();
             player.RefreshMatrix();
@@ -108,15 +105,19 @@ namespace ElonsRiot
                     gObj.AAbox = new Box(gObj, player);
                   
                 }
-                //inicjalizjacja Plane dla podłogi
-                floor.Initialize();
-                floor.GetCentre();
-                floor.RefreshMatrix();
-                new MyPlane(floor);
-                floor.RefreshMatrix();
+
                 isFirstTimeInitialization = true;
             }
-            //inicjalizja / aktualizacja obiektów ruchomych
+            //inicjalizjacja Plane dla podłogi
+            floor.Initialize();
+            floor.GetCentre();
+            floor.RefreshMatrix();
+            floor.AAbox = new Box(player);
+            floor.AAbox.createBoudingBox();
+            new MyPlane(floor);
+            floor.RefreshMatrix();
+
+            //inicjalizja / aktualizacja obiektów interaktywnych
             if (InteractiveGameObject.Count != 0)
             {
                 foreach (GameObject gObj in InteractiveGameObject)
@@ -144,17 +145,6 @@ namespace ElonsRiot
             {
                 player.Position = player.oldPosition;
             }
-            //kolizja obiektów interaktywnych
-           /* foreach (GameObject gObj in InteractiveGameObject)
-            {
-
-                if (boxesCollision.TestAABBAABB(player, gObj))
-                {
-                    player.Position = player.oldPosition;
-                }
-
-
-            }*/
             //kolizja elemetów nie interaktywnych,które nie są schodami z Elonem i Palo
             foreach (GameObject gObj in NotInteractiveGameObject)
             {
@@ -164,67 +154,35 @@ namespace ElonsRiot
                     {
                         player.Position = player.oldPosition;
                     }
-
-
                 }
-             /*   else
-                {
-
-                    if (boxesCollision.TestAABBAABB(player, gObj))
-                    {
-                        flag2 = 0;
-                    }
-
-                    if (boxesCollision.TestAABBPlane(player, gObj.AAbox.plane) && flag2 == 0)
-                    {
-                        player.gravity = 0;
-                        float step = (Math.Abs(gObj.AAbox.max.Y - gObj.AAbox.min.Y)) / 200;
-                        do
-                        {
-                            player.ChangePosition(new Vector3(0, step, 0));
-                            player.camera.position.Y += step;
-                        } while (player.Position.Y < gObj.AAbox.max.Y);
-
-
-                    }
-                }*/
-
             }
-
-            if (boxesCollision.TestAABBPlane(player, floor.plane))
+          
+            if (boxesCollision.TestAABBPlane(player, floor.plane) == false)
             {
-
-                player.Position = new Vector3(player.Position.X, player.oldPosition.Y, player.Position.Z);
+              player.Position = new Vector3(player.Position.X, player.gravity, player.Position.Z);
             }
 
             ChceckBoxesCollision(Boxes);
             ChceckStairsCollision(Stairs);
+          
         }
-
 
         public static  void ActivateGravity(GameObject gameObj, Plane floor)
         {
-
-            if (boxesCollision.TestAABBPlane(gameObj, floor))
-            {
-                gameObj.ChangePosition(new Vector3(0, gameObj.gravity, 0));
-            }
-
+            gameObj.ChangePosition(new Vector3(0, gameObj.gravity, 0));
+          if (boxesCollision.TestAABBPlane(gameObj, floor))
+             {
+                gameObj.SetPosition(new Vector3(gameObj.Position.X, gameObj.oldPosition.Y, gameObj.Position.Z));
+             } 
         }
-
-
-
 
         public static void ChceckBoxesCollision(List<GameObject> Boxes)
         {
-            
             foreach (GameObject box in Boxes)
             {
                  Interactions interactionsClass = new Interactions(box.interactionType, box);
-                        //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
-                        interactionsClass.Add();
-                        interactionsClass.CallInteraction();
-               
+                 interactionsClass.Add();
+                 interactionsClass.CallInteraction();
             }
         }
         public static void ChceckStairsCollision(List<GameObject> Stairs)
@@ -232,7 +190,6 @@ namespace ElonsRiot
             foreach (GameObject stairs in Stairs)
             {
                 Interactions interactionsClass = new Interactions(stairs.interactionType, stairs);
-                //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
                 interactionsClass.Add();
                 interactionsClass.CallInteraction();
             }

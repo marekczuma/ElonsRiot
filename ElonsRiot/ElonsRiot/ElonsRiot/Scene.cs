@@ -44,7 +44,7 @@ namespace ElonsRiot
             GameObjects = XMLScene.GameObjects;
             LoadElon();
             LoadPalo();
-            Methods.setPlayer(PlayerObject,GameObjects);
+            Methods.setPlayer( PlayerObject,GameObjects);
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
@@ -98,13 +98,10 @@ namespace ElonsRiot
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
-             /*   if (gObj.Name.Contains("stairs"))
-                {
-                    gObj.AAbox.drawPlane(basicEffect, graphic);
-                }*/
+            
             }
-         //   DrawBoudingBox(graphic);
-       //     DrawBoudingBoxes(graphic);
+            DrawBoudingBox(graphic);
+            DrawBoudingBoxes(graphic);
 
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -125,14 +122,12 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime)
         {
+            
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
             animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-            foreach(GameObject gObj in GameObjects)
-            {
-                gObj.update();
-            }
+            
         }
         private void LoadElon()
         {
@@ -143,7 +138,7 @@ namespace ElonsRiot
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
             Elon.Interactive = true;
-            Elon.gravity = -0.2f;
+            Elon.gravity = -0.002f;
             Elon.mass = 50; //kg
             GameObjects.Add(Elon);
             PlayerObject = Elon;

@@ -88,33 +88,10 @@ namespace ElonsRiot
                         }
                         
                     }
-                    if (isColliding == false)
-                    {
-                        gameObject.ChangeRelativePosition(tmp);
-                    }
-                    
-                  /*  if (gameObject.collisionCommunicat.Contains("x"))
-                    {
-                        if (referencePlayer.newPosition.X - referencePlayer.oldPosition.X < 0)
+                        if (isColliding == false)
                         {
-                            gameObject.ChangeRelativePosition(new Vector3(-referencePlayer.velocity, 0, 0));
+                            gameObject.ChangeRelativePosition(tmp);
                         }
-                        else
-                        {
-                            gameObject.ChangeRelativePosition(new Vector3(referencePlayer.velocity, 0, 0));
-                        }
-                    }
-                    else if (gameObject.collisionCommunicat.Contains("z"))
-                    {
-                        if (referencePlayer.newPosition.Z - referencePlayer.oldPosition.Z < 0)
-                        {
-                            gameObject.ChangeRelativePosition(new Vector3(0, 0, -referencePlayer.velocity));
-                        }
-                        else
-                        {
-                            gameObject.ChangeRelativePosition(new Vector3(0, 0, referencePlayer.velocity));
-                        }
-                    }*/
                 }
             }
         }
@@ -126,16 +103,15 @@ namespace ElonsRiot
 
                 if (bbcol.TestAABBPlane(referencePlayer, stairs.AAbox.plane))
                 {
+                    referencePlayer.gravity = 0;
                     float moving = Math.Abs((stairs.AAbox.plane.Normal.X * referencePlayer.Position.X) + (stairs.AAbox.plane.Normal.Y * referencePlayer.Position.Y) +
                     (stairs.AAbox.plane.Normal.Z * referencePlayer.Position.Z)) / (float)Math.Sqrt(Math.Pow(stairs.AAbox.plane.Normal.X, 2) +
                     Math.Pow(stairs.AAbox.plane.Normal.Y, 2) + Math.Pow(stairs.AAbox.plane.Normal.Z, 2));
-                    referencePlayer.ChangePosition(new Vector3(0, 3, 0));
-                    referencePlayer.camera.Update(referencePlayer.MatrixWorld, referencePlayer.elonState, referencePlayer.Rotation);
+                    referencePlayer.ChangePosition(new Vector3(0, 0.08f, 0));
+                   // referencePlayer.camera.Update(referencePlayer.MatrixWorld, referencePlayer.elonState, referencePlayer.Rotation);
                 }
+                
             }
-
-
-          
         }
         internal static void MoveDoor(GameObject gameObject)
         {

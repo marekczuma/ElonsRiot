@@ -123,12 +123,12 @@ namespace ElonsRiot
         public bool TestAABBPlane(GameObject player, Plane p)
         {
             // These two lines not necessary with a (center, extents) AABB representation
-            Vector3 c = player.AAbox.center; // Compute AABB center
-            Vector3 e =  player.AAbox.max -c; // Compute positive extents
+            Vector3 c = player.AAbox.center2; // Compute AABB center
+            Vector3 e =  player.AAbox.max -c ; // Compute positive extents
             // Compute the projection interval radius of b onto L(t) = b.c + t * p.n
             float r = e.X * Math.Abs(p.Normal.X) + e.Y * Math.Abs(p.Normal.Y) + e.Z * Math.Abs(p.Normal.Z);
             // Compute distance of box center from plane
-            float fmd = Vector3.Dot(p.Normal, c);
+            r += 5;
             float s = Vector3.Dot(p.Normal, c) - p.D;
             // Intersection occurs when distance s falls within [-r,+r] interval
             return Math.Abs(s) <= r;
