@@ -14,6 +14,7 @@ namespace ElonsRiot
         static List<GameObject> InteractiveGameObject;
         static List<GameObject> NotInteractiveGameObject;
         static List<GameObject> Boxes;
+        static List<GameObject> Stairs;
         static GameObject floor;
         static GameObject Palo;
         static Player Elon;
@@ -28,6 +29,7 @@ namespace ElonsRiot
             InteractiveGameObject = new List<GameObject>();
             NotInteractiveGameObject = new List<GameObject>();
             Boxes = new List<GameObject>();
+            Stairs = new List<GameObject>();
         }
 
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
@@ -65,9 +67,13 @@ namespace ElonsRiot
                     {
                         Elon = (Player)gObj;
                     }
-                    if (gObj.Name == "box")
+                    if (gObj.Name.Contains("box"))
                     {
                         Boxes.Add(gObj);
+                    }
+                    if (gObj.Name.Contains("stairs"))
+                    {
+                        Stairs.Add(gObj);
                     }
                 }
                 isStart = false;
@@ -84,7 +90,6 @@ namespace ElonsRiot
             player.AAbox.createBoudingBox();
             player.AAbox.CheckWhichCorners();
             player.AAbox.createBoudingBoxes();
-            Debug.WriteLine(player.boxes[0].Max.ToString());
             Palo.Initialize();
             Palo.RefreshMatrix();
             Palo.GetCentre();
@@ -101,10 +106,7 @@ namespace ElonsRiot
                     gObj.GetCentre();
                     gObj.RefreshMatrix();
                     gObj.AAbox = new Box(gObj, player);
-                    if (gObj.Name == "stairs")
-                    {
-                        gObj.AAbox.createAAPlane();
-                    }
+                  
                 }
                 //inicjalizjacja Plane dla podłogi
                 floor.Initialize();
@@ -125,6 +127,10 @@ namespace ElonsRiot
                     gObj.AAbox = new Box(gObj, player);
                     gObj.AAbox.CheckWhichCornersForObjects();
                     gObj.AAbox.GetRadius();
+                    if (gObj.Name == "stairs")
+                    {
+                        gObj.AAbox.createAAPlane();
+                    }
                 }
             }
             //aktualuzacja punktów kolidujących w obiektach interaktywnych
@@ -161,7 +167,7 @@ namespace ElonsRiot
 
 
                 }
-                else
+             /*   else
                 {
 
                     if (boxesCollision.TestAABBAABB(player, gObj))
@@ -181,7 +187,7 @@ namespace ElonsRiot
 
 
                     }
-                }
+                }*/
 
             }
 
@@ -191,8 +197,8 @@ namespace ElonsRiot
                 player.Position = new Vector3(player.Position.X, player.oldPosition.Y, player.Position.Z);
             }
 
-            CheckRay(Boxes);
-
+            ChceckBoxesCollision(Boxes);
+            ChceckStairsCollision(Stairs);
         }
 
 
@@ -209,28 +215,26 @@ namespace ElonsRiot
 
 
 
-        public static void CheckRay(List<GameObject> Boxes)
+        public static void ChceckBoxesCollision(List<GameObject> Boxes)
         {
-
-
-            Ray pickRay = MyRay.GetPickRay();
-            float selectedDistance = float.MaxValue;
+            
             foreach (GameObject box in Boxes)
             {
-
-                Nullable<float> result = pickRay.Intersects(box.boundingBox);
-               /* if (result.HasValue == true)
-                {
-                    if (result.Value < selectedDistance)
-                    {
-                */
-                        Interactions interactionsClass = new Interactions(box.interactionType, box);
+                 Interactions interactionsClass = new Interactions(box.interactionType, box);
                         //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
                         interactionsClass.Add();
                         interactionsClass.CallInteraction();
-                  /*  }
-                }*/
-
+               
+            }
+        }
+        public static void ChceckStairsCollision(List<GameObject> Stairs)
+        {
+            foreach (GameObject stairs in Stairs)
+            {
+                Interactions interactionsClass = new Interactions(stairs.interactionType, stairs);
+                //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                interactionsClass.Add();
+                interactionsClass.CallInteraction();
             }
         }
     }

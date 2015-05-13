@@ -84,11 +84,12 @@ namespace ElonsRiot
         {
             float r;
             int couter = 0;
+            gameObjects.collisionCommunicat = "";
             if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
             {
-                r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center.X, 2.0)) > r) { couter++; gameObjects.collisionCommunicat = "x"; return false; };
-                r = (int)(player.AAbox.radiuses[1] + gameObjects.AAbox.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - gameObjects.AAbox.center.Y, 2.0)) > r) { couter++; gameObjects.collisionCommunicat = "y"; return false; };
-                r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center.Z, 2.0)) > r) { couter++; gameObjects.collisionCommunicat = "z"; return false; };
+                r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center.X, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "x";};
+                r = (int)(player.AAbox.radiuses[1] + gameObjects.AAbox.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - gameObjects.AAbox.center.Y, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "y";};
+                r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center.Z, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "z";};
                 if (couter > 0)
                 {
                     return false;
@@ -98,6 +99,7 @@ namespace ElonsRiot
 
             return false;
         }
+       
         public bool TestAABBAABB(Player player, Box box, GameObject gameObjects)
         {
             float r;

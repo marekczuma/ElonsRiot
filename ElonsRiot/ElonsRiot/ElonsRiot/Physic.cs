@@ -14,6 +14,7 @@ namespace ElonsRiot
         List<GameObject> InteractiveGameObject;
         List<GameObject> NotInteractiveGameObject;
         List<GameObject> Boxes;
+        List<GameObject> Stairs;
         GameObject floor;
         GameObject Palo;
         Player Elon;
@@ -27,6 +28,7 @@ namespace ElonsRiot
             InteractiveGameObject = new List<GameObject>();
             NotInteractiveGameObject = new List<GameObject>();
             Boxes = new List<GameObject>();
+            Stairs = new List<GameObject>();
         }
         public void update(GameTime gameTime, List<GameObject> gameO, Player player)
         {
@@ -67,6 +69,11 @@ namespace ElonsRiot
                     {
                         Boxes.Add(gObj);
                     }
+                    if (gObj.Name == "stairs")
+                    {
+                        Stairs.Add(gObj);
+                    }
+                    
                 }
                 isStart = false;
             }
@@ -146,7 +153,7 @@ namespace ElonsRiot
 
                 }
             //kolizja elemetów nie interaktywnych,które nie są schodami z Elonem i Palo
-            foreach(GameObject gObj in NotInteractiveGameObject)
+          /*  foreach(GameObject gObj in NotInteractiveGameObject)
             {
                 if (gObj.Name != "stairs")
                 {
@@ -177,8 +184,8 @@ namespace ElonsRiot
 
                         }
                     }
-
-            }
+            
+            }*/
 
             if(boxesCollision.TestAABBPlane(player,floor.plane))
             {
@@ -186,8 +193,8 @@ namespace ElonsRiot
                 player.Position = new Vector3(player.Position.X, player.oldPosition.Y, player.Position.Z);
             }
 
-            CheckRay(Boxes);
-      
+            CheckBoxesCollision(Boxes);
+            ChceckStairsCollision(Stairs);
         }
 
 
@@ -200,33 +207,28 @@ namespace ElonsRiot
                 }
             
         }
-      
 
 
-
-          public void CheckRay(List<GameObject> Boxes)
+        public void CheckBoxesCollision(List<GameObject> Boxes)
         {
-            
-           
-                Ray pickRay = MyRay.GetPickRay();
-                float selectedDistance = float.MaxValue;
-                foreach  (GameObject box in Boxes)
-                {
-                   
-                        Nullable<float> result = pickRay.Intersects(box.boundingBox);
-                        if (result.HasValue == true)
-                        {
-                            if (result.Value < selectedDistance)
-                            {
-
-                                Interactions interactionsClass = new Interactions(box.interactionType,box);
-                              //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
-                                interactionsClass.Add();
-                                interactionsClass.CallInteraction();
-                            }
-                        }
-                    
-                }
+            foreach (GameObject box in Boxes)
+            {
+                Interactions interactionsClass = new Interactions(box.interactionType, box);
+                //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                interactionsClass.Add();
+                interactionsClass.CallInteraction();
             }
+        }
+       public void ChceckStairsCollision(List<GameObject> Stairs)
+        {
+            foreach (GameObject stairs in Stairs)
+            {
+                Interactions interactionsClass = new Interactions(stairs.interactionType, stairs);
+                //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                interactionsClass.Add();
+                interactionsClass.CallInteraction();
+            }
+        }
+
     }
 }

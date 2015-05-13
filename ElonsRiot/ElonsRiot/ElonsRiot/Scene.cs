@@ -21,7 +21,7 @@ namespace ElonsRiot
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
         private BasicEffect basicEffect;
-        private Physic physic;
+       // private Physic physic;
         AnimationPlayer animationPlayer;
         AnimationPlayer animationPlayerPalo;
         public Scene(ContentManager _contentManager)
@@ -98,9 +98,14 @@ namespace ElonsRiot
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
+                if (gObj.Name.Contains("stairs"))
+                {
+                    gObj.AAbox.drawPlane(basicEffect, graphic);
+                }
             }
-            DrawBoudingBox(graphic);
-            DrawBoudingBoxes(graphic);
+         //   DrawBoudingBox(graphic);
+       //     DrawBoudingBoxes(graphic);
+
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {

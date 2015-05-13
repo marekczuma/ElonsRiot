@@ -142,10 +142,8 @@ namespace ElonsRiot
                 meshMax.Y += 2;
                 meshMin.Y -= 2;
             }
-         /*   if (referenceObject.ObjectPath == "3D/sciana/wall")
-            {
-                meshMin.X += 2;
-            }*/
+
+       
             referenceObject.boundingBox = new BoundingBox(meshMin, meshMax);
         }
         public void createBoudingBoxes()
@@ -575,6 +573,43 @@ namespace ElonsRiot
         public void getEquationOfPlane(Vector3 a, Vector3 b)
         {
             
+        }
+        public void drawPlane(BasicEffect basicEffect,GraphicsDevice graphic)
+        {
+             short[] bBoxIndices ={
+                0,3,3,2,1,
+            };
+            
+             Vector3[] cornersPlane = new Vector3[4];
+             cornersPlane[0] = this.corners[0];
+             cornersPlane[1] = this.corners[2];
+             cornersPlane[2] = this.corners[5];
+             cornersPlane[3] = this.corners[7];
+
+             VertexPositionColor[] primitiveList = new VertexPositionColor[cornersPlane.Length];
+
+             // Assign the 8 box vertices
+             for (int i = 0; i < cornersPlane.Length; i++)
+             {
+                 cornersPlane[i].Y += 4;
+                 cornersPlane[i].X += 4;
+                 cornersPlane[i].Z += 4;
+                 primitiveList[i] = new VertexPositionColor(corners[i], Color.Red);
+             }
+
+             basicEffect.World = Matrix.Identity;
+             basicEffect.View = referencePlayer.camera.viewMatrix;
+             basicEffect.Projection = referencePlayer.camera.projectionMatrix;
+             basicEffect.TextureEnabled = false;
+
+             // Draw the box with a LineList
+             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+             {
+                 pass.Apply();
+                 graphic.DrawUserIndexedPrimitives(
+                     PrimitiveType.LineList, primitiveList, 0, 3,
+                     bBoxIndices, 0, 6);
+             }
         }
 
     }
