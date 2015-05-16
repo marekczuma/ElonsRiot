@@ -14,6 +14,8 @@ namespace ElonsRiot
         public FriendState PaloState { get; set; }
         public LearningState PaloLearningState { get; set; }
         public Player Elon { get; set; }
+        public List<Guard> Guards { get; set; }
+        public DecoyAI DecoyGuards { get; set; }
 
         private float velocity;
         public PaloCharacter()
@@ -21,26 +23,85 @@ namespace ElonsRiot
             distance = 1.0f;
             PaloState = FriendState.idle;
             PaloLearningState = LearningState.idle;
-            velocity = 0.05f;
+            velocity = 0.12f;
+            Guards = new List<Guard>();
         }
 
         public void WalkForward()
         {
-            ChangePosition(new Microsoft.Xna.Framework.Vector3(velocity, 0, 0 ));
+            ChangePosition(new Microsoft.Xna.Framework.Vector3(0, 0, velocity));
         }
-
+        private bool IsNear(Vector3 v1, Vector3 v2)
+        {
+            if((Math.Abs(v1.Z - v2.Z) <= 0.01) && (Math.Abs(v1.X - v2.X) <= 0.01))
+            {
+                return true;
+            }
+            return false;
+        }
         public void WalkToPlayer()
         {
-            Vector3 toPlayer = Vector3.Normalize((Elon.Position - Position));
-            Vector3 currentDirection = Vector3.Normalize(MatrixWorld.Forward);
-            float angle = (float)Math.Atan2(Convert.ToDouble(toPlayer.X - currentDirection.X), Convert.ToDouble(toPlayer.Z - currentDirection.Z));
-            //ChangeRotation(new Vector3(0, angle, 0));
-            RotateQuaternions(MathHelper.ToRadians(angle));
-            if (getDistance(Elon) > 15)
+            WalkToTarget(Elon, velocity, 20);
+        }
+
+        public List<Guard> FindGuards(float _range, Scene _scene)
+        {
+            List<GameObject> tmpGuards = new List<GameObject>();
+            List<Guard> guards = new List<Guard>();
+            foreach(var elem in _scene.GameObjects)
             {
-                WalkForward();
+                if(elem.Tag == "guard")
+                {
+                    tmpGuards.Add(elem);
+                }
+            }
+            foreach(var elem in tmpGuards)
+            {
+                if(getDistance(elem) <= _range)
+                {
+                    guards.Add((Guard)elem);
+                }
+            }
+            return guards;
+        }
+
+        public void Call(List<Guard> _guards)
+        {
+            foreach(var elem in _guards)
+            {
+                elem.Target = this;
+                elem.Chase();
             }
         }
+
+        public void Decoy(Scene _scene)
+        {
+            if(DecoyGuards == null) //Jak nie mamy podczepionej AI to nic nie robimy
+            {
+                return;
+            }
+            PaloState = FriendState.walk;
+            if(!DecoyGuards.BIncluded)
+            {
+                WalkToTarget(DecoyGuards.PointB, velocity, 1);
+                if(getDistance(DecoyGuards.PointB) <= 5)
+                {
+                    Guards = FindGuards(30, _scene);
+                    Call(Guards);
+                    DecoyGuards.BIncluded = true;
+                }
+            }else if(!DecoyGuards.CIncluded)
+            {
+                WalkToTarget(DecoyGuards.PointC, velocity, 1);
+                if(getDistance(DecoyGuards.PointC) <= 5)
+                {
+                    DecoyGuards.CIncluded = true;
+                    PaloState = FriendState.idle;
+                    DecoyGuards = null;
+                }
+            }        
+        }
+        
 
     }
 }

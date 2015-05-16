@@ -17,6 +17,7 @@ namespace ElonsRiot
     {
         public ContentManager ContentManager { get; set; }
         public List<GameObject> GameObjects { get; set; }
+        public List<GameObject> NPCs { get; set; }
         public XMLScene XMLScene { get; set; }
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
@@ -27,6 +28,7 @@ namespace ElonsRiot
         public Scene(ContentManager _contentManager)
         {
             GameObjects = new List<GameObject>();
+            NPCs = new List<GameObject>();
             ContentManager = _contentManager;
             XMLScene = new XMLScene();
         }
@@ -41,8 +43,9 @@ namespace ElonsRiot
             physic = new Physic();
             XMLScene = DeserializeFromXML();
             GameObjects = XMLScene.GameObjects;
-            LoadElon();
             LoadPalo();
+            LoadElon();
+            LoadGuards();
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
@@ -81,7 +84,7 @@ namespace ElonsRiot
         {
              foreach(var elem in GameObjects)
              {
-                 if ((elem.Name == "Elon") || (elem.Name == "Palo"))
+                 if ((elem.Name == "Elon") || (elem.Name == "Palo") || (elem.Tag == "guard"))
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
                  else
                     elem.DrawModels(ContentManager, PlayerObject);               
@@ -101,6 +104,7 @@ namespace ElonsRiot
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
             PlayerObject.ChangeHealth(_state);
+            PlayerObject.SetPaloState(_state, this);
         }
         private XMLScene DeserializeFromXML()
         {
@@ -115,6 +119,7 @@ namespace ElonsRiot
         {
             physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
+            NPCControl();
             animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
         }
         private void LoadElon()
@@ -122,9 +127,12 @@ namespace ElonsRiot
             Player Elon = new Player();
             Elon.Name = "Elon";
             Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            Elon.Position = new Vector3(60,4 , -40);
+            Elon.Position = new Vector3(20, 4 , -40);
             Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
+            Elon.Palo = PaloObject;
+            Elon.Palo.Elon = Elon;
+            Elon.Tag = "Player";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
             //GameObject sciana = new GameObject();
@@ -134,6 +142,28 @@ namespace ElonsRiot
             //sciana.Rotation = new Vector3(0, 0, 0);
             //sciana.ObjectPath = "3D/sciana/sciana";
             //GameObjects.Add(sciana);
+
+        }
+        private void LoadGuards()
+        {
+            Guard Marian = new Guard();
+            Marian.Name = "Marian";
+            Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
+            Marian.Position = new Vector3(0, 4, 0);
+            Marian.Rotation = new Vector3(0, 0, 0);
+            Marian.ObjectPath = "3D/ludzik/dude";
+            Marian.Tag = "guard";
+            Guard Zenon = new Guard();
+            Zenon.Name = "Zenon";
+            Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
+            Zenon.Position = new Vector3(10, 4, 5);
+            Zenon.Rotation = new Vector3(0, 0, 0);
+            Zenon.ObjectPath = "3D/ludzik/dude";
+            Zenon.Tag = "guard";
+            GameObjects.Add(Marian);
+            GameObjects.Add(Zenon);
+            NPCs.Add(Marian);
+            NPCs.Add(Zenon);
 
         }
         private void LoadPalo()
@@ -147,16 +177,35 @@ namespace ElonsRiot
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "Palo";
             Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
-            Palo.Position = new Vector3(70, 4, 0);
+            Palo.Position = new Vector3(40, 4, -30);
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
-            Palo.Elon = (Player)GameObjects[indexElon];
+            Palo.Tag = "Palo";
+            //Palo.Elon = (Player)GameObjects[indexElon];
             PaloObject = Palo;
+
             GameObjects.Add(Palo);
         }
         private void PaloControl()
         {
-            PaloObject.WalkToPlayer();
+            if (PaloObject.PaloState == FriendState.follow)
+            {
+                PaloObject.WalkToPlayer();
+            }else if(PaloObject.PaloState == FriendState.walk)
+            {
+                PaloObject.Decoy(this);
+            }
+        }
+        private void NPCControl()
+        {
+            foreach(var elem in NPCs)
+            {
+                Guard currGuard = (Guard)elem;
+                if(currGuard.State == GuardState.chase)
+                {
+                    currGuard.Chase();
+                }
+            }
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {

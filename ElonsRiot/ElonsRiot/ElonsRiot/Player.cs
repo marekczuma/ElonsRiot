@@ -15,6 +15,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
+        public PaloCharacter Palo { get; set; }
         public Player()
         {
             elonState = new CharacterState(State.idle);
@@ -44,19 +45,19 @@ namespace ElonsRiot
             oldPosition = Position;
             if (state.IsKeyDown(Keys.W))
             {
-                ChangePosition(new Vector3(elonState.VelocityForward, 0,0 ));
+                ChangePosition(new Vector3(0, 0, elonState.VelocityForward));
             }
             else if (state.IsKeyDown(Keys.S))
             {
-                ChangePosition(new Vector3(-elonState.VelocityBack, 0,0 ));
+                ChangePosition(new Vector3(0, 0,-elonState.VelocityBack ));
             }
             if (state.IsKeyDown(Keys.D))
             {
-                ChangePosition(new Vector3(0, 0, elonState.VelocitySide));
+                ChangePosition(new Vector3(-elonState.VelocitySide, 0,0 ));
             }
             else if (state.IsKeyDown(Keys.A))
             {
-                ChangePosition(new Vector3(0, 0, -elonState.VelocitySide));
+                ChangePosition(new Vector3(elonState.VelocitySide, 0, 0 ));
             }
 
             //obracanie playera
@@ -76,15 +77,16 @@ namespace ElonsRiot
 
             if (delta < 0)
             {
-                angle -= 5.1f;
+                angle -= 0.08f;
                 //angle += delta / 10;
             }
             else if (delta > 0)
             {
-                angle += 5.1f;
+                angle += 0.08f;
                 //angle -= delta / 10;
             }
-            ChangeRotation(new Vector3(0, angle, 0));
+            //ChangeRotation(new Vector3(0, angle, 0));
+            RotateQuaternions(angle);
             _oldMouseState = newState;
             isMouseMovement = false;
             angle = 0;
@@ -111,6 +113,52 @@ namespace ElonsRiot
                 health += 1;
                 if (health >= 100)
                     health = 100;
+            }
+        }
+        public void SetPaloState(KeyboardState state, Scene _scene)
+        {
+            if (state.IsKeyDown(Keys.Space))
+            {
+                if (Palo.PaloState != FriendState.follow)
+                {
+                    Palo.PaloState = FriendState.follow;
+                }
+                else if (Palo.PaloState == FriendState.follow)
+                {
+                    Palo.PaloState = FriendState.idle;
+                }
+            }
+            if(state.IsKeyDown(Keys.P))
+            {
+                if (Palo.PaloState != FriendState.walk)
+                {
+                    GameObject placeB = new GameObject();
+                    GameObject placeC = new GameObject();
+                    List<GameObject> guardPlaces = new List<GameObject>();
+                    foreach (var elem in _scene.GameObjects)
+                    {
+                        if (elem.Tag == "guardPlace")
+                        {
+                            guardPlaces.Add(elem);
+                        }
+                        if (elem.Tag == "escapePlace")
+                        {
+                            placeC = elem;
+                        }
+                        
+                    }
+                    placeB = guardPlaces[0];
+                    foreach(var elem in guardPlaces)
+                    {
+                        if(getDistance(elem) <= getDistance(placeB))
+                        {
+                            placeB = elem;
+                        }
+                    }
+                    DecoyAI tmpDecoy = new DecoyAI(placeB, placeC);
+                    Palo.DecoyGuards = tmpDecoy;
+                    Palo.Decoy(_scene);
+                }
             }
         }
     }

@@ -25,6 +25,8 @@ namespace ElonsRiot
         public List<GameObject> GameObjects { get; set; }
         [XmlElement("Scale")]
         public Vector3 Scale { get; set; }
+        [XmlElement("Tag")]
+        public string Tag { get; set; }
         public Matrix MatrixWorld { get; set; }
         //public Matrix MatrixView { get; set; }
         //public Matrix MatrixProjection { get; set; }
@@ -48,11 +50,14 @@ namespace ElonsRiot
         public Vector3 center;
         [XmlIgnore]
         public Plane plane;
+        [XmlIgnore]
+        public Quaternion RotationQ;
 
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
             //Position = new Vector3(0, 0, 0);
+            RotationQ = Quaternion.Identity;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
             //MatrixView = Matrix.CreateLookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), Vector3.UnitY);
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
@@ -61,6 +66,7 @@ namespace ElonsRiot
         }
         public GameObject(Vector3 _position)
         {
+            RotationQ = Quaternion.Identity;
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
             GameObjects = new List<GameObject>();
         }
@@ -102,43 +108,75 @@ namespace ElonsRiot
         }
         public void RefreshMatrix()
         {
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.Pi) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position);    // Matrix.CreateRotationY(MathHelper.Pi) * Matrix.CreateTranslation(Position) * Matrix.CreateFromQuaternion(RotationQ);
+        }
+        public void MoveWithDirectionRotate(Vector3 deltaVector)
+        {
+            Vector3 deltaVectorCopy = new Vector3(-deltaVector.X, 0, -deltaVector.Z);
+            Position += deltaVector;
+            deltaVectorCopy.Normalize();
+            Matrix mat = Matrix.CreateLookAt(Position,
+                                                Position + deltaVectorCopy,
+                                                Vector3.Up);
+            mat = Matrix.Transpose(mat);
+            Quaternion q = Quaternion.Slerp(RotationQ,
+                                            Quaternion.CreateFromRotationMatrix(mat),
+                                            0.1f);
+            RotationQ = q;
+        }
+        public void WalkToTarget(GameObject _target, float velocity, float stopDistance)
+        {
+            GameObject rightTarget = _target;
+            Vector3 tmpPos = rightTarget.Position;
+            tmpPos.Y = this.Position.Y;
+            rightTarget.Position = tmpPos;
+            Vector3 toTarget = (rightTarget.Position - Position);
+            Vector3 currentDirection = Vector3.Normalize(MatrixWorld.Forward);
+            float distanceEP = getDistance(rightTarget) / velocity;
+            float angle = (float)Math.Atan2(toTarget.X, toTarget.Z);
+
+            if (getDistance(rightTarget) > stopDistance)
+            {
+                MoveWithDirectionRotate(toTarget / distanceEP);
+            }
         }
         public void ChangePosition(Vector3 _position)
         {
-            Position += Vector3.Transform(_position, Matrix.CreateRotationY(MathHelper.ToRadians(90) + MathHelper.ToRadians(Rotation.Y)));
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            Position += Vector3.Transform(_position, RotationQ);
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position);
         }
         public void SetPosition(Vector3 _position)
         {
             Position = _position;
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
-        }
-        public void LookAt(GameObject _obj)
-        {
-            MatrixWorld = Matrix.CreateScale(Scale) *  Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateLookAt(Position,_obj.Position, Vector3.Up) * Matrix.CreateTranslation(Position);
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
         public void ChangeRotation(Vector3 _rotation)
         {
             Rotation += Vector3.Transform(_rotation, Matrix.Identity);
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
         public void RotateQuaternions(float angle)
         {
-            Vector3 y = new Vector3(0,1,0);
-            Quaternion rotationQ = Quaternion.Identity;
-            Quaternion.CreateFromAxisAngle(ref y, angle, out rotationQ);
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(rotationQ) * Matrix.CreateTranslation(Position) ;
+            Vector3 y = new Vector3(0, 1, 0);
+            Quaternion addRot = Quaternion.CreateFromAxisAngle(y, angle);
+            RotationQ = RotationQ * addRot;
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position) ;
         }
         public void SetRotation(Vector3 _rotation)
         {
             Rotation = _rotation;
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
         public void setScale(Vector3 _scale)
         {
             Scale = _scale;
-            MatrixWorld = Matrix.CreateScale(Scale);
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale);
         }
         public void Initialize()
         {
