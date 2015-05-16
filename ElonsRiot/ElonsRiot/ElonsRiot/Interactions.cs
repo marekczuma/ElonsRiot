@@ -20,8 +20,6 @@ namespace ElonsRiot
 
         public delegate void InteractionsDelegate(GameObject gameObject);
         public  event InteractionsDelegate InteractionEvent;
-        private int p;
-        private GameObject gameObject;
         public void Add()
         {
             if (interactionType == InterationTypes.door)
@@ -32,10 +30,7 @@ namespace ElonsRiot
             {
                 InteractionEvent += Methods.MoveBox;
             }
-            else if (interactionType == InterationTypes.stairs)
-            {
-                InteractionEvent += Methods.ClimbStairs;
-            }
+         
         }
         public void CallInteraction()
         {
@@ -54,65 +49,64 @@ namespace ElonsRiot
         static Player referencePlayer;
         static List<GameObject> gameObjects;
         static List<GameObject> referenceBoxes;
+        static List<GameObject> referenceCharacters;
+        static GameObject referenceFloor;
         static bool isColliding;
        public static void setPlayer(Player p,List<GameObject>objests)
        {
            referencePlayer = p;
            gameObjects = objests;
            referenceBoxes = new List<GameObject>();
+           referenceCharacters = new List<GameObject>();
            foreach (GameObject obj in objests)
            {
                if(obj.Name.Contains("box"))
                {
                    referenceBoxes.Add(obj);
                }
+               if (obj.Name.Contains("terrain"))
+               {
+                   referenceFloor = obj;
+               }
+               if(obj.Name.Contains("Elon") || obj.Name.Contains("Palo"))
+               {
+                   referenceCharacters.Add(obj);
+               }
            }
        }
       
         internal static void MoveBox(GameObject gameObject)
         {
+            Vector3 tmp = new Vector3(0, 0, 0);
             isColliding = false;
             BoxBoxCollision bbcol = new BoxBoxCollision();
-            if (bbcol.TestAABBAABB(referencePlayer, gameObject))
+            foreach (GameObject character in referenceCharacters)
             {
-                if (bbcol.TestAABBAABBTMP(referencePlayer, gameObject))
+                isColliding = false;
+                if (bbcol.TestAABBAABB(character, gameObject))
                 {
-                    Vector3 tmp = referencePlayer.newPosition - referencePlayer.oldPosition;
-                    Debug.WriteLine(tmp.ToString());
-                    foreach(GameObject gameBox in referenceBoxes)
-                    {
-                        if (bbcol.TestAABBAABB(gameBox, gameObject) == true && gameBox.Name != gameObject.Name)
+                    isColliding = true; 
+                       tmp = character.Position - character.oldPosition;
+                      /*  foreach (GameObject gameBox in referenceBoxes)
                         {
-                            isColliding = true;
-                            referencePlayer.Position = referencePlayer.oldPosition;
-                        }
-                        
-                    }
-                        if (isColliding == false)
-                        {
-                            gameObject.ChangeRelativePosition(tmp);
-                        }
-                }
-            }
-        }
-        internal static void ClimbStairs(GameObject stairs)
-        {
-            BoxBoxCollision bbcol = new BoxBoxCollision();
-            if (bbcol.TestAABBAABB(referencePlayer, stairs))
-            {
+                            if (bbcol.TestAABBAABB(gameBox, gameObject) == true && gameBox.Name != gameObject.Name)
+                            {
+                                isColliding = true;
+                                character.Position = character.oldPosition;
+                            }
 
-                if (bbcol.TestAABBPlane(referencePlayer, stairs.AAbox.plane))
-                {
-                    referencePlayer.gravity = 0;
-                    float moving = Math.Abs((stairs.AAbox.plane.Normal.X * referencePlayer.Position.X) + (stairs.AAbox.plane.Normal.Y * referencePlayer.Position.Y) +
-                    (stairs.AAbox.plane.Normal.Z * referencePlayer.Position.Z)) / (float)Math.Sqrt(Math.Pow(stairs.AAbox.plane.Normal.X, 2) +
-                    Math.Pow(stairs.AAbox.plane.Normal.Y, 2) + Math.Pow(stairs.AAbox.plane.Normal.Z, 2));
-                    referencePlayer.ChangePosition(new Vector3(0, 0.08f, 0));
-                   // referencePlayer.camera.Update(referencePlayer.MatrixWorld, referencePlayer.elonState, referencePlayer.Rotation);
+                        }*/
+                       
                 }
-                
             }
+            if (isColliding == true)
+            {
+                gameObject.ChangeRelativePosition(tmp);
+                isColliding = false;
+            } 
+            
         }
+       
         internal static void MoveDoor(GameObject gameObject)
         {
             gameObject.ChangePosition(new Vector3(0f, 0f, 0.2f));

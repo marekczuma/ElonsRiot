@@ -8,15 +8,15 @@ using Microsoft.Xna.Framework.Content;
 
 namespace ElonsRiot
 {
-    class HUD
+    static class HUD
     {
-        public SpriteFont font;
-        public Texture2D healthBar;
-        public Texture2D healthValue;
-        public Texture2D healthBackground;
-        public Vector2 scale;
+        public static SpriteFont font;
+        public static Texture2D healthBar;
+        public static Texture2D healthValue;
+        public static Texture2D healthBackground;
+        public static Vector2 scale;
 
-        public void LoadHUD(ContentManager content, float health)
+        public static void LoadHUD(ContentManager content, float health)
         {
             font = content.Load<SpriteFont>("HUD/HUDFont");
             healthBar = content.Load<Texture2D>("HUD/healthBar");
@@ -24,7 +24,7 @@ namespace ElonsRiot
             healthBackground = content.Load<Texture2D>("HUD/healthEmpty");
         }
 
-        public void DrawHUD(SpriteBatch spriteBatch, float health, GraphicsDevice graphics)
+        public static  void DrawHUD(SpriteBatch spriteBatch, float health, GraphicsDevice graphics)
         {
             scale = new Vector2(0.4f * (health / 100), 0.4f);
             spriteBatch.Begin();
@@ -34,6 +34,14 @@ namespace ElonsRiot
             spriteBatch.DrawString(font, ""+health, new Vector2(160, 5), Color.White);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
+
+        }
+        public static void DrawString(SpriteBatch spriteBatch,String message, GraphicsDevice graphic)
+        {
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "" + message, new Vector2(160, 5), Color.White);
+            spriteBatch.End();
+            graphic.DepthStencilState = DepthStencilState.Default;
 
         }
 

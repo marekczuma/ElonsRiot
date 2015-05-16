@@ -65,12 +65,12 @@ namespace ElonsRiot
             int indexPalo = 0;
             for (int i=0; i<GameObjects.Count; i++)
             {
-                if (GameObjects[i].Name == "Elon")
+                if (GameObjects[i].Name == "characterElon")
                     indexElon = i;
             }
             for (int i = 0; i < GameObjects.Count; i++)
             {
-                if (GameObjects[i].Name == "Palo")
+                if (GameObjects[i].Name == "characterPalo")
                     indexPalo = i;
             }
             //Elon - DO UCYWILIZOWANIA!
@@ -90,7 +90,7 @@ namespace ElonsRiot
         {
              foreach(var elem in GameObjects)
              {
-                 if ((elem.Name == "Elon") || (elem.Name == "Palo") || (elem.Tag == "guard"))
+                 if ((elem.Name == "characterElon") || (elem.Name == "characterPalo") || (elem.Tag == "guard"))
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
                  else
                     elem.DrawModels(ContentManager, PlayerObject);               
@@ -101,10 +101,9 @@ namespace ElonsRiot
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
-            
+                DrawBoudingBoxes(graphic, gObj);
             }
             DrawBoudingBox(graphic);
-            DrawBoudingBoxes(graphic);
 
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -137,7 +136,7 @@ namespace ElonsRiot
         private void LoadElon()
         {
             Player Elon = new Player();
-            Elon.Name = "Elon";
+            Elon.Name = "characterElon";
             Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
             Elon.Position = new Vector3(20, 4 , -40);
             Elon.Rotation = new Vector3(0, 0, 0);
@@ -158,15 +157,15 @@ namespace ElonsRiot
         }
         private void LoadGuards()
         {
-            Guard Marian = new Guard();
-            Marian.Name = "Marian";
+           /* Guard Marian = new Guard();
+            Marian.Name = "characterMarian";
             Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Marian.Position = new Vector3(0, 4, 0);
             Marian.Rotation = new Vector3(0, 0, 0);
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
             Guard Zenon = new Guard();
-            Zenon.Name = "Zenon";
+            Zenon.Name = "characterZenon";
             Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Zenon.Position = new Vector3(10, 4, 5);
             Zenon.Rotation = new Vector3(0, 0, 0);
@@ -175,7 +174,7 @@ namespace ElonsRiot
             GameObjects.Add(Marian);
             GameObjects.Add(Zenon);
             NPCs.Add(Marian);
-            NPCs.Add(Zenon);
+            NPCs.Add(Zenon);*/
 
         }
         private void LoadPalo()
@@ -187,9 +186,11 @@ namespace ElonsRiot
                     indexElon = i;
             }
             PaloCharacter Palo = new PaloCharacter();
-            Palo.Name = "Palo";
+            Palo.Name = "characterPalo";
             Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
             Palo.Position = new Vector3(40, 4, -30);
+            Palo.oldPosition = new Vector3(40, 4, -30);
+            Palo.newPosition = new Vector3(40, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
             Palo.Tag = "Palo";
@@ -249,10 +250,12 @@ namespace ElonsRiot
                     }
             }
         }
-        public void DrawBoudingBoxes(GraphicsDevice graphic)
+        public void DrawBoudingBoxes(GraphicsDevice graphic,GameObject gameObj)
         {
-          
-                Vector3[] corners = PlayerObject.boxes[0].GetCorners();
+            if (gameObj.boxes.Count != 0)
+            {
+
+                Vector3[] corners = gameObj.boxes[0].GetCorners();
 
                 VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
@@ -275,7 +278,7 @@ namespace ElonsRiot
                         PrimitiveType.LineList, primitiveList, 0, 8,
                         PlayerObject.bBoxIndices, 0, 12);
                 }
-            
+            }
         }
         public void DrawModel(GameObject gameObj)
         {

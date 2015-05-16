@@ -21,7 +21,7 @@ namespace ElonsRiot
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteBatch spriteBatchHUD;
-        HUD myHUD;
+       // HUD myHUD;
 
         public Game1()
         {
@@ -29,7 +29,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
-            myHUD = new HUD();
+         //   myHUD = new HUD();
         }
         protected override void Initialize()
         {
@@ -42,7 +42,7 @@ namespace ElonsRiot
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
-            myHUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
+            HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
@@ -69,7 +69,7 @@ namespace ElonsRiot
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.DrawAllContent(graphics.GraphicsDevice);
-            myHUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, GraphicsDevice);
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, GraphicsDevice);
             
             base.Draw(gameTime);
         }

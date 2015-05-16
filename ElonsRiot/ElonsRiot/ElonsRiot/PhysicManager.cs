@@ -14,13 +14,11 @@ namespace ElonsRiot
         static List<GameObject> InteractiveGameObject;
         static List<GameObject> NotInteractiveGameObject;
         static List<GameObject> Boxes;
-        static List<GameObject> Stairs;
+        static List<GameObject> Characters;
         static GameObject floor;
         static GameObject Palo;
         static Player Elon;
         static bool isFirstTimeInitialization, isStart;
-        static int flag2 = 1;
-
         public static void setElements()
         {
             boxesCollision = new BoxBoxCollision();
@@ -29,18 +27,19 @@ namespace ElonsRiot
             InteractiveGameObject = new List<GameObject>();
             NotInteractiveGameObject = new List<GameObject>();
             Boxes = new List<GameObject>();
-            Stairs = new List<GameObject>();
+            Characters = new List<GameObject>();
+
         }
 
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
         {
+
             if (isStart == true)
             {
                 foreach (GameObject gObj in gameO)
                 {
                     if (gObj.Interactive == true)
                     {
-
 
                         if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
                         {
@@ -59,11 +58,11 @@ namespace ElonsRiot
                         floor = gObj;
                     }
 
-                    if (gObj.Name == "Palo")
+                    if (gObj.Name.Contains("Palo"))
                     {
                         Palo = gObj;
                     }
-                    if (gObj.Name == "Elon")
+                    if (gObj.Name.Contains("Elon"))
                     {
                         Elon = (Player)gObj;
                     }
@@ -71,127 +70,159 @@ namespace ElonsRiot
                     {
                         Boxes.Add(gObj);
                     }
-                    if (gObj.Name.Contains("stairs"))
+                    if (gObj.Name.Contains("character"))
                     {
-                        Stairs.Add(gObj);
+                        Characters.Add(gObj);
                     }
                 }
+
+                //tworzenie AAboxów dla bohaterów
+                  foreach(GameObject character in Characters){
+                      character.Initialize();
+                      character.RefreshMatrix();
+                      character.GetCentre();
+                      character.AAbox = new Box(character, player);
+                      character.AAbox.GetCorners();
+                      character.AAbox.createBoudingBox();
+                      character.AAbox.createBoudingBoxes();
+                      
+                     }
+                  //inicjalizjacja Plane dla podłogi
+                  floor.Initialize();
+                  floor.GetCentre();
+                  floor.RefreshMatrix();
+                  floor.AAbox = new Box(player);
+                  floor.AAbox.createBoudingBox();
+                  new MyPlane(floor);
+                  floor.RefreshMatrix();
+                //inicjalizjacja nieaktywnych
+                  foreach (GameObject gObj in NotInteractiveGameObject)
+                  {
+                      gObj.Initialize();
+                      gObj.GetCentre();
+                      gObj.RefreshMatrix();
+                      gObj.AAbox = new Box(gObj, player);
+
+                  }
+                //inicjalizacja aktywnych
+                  foreach (GameObject gObj in InteractiveGameObject)
+                  {
+                      gObj.Initialize();
+                      gObj.GetCentre();
+                      gObj.RefreshMatrix();
+                      gObj.AAbox = new Box(gObj, player);
+
+                  }
+
                 isStart = false;
             }
-            
-            //aktualizowanie AAboxów dla Palo i Elona
-            player.Initialize();
-            player.RefreshMatrix();
-            player.GetCentre();
-            player.AAbox = new Box(player);
-            player.AAbox.createBoudingBox();
-            player.AAbox.CheckWhichCorners();
-            player.AAbox.createBoudingBoxes();
-            Palo.Initialize();
-            Palo.RefreshMatrix();
-            Palo.GetCentre();
-            Palo.AAbox = new Box(Palo, player);
-            Palo.AAbox.createBoudingBox();
-            Palo.AAbox.CheckWhichCorners();
-
-            //inicjalizacja dla obiektów nieruchomych 
-            if (isFirstTimeInitialization == false && NotInteractiveGameObject.Count != 0)
+            //atualizacja bohaterów
+            foreach (GameObject character in Characters)
             {
-                foreach (GameObject gObj in NotInteractiveGameObject)
+                
+                character.AAbox.CreateRadiuses();
+                character.AAbox.GetRadius();
+                character.AAbox.GetCorners();
+                character.AAbox.createBoudingBox();
+                if (character.Name == "characterElon" || character.Name == "characterPalo")
                 {
-                    gObj.Initialize();
-                    gObj.GetCentre();
-                    gObj.RefreshMatrix();
-                    gObj.AAbox = new Box(gObj, player);
-                  
+                    character.AAbox.createBoudingBoxes();
                 }
-
-                isFirstTimeInitialization = true;
+                character.AAbox.GetRefrecneObjectAndPlayer(character, player);
             }
-            //inicjalizjacja Plane dla podłogi
-            floor.Initialize();
-            floor.GetCentre();
-            floor.RefreshMatrix();
-            floor.AAbox = new Box(player);
-            floor.AAbox.createBoudingBox();
-            new MyPlane(floor);
-            floor.RefreshMatrix();
-
-            //inicjalizja / aktualizacja obiektów interaktywnych
-            if (InteractiveGameObject.Count != 0)
+            //aktualuzacja boxów
+            foreach (GameObject box in Boxes)
             {
-                foreach (GameObject gObj in InteractiveGameObject)
+                box.AAbox.CreateRadiuses();
+                box.AAbox.GetRadius();
+                box.AAbox.GetCorners();
+                box.AAbox.createBoudingBox();
+                box.AAbox.GetRefrecneObjectAndPlayer(box, player);
+            }
+            //kolija między charakterami
+           foreach (GameObject character in Characters)
+            {
+                foreach(GameObject character2 in Characters)
+                 if (character.Name != character2.Name && boxesCollision.TestAABBAABB(character, character2))
                 {
-                    gObj.Initialize();
-                    gObj.GetCentre();
-                    gObj.RefreshMatrix();
-                    gObj.AAbox = new Box(gObj, player);
-                    gObj.AAbox.CheckWhichCornersForObjects();
-                    gObj.AAbox.GetRadius();
-                    if (gObj.Name == "stairs")
+                     if(boxesCollision.TestAABBAABBTMP(character,character2))
+                     {
+                         character.Position = character.oldPosition;
+                     }
+                }
+            }
+           //kolizja elemetów nieinteraktywnych z bahataterami 
+            foreach(GameObject character in Characters)
+            {
+                foreach(GameObject gObj in NotInteractiveGameObject)
+                { 
+                    if (boxesCollision.TestAABBAABB(character, gObj))
                     {
-                        gObj.AAbox.createAAPlane();
+                        character.Position = character.oldPosition;
                     }
-                }
+                  }
             }
-            //aktualuzacja punktów kolidujących w obiektach interaktywnych
-            foreach (GameObject gObj in NotInteractiveGameObject)
-            {
-                gObj.AAbox.CheckWhichCornersForObjects();
-                gObj.AAbox.GetRadius();
-            }
-            //kolija Palo i Elona
-            if (boxesCollision.TestAABBAABB(player, Palo))
-            {
-                player.Position = player.oldPosition;
-            }
-            //kolizja elemetów nie interaktywnych,które nie są schodami z Elonem i Palo
-            foreach (GameObject gObj in NotInteractiveGameObject)
-            {
-                if (gObj.Name != "stairs")
-                {
-                    if (boxesCollision.TestAABBAABB(player, gObj))
-                    {
-                        player.Position = player.oldPosition;
-                    }
-                }
-            }
-          
-            if (boxesCollision.TestAABBPlane(player, floor.plane) == false)
-            {
-              player.Position = new Vector3(player.Position.X, player.gravity, player.Position.Z);
-            }
-
             ChceckBoxesCollision(Boxes);
-            ChceckStairsCollision(Stairs);
-          
+            foreach(GameObject character in Characters)
+            {
+                ActivateGravity(player, gameO, floor.plane);
+            }
+           
         }
 
-        public static  void ActivateGravity(GameObject gameObj, Plane floor)
-        {
-            gameObj.ChangePosition(new Vector3(0, gameObj.gravity, 0));
-          if (boxesCollision.TestAABBPlane(gameObj, floor))
-             {
-                gameObj.SetPosition(new Vector3(gameObj.Position.X, gameObj.oldPosition.Y, gameObj.Position.Z));
-             } 
-        }
 
         public static void ChceckBoxesCollision(List<GameObject> Boxes)
         {
             foreach (GameObject box in Boxes)
             {
-                 Interactions interactionsClass = new Interactions(box.interactionType, box);
-                 interactionsClass.Add();
-                 interactionsClass.CallInteraction();
-            }
-        }
-        public static void ChceckStairsCollision(List<GameObject> Stairs)
-        {
-            foreach (GameObject stairs in Stairs)
-            {
-                Interactions interactionsClass = new Interactions(stairs.interactionType, stairs);
+                Interactions interactionsClass = new Interactions(box.interactionType, box);
                 interactionsClass.Add();
                 interactionsClass.CallInteraction();
+            }
+        }
+      
+        public static void ClimbBox()
+        {
+            foreach (GameObject box in Boxes)
+            {
+                if (boxesCollision.TestAABBAABB(Elon, box) && box.Name =="box2")
+                {
+                    float x = box.Position.X -  Elon.Position.X;
+                    float z = box.Position.Z - Elon.Position.Z;
+                    Vector3 climbPosition = new Vector3(0, box.AAbox.max.Y-2, 0);
+                   // Elon.ChangePosition(climbPosition);
+                    Elon.SetPosition(new Vector3(box.Position.X, box.AAbox.max.Y, box.Position.Z));
+                }
+            }
+        }
+        public static void ShowMessage(List<GameObject> ObjectWithMessage)
+        {
+            foreach(GameObject gameObj in ObjectWithMessage)
+            {
+            //    HUD.DrawString()
+            }
+        }
+        public static void ActivateGravity(Player player, List<GameObject> GameObjs,Plane floor)
+        {
+           
+            BoxBoxCollision boxesCollision = new BoxBoxCollision();
+            int counter = 0;
+            foreach(GameObject gobj in GameObjs)
+            {
+                if (boxesCollision.TestAABBAABB(player,gobj) && gobj.Name !="terrain")
+                {
+                    counter++;
+                }
+                else if(boxesCollision.TestAABBPlane(player,floor))
+                {
+                    counter++;
+                }
+               
+                
+            }
+            if(counter == 0)
+            {
+                player.ChangePosition(new Vector3(0, -0.5f, 0));
             }
         }
     }

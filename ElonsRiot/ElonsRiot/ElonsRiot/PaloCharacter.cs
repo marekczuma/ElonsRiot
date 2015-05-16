@@ -16,6 +16,7 @@ namespace ElonsRiot
         public Player Elon { get; set; }
         public List<Guard> Guards { get; set; }
         public DecoyAI DecoyGuards { get; set; }
+        
 
         private float velocity;
         public PaloCharacter()
@@ -41,6 +42,7 @@ namespace ElonsRiot
         }
         public void WalkToPlayer()
         {
+            this.oldPosition = this.Position;
             WalkToTarget(Elon, velocity, 20);
         }
 
