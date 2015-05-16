@@ -52,7 +52,17 @@ namespace ElonsRiot
         public Plane plane;
         [XmlIgnore]
         public Quaternion RotationQ;
-
+        public float gravity;
+        [XmlIgnore]
+        public InterationTypes interactionType;
+        [XmlIgnore]
+        public float mass;
+        [XmlIgnore]
+        public float velocity;
+        [XmlIgnore]
+        public string collisionCommunicat;
+        [XmlIgnore]
+        public Vector3 oldPosition;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -63,6 +73,7 @@ namespace ElonsRiot
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
             AAbox = new Box();
+            
         }
         public GameObject(Vector3 _position)
         {
@@ -144,10 +155,15 @@ namespace ElonsRiot
         {
             Position += Vector3.Transform(_position, RotationQ);
             RefreshMatrix();
-            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position);
+        }
+        public void ChangeRelativePosition(Vector3 _position)
+        {
+            oldPosition = Position;
+            Position += _position;
         }
         public void SetPosition(Vector3 _position)
         {
+            oldPosition = Position;
             Position = _position;
             RefreshMatrix();
             //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
@@ -187,67 +203,7 @@ namespace ElonsRiot
         {
             return Vector3.Distance(_target.Position, Position);
         }
-        public void createBoudingBox()
-        {
-            Initialize();
-            Matrix tmp = Matrix.Identity;
-            if(Rotation.Y !=0 && this.ObjectPath !="3D/ludzik/dude")
-            {
-                tmp = MatrixWorld;
-            }
-            else
-            {
-                tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
-            }
-            
-
-            Vector3 meshMax = new Vector3(float.MinValue);
-            Vector3 meshMin = new Vector3(float.MaxValue);
-            Matrix meshTransform = new Matrix();
-            foreach (ModelMesh mesh in GameObjectModel.Meshes)
-            {
-                meshTransform = boneTransformations[mesh.ParentBone.Index] * tmp;
-
-                foreach (ModelMeshPart part in mesh.MeshParts)
-                {
-
-                    // The stride is how big, in bytes, one vertex is in the vertex buffer
-                    // We have to use this as we do not know the make up of the vertex
-                    int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
-
-                    VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[part.NumVertices];
-                    part.VertexBuffer.GetData(part.VertexOffset * stride, vertexData, 0, part.NumVertices, stride);
-
-                    // Find minimum and maximum xyz values for this mesh part
-                    Vector3 vertPosition = new Vector3();
-
-                    for (int i = 0; i < vertexData.Length; i++)
-                    {
-                        vertPosition = vertexData[i].Position;
-
-                        // update our values from this vertex
-                        meshMin = Vector3.Min(meshMin, vertPosition);
-                        meshMax = Vector3.Max(meshMax, vertPosition);
-                    }
-                }
-
-                // transform by mesh bone matrix
-                meshMin = Vector3.Transform(meshMin, meshTransform);
-                meshMax = Vector3.Transform(meshMax, meshTransform);
-
-            }
-            if(this.ObjectPath == "3D/ludzik/dude")
-            {
-                meshMax.Z += 2;
-                meshMin.Z -= 2;
-            }
-            if (this.ObjectPath == "3D/sciana/wall")
-            {
-                
-                meshMin.X += 2;
-            }
-            boundingBox = new BoundingBox(meshMin, meshMax);
-        }
+       
         public void GetCentre()
         {
             BoundingSphere sphere = new BoundingSphere();
@@ -267,36 +223,7 @@ namespace ElonsRiot
             }
             this.center = sphere.Center;
         }
-        public void createPlane()
-        {
-            float dotProduct = 0;
-            Vector3 normal = new Vector3(0, 0, 0);
-
-            foreach (ModelMesh mesh in GameObjectModel.Meshes)
-            {
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                {
-
-                    int stride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
-
-                    VertexPositionNormalTexture[] vertexData = new VertexPositionNormalTexture[meshPart.NumVertices];
-                    meshPart.VertexBuffer.GetData(meshPart.VertexOffset * stride, vertexData, 0, meshPart.NumVertices, stride);
-
-                    Vector3 vecAB = vertexData[1].Position - vertexData[0].Position;
-                    Vector3 vecAC = vertexData[2].Position - vertexData[0].Position;
-                    
-                    // Cross vecAB and vecAC
-                    normal = Vector3.Cross(vecAB, vecAC);
-                    normal.Normalize();
-
-                    Vector3 tmp = vertexData[0].Position;
-                    dotProduct = Vector3.Dot(-normal, tmp);
-
-                }
-            }
-            plane = new Plane(normal, dotProduct);
-        }
-
+       
         private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
         {
             foreach (ModelMesh mesh in model.Meshes)
@@ -340,6 +267,30 @@ namespace ElonsRiot
             }
         }
         
+     //ustawianie rodzaju interakcji
+       public void setInteractionType()
+        {
+           if(this.Name.Contains("door"))
+           {
+               interactionType = InterationTypes.door;
+           }
+           else if(this.Name.Contains("box"))
+           {
+               interactionType = InterationTypes.box;
+               
+           }
+           else if (this.Name.Contains("stairs"))
+           {
+               interactionType = InterationTypes.stairs;
+
+           }
+        }
+        
+        //aktualizacja danych fizycznych
+        public void update()
+       {
+         
+       }
     }
 }
 

@@ -22,7 +22,7 @@ namespace ElonsRiot
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
         private BasicEffect basicEffect;
-        private Physic physic;
+       // private Physic physic;
         AnimationPlayer animationPlayer;
         AnimationPlayer animationPlayerPalo;
         public Scene(ContentManager _contentManager)
@@ -31,6 +31,7 @@ namespace ElonsRiot
             NPCs = new List<GameObject>();
             ContentManager = _contentManager;
             XMLScene = new XMLScene();
+           
         }
         public Scene()
         {
@@ -40,17 +41,22 @@ namespace ElonsRiot
 
         public void LoadAllContent(GraphicsDevice graphic)
         {
-            physic = new Physic();
+          //  physic = new Physic();
             XMLScene = DeserializeFromXML();
             GameObjects = XMLScene.GameObjects;
             LoadPalo();
             LoadElon();
             LoadGuards();
+            Methods.setPlayer( PlayerObject,GameObjects);
             foreach (var elem in GameObjects)
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
                 {
                     elem.LoadModels(ContentManager);
+                    if(elem.Interactive == true)
+                    {
+                        elem.setInteractionType();
+                    }
                     //elem.Initialize();
                     //elem.RefreshMatrix();
                 }
@@ -93,10 +99,13 @@ namespace ElonsRiot
             foreach (GameObject gObj in this.GameObjects)
             {
               //  DrawModel(gObj);
-                gObj.createBoudingBox();
+             //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
+            
             }
             DrawBoudingBox(graphic);
+            DrawBoudingBoxes(graphic);
+
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
@@ -117,10 +126,13 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime)
         {
-            physic.update(gameTime, GameObjects, PlayerObject);
+            
+            PhysicManager.update(gameTime, GameObjects, PlayerObject);
+            //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
             NPCControl();
             animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+            
         }
         private void LoadElon()
         {
@@ -181,7 +193,7 @@ namespace ElonsRiot
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
             Palo.Tag = "Palo";
-            //Palo.Elon = (Player)GameObjects[indexElon];
+            Palo.Interactive = true;
             PaloObject = Palo;
 
             GameObjects.Add(Palo);
@@ -209,14 +221,38 @@ namespace ElonsRiot
         }
         public void DrawBoudingBox(GraphicsDevice graphic)
         {
-            foreach (GameObject gameObj in this.GameObjects)
+           foreach (GameObject gameObj in this.GameObjects)
             {
+              
+                    Vector3[] corners = gameObj.boundingBox.GetCorners();
+                
+                    VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
-                //   gameObj.boneTransformations = new Matrix[gameObj.GameObjectModel.Bones.Count];
-                // gameObj.GameObjectModel.CopyAbsoluteBoneTransformsTo(gameObj.boneTransformations);
+                    // Assign the 8 box vertices
+                    for (int i = 0; i < corners.Length; i++)
+                    {
+                        primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
+                    }
 
-                //draw bouding box 
-                Vector3[] corners = gameObj.boundingBox.GetCorners();
+                    basicEffect.World = Matrix.Identity;
+                    basicEffect.View = PlayerObject.camera.viewMatrix;
+                    basicEffect.Projection = PlayerObject.camera.projectionMatrix;
+                    basicEffect.TextureEnabled = false;
+
+                    // Draw the box with a LineList
+                    foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+                        graphic.DrawUserIndexedPrimitives(
+                            PrimitiveType.LineList, primitiveList, 0, 8,
+                            gameObj.bBoxIndices, 0, 12);
+                    }
+            }
+        }
+        public void DrawBoudingBoxes(GraphicsDevice graphic)
+        {
+          
+                Vector3[] corners = PlayerObject.boxes[0].GetCorners();
 
                 VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
@@ -237,12 +273,11 @@ namespace ElonsRiot
                     pass.Apply();
                     graphic.DrawUserIndexedPrimitives(
                         PrimitiveType.LineList, primitiveList, 0, 8,
-                        gameObj.bBoxIndices, 0, 12);
+                        PlayerObject.bBoxIndices, 0, 12);
                 }
-            }
+            
         }
-      
-      /*  public void DrawModel(GameObject gameObj)
+        public void DrawModel(GameObject gameObj)
         {
 
             foreach (ModelMesh mesh in gameObj.GameObjectModel.Meshes)
@@ -260,6 +295,6 @@ namespace ElonsRiot
                 mesh.Draw();
 
             }
-        }*/
+        }
     }
 }

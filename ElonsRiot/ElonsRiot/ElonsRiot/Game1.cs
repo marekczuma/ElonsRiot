@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace ElonsRiot
 {
@@ -32,6 +33,7 @@ namespace ElonsRiot
         }
         protected override void Initialize()
         {
+            PhysicManager.setElements();
             base.Initialize();
         }
 
@@ -41,6 +43,7 @@ namespace ElonsRiot
             spriteBatchHUD = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             myHUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
+           // MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
         protected override void UnloadContent()
@@ -57,6 +60,7 @@ namespace ElonsRiot
             CurrentMouseState = Mouse.GetState();
             MyScene.Update(MyScene.PlayerObject, gameTime);
             CheckRay(state);
+            //MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
 
             base.Update(gameTime);
@@ -72,6 +76,7 @@ namespace ElonsRiot
 
         public void CheckRay(KeyboardState _state)
         {
+            
             if (_state.IsKeyDown(Keys.E))
             {
                 Ray pickRay = GetPickRay();
@@ -85,7 +90,11 @@ namespace ElonsRiot
                         {
                             if (result.Value < selectedDistance)
                             {
-                                MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                                
+                                Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
+                              //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
+                                interactionsClass.Add();
+                                interactionsClass.CallInteraction();
                             }
                         }
                     }
