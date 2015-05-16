@@ -158,7 +158,10 @@ namespace ElonsRiot
                 { 
                     if (boxesCollision.TestAABBAABB(character, gObj))
                     {
-                        character.Position = character.oldPosition;
+                        if(boxesCollision.TestAABBAABBTMP(character,gObj))
+                        {
+                            character.Position = character.oldPosition;
+                        }
                     }
                   }
             }
@@ -222,7 +225,7 @@ namespace ElonsRiot
             }
             if(counter == 0)
             {
-                player.ChangePosition(new Vector3(0, -0.5f, 0));
+                player.ChangePosition(new Vector3(0, -0.2f, 0));
             }
         }
     }

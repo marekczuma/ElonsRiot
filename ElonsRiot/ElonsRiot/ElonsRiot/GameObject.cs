@@ -299,7 +299,18 @@ namespace ElonsRiot
         //aktualizacja danych fizycznych
         public void update()
        {
-         
+         if(this.Name.Contains("box"))
+         {
+             mass = 80;
+         }
+        if(this.Name.Contains("Elon"))
+        {
+            mass = 70;
+        }
+        if (this.Name.Contains("Palo"))
+        {
+            mass = 100;
+        }
        }
     }
 }

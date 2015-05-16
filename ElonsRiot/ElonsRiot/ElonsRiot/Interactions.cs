@@ -52,6 +52,7 @@ namespace ElonsRiot
         static List<GameObject> referenceCharacters;
         static GameObject referenceFloor;
         static bool isColliding;
+        static float massDifference;
        public static void setPlayer(Player p,List<GameObject>objests)
        {
            referencePlayer = p;
@@ -77,6 +78,7 @@ namespace ElonsRiot
       
         internal static void MoveBox(GameObject gameObject)
         {
+            massDifference = 0;
             Vector3 tmp = new Vector3(0, 0, 0);
             isColliding = false;
             BoxBoxCollision bbcol = new BoxBoxCollision();
@@ -85,7 +87,8 @@ namespace ElonsRiot
                 isColliding = false;
                 if (bbcol.TestAABBAABB(character, gameObject))
                 {
-                    isColliding = true; 
+                    isColliding = true;
+                    massDifference = character.mass - gameObject.mass;
                        tmp = character.Position - character.oldPosition;
                       /*  foreach (GameObject gameBox in referenceBoxes)
                         {
@@ -96,14 +99,21 @@ namespace ElonsRiot
                             }
 
                         }*/
-                       
+                       if(massDifference < 0)
+                       {
+                           if (bbcol.TestAABBAABBTMP(character, gameObject))
+                           {
+                            character.Position = character.oldPosition;
+                           }
+                       }
                 }
             }
-            if (isColliding == true)
+            if (isColliding == true && massDifference >= 0)
             {
                 gameObject.ChangeRelativePosition(tmp);
                 isColliding = false;
-            } 
+            }
+            
             
         }
        

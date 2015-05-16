@@ -131,6 +131,10 @@ namespace ElonsRiot
             PaloControl();
             NPCControl();
             animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+            foreach(GameObject gobj in GameObjects)
+            {
+                gobj.update();
+            }
             
         }
         private void LoadElon()
