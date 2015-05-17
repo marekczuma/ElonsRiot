@@ -301,7 +301,7 @@ namespace ElonsRiot
        {
          if(this.Name.Contains("box"))
          {
-             mass = 80;
+             mass = 50;
          }
         if(this.Name.Contains("Elon"))
         {
