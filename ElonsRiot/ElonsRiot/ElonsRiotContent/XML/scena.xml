@@ -96,7 +96,7 @@
 		100 
 		</Mass>
 		<Interactive>true</Interactive>
-	</GameObject>  
+	</GameObject>   -->
 	<GameObject Name="box1" Path="3D/Boxes/box">
 		<Position>
 		  <X>100</X>
@@ -117,7 +117,7 @@
 		100 
 		</Mass>
 		<Interactive>true</Interactive>
-	</GameObject>   -->
+	</GameObject>  
 	<GameObject Name="box2" Path="3D/Boxes/box">
 		<Position>
 		  <X>80</X>

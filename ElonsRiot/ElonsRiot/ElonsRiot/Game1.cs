@@ -91,10 +91,10 @@ namespace ElonsRiot
                             if (result.Value < selectedDistance)
                             {
                                 
-                                Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
+                               // Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
                               //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
-                                interactionsClass.Add();
-                                interactionsClass.CallInteraction();
+                                Interactions.Add(MyScene.GameObjects[i].interactionType);
+                                Interactions.CallInteraction(MyScene.GameObjects[i]);
                             }
                         }
                     }
