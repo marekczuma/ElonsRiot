@@ -137,7 +137,7 @@ namespace ElonsRiot
         private void LoadElon()
         {
             Player Elon = new Player();
-            Elon.Name = "Elon";
+            Elon.Name = "CharacterElon";
             Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
             Elon.Position = new Vector3(20, 4 , -40);
             Elon.Rotation = new Vector3(0, 0, 0);
@@ -159,14 +159,14 @@ namespace ElonsRiot
         private void LoadGuards()
         {
             Guard Marian = new Guard();
-            Marian.Name = "Marian";
+            Marian.Name = "CharacterMarian";
             Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Marian.Position = new Vector3(0, 4, 0);
             Marian.Rotation = new Vector3(0, 0, 0);
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
             Guard Zenon = new Guard();
-            Zenon.Name = "Zenon";
+            Zenon.Name = "CharacterZenon";
             Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Zenon.Position = new Vector3(10, 4, 5);
             Zenon.Rotation = new Vector3(0, 0, 0);
@@ -180,14 +180,8 @@ namespace ElonsRiot
         }
         private void LoadPalo()
         {
-            int indexElon = 0;
-            for (int i = 0; i < GameObjects.Count; i++)
-            {
-                if (GameObjects[i].Name == "Elon")
-                    indexElon = i;
-            }
             PaloCharacter Palo = new PaloCharacter();
-            Palo.Name = "Palo";
+            Palo.Name = "CharacterPalo";
             Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
             Palo.Position = new Vector3(40, 4, -30);
             Palo.Rotation = new Vector3(0, 0, 0);

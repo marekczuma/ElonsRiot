@@ -164,6 +164,10 @@ namespace ElonsRiot
                     Palo.Decoy(_scene);
                 }
             }
+            if(state.IsKeyDown(Keys.O))
+            {
+                Palo.RotateToBox(this);
+            }
         }
     }
 }

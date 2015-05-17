@@ -102,6 +102,33 @@ namespace ElonsRiot
             }        
         }
         
-
+        //ALGORYTM PRZESUWANI SKRZYNKI
+        //1.1 Wykrycie miejsca za skrzynką
+        private Vector3 FindPlaceBehindObject(GameObject _object, Vector3 _targetPosition)
+        {
+            Vector3 goodDirection = (_targetPosition - _object.Position) * (-1);
+            goodDirection.Normalize();
+            goodDirection *= 4;
+            return goodDirection;
+        }
+        //1.2 Pójście do tego punktu
+        private void StandBehindBox(Vector3 _behindBox)
+        {
+            GameObject tmpGO = new GameObject(_behindBox);
+            WalkToTarget(tmpGO, velocity, 0.5f);
+        }
+        //2 - Obróć się w kierunku skrzynki
+        public void RotateToBox(GameObject _targetBox)
+        {
+            Vector3 deltaVectorCopy = new Vector3(-_targetBox.Position.X, 0, -_targetBox.Position.Z);
+            Matrix mat = Matrix.CreateLookAt(Position,
+                                                Position + deltaVectorCopy,
+                                                Vector3.Up);
+            mat = Matrix.Transpose(mat);
+            Quaternion q = Quaternion.Slerp(RotationQ,
+                                            Quaternion.CreateFromRotationMatrix(mat),
+                                            0.1f);
+            RotationQ = q;
+        }
     }
 }
