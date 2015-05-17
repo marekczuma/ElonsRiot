@@ -110,7 +110,7 @@ namespace ElonsRiot
             }
             if (isColliding == true && massDifference >= 0)
             {
-                gameObject.ChangeRelativePosition(tmp);
+                gameObject.ChangeRelativePosition(new Vector3(tmp.X, 0, tmp.Z));
                 isColliding = false;
             }
             

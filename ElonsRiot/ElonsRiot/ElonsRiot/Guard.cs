@@ -19,6 +19,7 @@ namespace ElonsRiot
         }
         public void Chase()
         {
+            oldPosition = Position;
             State = GuardState.chase;
             WalkToTarget(Target, Velocity, 0.5f);
         }

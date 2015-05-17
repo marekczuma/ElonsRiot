@@ -168,12 +168,17 @@ namespace ElonsRiot
             Marian.Rotation = new Vector3(0, 0, 0);
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
+            Marian.oldPosition = 
+            Marian.oldPosition = new Vector3(0, 4, 0);
+            Marian.newPosition = new Vector3(0, 4, 0);
             Guard Zenon = new Guard();
             Zenon.Name = "characterZenon";
             Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Zenon.Position = new Vector3(10, 4, 5);
             Zenon.Rotation = new Vector3(0, 0, 0);
             Zenon.ObjectPath = "3D/ludzik/dude";
+            Zenon.oldPosition = new Vector3(10, 4, 5);
+            Zenon.newPosition = new Vector3(10, 4, 5);
             Zenon.Tag = "guard";
             GameObjects.Add(Marian);
             GameObjects.Add(Zenon);

@@ -18,12 +18,13 @@ namespace ElonsRiot
         static GameObject floor;
         static GameObject Palo;
         static Player Elon;
-        static bool isFirstTimeInitialization, isStart;
+        static bool isStart;
+        public static bool isClimbing;
         public static void setElements()
         {
             boxesCollision = new BoxBoxCollision();
-            isFirstTimeInitialization = false;
             isStart = true;
+            isClimbing = false;
             InteractiveGameObject = new List<GameObject>();
             NotInteractiveGameObject = new List<GameObject>();
             Boxes = new List<GameObject>();
@@ -165,6 +166,7 @@ namespace ElonsRiot
                     }
                   }
             }
+           
             ChceckBoxesCollision(Boxes);
             foreach(GameObject character in Characters)
             {
@@ -188,13 +190,14 @@ namespace ElonsRiot
         {
             foreach (GameObject box in Boxes)
             {
-                if (boxesCollision.TestAABBAABB(Elon, box) && box.Name =="box2")
+                if (boxesCollision.TestAABBAABB(Elon, box))
                 {
                     float x = box.Position.X -  Elon.Position.X;
                     float z = box.Position.Z - Elon.Position.Z;
                     Vector3 climbPosition = new Vector3(0, box.AAbox.max.Y-2, 0);
                    // Elon.ChangePosition(climbPosition);
                     Elon.SetPosition(new Vector3(box.Position.X, box.AAbox.max.Y, box.Position.Z));
+                    
                 }
             }
         }
@@ -221,7 +224,6 @@ namespace ElonsRiot
                     counter++;
                 }
                
-                
             }
             if(counter == 0)
             {
