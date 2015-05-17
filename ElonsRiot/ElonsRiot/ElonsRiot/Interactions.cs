@@ -7,20 +7,11 @@ using System.Text;
 
 namespace ElonsRiot
 {
-    public  class Interactions
+    public static class Interactions
     {
-        InterationTypes interactionType;
-        GameObject referenceObject;
-        public Interactions(InterationTypes interType, GameObject gameObj)
-        {
-            this.interactionType = interType;
-            this.referenceObject = gameObj;
-        }
-
-
         public delegate void InteractionsDelegate(GameObject gameObject);
-        public  event InteractionsDelegate InteractionEvent;
-        public void Add()
+        static event InteractionsDelegate InteractionEvent;
+        public static void Add(InterationTypes interactionType)
         {
             if (interactionType == InterationTypes.door)
             {
@@ -32,7 +23,7 @@ namespace ElonsRiot
             }
          
         }
-        public void CallInteraction()
+        public static void CallInteraction(GameObject referenceObject)
         {
             if (InteractionEvent != null)
                 InteractionEvent(referenceObject);
@@ -84,7 +75,7 @@ namespace ElonsRiot
             BoxBoxCollision bbcol = new BoxBoxCollision();
             foreach (GameObject character in referenceCharacters)
             {
-                isColliding = false;
+                //isColliding = false;
                 if (bbcol.TestAABBAABB(character, gameObject))
                 {
                     isColliding = true;
@@ -98,7 +89,7 @@ namespace ElonsRiot
                                 character.Position = character.oldPosition;
                             }
 
-                        }*/
+                        } */
                        if(massDifference < 0)
                        {
                            if (bbcol.TestAABBAABBTMP(character, gameObject))

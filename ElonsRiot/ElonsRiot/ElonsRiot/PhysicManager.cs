@@ -76,7 +76,6 @@ namespace ElonsRiot
                         Characters.Add(gObj);
                     }
                 }
-
                 //tworzenie AAboxów dla bohaterów
                   foreach(GameObject character in Characters){
                       character.Initialize();
@@ -175,14 +174,18 @@ namespace ElonsRiot
            
         }
 
-
+        static bool isFirst = false;
         public static void ChceckBoxesCollision(List<GameObject> Boxes)
         {
+           
             foreach (GameObject box in Boxes)
             {
-                Interactions interactionsClass = new Interactions(box.interactionType, box);
-                interactionsClass.Add();
-                interactionsClass.CallInteraction();
+                if (isFirst == false)
+                {
+                    Interactions.Add(box.interactionType);
+                    isFirst = true;
+                }
+                Interactions.CallInteraction(box);
             }
         }
       
