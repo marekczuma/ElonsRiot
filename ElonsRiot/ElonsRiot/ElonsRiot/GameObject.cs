@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using SkinnedModel;
+using System.Diagnostics;
 namespace ElonsRiot
 {
     [Serializable]
@@ -36,6 +37,8 @@ namespace ElonsRiot
         public Model GameObjectModel { get; set; }
          [XmlIgnore]
         public BoundingBox boundingBox;
+         [XmlIgnore]
+         public List<BoundingBox> boxes;
         [XmlIgnore]
         public Matrix[] boneTransformations;
         [XmlIgnore]
@@ -62,7 +65,9 @@ namespace ElonsRiot
         [XmlIgnore]
         public string collisionCommunicat;
         [XmlIgnore]
-        public Vector3 oldPosition;
+        public Vector3 oldPosition, newPosition;
+        [XmlIgnore]
+        public String message;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -73,6 +78,7 @@ namespace ElonsRiot
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
             AAbox = new Box();
+            boxes = new List<BoundingBox>();
             
         }
         public GameObject(Vector3 _position)
@@ -153,19 +159,23 @@ namespace ElonsRiot
         }
         public void ChangePosition(Vector3 _position)
         {
+            oldPosition = Position;
             Position += Vector3.Transform(_position, RotationQ);
             RefreshMatrix();
+            newPosition = Position;
         }
         public void ChangeRelativePosition(Vector3 _position)
         {
             oldPosition = Position;
             Position += _position;
+            newPosition = Position;
         }
         public void SetPosition(Vector3 _position)
         {
             oldPosition = Position;
             Position = _position;
             RefreshMatrix();
+            newPosition = Position;
             //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
         }
         public void ChangeRotation(Vector3 _rotation)
@@ -289,7 +299,18 @@ namespace ElonsRiot
         //aktualizacja danych fizycznych
         public void update()
        {
-         
+         if(this.Name.Contains("box"))
+         {
+             mass = 80;
+         }
+        if(this.Name.Contains("Elon"))
+        {
+            mass = 70;
+        }
+        if (this.Name.Contains("Palo"))
+        {
+            mass = 100;
+        }
        }
     }
 }

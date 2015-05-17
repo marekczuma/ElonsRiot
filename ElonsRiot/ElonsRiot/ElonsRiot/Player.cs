@@ -38,6 +38,10 @@ namespace ElonsRiot
             {
                 elonState.SetCurrentState(State.walk);
             }
+            else if(state.IsKeyDown(Keys.M))
+            {
+                PhysicManager.ClimbBox();
+            }
             else
             {
                 elonState.SetCurrentState(State.idle);
