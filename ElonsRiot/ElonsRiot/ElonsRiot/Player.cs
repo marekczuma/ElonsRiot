@@ -26,6 +26,7 @@ namespace ElonsRiot
             angle = 0;
             health = 100.0f;
             boxes = new List<BoundingBox>();
+            gravity = -0.12f;
         }
 
         public void SetState(KeyboardState state)
@@ -40,7 +41,7 @@ namespace ElonsRiot
             }
             else if(state.IsKeyDown(Keys.M))
             {
-                PhysicManager.ClimbBox();
+                PhysicManager.ClimbBox(this);
             }
             else
             {

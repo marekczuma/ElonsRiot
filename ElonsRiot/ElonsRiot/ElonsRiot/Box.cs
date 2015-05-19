@@ -130,10 +130,10 @@ namespace ElonsRiot
             }
             if (referenceObject.ObjectPath == "3D/ludzik/dude")
             {
-                meshMax.Z += 2;
-                meshMin.Z -= 2;
-                meshMax.Y += 2;
-                meshMin.Y -= 2;
+                meshMax.Z += 1.5f;
+                meshMin.Z -= 1.5f;
+             //   meshMax.Y += 1.5f;
+              //  meshMin.Y -= 1.5f;
             }
             this.max = meshMax;
             this.min = meshMin;
