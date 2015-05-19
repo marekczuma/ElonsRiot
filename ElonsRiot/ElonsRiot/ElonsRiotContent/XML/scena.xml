@@ -130,12 +130,12 @@
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
-		  <X>0.05</X>
-		  <Y>0.05</Y>
-		  <Z>0.05</Z>
+		  <X>0.1</X>
+		  <Y>0.1</Y>
+		  <Z>0.1</Z>
 		</Scale>
 		<Mass>
-		100 
+		500 
 		</Mass>
 		<Interactive>true</Interactive>
 	</GameObject>  
