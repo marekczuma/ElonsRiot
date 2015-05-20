@@ -105,9 +105,9 @@ namespace ElonsRiot
                             {
                                 
                                // Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
-                              //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
-                                Interactions.Add(MyScene.GameObjects[i].interactionType);
-                                Interactions.CallInteraction(MyScene.GameObjects[i]);
+                                MyScene.GameObjects[i].ChangePosition(new Vector3(0.03f, 0f, 0.0f));
+                                //Interactions.Add(MyScene.GameObjects[i].interactionType);
+                                //Interactions.CallInteraction(MyScene.GameObjects[i]);
                             }
                         }
                     }

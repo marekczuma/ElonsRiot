@@ -140,7 +140,7 @@ namespace ElonsRiot
        }
         internal static void MoveDoor(GameObject gameObject)
         {
-            gameObject.ChangePosition(new Vector3(0f, 0f, 0.2f));
+            gameObject.ChangePosition(new Vector3(0.01f, 0f, 0.0f));
         }
     }
 }

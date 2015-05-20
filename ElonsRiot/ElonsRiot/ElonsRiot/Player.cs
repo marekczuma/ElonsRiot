@@ -23,8 +23,12 @@ namespace ElonsRiot
         public bool showGun;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
+        public Vector3 nearPoint;
+        public Vector3 farPoint;
         public Player()
         {
+            nearPoint = new Vector3(0, 0, 0);
+            farPoint = new Vector3(0, 0, 0);
             elonState = new CharacterState(State.idle);
             camera = new Camera();
             isMouseMovement = false;
@@ -246,7 +250,7 @@ namespace ElonsRiot
             }
             if(state.IsKeyDown(Keys.L))
             {
-                GameObject tmpBox = GetObjectByRay(_scene, state, "boxForMovement",50);
+                GameObject tmpBox = GetObjectByRay(_scene, state, "boxForMovement",500);
                 //foreach(var elem in _scene.GameObjects)
                 //{
                 //    if(elem.Name == "boxForMovement")
@@ -296,8 +300,14 @@ namespace ElonsRiot
         private Ray GetPickRay(Scene _scene)
         {
             Matrix world = Matrix.CreateTranslation(10, 0, 0);
-            Vector3 nearPoint = _scene.GraphicsDevice.Viewport.Unproject(_scene.PlayerObject.camera.position, _scene.PlayerObject.camera.projectionMatrix, _scene.PlayerObject.camera.viewMatrix, world);
-            Vector3 farPoint = _scene.GraphicsDevice.Viewport.Unproject(this.camera.target, this.camera.projectionMatrix, this.camera.viewMatrix, world);
+             nearPoint = _scene.GraphicsDevice.Viewport.Unproject(_scene.PlayerObject.camera.position, _scene.PlayerObject.camera.projectionMatrix, _scene.PlayerObject.camera.viewMatrix, world);
+             farPoint = _scene.GraphicsDevice.Viewport.Unproject(this.camera.target, this.camera.projectionMatrix, this.camera.viewMatrix, world);
+            Vector3 temp = farPoint;
+            temp.Y += 0.3f;
+            farPoint = temp;
+            temp = nearPoint;
+            temp.Y += 0.3f;
+            nearPoint = temp;
             Vector3 direction = farPoint - nearPoint;
             direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction);
