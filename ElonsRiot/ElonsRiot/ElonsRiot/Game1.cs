@@ -20,7 +20,8 @@ namespace ElonsRiot
         MouseState CurrentMouseState { get; set; }
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteBatch spriteBatchHUD;
+        SpriteBatch[] spriteBatchHUD;
+        SpriteBatch[] spriteBatchHUD2;
        // HUD myHUD;
 
         public Game1()
@@ -39,8 +40,13 @@ namespace ElonsRiot
 
         protected override void LoadContent()
         {
+            spriteBatchHUD = new SpriteBatch[2];
+            spriteBatchHUD2 = new SpriteBatch[2];
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            spriteBatchHUD = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD[0] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD[1] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD2[0] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD2[1] = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
@@ -70,8 +76,8 @@ namespace ElonsRiot
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, GraphicsDevice);
-            
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice);
+            HUD. DrawHUDGuns(spriteBatchHUD2,50, GraphicsDevice);
             base.Draw(gameTime);
         }
 

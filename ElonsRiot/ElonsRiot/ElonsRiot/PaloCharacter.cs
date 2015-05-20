@@ -20,6 +20,7 @@ namespace ElonsRiot
         public BoxMovementAI MoveBoxAI { get; set; }
         public WalkState Walk { get; set; }
         private float velocity;
+        public float health;
         public PaloCharacter()
         {
             distance = 1.0f;
@@ -27,6 +28,7 @@ namespace ElonsRiot
             PaloLearningState = LearningState.idle;
             velocity = 0.12f;
             Guards = new List<Guard>();
+            health = 100;
         }
 
         public void WalkForward()

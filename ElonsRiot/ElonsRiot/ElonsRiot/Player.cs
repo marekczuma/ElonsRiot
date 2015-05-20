@@ -211,6 +211,18 @@ namespace ElonsRiot
             {
                 Palo.RotateToBox(Palo.MoveBoxAI.Cube);
             }
+            if (state.IsKeyDown(Keys.B))
+            {
+                health -= 1;
+                if (health <= 0)
+                    health = 0;
+            }
+            else if (state.IsKeyDown(Keys.N))
+            {
+                health += 1;
+                if (health >= 100)
+                    health = 100;
+            }
         }
 
         public GameObject GetObjectByRay(Scene _scene, KeyboardState _state, string _name, float _distance)
