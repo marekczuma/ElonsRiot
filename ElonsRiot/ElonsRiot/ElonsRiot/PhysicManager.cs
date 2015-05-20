@@ -16,12 +16,15 @@ namespace ElonsRiot
         static List<GameObject> NotInteractiveGameObject;
         static List<GameObject> Boxes;
         static List<GameObject> Characters;
+        static List<GameObject> Enemies;
         static GameObject floor;
         static GameObject Palo;
         static Player Elon;
         static bool isStart;
         public static bool isClimbing;
-        public static void setElements()
+        static SpriteBatch spriteBatchHUD;
+        static GraphicsDevice graphicDevice;
+        public static void setElements(GraphicsDevice graphic)
         {
             boxesCollision = new BoxBoxCollision();
             isStart = true;
@@ -30,7 +33,10 @@ namespace ElonsRiot
             NotInteractiveGameObject = new List<GameObject>();
             Boxes = new List<GameObject>();
             Characters = new List<GameObject>();
+            Enemies = new List<GameObject>();
 
+            spriteBatchHUD = new SpriteBatch(graphic);
+            graphicDevice = graphic;
         }
 
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
@@ -59,15 +65,6 @@ namespace ElonsRiot
                     {
                         floor = gObj;
                     }
-
-                    if (gObj.Name.Contains("Palo"))
-                    {
-                        Palo = gObj;
-                    }
-                    if (gObj.Name.Contains("Elon"))
-                    {
-                        Elon = (Player)gObj;
-                    }
                     if (gObj.Name.Contains("box"))
                     {
                         Boxes.Add(gObj);
@@ -75,6 +72,10 @@ namespace ElonsRiot
                     if (gObj.Name.Contains("character"))
                     {
                         Characters.Add(gObj);
+                    }
+                    if (gObj.Name.Contains("enemy"))
+                    {
+                        Enemies.Add(gObj);
                     }
                 }
                 
@@ -89,6 +90,18 @@ namespace ElonsRiot
                       character.AAbox.createBoudingBoxes();
                       
                      }
+                  //tworzenie AAboxów dla wrogów
+                  foreach (GameObject enemy in Enemies)
+                  {
+                      enemy.Initialize();
+                      enemy.RefreshMatrix();
+                      enemy.GetCentre();
+                      enemy.AAbox = new Box(enemy, player);
+                      enemy.AAbox.GetCorners();
+                      enemy.AAbox.createBoudingBox();
+                      enemy.AAbox.createBoudingBoxes();
+
+                  }
                   //inicjalizjacja Plane dla podłogi
                   floor.Initialize();
                   floor.GetCentre();
@@ -127,11 +140,17 @@ namespace ElonsRiot
                 character.AAbox.GetRadius();
                 character.AAbox.GetCorners();
                 character.AAbox.createBoudingBox();
-                if (character.Name == "characterElon" || character.Name == "characterPalo")
-                {
-                    character.AAbox.createBoudingBoxes();
-                }
                 character.AAbox.GetRefrecneObjectAndPlayer(character, player);
+            }
+            //atualizacja wrogów
+            foreach (GameObject enemy in Enemies)
+            {
+
+                enemy.AAbox.CreateRadiuses();
+                enemy.AAbox.GetRadius();
+                enemy.AAbox.GetCorners();
+                enemy.AAbox.createBoudingBox();
+                enemy.AAbox.GetRefrecneObjectAndPlayer(enemy, player);
             }
             //aktualuzacja boxów
             foreach (GameObject box in Boxes)
@@ -148,6 +167,7 @@ namespace ElonsRiot
                 foreach(GameObject character2 in Characters)
                  if (character.Name != character2.Name && boxesCollision.TestAABBAABB(character, character2))
                 {
+                    character.AAbox.createBoudingBoxes();
                      if(boxesCollision.TestAABBAABBTMP(character,character2))
                      {
                          character.Position = character.oldPosition;
@@ -161,6 +181,7 @@ namespace ElonsRiot
                 { 
                     if (boxesCollision.TestAABBAABB(character, gObj))
                     {
+                        character.AAbox.createBoudingBoxes();
                         if(boxesCollision.TestAABBAABBTMP(character,gObj))
                         {
                             character.Position = character.oldPosition;
@@ -180,11 +201,39 @@ namespace ElonsRiot
                         character.SetPositionY(character.oldPosition.Y);
                     }
                 }
+            } 
+            //kolizka bohaterów z wrogami
+            foreach (GameObject character in Characters)
+            {
+                foreach (GameObject enemy in Enemies)
+                {
+                    if (boxesCollision.TestAABBAABB(character, enemy))
+                    {
+                         character.AAbox.createBoudingBoxes();
+                         if (boxesCollision.TestAABBAABBTMP(character, enemy))
+                         {
+                             character.Position = character.oldPosition;
+                             enemy.Position = enemy.oldPosition;
+                         }
+                    }
+                }
+            } 
+            //kolizja wrogów z elementami nieaktywnymi
+            foreach (GameObject enemy in Enemies)
+            {
+                foreach (GameObject gObj in NotInteractiveGameObject)
+                {
+                    if (boxesCollision.TestAABBAABB(enemy, gObj))
+                    {
+                            enemy.Position = enemy.oldPosition;
+                        
+                    }
+                }
             }
             foreach(GameObject character in Characters)
             {
                 ActivateGravity(character, gameO, floor.plane);
-            }
+            } 
        
         }
 
@@ -197,10 +246,11 @@ namespace ElonsRiot
                 if (isFirst == false)
                 {
                     Interactions.Add(box.interactionType);
+             //      HUD.DrawString(spriteBatchHUD, "message new nanana", graphicDevice);
                     isFirst = true;
                 }
                 Interactions.CallInteraction(box);
-              
+                
             }
         }
       

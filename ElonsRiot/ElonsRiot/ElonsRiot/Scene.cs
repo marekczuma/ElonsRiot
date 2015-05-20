@@ -168,7 +168,7 @@ namespace ElonsRiot
         private void LoadGuards()
         {
             Guard Marian = new Guard();
-            Marian.Name = "characterMarian";
+            Marian.Name = "enemyMarian";
             Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Marian.Position = new Vector3(0, 4, 0);
             Marian.Rotation = new Vector3(0, 0, 0);
@@ -178,7 +178,7 @@ namespace ElonsRiot
             Marian.oldPosition = new Vector3(0, 4, 0);
             Marian.newPosition = new Vector3(0, 4, 0);
             Guard Zenon = new Guard();
-            Zenon.Name = "characterZenon";
+            Zenon.Name = "enemyZenon";
             Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
             Zenon.Position = new Vector3(10, 4, 5);
             Zenon.Rotation = new Vector3(0, 0, 0);

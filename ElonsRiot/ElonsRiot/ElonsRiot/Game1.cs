@@ -33,7 +33,7 @@ namespace ElonsRiot
         }
         protected override void Initialize()
         {
-            PhysicManager.setElements();
+            PhysicManager.setElements(graphics.GraphicsDevice);
             base.Initialize();
         }
 

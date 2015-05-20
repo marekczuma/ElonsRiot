@@ -39,7 +39,7 @@ namespace ElonsRiot
         public static void DrawString(SpriteBatch spriteBatch,String message, GraphicsDevice graphic)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "" + message, new Vector2(160, 5), Color.White);
+            spriteBatch.DrawString(font, "" + message, new Vector2(100, 2), Color.White);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
 
