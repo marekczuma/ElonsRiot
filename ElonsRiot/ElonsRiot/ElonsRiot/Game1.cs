@@ -30,7 +30,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
          //   myHUD = new HUD();
         }
         protected override void Initialize()
@@ -63,7 +63,7 @@ namespace ElonsRiot
             // Allows the game to exit
             if (state.IsKeyDown(Keys.Escape))
                 this.Exit();
-            
+
             MyScene.PlayerControll(state, gameTime, CurrentMouseState);
             CurrentMouseState = Mouse.GetState();
             MyScene.Update(MyScene.PlayerObject, gameTime);
@@ -78,7 +78,7 @@ namespace ElonsRiot
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice);
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width);
             if(MyScene.PlayerObject.showGun == true)
             {
                 HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
@@ -105,9 +105,9 @@ namespace ElonsRiot
                             {
                                 
                                // Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
-                              //  MyScene.GameObjects[i].ChangePosition(new Vector3(0f, 0f, 0.2f));
-                                Interactions.Add(MyScene.GameObjects[i].interactionType);
-                                Interactions.CallInteraction(MyScene.GameObjects[i]);
+                                MyScene.GameObjects[i].ChangePosition(new Vector3(0.05f, 0f, 0.0f));
+                                //Interactions.Add(MyScene.GameObjects[i].interactionType);
+                                //Interactions.CallInteraction(MyScene.GameObjects[i]);
                             }
                         }
                     }
@@ -137,6 +137,12 @@ namespace ElonsRiot
             Matrix world = Matrix.CreateTranslation(10, 0, 0);
             Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
             Vector3 farPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.target, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
+            Vector3 temp = farPoint;
+            temp.Y += 0.3f;
+            farPoint = temp;
+            temp = nearPoint;
+            temp.Y += 0.3f;
+            nearPoint = temp;
             Vector3 direction = farPoint - nearPoint;
             direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction);

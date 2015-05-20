@@ -29,7 +29,7 @@ namespace ElonsRiot
             gunPalo = content.Load<Texture2D>("HUD/Gun/GunPalo");
         }
 
-        public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics)
+        public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width)
         {
             scale = new Vector2(0.4f * (healthElon / 100), 0.4f);
             spriteBatch[0].Begin();
@@ -41,12 +41,15 @@ namespace ElonsRiot
 
             scalePalo = new Vector2(0.4f * (healthPalo / 100), 0.4f);
             spriteBatch[1].Begin();
-            spriteBatch[1].Draw(healthBackground, new Vector2(505, 10), null, Color.White, 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0);
-            spriteBatch[1].Draw(healthValue, new Vector2(505, 10), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
-            spriteBatch[1].Draw(healthBar, new Vector2(470, 0), null, Color.White, 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0);
-            spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(620, 5), Color.White);
+            spriteBatch[1].Draw(healthBackground, new Vector2(width - 307, 10), null, Color.White, 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0);
+            spriteBatch[1].Draw(healthValue, new Vector2(width - 307, 10), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
+            spriteBatch[1].Draw(healthBar, new Vector2(width - 340, 0), null, Color.White, 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0);
+            spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
+            spriteBatch[1].DrawString(font, "Visible objects: " + myScene.VisibleGameObjects.Count, new Vector2(300, 15), Color.White);
             spriteBatch[1].End();
+
             graphics.DepthStencilState = DepthStencilState.Default;
+
 
         }
         public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammoElon,float ammoPalo,float ammoMax, GraphicsDevice graphics,int width)
@@ -56,8 +59,8 @@ namespace ElonsRiot
             spriteBatch[0].DrawString(font, "" + ammoElon + "/" + ammoMax, new Vector2(160, 50), Color.White);
             spriteBatch[0].End();
             spriteBatch[1].Begin();
-            spriteBatch[1].Draw(gunPalo, new Vector2(width-150, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
-            spriteBatch[1].DrawString(font, "" + ammoPalo + "/" + ammoMax, new Vector2(600, 50), Color.White);
+            spriteBatch[1].Draw(gunPalo, new Vector2(width - 170, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+            spriteBatch[1].DrawString(font, "" + ammoPalo + "/" + ammoMax, new Vector2(width - 220, 50), Color.White);
             spriteBatch[1].End();
             graphics.DepthStencilState = DepthStencilState.Default;
 

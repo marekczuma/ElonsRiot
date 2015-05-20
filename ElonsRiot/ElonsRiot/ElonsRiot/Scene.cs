@@ -19,6 +19,7 @@ namespace ElonsRiot
         public GraphicsDevice GraphicsDevice { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public List<GameObject> NPCs { get; set; }
+        public List<GameObject> VisibleGameObjects {get; set;}
         public XMLScene XMLScene { get; set; }
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
@@ -33,6 +34,7 @@ namespace ElonsRiot
             ContentManager = _contentManager;
             GraphicsDevice = _graphicsDevice;
             XMLScene = new XMLScene();
+            VisibleGameObjects = new List<GameObject>();
            
         }
         public Scene()
@@ -93,7 +95,7 @@ namespace ElonsRiot
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
-             foreach(var elem in GameObjects)
+             foreach(var elem in VisibleGameObjects)
              {
                  if ((elem.Name == "characterElon") || (elem.Name == "characterPalo") || (elem.Tag == "guard"))
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
@@ -101,14 +103,15 @@ namespace ElonsRiot
                     elem.DrawModels(ContentManager, PlayerObject);               
                 elem.RefreshMatrix();
              }
-            foreach (GameObject gObj in this.GameObjects)
+            foreach (GameObject gObj in this.VisibleGameObjects)
             {
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
              //   DrawBoudingBoxes(graphic, gObj);
             }
-            DrawBoudingBox(graphic);
+            //DrawBoudingBox(graphic);
+            DrawRay(graphic);
 
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -132,7 +135,14 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime)
         {
-            
+            VisibleGameObjects.Clear();
+
+            foreach (GameObject obj in GameObjects)
+            {
+                if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name == "terrain" || obj.Name == "ceil")
+                    VisibleGameObjects.Add(obj);
+            }
+
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
@@ -146,7 +156,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(100, 4, -90); ;
+            Vector3 tmpPos = new Vector3(100, 4, -90);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot);
             Elon.Name = "characterElon";
@@ -175,26 +185,26 @@ namespace ElonsRiot
             Guard Marian = new Guard();
             Marian.Name = "enemyMarian";
             Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
-            Marian.Position = new Vector3(0, 4, 0);
-            Marian.Rotation = new Vector3(0, 0, 0);
+            Marian.Position = new Vector3(90, 4, 35);
+            Marian.Rotation = new Vector3(86, 0, 34);
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
-            Marian.oldPosition = 
-            Marian.oldPosition = new Vector3(0, 4, 0);
-            Marian.newPosition = new Vector3(0, 4, 0);
-            Guard Zenon = new Guard();
-            Zenon.Name = "enemyZenon";
-            Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
-            Zenon.Position = new Vector3(10, 4, 5);
-            Zenon.Rotation = new Vector3(0, 0, 0);
-            Zenon.ObjectPath = "3D/ludzik/dude";
-            Zenon.oldPosition = new Vector3(10, 4, 5);
-            Zenon.newPosition = new Vector3(10, 4, 5);
-            Zenon.Tag = "guard";
+            Marian.oldPosition =
+            Marian.oldPosition = new Vector3(90, 4, 35);
+            Marian.newPosition = new Vector3(90, 4, 35);
+            //Guard Zenon = new Guard();
+            //Zenon.Name = "enemyZenon";
+            //Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
+            //Zenon.Position = new Vector3(86, 0, 34);
+            //Zenon.Rotation = new Vector3(0, 0, 0);
+            //Zenon.ObjectPath = "3D/ludzik/dude";
+            //Zenon.oldPosition = new Vector3(86, 0, 34);
+            //Zenon.newPosition = new Vector3(86, 0, 34);
+            //Zenon.Tag = "guard";
             GameObjects.Add(Marian);
-            GameObjects.Add(Zenon);
+            //GameObjects.Add(Zenon);
             NPCs.Add(Marian);
-            NPCs.Add(Zenon);
+            //NPCs.Add(Zenon);
 
         }
         private void LoadPalo()
@@ -263,6 +273,27 @@ namespace ElonsRiot
                             PrimitiveType.LineList, primitiveList, 0, 8,
                             gameObj.bBoxIndices, 0, 12);
                     }
+            }
+        }
+        public void DrawRay(GraphicsDevice graphic)
+        {
+            short[] bBoxIndices ={0, 1,0};
+            VertexPositionColor[] primitiveList = new VertexPositionColor[2];
+            primitiveList[0] = new VertexPositionColor(PlayerObject.nearPoint, Color.White);
+            primitiveList[1] = new VertexPositionColor(PlayerObject.farPoint, Color.White);
+           
+            basicEffect.World = Matrix.Identity;
+            basicEffect.View = PlayerObject.camera.viewMatrix;
+            basicEffect.Projection = PlayerObject.camera.projectionMatrix;
+            basicEffect.TextureEnabled = false;
+
+            // Draw the box with a LineList
+            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphic.DrawUserIndexedPrimitives(
+                    PrimitiveType.LineList, primitiveList, 0, 2,
+                    bBoxIndices, 0, 1);
             }
         }
         public void DrawBoudingBoxes(GraphicsDevice graphic,GameObject gameObj)

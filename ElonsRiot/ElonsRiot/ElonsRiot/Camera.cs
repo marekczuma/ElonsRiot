@@ -33,6 +33,8 @@ namespace ElonsRiot
         private Vector3 desiredPosition;
         private Vector3 desiredTarget;
         public Vector3 offsetDistance;
+        public BoundingFrustum frustum;
+
         public Camera()
         {
             ResetCamera();
@@ -40,11 +42,13 @@ namespace ElonsRiot
 
         public void ResetCamera()
         {
-            position = new Vector3(0, 10, 50);
+            position = new Vector3(0, 20, 50);
             target = new Vector3();
 
             viewMatrix = Matrix.Identity;
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 16 / 9, 0.5f, 500f);
+
+            frustum = new BoundingFrustum(viewMatrix * projectionMatrix);
 
             yaw = 0.0f;
             pitch = 0.0f;
@@ -94,6 +98,14 @@ namespace ElonsRiot
 
             HandleInput(elonState, rotation);
             UpdateViewMatrix(chasedObjectsWorld, elonState);
+            UpdateFrustum();
+
+        }
+
+        public void UpdateFrustum()
+        {
+            Matrix viewProjection = viewMatrix * projectionMatrix;
+            frustum.Matrix = viewProjection;
         }
 
         public void UpdateCamera(GameTime gameTime)
