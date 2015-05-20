@@ -20,6 +20,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
+        public bool showGun;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
         public Player()
@@ -47,6 +48,7 @@ namespace ElonsRiot
             health = 100.0f;
             ammo = 50;
             ammoMax = 50;
+            showGun = false;
             boxes = new List<BoundingBox>();
         }
 
@@ -157,7 +159,18 @@ namespace ElonsRiot
                     Palo.health = 100;
             }
         }
-        
+        public void ShowHideGun(KeyboardState state)
+        {
+            if (state.IsKeyDown(Keys.T))
+            {
+                showGun = true;
+            }
+            else if (state.IsKeyDown(Keys.Y))
+            {
+                showGun = false;
+            }
+           
+        }
         public void ChangeAmmo(KeyboardState state)
         {
             if (state.IsKeyDown(Keys.Z))
