@@ -138,6 +138,18 @@ namespace ElonsRiot
                 if (health >= 100)
                     health = 100;
             }
+            if (state.IsKeyDown(Keys.B))
+            {
+                Palo.health -= 1;
+                if (Palo.health <= 0)
+                    Palo.health = 0;
+            }
+            else if (state.IsKeyDown(Keys.N))
+            {
+                Palo.health += 1;
+                if (Palo.health >= 100)
+                    Palo.health = 100;
+            }
         }
         public void SetPaloState(KeyboardState state, Scene _scene)
         {
@@ -210,18 +222,6 @@ namespace ElonsRiot
             if(state.IsKeyDown(Keys.O))
             {
                 Palo.RotateToBox(Palo.MoveBoxAI.Cube);
-            }
-            if (state.IsKeyDown(Keys.B))
-            {
-                health -= 1;
-                if (health <= 0)
-                    health = 0;
-            }
-            else if (state.IsKeyDown(Keys.N))
-            {
-                health += 1;
-                if (health >= 100)
-                    health = 100;
             }
         }
 
