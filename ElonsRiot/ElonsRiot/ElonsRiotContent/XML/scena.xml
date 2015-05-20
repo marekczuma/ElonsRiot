@@ -422,9 +422,9 @@
 	</GameObject>
 	<GameObject Name="boxForMovement" Path="3D/Boxes/box">
 		<Position>
-		  <X>6</X>
+		  <X>45</X>
 		  <Y>4</Y>
-		  <Z>-27</Z>
+		  <Z>-10</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
