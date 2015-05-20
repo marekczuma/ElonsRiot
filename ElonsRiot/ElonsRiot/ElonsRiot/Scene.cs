@@ -16,6 +16,7 @@ namespace ElonsRiot
     public class Scene// : Microsoft.Xna.Framework.Game
     {
         public ContentManager ContentManager { get; set; }
+        public GraphicsDevice GraphicsDevice { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public List<GameObject> NPCs { get; set; }
         public XMLScene XMLScene { get; set; }
@@ -25,11 +26,12 @@ namespace ElonsRiot
        // private Physic physic;
         AnimationPlayer animationPlayer;
         AnimationPlayer animationPlayerPalo;
-        public Scene(ContentManager _contentManager)
+        public Scene(ContentManager _contentManager, GraphicsDevice _graphicsDevice)
         {
             GameObjects = new List<GameObject>();
             NPCs = new List<GameObject>();
             ContentManager = _contentManager;
+            GraphicsDevice = _graphicsDevice;
             XMLScene = new XMLScene();
            
         }
@@ -142,7 +144,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(-100, 4, 13); ;
+            Vector3 tmpPos = new Vector3(100, 4, -90); ;
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot);
             Elon.Name = "characterElon";
@@ -154,6 +156,7 @@ namespace ElonsRiot
             Elon.Palo.Elon = Elon;
             Elon.mass = 70;
             Elon.Tag = "Player";
+            Elon.GraphicsDevice = GraphicsDevice;
             GameObjects.Add(Elon);
             PlayerObject = Elon;
             //GameObject sciana = new GameObject();

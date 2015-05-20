@@ -27,7 +27,7 @@ namespace ElonsRiot
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            MyScene = new Scene(Content);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
+            MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
          //   myHUD = new HUD();
         }
@@ -68,6 +68,7 @@ namespace ElonsRiot
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, GraphicsDevice);
             

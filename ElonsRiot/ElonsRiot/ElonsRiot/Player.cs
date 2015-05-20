@@ -187,22 +187,25 @@ namespace ElonsRiot
             }
             if(state.IsKeyDown(Keys.L))
             {
-                GameObject tmpBox = new GameObject();
-                foreach(var elem in _scene.GameObjects)
+                GameObject tmpBox = GetObjectByRay(_scene, state, "boxForMovement",50);
+                //foreach(var elem in _scene.GameObjects)
+                //{
+                //    if(elem.Name == "boxForMovement")
+                //    {
+                //        tmpBox = elem;
+                //        break;
+                //    }
+                //}
+                if (tmpBox != null)
                 {
-                    if(elem.Name == "boxForMovement")
-                    {
-                        tmpBox = elem;
-                        break;
-                    }
+                    BoxMovementAI tmpAI = new BoxMovementAI(this.Position);
+                    tmpAI.PointA = Palo.FindPlaceBehindObject(tmpBox, this.Position);
+                    tmpAI.Cube = tmpBox;
+                    tmpAI.CubeMass = tmpBox.mass;
+                    Palo.MoveBoxAI = tmpAI;
+                    Palo.PaloState = FriendState.walk;
+                    Palo.Walk = WalkState.moveBox;
                 }
-                BoxMovementAI tmpAI = new BoxMovementAI(this.Position);
-                tmpAI.PointA = Palo.FindPlaceBehindObject(tmpBox, this.Position);
-                tmpAI.Cube = tmpBox;
-                tmpAI.CubeMass = tmpBox.mass;
-                Palo.MoveBoxAI = tmpAI;
-                Palo.PaloState = FriendState.walk;
-                Palo.Walk = WalkState.moveBox;
             }
             if(state.IsKeyDown(Keys.O))
             {
@@ -210,16 +213,32 @@ namespace ElonsRiot
             }
         }
 
-        public GameObject GetObjectByRay(Scene _scene, KeyboardState _state)
+        public GameObject GetObjectByRay(Scene _scene, KeyboardState _state, string _name, float _distance)
         {
-            return new GameObject();
+            Ray pickRay = GetPickRay(_scene);
+            float selectedDistance = _distance;
+            for (int i = 0; i < _scene.GameObjects.Count; i++)
+            {
+                if ((_scene.GameObjects[i].Interactive == true) && (_scene.GameObjects[i].Name == _name))
+                {
+                    Nullable<float> result = pickRay.Intersects(_scene.GameObjects[i].boundingBox);
+                    if (result.HasValue == true)
+                    {
+                        if (result.Value < selectedDistance)
+                        {
+                            return _scene.GameObjects[i];
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         private Ray GetPickRay(Scene _scene)
         {
             Matrix world = Matrix.CreateTranslation(10, 0, 0);
-            Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(this.camera.position, this.camera.projectionMatrix, this.camera.viewMatrix, world);
-            Vector3 farPoint = GraphicsDevice.Viewport.Unproject(this.camera.target, this.camera.projectionMatrix, this.camera.viewMatrix, world);
+            Vector3 nearPoint = _scene.GraphicsDevice.Viewport.Unproject(_scene.PlayerObject.camera.position, _scene.PlayerObject.camera.projectionMatrix, _scene.PlayerObject.camera.viewMatrix, world);
+            Vector3 farPoint = _scene.GraphicsDevice.Viewport.Unproject(this.camera.target, this.camera.projectionMatrix, this.camera.viewMatrix, world);
             Vector3 direction = farPoint - nearPoint;
             direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction);
