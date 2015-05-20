@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace ElonsRiot
 {
     public class Player : GameObject
     {
+        public GraphicsDevice GraphicsDevice { get; set; }
         public CharacterState elonState {get; set;}    //STAN ELONA - TO JEST KLASA KUŹWA!
         public Camera camera;
         public float health;
@@ -206,6 +208,22 @@ namespace ElonsRiot
             {
                 Palo.RotateToBox(Palo.MoveBoxAI.Cube);
             }
+        }
+
+        public GameObject GetObjectByRay(Scene _scene, KeyboardState _state)
+        {
+            return new GameObject();
+        }
+
+        private Ray GetPickRay(Scene _scene)
+        {
+            Matrix world = Matrix.CreateTranslation(10, 0, 0);
+            Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(this.camera.position, this.camera.projectionMatrix, this.camera.viewMatrix, world);
+            Vector3 farPoint = GraphicsDevice.Viewport.Unproject(this.camera.target, this.camera.projectionMatrix, this.camera.viewMatrix, world);
+            Vector3 direction = farPoint - nearPoint;
+            direction.Normalize();
+            Ray pickRay = new Ray(nearPoint, direction);
+            return pickRay;
         }
     }
 }
