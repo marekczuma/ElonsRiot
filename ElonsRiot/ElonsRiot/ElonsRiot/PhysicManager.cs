@@ -49,7 +49,7 @@ namespace ElonsRiot
                     if (gObj.Interactive == true)
                     {
 
-                        if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
+                        if (gObj.Name != "terrain" && !gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
                         {
                             InteractiveGameObject.Add(gObj);
                         }
@@ -90,6 +90,18 @@ namespace ElonsRiot
                       character.AAbox.createBoudingBoxes();
                       
                      }
+                  //tworzenie AAboxów dla boxów
+                  foreach (GameObject box in Boxes)
+                  {
+                      box.Initialize();
+                      box.RefreshMatrix();
+                      box.GetCentre();
+                      box.AAbox = new Box(box, player);
+                      box.AAbox.GetCorners();
+                      box.AAbox.createBoudingBox();
+                      box.AAbox.createBoudingBoxes();
+
+                  }
                   //tworzenie AAboxów dla wrogów
                   foreach (GameObject enemy in Enemies)
                   {
@@ -117,6 +129,8 @@ namespace ElonsRiot
                       gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
+                      gObj.AAbox.GetCorners();
+                      gObj.AAbox.createBoudingBox();
 
                   }
                 //inicjalizacja aktywnych
@@ -126,6 +140,8 @@ namespace ElonsRiot
                       gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
+                      gObj.AAbox.GetCorners();
+                      gObj.AAbox.createBoudingBox();
 
                   }
 
@@ -161,6 +177,28 @@ namespace ElonsRiot
                 box.AAbox.createBoudingBox();
                 box.AAbox.GetRefrecneObjectAndPlayer(box, player);
             }
+            //aktualuzacja aktywnych
+            foreach (GameObject interactive in InteractiveGameObject)
+            {
+                interactive.AAbox.CreateRadiuses();
+                interactive.AAbox.GetRadius();
+                interactive.AAbox.GetCorners();
+                interactive.AAbox.createBoudingBox();
+                interactive.AAbox.GetRefrecneObjectAndPlayer(interactive, player);
+            }
+            //kolizja aktywnych z charakterami
+            foreach(GameObject character in Characters)
+            {
+                foreach (GameObject interactive in InteractiveGameObject)
+                    if (boxesCollision.TestAABBAABB(character, interactive))
+                    {
+                        character.AAbox.createBoudingBoxes();
+                        if (boxesCollision.TestAABBAABBTMP(character, interactive))
+                        {
+                            character.Position = character.oldPosition;
+                        }
+                    }
+            }
             //kolija między charakterami
            foreach (GameObject character in Characters)
             {
@@ -188,6 +226,21 @@ namespace ElonsRiot
                         }
                     }
                   }
+            }
+            //kolizja elemetów interaktywnych z bahataterami 
+            foreach (GameObject character in Characters)
+            {
+                foreach (GameObject gObj in InteractiveGameObject)
+                {
+                    if (boxesCollision.TestAABBAABB(character, gObj))
+                    {
+                        character.AAbox.createBoudingBoxes();
+                        if (boxesCollision.TestAABBAABBTMP(character, gObj))
+                        {
+                            character.Position = character.oldPosition;
+                        }
+                    }
+                }
             }
           
             ChceckBoxesCollision(Boxes);

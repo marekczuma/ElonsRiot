@@ -20,7 +20,8 @@ namespace ElonsRiot
         MouseState CurrentMouseState { get; set; }
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteBatch spriteBatchHUD;
+        SpriteBatch[] spriteBatchHUD;
+        SpriteBatch[] spriteBatchHUD2;
        // HUD myHUD;
 
         public Game1()
@@ -29,6 +30,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
+            graphics.IsFullScreen = false;
          //   myHUD = new HUD();
         }
         protected override void Initialize()
@@ -39,8 +41,13 @@ namespace ElonsRiot
 
         protected override void LoadContent()
         {
+            spriteBatchHUD = new SpriteBatch[2];
+            spriteBatchHUD2 = new SpriteBatch[2];
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            spriteBatchHUD = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD[0] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD[1] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD2[0] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD2[1] = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
@@ -52,10 +59,11 @@ namespace ElonsRiot
         }
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
             state = Keyboard.GetState();
+            // Allows the game to exit
+            if (state.IsKeyDown(Keys.Escape))
+                this.Exit();
+            
             MyScene.PlayerControll(state, gameTime, CurrentMouseState);
             CurrentMouseState = Mouse.GetState();
             MyScene.Update(MyScene.PlayerObject, gameTime);
@@ -70,8 +78,12 @@ namespace ElonsRiot
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, GraphicsDevice);
-            
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice);
+            if(MyScene.PlayerObject.showGun == true)
+            {
+                HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
+                GraphicsDevice,GraphicsDevice.Viewport.Width);
+            }
             base.Draw(gameTime);
         }
 
