@@ -63,7 +63,7 @@ namespace ElonsRiot
             // Allows the game to exit
             if (state.IsKeyDown(Keys.Escape))
                 this.Exit();
-            
+
             MyScene.PlayerControll(state, gameTime, CurrentMouseState);
             CurrentMouseState = Mouse.GetState();
             MyScene.Update(MyScene.PlayerObject, gameTime);
@@ -78,7 +78,7 @@ namespace ElonsRiot
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice);
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice, MyScene);
             if(MyScene.PlayerObject.showGun == true)
             {
                 HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,

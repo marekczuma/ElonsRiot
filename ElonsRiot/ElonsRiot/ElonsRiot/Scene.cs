@@ -19,6 +19,7 @@ namespace ElonsRiot
         public GraphicsDevice GraphicsDevice { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public List<GameObject> NPCs { get; set; }
+        public List<GameObject> VisibleGameObjects {get; set;}
         public XMLScene XMLScene { get; set; }
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
@@ -33,6 +34,7 @@ namespace ElonsRiot
             ContentManager = _contentManager;
             GraphicsDevice = _graphicsDevice;
             XMLScene = new XMLScene();
+            VisibleGameObjects = new List<GameObject>();
            
         }
         public Scene()
@@ -93,7 +95,7 @@ namespace ElonsRiot
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
-             foreach(var elem in GameObjects)
+             foreach(var elem in VisibleGameObjects)
              {
                  if ((elem.Name == "characterElon") || (elem.Name == "characterPalo") || (elem.Tag == "guard"))
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
@@ -101,7 +103,7 @@ namespace ElonsRiot
                     elem.DrawModels(ContentManager, PlayerObject);               
                 elem.RefreshMatrix();
              }
-            foreach (GameObject gObj in this.GameObjects)
+            foreach (GameObject gObj in this.VisibleGameObjects)
             {
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
@@ -132,7 +134,14 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime)
         {
-            
+            VisibleGameObjects.Clear();
+
+            foreach (GameObject obj in GameObjects)
+            {
+                if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name == "terrain" || obj.Name == "ceil")
+                    VisibleGameObjects.Add(obj);
+            }
+
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
