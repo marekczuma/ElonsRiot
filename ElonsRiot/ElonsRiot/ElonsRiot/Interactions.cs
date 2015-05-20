@@ -85,6 +85,7 @@ namespace ElonsRiot
                             if (bbcol.TestAABBAABB(gameBox, gameObject) && gameBox.Name != gameObject.Name)
                             {
                                 isColliding = false;
+                                character.AAbox.createBoudingBoxes();
                                 if (bbcol.TestAABBAABBTMP(character, gameObject))
                                 {
                                     character.Position = character.oldPosition;
@@ -95,6 +96,7 @@ namespace ElonsRiot
                         } 
                        if(massDifference < 0)
                        {
+                           character.AAbox.createBoudingBoxes();
                            if (bbcol.TestAABBAABBTMP(character, gameObject))
                            {
                             character.Position = character.oldPosition;
