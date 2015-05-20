@@ -187,6 +187,10 @@ namespace ElonsRiot
             Position += _position;
             newPosition = Position;
         }
+        public void SetPositionY(float y)
+        {
+            Position = new Vector3(Position.X, y, Position.Z);
+        }
         public void SetPosition(Vector3 _position)
         {
             oldPosition = Position;

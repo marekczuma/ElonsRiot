@@ -75,21 +75,24 @@ namespace ElonsRiot
             BoxBoxCollision bbcol = new BoxBoxCollision();
             foreach (GameObject character in referenceCharacters)
             {
-                //isColliding = false;
-                if (bbcol.TestAABBAABB(character, gameObject))
+                if (bbcol.TestAABBAABB(character, gameObject) && gameObject.AAbox.max.Y > character.Position.Y)
                 {
                     isColliding = true;
                     massDifference = character.mass - gameObject.mass;
                        tmp = character.Position - character.oldPosition;
-                      /*  foreach (GameObject gameBox in referenceBoxes)
+                        foreach (GameObject gameBox in referenceBoxes)
                         {
-                            if (bbcol.TestAABBAABB(gameBox, gameObject) == true && gameBox.Name != gameObject.Name)
+                            if (bbcol.TestAABBAABB(gameBox, gameObject) && gameBox.Name != gameObject.Name)
                             {
-                                isColliding = true;
-                                character.Position = character.oldPosition;
+                                isColliding = false;
+                                if (bbcol.TestAABBAABBTMP(character, gameObject))
+                                {
+                                    character.Position = character.oldPosition;
+                                }
+                                gameObject.Position = gameObject.oldPosition;
                             }
 
-                        } */
+                        } 
                        if(massDifference < 0)
                        {
                            if (bbcol.TestAABBAABBTMP(character, gameObject))
@@ -104,10 +107,35 @@ namespace ElonsRiot
                 gameObject.ChangeRelativePosition(new Vector3(tmp.X, 0, tmp.Z));
                 isColliding = false;
             }
-            
+           
             
         }
-       
+       internal static void ClimbBox(GameObject gameObject)
+        {
+            BoxBoxCollision bbcol = new BoxBoxCollision();
+            foreach (GameObject character in referenceCharacters)
+            {
+                if (bbcol.TestAABBAABB(character, gameObject))
+                {
+                    character.SetPosition(new Vector3(gameObject.Position.X, gameObject.AAbox.max.Y +0.5f, gameObject.Position.Z));
+                    CollisionBox(gameObject);
+                   
+                }
+            }
+        }
+        internal static void CollisionBox(GameObject gameObj)
+       {
+           BoxBoxCollision bbcol = new BoxBoxCollision();
+           foreach (GameObject character in referenceCharacters)
+           {
+               if (bbcol.TestAABBAABB(character, gameObj))
+               {
+                   character.Position = character.oldPosition;
+                   Interactions.Add(InterationTypes.box);
+                //   Interactions.Delete();
+               }
+           }
+       }
         internal static void MoveDoor(GameObject gameObject)
         {
             gameObject.ChangePosition(new Vector3(0f, 0f, 0.2f));

@@ -26,6 +26,7 @@ namespace ElonsRiot
             angle = 0;
             health = 100.0f;
             boxes = new List<BoundingBox>();
+            gravity = -0.12f;
         }
 
         public Player(Vector3 _position, Vector3 _rotation)
@@ -53,7 +54,7 @@ namespace ElonsRiot
             }
             else if(state.IsKeyDown(Keys.M))
             {
-                PhysicManager.ClimbBox();
+                PhysicManager.ClimbBox(this);
             }
             else
             {

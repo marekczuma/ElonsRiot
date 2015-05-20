@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -76,6 +77,7 @@ namespace ElonsRiot
                         Characters.Add(gObj);
                     }
                 }
+                
                 //tworzenie AAboxów dla bohaterów
                   foreach(GameObject character in Characters){
                       character.Initialize();
@@ -116,6 +118,7 @@ namespace ElonsRiot
 
                 isStart = false;
             }
+           
             //atualizacja bohaterów
             foreach (GameObject character in Characters)
             {
@@ -165,13 +168,24 @@ namespace ElonsRiot
                     }
                   }
             }
-           
+          
             ChceckBoxesCollision(Boxes);
+         //kolizja bohaterów z boxami 
+            foreach (GameObject character in Characters)
+            {
+                foreach (GameObject box in Boxes)
+                {
+                    if(boxesCollision.TestAABBAABB(character,box))
+                    {
+                        character.SetPositionY(character.oldPosition.Y);
+                    }
+                }
+            }
             foreach(GameObject character in Characters)
             {
-                ActivateGravity(player, gameO, floor.plane);
+                ActivateGravity(character, gameO, floor.plane);
             }
-           
+       
         }
 
         static bool isFirst = false;
@@ -186,32 +200,22 @@ namespace ElonsRiot
                     isFirst = true;
                 }
                 Interactions.CallInteraction(box);
+              
             }
         }
       
-        public static void ClimbBox()
+        public static void ClimbBox(GameObject character)
         {
-            foreach (GameObject box in Boxes)
-            {
-                if (boxesCollision.TestAABBAABB(Elon, box))
+                foreach (GameObject box in Boxes)
                 {
-                    float x = box.Position.X -  Elon.Position.X;
-                    float z = box.Position.Z - Elon.Position.Z;
-                    Vector3 climbPosition = new Vector3(0, box.AAbox.max.Y-2, 0);
-                   // Elon.ChangePosition(climbPosition);
-                    Elon.SetPosition(new Vector3(box.Position.X, box.AAbox.max.Y, box.Position.Z));
-                    
+                    if (boxesCollision.TestAABBAABBWithError(character, box))
+                    {
+                        character.SetPosition(new Vector3(box.Position.X, box.AAbox.max.Y, box.Position.Z));
+                    }
                 }
-            }
         }
-        public static void ShowMessage(List<GameObject> ObjectWithMessage)
-        {
-            foreach(GameObject gameObj in ObjectWithMessage)
-            {
-            //    HUD.DrawString()
-            }
-        }
-        public static void ActivateGravity(Player player, List<GameObject> GameObjs,Plane floor)
+       
+        public static void ActivateGravity(GameObject player, List<GameObject> GameObjs,Plane floor)
         {
            
             BoxBoxCollision boxesCollision = new BoxBoxCollision();
@@ -230,7 +234,7 @@ namespace ElonsRiot
             }
             if(counter == 0)
             {
-                player.ChangePosition(new Vector3(0, -0.2f, 0));
+                player.ChangePosition(new Vector3(0, player.gravity, 0));
             }
         }
     }
