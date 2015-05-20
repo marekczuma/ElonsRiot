@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Box.cs" />
     <Compile Include="BoxBoxCollision.cs" />
+    <Compile Include="BoxMovementAI.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterState.cs" />
     <Compile Include="DecoyAI.cs" />

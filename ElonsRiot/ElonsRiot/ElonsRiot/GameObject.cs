@@ -33,6 +33,8 @@ namespace ElonsRiot
         //public Matrix MatrixProjection { get; set; }
         [XmlElement("Interactive")]
         public bool Interactive { get; set; }
+        [XmlElement("Mass")]
+        public float mass;
         [XmlIgnore]
         public Model GameObjectModel { get; set; }
          [XmlIgnore]
@@ -59,8 +61,6 @@ namespace ElonsRiot
         [XmlIgnore]
         public InterationTypes interactionType;
         [XmlIgnore]
-        public float mass;
-        [XmlIgnore]
         public float velocity;
         [XmlIgnore]
         public string collisionCommunicat;
@@ -72,8 +72,9 @@ namespace ElonsRiot
         {
             //Rotation = new Vector3(-90, 0, 0);
             //Position = new Vector3(0, 0, 0);
-            RotationQ = Quaternion.Identity;
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
             //MatrixView = Matrix.CreateLookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), Vector3.UnitY);
             //MatrixProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 600f, 0.1f, 100f);
             GameObjects = new List<GameObject>();
@@ -83,8 +84,19 @@ namespace ElonsRiot
         }
         public GameObject(Vector3 _position)
         {
-            RotationQ = Quaternion.Identity;
-            MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            Position = _position;
+            RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
+            GameObjects = new List<GameObject>();
+        }
+        public GameObject(Vector3 _position, Vector3 _rotation)
+        {
+            Position = _position;
+            Rotation = _rotation;
+            RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
+            RefreshMatrix();
+            //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
             GameObjects = new List<GameObject>();
         }
         public void LoadModels(ContentManager _contentManager)
@@ -127,6 +139,10 @@ namespace ElonsRiot
         {
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.Pi) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position);    // Matrix.CreateRotationY(MathHelper.Pi) * Matrix.CreateTranslation(Position) * Matrix.CreateFromQuaternion(RotationQ);
         }
+        public void RotationVectorToQuaternion()
+        {
+            RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
+        }
         public void MoveWithDirectionRotate(Vector3 deltaVector)
         {
             Vector3 deltaVectorCopy = new Vector3(-deltaVector.X, 0, -deltaVector.Z);
@@ -154,6 +170,7 @@ namespace ElonsRiot
 
             if (getDistance(rightTarget) > stopDistance)
             {
+                this.oldPosition = this.Position;
                 MoveWithDirectionRotate(toTarget / distanceEP);
             }
         }
@@ -299,18 +316,18 @@ namespace ElonsRiot
         //aktualizacja danych fizycznych
         public void update()
        {
-         if(this.Name.Contains("box"))
-         {
-             mass = 50;
-         }
-        if(this.Name.Contains("Elon"))
-        {
-            mass = 70;
-        }
-        if (this.Name.Contains("Palo"))
-        {
-            mass = 100;
-        }
+        // if(this.Name.Contains("box"))
+        // {
+        //     mass = 50;
+        // }
+        //if(this.Name.Contains("Elon"))
+        //{
+        //    mass = 70;
+        //}
+        //if (this.Name.Contains("Palo"))
+        //{
+        //    mass = 100;
+        //}
        }
     }
 }

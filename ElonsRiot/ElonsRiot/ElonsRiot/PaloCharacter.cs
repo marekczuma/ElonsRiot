@@ -8,6 +8,7 @@ namespace ElonsRiot
 {
     public enum FriendState { idle, walk, follow }
     public enum LearningState { idle, EngineeringLearning, ShootingLearning, UsingLearning }
+    public enum WalkState { decoy, moveBox }
     public class PaloCharacter : GameObject
     {
         public float distance { get; set; }
@@ -16,8 +17,8 @@ namespace ElonsRiot
         public Player Elon { get; set; }
         public List<Guard> Guards { get; set; }
         public DecoyAI DecoyGuards { get; set; }
-        
-
+        public BoxMovementAI MoveBoxAI { get; set; }
+        public WalkState Walk { get; set; }
         private float velocity;
         public PaloCharacter()
         {
@@ -42,7 +43,6 @@ namespace ElonsRiot
         }
         public void WalkToPlayer()
         {
-            this.oldPosition = this.Position;
             WalkToTarget(Elon, velocity, 20);
         }
 
@@ -106,15 +106,16 @@ namespace ElonsRiot
         
         //ALGORYTM PRZESUWANI SKRZYNKI
         //1.1 Wykrycie miejsca za skrzynką
-        private Vector3 FindPlaceBehindObject(GameObject _object, Vector3 _targetPosition)
+        public Vector3 FindPlaceBehindObject(GameObject _object, Vector3 _targetPosition)
         {
             Vector3 goodDirection = (_targetPosition - _object.Position) * (-1);
             goodDirection.Normalize();
-            goodDirection *= 4;
-            return goodDirection;
+            goodDirection *= 6;
+            Vector3 newPosition = _object.Position + goodDirection;
+            return newPosition;
         }
         //1.2 Pójście do tego punktu
-        private void StandBehindBox(Vector3 _behindBox)
+        public void StandBehindBox(Vector3 _behindBox)
         {
             GameObject tmpGO = new GameObject(_behindBox);
             WalkToTarget(tmpGO, velocity, 0.5f);
@@ -131,6 +132,58 @@ namespace ElonsRiot
                                             Quaternion.CreateFromRotationMatrix(mat),
                                             0.1f);
             RotationQ = q;
+        }
+
+        public void MoveBox()
+        {
+            if(MoveBoxAI == null)
+            {
+                return;
+            }
+            PaloState = FriendState.walk;
+            if (!MoveBoxAI.AIncluded)
+            {
+                StandBehindBox(MoveBoxAI.PointA);
+                GameObject tmpA = new GameObject(MoveBoxAI.PointA);
+                if(getDistance(tmpA) <= 2)
+                {
+                    MoveBoxAI.AIncluded = true;
+                }
+            }else if(!MoveBoxAI.BIncluded)
+            {
+                //RotateToBox(MoveBoxAI.Cube);
+                GameObject tmpB = new GameObject(MoveBoxAI.PointB);
+                WalkToTarget(tmpB,velocity,2);
+                if (getDistance(tmpB) <= 2)
+                {
+                    MoveBoxAI.BIncluded = true;
+                    MoveBoxAI.Cube.mass = 500;
+                }
+            }else if(!MoveBoxAI.IsFinished)
+            {
+                GameObject tmpA = new GameObject(MoveBoxAI.PointA);
+                WalkToTarget(tmpA, velocity, 2);
+                if (getDistance(tmpA) <= 2)
+                {
+                   MoveBoxAI.IsFinished = true;
+                   MoveBoxAI.Cube.mass = MoveBoxAI.CubeMass;
+                }
+            }else
+            {
+                PaloState = FriendState.idle;
+            }
+        }
+
+        //Jak jest walk to jaką akcję ma wybrać
+        public void ChooseAction(Scene _scene)
+        {
+            if(Walk == WalkState.decoy)
+            {
+                Decoy(_scene);
+            }else if(Walk == WalkState.moveBox)
+            {
+                MoveBox();
+            }
         }
     }
 }

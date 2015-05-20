@@ -1,23 +1,26 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace ElonsRiot
 {
-    class BoxMovementAI
+    public class BoxMovementAI
     {
-        public GameObject PointB { get; set; }      // Punkt w którym ma się postać zatrzymać
-        public GameObject PointC { get; set; }      // Punkt do którego ma spitolić
+        public GameObject Cube { get; set; }
+        public Vector3 PointA { get; set; }      // Punkt za beczką
+        public Vector3 PointB { get; set; }      // Punkt do którego ma przesunąć skrzynkę
+        public bool AIncluded { get; set; }         // Czy byłeś już w A?
         public bool BIncluded { get; set; }         // Czy byłeś już w B?
-        public bool CIncluded { get; set; }         // Czy byłeś już w C?
-
-        public BoxMovementAI(GameObject _b, GameObject _c)
+        public bool IsFinished { get; set; }
+        public float CubeMass { get; set; }
+        public BoxMovementAI(Vector3 _b)
         {
             PointB = _b;
-            PointC = _c;
+            AIncluded = false;
             BIncluded = false;
-            CIncluded = false;
+            IsFinished = false;
         }
     }
 }

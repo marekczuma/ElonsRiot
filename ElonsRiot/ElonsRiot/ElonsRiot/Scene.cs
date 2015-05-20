@@ -52,11 +52,14 @@ namespace ElonsRiot
             {
                 if (!string.IsNullOrEmpty(elem.ObjectPath))
                 {
+                    elem.RotationVectorToQuaternion();
                     elem.LoadModels(ContentManager);
+
                     if(elem.Interactive == true)
                     {
                         elem.setInteractionType();
                     }
+
                     //elem.Initialize();
                     //elem.RefreshMatrix();
                 }
@@ -139,14 +142,17 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Player Elon = new Player();
+            Vector3 tmpPos = new Vector3(-100, 4, 13); ;
+            Vector3 tmpRot = new Vector3(0, 180, 0);
+            Player Elon = new Player(tmpPos, tmpRot);
             Elon.Name = "characterElon";
             Elon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            Elon.Position = new Vector3(20, 4 , -40);
-            Elon.Rotation = new Vector3(0, 0, 0);
+            //Elon.Position = new Vector3(-100, 4 , 13);
+            //Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/dude";
             Elon.Palo = PaloObject;
             Elon.Palo.Elon = Elon;
+            Elon.mass = 70;
             Elon.Tag = "Player";
             GameObjects.Add(Elon);
             PlayerObject = Elon;
@@ -198,6 +204,7 @@ namespace ElonsRiot
             Palo.ObjectPath = "3D/ludzik/dude";
             Palo.Tag = "Palo";
             Palo.Interactive = true;
+            Palo.mass = 100;
             PaloObject = Palo;
 
             GameObjects.Add(Palo);
@@ -209,7 +216,7 @@ namespace ElonsRiot
                 PaloObject.WalkToPlayer();
             }else if(PaloObject.PaloState == FriendState.walk)
             {
-                PaloObject.Decoy(this);
+                PaloObject.ChooseAction(this);
             }
         }
         private void NPCControl()

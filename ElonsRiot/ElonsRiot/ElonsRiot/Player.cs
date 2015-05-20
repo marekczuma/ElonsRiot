@@ -28,6 +28,19 @@ namespace ElonsRiot
             boxes = new List<BoundingBox>();
         }
 
+        public Player(Vector3 _position, Vector3 _rotation)
+        {
+            Position = _position;
+            Rotation = _rotation;
+            RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
+            elonState = new CharacterState(State.idle);
+            camera = new Camera();
+            isMouseMovement = false;
+            angle = 0;
+            health = 100.0f;
+            boxes = new List<BoundingBox>();
+        }
+
         public void SetState(KeyboardState state)
         {
             if (state.IsKeyDown(Keys.LeftShift))
@@ -165,12 +178,32 @@ namespace ElonsRiot
                     }
                     DecoyAI tmpDecoy = new DecoyAI(placeB, placeC);
                     Palo.DecoyGuards = tmpDecoy;
-                    Palo.Decoy(_scene);
+                    Palo.PaloState = FriendState.walk;
+                    Palo.Walk = WalkState.decoy;
                 }
+            }
+            if(state.IsKeyDown(Keys.L))
+            {
+                GameObject tmpBox = new GameObject();
+                foreach(var elem in _scene.GameObjects)
+                {
+                    if(elem.Name == "boxForMovement")
+                    {
+                        tmpBox = elem;
+                        break;
+                    }
+                }
+                BoxMovementAI tmpAI = new BoxMovementAI(this.Position);
+                tmpAI.PointA = Palo.FindPlaceBehindObject(tmpBox, this.Position);
+                tmpAI.Cube = tmpBox;
+                tmpAI.CubeMass = tmpBox.mass;
+                Palo.MoveBoxAI = tmpAI;
+                Palo.PaloState = FriendState.walk;
+                Palo.Walk = WalkState.moveBox;
             }
             if(state.IsKeyDown(Keys.O))
             {
-                Palo.RotateToBox(this);
+                Palo.RotateToBox(Palo.MoveBoxAI.Cube);
             }
         }
     }
