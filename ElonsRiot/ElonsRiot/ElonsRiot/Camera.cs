@@ -40,7 +40,7 @@ namespace ElonsRiot
 
         public void ResetCamera()
         {
-            position = new Vector3(0, 10, 50);
+            position = new Vector3(0, 20, 50);
             target = new Vector3();
 
             viewMatrix = Matrix.Identity;

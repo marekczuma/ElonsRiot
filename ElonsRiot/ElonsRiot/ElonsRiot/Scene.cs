@@ -109,6 +109,7 @@ namespace ElonsRiot
                 DrawBoudingBoxes(graphic, gObj);
             }
             DrawBoudingBox(graphic);
+            DrawRay(graphic);
 
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -144,7 +145,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(100, 4, -90); ;
+            Vector3 tmpPos = new Vector3(100, 4, -90);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot);
             Elon.Name = "characterElon";
@@ -173,26 +174,26 @@ namespace ElonsRiot
             Guard Marian = new Guard();
             Marian.Name = "enemyMarian";
             Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
-            Marian.Position = new Vector3(0, 4, 0);
-            Marian.Rotation = new Vector3(0, 0, 0);
+            Marian.Position = new Vector3(90, 4, 35);
+            Marian.Rotation = new Vector3(86, 0, 34);
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
-            Marian.oldPosition = 
-            Marian.oldPosition = new Vector3(0, 4, 0);
-            Marian.newPosition = new Vector3(0, 4, 0);
-            Guard Zenon = new Guard();
-            Zenon.Name = "enemyZenon";
-            Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
-            Zenon.Position = new Vector3(10, 4, 5);
-            Zenon.Rotation = new Vector3(0, 0, 0);
-            Zenon.ObjectPath = "3D/ludzik/dude";
-            Zenon.oldPosition = new Vector3(10, 4, 5);
-            Zenon.newPosition = new Vector3(10, 4, 5);
-            Zenon.Tag = "guard";
+            Marian.oldPosition =
+            Marian.oldPosition = new Vector3(90, 4, 35);
+            Marian.newPosition = new Vector3(90, 4, 35);
+            //Guard Zenon = new Guard();
+            //Zenon.Name = "enemyZenon";
+            //Zenon.Scale = new Vector3(0.09f, 0.09f, 0.09f);
+            //Zenon.Position = new Vector3(86, 0, 34);
+            //Zenon.Rotation = new Vector3(0, 0, 0);
+            //Zenon.ObjectPath = "3D/ludzik/dude";
+            //Zenon.oldPosition = new Vector3(86, 0, 34);
+            //Zenon.newPosition = new Vector3(86, 0, 34);
+            //Zenon.Tag = "guard";
             GameObjects.Add(Marian);
-            GameObjects.Add(Zenon);
+            //GameObjects.Add(Zenon);
             NPCs.Add(Marian);
-            NPCs.Add(Zenon);
+            //NPCs.Add(Zenon);
 
         }
         private void LoadPalo()
@@ -200,9 +201,9 @@ namespace ElonsRiot
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "characterPalo";
             Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
-            Palo.Position = new Vector3(40, 4, -30);
-            Palo.oldPosition = new Vector3(40, 4, -30);
-            Palo.newPosition = new Vector3(40, 4, -30); 
+            Palo.Position = new Vector3(110, 4, -30);
+            Palo.oldPosition = new Vector3(110, 4, -30);
+            Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
             Palo.Tag = "Palo";
@@ -261,6 +262,27 @@ namespace ElonsRiot
                             PrimitiveType.LineList, primitiveList, 0, 8,
                             gameObj.bBoxIndices, 0, 12);
                     }
+            }
+        }
+        public void DrawRay(GraphicsDevice graphic)
+        {
+            short[] bBoxIndices ={0, 1,0};
+            VertexPositionColor[] primitiveList = new VertexPositionColor[2];
+            primitiveList[0] = new VertexPositionColor(PlayerObject.nearPoint, Color.White);
+            primitiveList[1] = new VertexPositionColor(PlayerObject.farPoint, Color.White);
+           
+            basicEffect.World = Matrix.Identity;
+            basicEffect.View = PlayerObject.camera.viewMatrix;
+            basicEffect.Projection = PlayerObject.camera.projectionMatrix;
+            basicEffect.TextureEnabled = false;
+
+            // Draw the box with a LineList
+            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphic.DrawUserIndexedPrimitives(
+                    PrimitiveType.LineList, primitiveList, 0, 2,
+                    bBoxIndices, 0, 1);
             }
         }
         public void DrawBoudingBoxes(GraphicsDevice graphic,GameObject gameObj)

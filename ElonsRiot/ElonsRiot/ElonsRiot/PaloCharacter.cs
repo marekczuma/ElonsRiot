@@ -86,7 +86,7 @@ namespace ElonsRiot
             if(!DecoyGuards.BIncluded)
             {
                 WalkToTarget(DecoyGuards.PointB, velocity, 1);
-                if(getDistance(DecoyGuards.PointB) <= 5)
+                if(getDistance(DecoyGuards.PointB) <= 10)
                 {
                     Guards = FindGuards(30, _scene);
                     Call(Guards);
