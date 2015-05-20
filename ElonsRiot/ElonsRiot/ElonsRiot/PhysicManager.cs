@@ -147,7 +147,7 @@ namespace ElonsRiot
 
                 isStart = false;
             }
-           
+            
             //atualizacja bohaterów
             foreach (GameObject character in Characters)
             {
@@ -155,7 +155,7 @@ namespace ElonsRiot
                 character.AAbox.CreateRadiuses();
                 character.AAbox.GetRadius();
                 character.AAbox.GetCorners();
-                character.AAbox.createBoudingBox();
+                character.AAbox.UpdateBoundingBox();
                 character.AAbox.GetRefrecneObjectAndPlayer(character, player);
             }
             //atualizacja wrogów
@@ -165,7 +165,7 @@ namespace ElonsRiot
                 enemy.AAbox.CreateRadiuses();
                 enemy.AAbox.GetRadius();
                 enemy.AAbox.GetCorners();
-                enemy.AAbox.createBoudingBox();
+                enemy.AAbox.UpdateBoundingBox();
                 enemy.AAbox.GetRefrecneObjectAndPlayer(enemy, player);
             }
             //aktualuzacja boxów
@@ -174,7 +174,7 @@ namespace ElonsRiot
                 box.AAbox.CreateRadiuses();
                 box.AAbox.GetRadius();
                 box.AAbox.GetCorners();
-                box.AAbox.createBoudingBox();
+                box.AAbox.UpdateBoundingBox();
                 box.AAbox.GetRefrecneObjectAndPlayer(box, player);
             }
             //aktualuzacja aktywnych
@@ -183,7 +183,7 @@ namespace ElonsRiot
                 interactive.AAbox.CreateRadiuses();
                 interactive.AAbox.GetRadius();
                 interactive.AAbox.GetCorners();
-                interactive.AAbox.createBoudingBox();
+                interactive.AAbox.UpdateBoundingBox();
                 interactive.AAbox.GetRefrecneObjectAndPlayer(interactive, player);
             }
             //kolizja aktywnych z charakterami

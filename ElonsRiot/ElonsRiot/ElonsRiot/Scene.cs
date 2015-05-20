@@ -106,7 +106,7 @@ namespace ElonsRiot
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
-                DrawBoudingBoxes(graphic, gObj);
+             //   DrawBoudingBoxes(graphic, gObj);
             }
             DrawBoudingBox(graphic);
 

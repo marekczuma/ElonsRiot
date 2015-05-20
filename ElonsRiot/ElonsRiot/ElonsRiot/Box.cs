@@ -92,8 +92,6 @@ namespace ElonsRiot
                 tmp = Matrix.CreateScale(referenceObject.Scale) * Matrix.CreateTranslation(referenceObject.Position);
             }
 
-
-
             Vector3 meshMax = new Vector3(float.MinValue);
             Vector3 meshMin = new Vector3(float.MaxValue);
             Matrix meshTransform = new Matrix();
@@ -123,7 +121,8 @@ namespace ElonsRiot
                         meshMax = Vector3.Max(meshMax, vertPosition);
                     }
                 }
-
+                this.max = meshMax;
+                this.min = meshMin;
                 // transform by mesh bone matrix
                 meshMin = Vector3.Transform(meshMin, meshTransform);
                 meshMax = Vector3.Transform(meshMax, meshTransform);
@@ -132,12 +131,40 @@ namespace ElonsRiot
             {
                 meshMax.Z += 1.5f;
                 meshMin.Z -= 1.5f;
-             //   meshMax.Y += 1.5f;
-              //  meshMin.Y -= 1.5f;
             }
-            this.max = meshMax;
-            this.min = meshMin;
+            
             referenceObject.boundingBox = new BoundingBox(meshMin, meshMax);
+
+        }
+        public void UpdateBoundingBox()
+        {
+            Vector3 referenceMin = min;
+            Vector3 referenceMax = max;
+            Matrix tmp = Matrix.Identity;
+            if ((referenceObject.Rotation.Y != 0 && referenceObject.ObjectPath != "3D/ludzik/dude"))
+            {
+                tmp = referenceObject.MatrixWorld;
+            }
+
+            else
+            {
+                tmp = Matrix.CreateScale(referenceObject.Scale) * Matrix.CreateTranslation(referenceObject.Position);
+            }
+            Matrix meshTransform = Matrix.Identity;
+            foreach (ModelMesh mesh in referenceObject.GameObjectModel.Meshes)
+            {
+                meshTransform = referenceObject.boneTransformations[mesh.ParentBone.Index] * tmp;
+
+                // transform by mesh bone matrix
+                referenceMin = Vector3.Transform(referenceMin, meshTransform);
+                referenceMax = Vector3.Transform(referenceMax, meshTransform);
+            }
+            if (referenceObject.ObjectPath == "3D/ludzik/dude")
+            {
+                referenceMax.Z += 1.5f;
+                referenceMin.Z -= 1.5f;
+            }
+            referenceObject.boundingBox = new BoundingBox(referenceMin, referenceMax); 
         }
         public void createBoudingBoxes()
         {

@@ -17,7 +17,7 @@
 		    <Z>1</Z>
 	</Scale>
 	<Interactive>false</Interactive>
-</GameObject> 
+</GameObject>  
  <GameObject Name="ceil" Path="3D/Ziemia/bigFloor">
     <Position>
       <X>0</X>
