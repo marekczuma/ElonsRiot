@@ -21,6 +21,8 @@ namespace ElonsRiot
         public WalkState Walk { get; set; }
         private float velocity;
         public float health;
+        public int ammo;
+        public int ammoMax;
         public PaloCharacter()
         {
             distance = 1.0f;
@@ -29,6 +31,8 @@ namespace ElonsRiot
             velocity = 0.12f;
             Guards = new List<Guard>();
             health = 100;
+            ammo = 50;
+            ammoMax = 50;
         }
 
         public void WalkForward()

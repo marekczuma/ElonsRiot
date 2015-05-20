@@ -214,8 +214,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="HUD\Gun\gunPaolo.png">
-      <Name>gunPaolo</Name>
+    <Compile Include="HUD\Gun\GunPalo.png">
+      <Name>GunPalo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

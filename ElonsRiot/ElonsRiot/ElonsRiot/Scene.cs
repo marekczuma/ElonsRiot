@@ -117,6 +117,7 @@ namespace ElonsRiot
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
             PlayerObject.ChangeHealth(_state);
+            PlayerObject.ChangeAmmo(_state);
             PlayerObject.SetPaloState(_state, this);
         }
         private XMLScene DeserializeFromXML()
@@ -200,9 +201,9 @@ namespace ElonsRiot
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "characterPalo";
             Palo.Scale = new Vector3(0.15f, 0.15f, 0.15f);
-            Palo.Position = new Vector3(40, 4, -30);
-            Palo.oldPosition = new Vector3(40, 4, -30);
-            Palo.newPosition = new Vector3(40, 4, -30); 
+            Palo.Position = new Vector3(110, 4, -30);
+            Palo.oldPosition = new Vector3(110, 4, -30);
+            Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/dude";
             Palo.Tag = "Palo";

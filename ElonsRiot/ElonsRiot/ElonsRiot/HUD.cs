@@ -26,7 +26,7 @@ namespace ElonsRiot
             healthValue = content.Load<Texture2D>("HUD/health");
             healthBackground = content.Load<Texture2D>("HUD/healthEmpty");
             gunElon = content.Load<Texture2D>("HUD/Gun/gunElon");
-            gunPalo = content.Load<Texture2D>("HUD/Gun/gunPaolo");
+            gunPalo = content.Load<Texture2D>("HUD/Gun/GunPalo");
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics)
@@ -49,15 +49,15 @@ namespace ElonsRiot
             graphics.DepthStencilState = DepthStencilState.Default;
 
         }
-        public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammo, GraphicsDevice graphics)
+        public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammoElon,float ammoPalo,float ammoMax, GraphicsDevice graphics,int width)
         {
             spriteBatch[0].Begin();
             spriteBatch[0].Draw(gunElon, new Vector2(5, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
-            //   spriteBatch.DrawString(font, "" + health, new Vector2(160, 5), Color.White);
+            spriteBatch[0].DrawString(font, "" + ammoElon + "/" + ammoMax, new Vector2(160, 50), Color.White);
             spriteBatch[0].End();
             spriteBatch[1].Begin();
-            spriteBatch[1].Draw(gunPalo, new Vector2(650, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
-            //   spriteBatch.DrawString(font, "" + health, new Vector2(160, 5), Color.White);
+            spriteBatch[1].Draw(gunPalo, new Vector2(width-150, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+            spriteBatch[1].DrawString(font, "" + ammoPalo + "/" + ammoMax, new Vector2(600, 50), Color.White);
             spriteBatch[1].End();
             graphics.DepthStencilState = DepthStencilState.Default;
 

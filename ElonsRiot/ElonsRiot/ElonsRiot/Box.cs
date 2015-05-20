@@ -177,8 +177,8 @@ namespace ElonsRiot
                 // transform by mesh bone matrix
                 meshMin = Vector3.Transform(meshMin, meshTransform);
                 meshMax = Vector3.Transform(meshMax, meshTransform);
-                meshMax.X -= 1;
-                meshMin.X += 1;
+                meshMax.X -= 2;
+                meshMin.X += 2;
                 referenceObject.boxes.Clear();
                 referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
             }
@@ -198,6 +198,7 @@ namespace ElonsRiot
         //potrzebne do wykrywania kolizji
         public void CreateRadiuses()
         {
+            
             radiuses[0] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[6].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[6].Y), 2)
              +   Math.Pow(Convert.ToDouble(corners[7].Z - corners[6].Z),2));//x
             radiuses[1] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[4].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[4].Y), 2)

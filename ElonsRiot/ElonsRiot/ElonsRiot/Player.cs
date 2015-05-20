@@ -15,6 +15,8 @@ namespace ElonsRiot
         public CharacterState elonState {get; set;}    //STAN ELONA - TO JEST KLASA KUŹWA!
         public Camera camera;
         public float health;
+        public int ammo;
+        public int ammoMax;
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
@@ -29,6 +31,8 @@ namespace ElonsRiot
             health = 100.0f;
             boxes = new List<BoundingBox>();
             gravity = -0.12f;
+            ammo = 50;
+            ammoMax = 50;
         }
 
         public Player(Vector3 _position, Vector3 _rotation)
@@ -41,6 +45,8 @@ namespace ElonsRiot
             isMouseMovement = false;
             angle = 0;
             health = 100.0f;
+            ammo = 50;
+            ammoMax = 50;
             boxes = new List<BoundingBox>();
         }
 
@@ -149,6 +155,34 @@ namespace ElonsRiot
                 Palo.health += 1;
                 if (Palo.health >= 100)
                     Palo.health = 100;
+            }
+        }
+        
+        public void ChangeAmmo(KeyboardState state)
+        {
+            if (state.IsKeyDown(Keys.Z))
+            {
+                ammo -= 1;
+                if (ammo <= 0)
+                    ammo = 0;
+            }
+            else if (state.IsKeyDown(Keys.X))
+            {
+                ammo += 1;
+                if (ammo >= 50)
+                    ammo = 50;
+            }
+            if (state.IsKeyDown(Keys.C))
+            {
+                Palo.ammo -= 1;
+                if (Palo.ammo <= 0)
+                    Palo.ammo = 0;
+            }
+            else if (state.IsKeyDown(Keys.V))
+            {
+                Palo.ammo += 1;
+                if (Palo.ammo >= 50)
+                    Palo.ammo = 50;
             }
         }
         public void SetPaloState(KeyboardState state, Scene _scene)
