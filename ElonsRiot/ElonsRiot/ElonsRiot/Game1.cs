@@ -30,7 +30,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = true;
+       //     graphics.IsFullScreen = true;
          //   myHUD = new HUD();
         }
         protected override void Initialize()

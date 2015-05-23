@@ -68,6 +68,8 @@ namespace ElonsRiot
         public Vector3 oldPosition, newPosition;
         [XmlIgnore]
         public String message;
+        [XmlIgnore]
+        public string velocityName;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);

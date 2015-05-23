@@ -35,7 +35,7 @@
 		    <Z>1</Z>
 	</Scale>
 	<Interactive>false</Interactive>
-</GameObject> 
+</GameObject>  
 	//magazyn
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
 		<Position>
@@ -54,7 +54,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
 		<Position>
 		  <X>25</X>
@@ -108,7 +108,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	<GameObject Name="wall4" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>50</X>
@@ -126,7 +126,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	<GameObject Name="door1" Path="3D/placeholders/Wall5">
 		<Position>
 		  <X>50</X>
@@ -438,5 +438,5 @@
 		</Scale>
 		<Mass>90</Mass>
 		<Interactive>true</Interactive>
-	</GameObject>  
+	</GameObject> 
 </Scene>

@@ -56,7 +56,7 @@ namespace ElonsRiot
                     }
                     else
                     {
-                        if (gObj.Name != "terrain" && gObj.Name != "Elon" && gObj.Name != "Palo")
+                        if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
                         {
                             NotInteractiveGameObject.Add(gObj);
                         }
@@ -131,6 +131,7 @@ namespace ElonsRiot
                       gObj.AAbox = new Box(gObj, player);
                       gObj.AAbox.GetCorners();
                       gObj.AAbox.createBoudingBox();
+                      gObj.AAbox.createPlanes();
 
                   }
                 //inicjalizacja aktywnych
@@ -216,17 +217,27 @@ namespace ElonsRiot
             foreach(GameObject character in Characters)
             {
                 foreach(GameObject gObj in NotInteractiveGameObject)
-                { 
+                {
                     if (boxesCollision.TestAABBAABB(character, gObj))
                     {
-                        character.AAbox.createBoudingBoxes();
-                        if(boxesCollision.TestAABBAABBTMP(character,gObj))
+                        foreach (Plane plane in gObj.AAbox.planes)
                         {
-                            character.Position = character.oldPosition;
+                            if (boxesCollision.TestAABBPlane(character, plane))
+                            { 
+                                Vector3 direction = character.newPosition - character.oldPosition; 
+                                Vector3 invNormal = plane.Normal;
+                                invNormal.X *= -1;
+                                invNormal.Y *= -1;
+                                invNormal.Z *= -1;
+                                invNormal = invNormal * (direction * plane.Normal).Length();
+                                Vector3 wallDir = direction - invNormal; 
+                                character.Position = character.oldPosition + wallDir;
+                            }
                         }
                     }
                   }
             }
+            
             //kolizja elemetów interaktywnych z bahataterami 
             foreach (GameObject character in Characters)
             {
@@ -289,7 +300,7 @@ namespace ElonsRiot
             } 
        
         }
-
+        
         static bool isFirst = false;
         public static void ChceckBoxesCollision(List<GameObject> Boxes)
         {
@@ -339,6 +350,32 @@ namespace ElonsRiot
             {
                 player.ChangePosition(new Vector3(0, player.gravity, 0));
             }
+        }
+
+
+
+        static void ResolveCollision(GameObject character, GameObject obj2)
+        {
+            //jesli odlegosc jest rowna/mniejsza odległosci np. w x to predkosc.x = 0 
+            float distanceX = character.AAbox.radiuses[0] + obj2.AAbox.radiuses[0];
+            float distanceY = character.AAbox.radiuses[1] + obj2.AAbox.radiuses[1];
+            float distanceZ = character.AAbox.radiuses[2] + obj2.AAbox.radiuses[2];
+            Vector3 distance = new Vector3(distanceX,distanceY,distanceZ);
+            Vector3 dis = character.center - character.Position;
+            Vector3 velocity = character.Position - character.oldPosition;
+            velocity.Normalize();
+            float r = character.AAbox.radiuses[0] + obj2.AAbox.radiuses[0];
+            float r2 = character.AAbox.radiuses[2] + obj2.AAbox.radiuses[2];
+            if (Math.Sqrt(Math.Pow(character.AAbox.center2.X - obj2.center.X, 2.0)) < r)
+                    {
+                        character.ChangePosition(new Vector3(0,0,velocity.Z));
+                    }
+            
+            else if (Math.Sqrt(Math.Pow(character.AAbox.center2.Z - obj2.center.Z, 2.0)) < r2)
+            {
+                character.ChangePosition(new Vector3(velocity.X, 0, 0));
+            }
+        
         }
     }
 }
