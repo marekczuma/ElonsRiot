@@ -20,7 +20,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
-        public bool showGun;
+        public bool showGun, showProgress, showCrosshair, showItem1, showItem2;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
         public Vector3 nearPoint;
@@ -53,6 +53,10 @@ namespace ElonsRiot
             ammo = 50;
             ammoMax = 50;
             showGun = false;
+            showProgress = false;
+            showCrosshair = false;
+            showItem1 = false; 
+            showItem2 = false;
             boxes = new List<BoundingBox>();
         }
 
@@ -65,6 +69,7 @@ namespace ElonsRiot
             else if ((state.IsKeyDown(Keys.W)) || (state.IsKeyDown(Keys.S)) || (state.IsKeyDown(Keys.A)) || (state.IsKeyDown(Keys.D)))
             {
                 elonState.SetCurrentState(State.walk);
+
             }
             else if(state.IsKeyDown(Keys.M))
             {
@@ -163,7 +168,7 @@ namespace ElonsRiot
                     Palo.health = 100;
             }
         }
-        public void ShowHideGun(KeyboardState state)
+        public void ShowHUDElements(KeyboardState state)
         {
             if (state.IsKeyDown(Keys.T))
             {
@@ -173,7 +178,37 @@ namespace ElonsRiot
             {
                 showGun = false;
             }
-           
+            else if (state.IsKeyDown(Keys.NumPad1))
+            {
+                showCrosshair = true;
+            }
+            else if (state.IsKeyDown(Keys.NumPad2))
+            {
+                showCrosshair = false;
+            }
+            else if (state.IsKeyDown(Keys.NumPad3))
+            {
+                showProgress = true;
+            }
+            else if (state.IsKeyDown(Keys.NumPad4))
+            {
+                showProgress = false;
+            }
+            else if (state.IsKeyDown(Keys.NumPad5))
+            {
+                showItem1 = true;
+                showItem2 = false;
+            }
+            else if (state.IsKeyDown(Keys.NumPad6))
+            {
+                showItem1 = false;
+                showItem2 = true;
+            }
+            else if (state.IsKeyDown(Keys.NumPad7))
+            {
+                showItem1 = false;
+                showItem2 = false;
+            }
         }
         public void ChangeAmmo(KeyboardState state)
         {

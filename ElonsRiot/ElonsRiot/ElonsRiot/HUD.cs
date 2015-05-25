@@ -17,6 +17,10 @@ namespace ElonsRiot
         public static Vector2 scale;
         public static Texture2D gunElon;
         public static Texture2D gunPalo;
+        public static Texture2D progress;
+        public static Texture2D crossHair;
+        public static Texture2D newItem1;
+        public static Texture2D newItem2;
         public static Vector2 scalePalo;
 
         public static void LoadHUD(ContentManager content, float health)
@@ -27,6 +31,10 @@ namespace ElonsRiot
             healthBackground = content.Load<Texture2D>("HUD/healthEmpty");
             gunElon = content.Load<Texture2D>("HUD/Gun/gunElon");
             gunPalo = content.Load<Texture2D>("HUD/Gun/GunPalo");
+            progress = content.Load<Texture2D>("HUD/progress");
+            crossHair = content.Load<Texture2D>("HUD/crosshair");
+            newItem1 = content.Load<Texture2D>("HUD/item1");
+            newItem2 = content.Load<Texture2D>("HUD/item2");
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width)
@@ -45,7 +53,9 @@ namespace ElonsRiot
             spriteBatch[1].Draw(healthValue, new Vector2(width - 307, 10), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
             spriteBatch[1].Draw(healthBar, new Vector2(width - 340, 0), null, Color.White, 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0);
             spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
-            spriteBatch[1].DrawString(font, "Visible objects: " + myScene.VisibleGameObjects.Count, new Vector2(300, 15), Color.White);
+            //spriteBatch[1].DrawString(font, "Visible objects: " + myScene.VisibleGameObjects.Count, new Vector2(300, 15), Color.White);
+            //spriteBatch[1].DrawString(font, "OffsetDistance.Z: " + myScene.PlayerObject.camera.offsetDistance.Z, new Vector2(300, 30), Color.White);
+
             spriteBatch[1].End();
 
             graphics.DepthStencilState = DepthStencilState.Default;
@@ -65,13 +75,45 @@ namespace ElonsRiot
             graphics.DepthStencilState = DepthStencilState.Default;
 
         }
+
+        public static void DrawProgress(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(progress, new Vector2(5, 120), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
+        public static void DrawCrosshair(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(crossHair, new Vector2(graphics.Viewport.Width/2 -24, graphics.Viewport.Height/2 -24), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
+        public static void DrawItem1(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(newItem1, new Vector2(graphics.Viewport.Width / 2 - 120, 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
+        public static void DrawItem2(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(newItem2, new Vector2(graphics.Viewport.Width / 2 - 120, 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
         public static void DrawString(SpriteBatch spriteBatch,String message, GraphicsDevice graphic)
         {
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "" + message, new Vector2(100, 2), Color.White);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
-
         }
 
     }

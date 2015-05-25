@@ -22,6 +22,10 @@ namespace ElonsRiot
         SpriteBatch spriteBatch;
         SpriteBatch[] spriteBatchHUD;
         SpriteBatch[] spriteBatchHUD2;
+        SpriteBatch spriteBatchHUD3;
+        SpriteBatch spriteBatchHUD4;
+        SpriteBatch spriteBatchHUD5;
+        SpriteBatch spriteBatchHUD6;
        // HUD myHUD;
 
         public Game1()
@@ -30,7 +34,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
          //   myHUD = new HUD();
         }
         protected override void Initialize()
@@ -48,6 +52,10 @@ namespace ElonsRiot
             spriteBatchHUD[1] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD2[0] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD2[1] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD3 = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD4 = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD5 = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD6 = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
@@ -83,6 +91,25 @@ namespace ElonsRiot
             {
                 HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
                 GraphicsDevice,GraphicsDevice.Viewport.Width);
+            }
+
+            if(MyScene.PlayerObject.showProgress == true)
+            {
+                HUD.DrawProgress(spriteBatchHUD3, GraphicsDevice);
+            }
+
+            if (MyScene.PlayerObject.showCrosshair == true)
+            {
+                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
+            }
+
+            if (MyScene.PlayerObject.showItem1 == true)
+            {
+                HUD.DrawItem1(spriteBatchHUD5, GraphicsDevice);
+            }
+            if (MyScene.PlayerObject.showItem2 == true)
+            {
+                HUD.DrawItem2(spriteBatchHUD6, GraphicsDevice);
             }
             base.Draw(gameTime);
         }
@@ -125,9 +152,11 @@ namespace ElonsRiot
                         if (result.Value < selectedDistance)
                         {
                             selectedDistance = result.Value;
-                            MyScene.PlayerObject.camera.offsetDistance.Z = 20;
+                            MyScene.PlayerObject.camera.offsetDistance.Z = 40;
                         }
                     }
+                  //  else
+                       // MyScene.PlayerObject.camera.offsetDistance.Z = 150;
                 }
             }
         }

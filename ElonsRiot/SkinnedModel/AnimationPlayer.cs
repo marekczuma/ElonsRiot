@@ -9,7 +9,7 @@ namespace SkinnedModel
         AnimationClip currentClipValue;
         TimeSpan currentTimeValue;
         int currentKeyframe;
-
+        bool done;
         Matrix[] boneTransfroms;
         Matrix[] worldTransforms;
         Matrix[] skinTransforms;
@@ -37,7 +37,17 @@ namespace SkinnedModel
             currentTimeValue = TimeSpan.Zero;
             currentKeyframe = 0;
 
+            //CurrentClip = skinningDataValue.AnimationClips[clip];
+            //CurrentTime = TimeSpan.FromSeconds(0);
+            //currentKeyframe = 0;
+            //done = false;
+
             skinningDataValue.BindPose.CopyTo(boneTransfroms, 0);
+        }
+
+        public void StartClip(AnimationClip clip, int startFrame, int endFrame, bool loop)
+        {
+
         }
 
         public void Update(TimeSpan time, bool relativeToCurrentTime, Matrix rootTransform)
@@ -112,8 +122,9 @@ namespace SkinnedModel
         public Matrix[] GetWorldTransforms() { return worldTransforms; }
         public Matrix[] GetSkinTransforms() { return skinTransforms; }
 
-        public AnimationClip CurrentClip { get { return currentClipValue; } }
+        public AnimationClip CurrentClip { get { return currentClipValue; } set { currentClipValue = value; } }
 
-        public TimeSpan CurrentTime { get { return currentTimeValue; } }
+        public TimeSpan CurrentTime { get { return currentTimeValue; } set { currentTimeValue = value; } }
+        public SkinningData SkinningData { get { return skinningDataValue; } set { skinningDataValue = value; } }
     }
 }

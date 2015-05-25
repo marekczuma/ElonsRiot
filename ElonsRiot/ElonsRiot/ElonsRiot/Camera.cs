@@ -26,6 +26,7 @@ namespace ElonsRiot
         public Vector3 position;
         public Vector3 target;
         public Matrix viewMatrix, projectionMatrix;
+        public Matrix bigView;
 
         private float yaw, pitch, roll;
         private Matrix cameraRotation;
@@ -48,7 +49,9 @@ namespace ElonsRiot
             viewMatrix = Matrix.Identity;
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 16 / 9, 0.5f, 500f);
 
-            frustum = new BoundingFrustum(viewMatrix * projectionMatrix);
+            bigView = Matrix.Multiply(viewMatrix, 2f);
+
+            frustum = new BoundingFrustum(bigView * projectionMatrix);
 
             yaw = 0.0f;
             pitch = 0.0f;
@@ -104,7 +107,8 @@ namespace ElonsRiot
 
         public void UpdateFrustum()
         {
-            Matrix viewProjection = viewMatrix * projectionMatrix;
+            bigView = Matrix.Multiply(viewMatrix, 2f);
+            Matrix viewProjection = bigView * projectionMatrix;
             frustum.Matrix = viewProjection;
         }
 
@@ -163,17 +167,17 @@ namespace ElonsRiot
 
             if(currentMouseState.ScrollWheelValue < previousScrollValue)
             {
-                offsetDistance.Z += 2.0f;
+                offsetDistance.Z += 15.0f;
             }
             else if (currentMouseState.ScrollWheelValue > previousScrollValue)
             {
-                offsetDistance.Z -= 2.0f;
+                offsetDistance.Z -= 15.0f;
             }
 
-            if (offsetDistance.Z > 150)
-                offsetDistance.Z = 150;
-            else if (offsetDistance.Z < 20)
-                offsetDistance.Z = 20;
+            if (offsetDistance.Z > 350)
+                offsetDistance.Z = 350;
+            else if (offsetDistance.Z < 40)
+                offsetDistance.Z = 40;
 
             previousScrollValue = currentMouseState.ScrollWheelValue;
             
