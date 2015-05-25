@@ -20,6 +20,7 @@ namespace ElonsRiot
             this.center = new Vector3(0, 0, 0);
             this.radiuses = new float[3];
             this.actualRadiuses = null;
+            this.planes = new Plane[2];
         }
         public Vector3 center;
         public float[] radiuses;
@@ -32,9 +33,11 @@ namespace ElonsRiot
         public Vector3 min, max;
         public int length;
         public float height;
+        public Plane[] planes;
             
         public Box(Player gameObj)
         {
+            this.planes = new Plane[2];
             ActualCorners = new Vector3[6];
             this.referencePlayer = gameObj;
             this.referenceObject = gameObj;
@@ -53,7 +56,7 @@ namespace ElonsRiot
         }
         public Box(GameObject gameObj, Player pla)
         {
-            
+            this.planes = new Plane[2];
             ActualCorners = new Vector3[6];
             this.referenceObject = gameObj;
             createBoudingBox();
@@ -236,7 +239,50 @@ namespace ElonsRiot
             radiuses[1] = radiuses[1] / 2;
             radiuses[2] = radiuses[2] / 2;
         }
-   
+        
+        public void createPlanes()
+        {
+            Vector3[] vecAB = new Vector3[2];
+            Vector3[] vecAC = new Vector3[2];
+            Vector3[] vecA = new Vector3[2];
+            if (Math.Abs(corners[4].X - corners[5].X) > Math.Abs(corners[5].Z - corners[1].Z))
+            {
+                vecAB[0] = corners[1] - corners[0];
+                vecAC[0] = corners[3] - corners[0];
+                vecAB[1] = corners[4] - corners[5];
+                vecAC[1] = corners[6] - corners[5];
+                vecA[0] = corners[0];
+                vecA[1] = corners[5];
+
+            }
+            else
+            {
+                vecA[0] = corners[5];
+                vecA[1] = corners[0];
+                vecAB[0] = corners[1] - corners[5];
+                vecAC[0] = corners[6] - corners[5];
+                vecAB[1] = corners[4] - corners[0];
+                vecAC[1] = corners[3] - corners[0];
+            }
+
+            float dotProduct = 0;
+            Vector3 normal = new Vector3(0, 0, 0);
+            for(int i = 0; i < 2;i++)
+            {
+
+                    normal = Vector3.Cross(vecAB[i], vecAC[i]);
+                    normal.Normalize();
+
+                    dotProduct = Vector3.Dot(normal, vecA[i]);
+
+                    planes[i] = new Plane();
+                    planes[i].Normal = normal;
+                    planes[i].D = dotProduct;
+            }
+         
+        }
+
     }
 }
+
 

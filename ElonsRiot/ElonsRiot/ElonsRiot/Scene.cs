@@ -133,7 +133,7 @@ namespace ElonsRiot
                 gObj.RefreshMatrix();
              //   DrawBoudingBoxes(graphic, gObj);
             }
-            //DrawBoudingBox(graphic);
+            DrawBoudingBox(graphic);
             DrawRay(graphic);
 
         }
