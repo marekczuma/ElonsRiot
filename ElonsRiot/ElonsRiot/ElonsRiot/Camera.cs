@@ -43,7 +43,7 @@ namespace ElonsRiot
 
         public void ResetCamera()
         {
-            position = new Vector3(0, 20, 50);
+            position = new Vector3(110, 4, -120);
             target = new Vector3();
 
             viewMatrix = Matrix.Identity;
@@ -61,7 +61,7 @@ namespace ElonsRiot
 
             desiredPosition = position;
             desiredTarget = target;
-            offsetDistance = new Vector3(0, 10, 80);
+            offsetDistance = new Vector3(0, 0, -450);
             
         }
 
@@ -165,19 +165,19 @@ namespace ElonsRiot
                     position.Y = 10;
             //}
 
-            if(currentMouseState.ScrollWheelValue < previousScrollValue)
-            {
-                offsetDistance.Z += 15.0f;
-            }
-            else if (currentMouseState.ScrollWheelValue > previousScrollValue)
-            {
-                offsetDistance.Z -= 15.0f;
-            }
+                if (currentMouseState.ScrollWheelValue < previousScrollValue)
+                {
+                    offsetDistance.Z -= 15.0f;
+                }
+                else if (currentMouseState.ScrollWheelValue > previousScrollValue)
+                {
+                    offsetDistance.Z += 15.0f;
+                }
 
-            if (offsetDistance.Z > 350)
-                offsetDistance.Z = 350;
-            else if (offsetDistance.Z < 40)
-                offsetDistance.Z = 40;
+                if (offsetDistance.Z < -550)
+                    offsetDistance.Z = -550;
+                else if (offsetDistance.Z > -70)
+                    offsetDistance.Z = -70;
 
             previousScrollValue = currentMouseState.ScrollWheelValue;
             

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ElonsRiot
 {
-    public enum State { idle, walk, run, jump };
+    public enum State { idle, walk, run, climb, idleShoot, walkShoot, push, interact };
     public class CharacterState
     {
         public float VelocityForward { get; set; }      //Do przodu

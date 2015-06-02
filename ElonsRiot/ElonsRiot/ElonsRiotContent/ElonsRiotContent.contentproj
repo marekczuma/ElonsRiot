@@ -219,7 +219,7 @@
       <Name>elon-idle</Name>
       <Importer>FbxImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
-      <ProcessorParameters_MergeAnimations>3D/ludzik/elon-walk.fbx%3b3D/ludzik/elon-run.fbx</ProcessorParameters_MergeAnimations>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/elon-walk.fbx%3b3D/ludzik/elon-run.fbx%3b3D/ludzik/elon-walkshoot.fbx%3b3D/ludzik/elon-push.fbx%3b3D/ludzik/elon-climb.fbx%3b3D/ludzik/elon-interact.fbx%3b3D/ludzik/elon-idleshoot.fbx</ProcessorParameters_MergeAnimations>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +227,13 @@
       <Name>palo-walk</Name>
       <Importer>FbxImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\skills.png">
+      <Name>skills</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

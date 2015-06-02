@@ -21,6 +21,7 @@ namespace ElonsRiot
         public static Texture2D crossHair;
         public static Texture2D newItem1;
         public static Texture2D newItem2;
+        public static Texture2D skills;
         public static Vector2 scalePalo;
 
         public static void LoadHUD(ContentManager content, float health)
@@ -35,6 +36,7 @@ namespace ElonsRiot
             crossHair = content.Load<Texture2D>("HUD/crosshair");
             newItem1 = content.Load<Texture2D>("HUD/item1");
             newItem2 = content.Load<Texture2D>("HUD/item2");
+            skills = content.Load<Texture2D>("HUD/skills");
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width)
@@ -79,7 +81,7 @@ namespace ElonsRiot
         public static void DrawProgress(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(progress, new Vector2(5, 120), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.Draw(progress, new Vector2(10, 123), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
@@ -116,5 +118,12 @@ namespace ElonsRiot
             graphic.DepthStencilState = DepthStencilState.Default;
         }
 
+        public static void DrawSkills(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(skills, new Vector2(graphics.Viewport.Width - 230, 123), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
     }
 }
