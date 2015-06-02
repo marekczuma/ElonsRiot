@@ -235,7 +235,7 @@ namespace ElonsRiot
             Palo.oldPosition = new Vector3(110, 4, -30);
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
-            Palo.ObjectPath = "3D/ludzik/palo-walk";
+            Palo.ObjectPath = "3D/ludzik/chod_2006";
             Palo.Tag = "Palo";
             Palo.Interactive = true;
             Palo.mass = 100;
