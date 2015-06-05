@@ -12,24 +12,6 @@ namespace ElonsRiot
     {
         public BoxBoxCollision() { }
 
-        public bool TestAABBAABB(Player player, GameObject gameObjects)
-        {
-                float r;
-                int couter = 0;
-                if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
-                {
-                    r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center.X, 2.0)) > r) { couter++; gameObjects.collisionCommunicat = "x";  };
-                    r = (int)(player.AAbox.radiuses[1] + gameObjects.AAbox.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - gameObjects.AAbox.center.Y, 2.0)) > r) { couter++; gameObjects.collisionCommunicat = "y";  };
-                    r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center.Z, 2.0)) > r) { couter++; gameObjects.collisionCommunicat = "z";  };
-                   if(couter > 0)
-                   {
-                       return false;
-                   }
-                    return true;
-                }  
-           
-                return false;
-        }
         public bool TestAABBAABB(GameObject player, GameObject gameObjects)
         {
             float r;
@@ -37,18 +19,67 @@ namespace ElonsRiot
             gameObjects.collisionCommunicat = "";
             if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
             {
-                r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center2.X, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "x";};
-                r = (int)(player.AAbox.radiuses[1] + gameObjects.AAbox.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - gameObjects.AAbox.center2.Y, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "y";};
-                r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center2.Z, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "z";};
+                r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center2.Z, 2.0)) > r) {couter++;};
+                r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center2.X, 2.0)) > r) { couter++;};
+                r = (int)(player.AAbox.radiuses[1] + gameObjects.AAbox.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - gameObjects.AAbox.center2.Y, 2.0)) > r) { couter++;};
+
                 if (couter > 0)
                 {
                     return false;
                 }
-                return true;
+                else {
+                 //   chceckWitchWall(player, gameObjects); //DZIALA dla małych obiektow
+                    return true;
+              }
             }
 
             return false;
         }
+        public Plane checkWhichPlane(GameObject player,GameObject gObj)
+        {
+            Plane[] planes = new Plane[2];
+            if(gObj.collisionCommunicat == "z")
+            {
+                planes[0] = gObj.AAbox.planes[0];
+                planes[1] = gObj.AAbox.planes[1];
+            }
+            else
+            {
+                planes[0] = gObj.AAbox.planes[2];
+                planes[1] = gObj.AAbox.planes[3];
+            }
+            Plane plane = new Plane();
+            Vector3 c = player.AAbox.center2; 
+            float[] s = new float[2];
+            s[0] = Vector3.Dot(planes[0].Normal, c) - planes[0].D;
+            s[1] = Vector3.Dot(planes[1].Normal, c) - planes[1].D;
+            if(Math.Abs(s[0]) < Math.Abs(s[1]))
+            {
+                plane = planes[0];
+            }
+            else { plane = planes[1]; }
+            return plane;
+        }
+        public void chceckWitchWall(GameObject player, GameObject gObj)
+        {
+            float smallestDistance = float.MaxValue;
+            int whichWall = 0;
+            for(int i = 0; i < 4;i++)
+            {
+                float distance = (float)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gObj.AAbox.centersOfWalls[i].X, 2) + Math.Pow(player.AAbox.center2.Y - gObj.AAbox.centersOfWalls[i].Y, 2) + Math.Pow(player.AAbox.center2.Z - gObj.AAbox.centersOfWalls[i].Z, 2));
+                if(distance < smallestDistance)
+                {
+                    smallestDistance = distance;
+                    whichWall = i;
+                }
+            }
+            if(whichWall == 0 || whichWall == 1)
+            {
+                gObj.collisionCommunicat = "x";
+            }
+            else { gObj.collisionCommunicat = "z"; }
+        }
+       
         /// <summary>
         /// Potrzebne gdy bohaterowie przesuwają paczki. Zawsze po zatrzymaniu będą 2 punkty dalej od paczki wiec trzeba wziąć to pod
         /// uwagę w czasie wyliczania czy mogą się wspiąć na paczkę. 
@@ -75,44 +106,7 @@ namespace ElonsRiot
 
             return false;
         }
-        public bool TestAABBAABB(GameObject player, GameObject gameObjects,String message)
-        {
-            float r;
-            int couter = 0;
-            gameObjects.collisionCommunicat = "";
-            if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
-            {
-                r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center.X, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "x"; };
-                r = (int)(player.AAbox.radiuses[1] + gameObjects.AAbox.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - gameObjects.AAbox.center.Y, 2.0)) > r) { couter++; message += "y"; };
-                r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center.Z, 2.0)) > r) { couter++; gameObjects.collisionCommunicat += "z"; };
-                if (couter > 0)
-                {
-                    return false;
-                }
-                return true;
-            }
-
-            return false;
-        }
-        public bool TestAABBAABB(Player player, Box box, GameObject gameObjects)
-        {
-            float r;
-            int couter = 0;
-            if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
-            {
-                r = (int)(player.AAbox.radiuses[0] + box.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - box.center.X, 2.0)) > r) couter++;
-                r = (int)(player.AAbox.radiuses[1] + box.radiuses[1]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Y - box.center.Y, 2.0)) > r) couter++;
-                r = (int)(player.AAbox.radiuses[2] + box.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - box.center.Z, 2.0)) > r) couter++;
-                if (couter > 0)
-                {
-                    return false;
-                }
-                return true;
-            }
-
-            return false;
-        }
-   
+     
         // Test if AABB b intersects plane p
         public bool TestAABBPlane(GameObject player, Plane p)
         {
@@ -126,7 +120,8 @@ namespace ElonsRiot
             // Compute distance of box center from plane
             float s = Vector3.Dot(p.Normal, c) - p.D;
             // Intersection occurs when distance s falls within [-r,+r] interval
-            return Math.Abs(s) <= r;
+            //return Math.Abs(s) <= r;
+            return s <= r;
         }
 
         public bool TestAABBAABBTMP(GameObject player, GameObject gameObjects)
@@ -163,39 +158,6 @@ namespace ElonsRiot
 
             return false;
         }
-        public bool TestAABBAABBTMP2(GameObject player, GameObject gameObjects)
-        {
-            float[] radiuses = new float[3];
-            Vector3 center2;
-            Vector3[] corners = player.boxes[0].GetCorners();
-            radiuses[0] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[6].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[6].Y), 2)
-            + Math.Pow(Convert.ToDouble(corners[7].Z - corners[6].Z), 2));//x
-            radiuses[1] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[4].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[4].Y), 2)
-             + Math.Pow(Convert.ToDouble(corners[7].Z - corners[4].Z), 2));//y
-            radiuses[2] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[3].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[3].Y), 2)
-             + Math.Pow(Convert.ToDouble(corners[7].Z - corners[3].Z), 2));//z
-            radiuses[0] = radiuses[0] / 2;
-            radiuses[1] = radiuses[1] / 2;
-            radiuses[2] = radiuses[2] / 2;
-            center2.X = (corners[1].X + corners[7].X) / 2;
-            center2.Y = (corners[1].Y + corners[7].Y) / 2;
-            center2.Z = (corners[1].Z + corners[7].Z) / 2;
-            gameObjects.collisionCommunicat = "";
-            float r;
-            int couter = 0;
-            if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
-            {
-                r = (int)(gameObjects.AAbox.radiuses[0] + radiuses[0]); if ((int)Math.Sqrt(Math.Pow(center2.X - gameObjects.AAbox.center2.X, 2.0)) < r) {couter++; gameObjects.collisionCommunicat += "x"; }
-                r = (int)(gameObjects.AAbox.radiuses[1] + radiuses[1]); if ((int)Math.Sqrt(Math.Pow(center2.Y - gameObjects.AAbox.center2.Y, 2.0)) < r) {couter++; gameObjects.collisionCommunicat += "y";}
-                r = (int)(gameObjects.AAbox.radiuses[2] + radiuses[2]); if ((int)Math.Sqrt(Math.Pow(center2.Z - gameObjects.AAbox.center2.Z, 2.0)) < r) { couter++; gameObjects.collisionCommunicat += "z"; }
-                if (couter > 0)
-                {
-                    return true;
-                }
-                return false;
-            }
-
-            return true;
-        }
+       
     }
 }
