@@ -235,7 +235,7 @@ namespace ElonsRiot
             Palo.oldPosition = new Vector3(110, 4, -30);
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
-            Palo.ObjectPath = "3D/ludzik/palo-walk";
+            Palo.ObjectPath = "3D/ludzik/chod_2006";
             Palo.Tag = "Palo";
             Palo.Interactive = true;
             Palo.mass = 100;
@@ -276,10 +276,11 @@ namespace ElonsRiot
             }
             else if (PlayerObject.elonState.State == State.walk)
             {
-                clip = skinningData.AnimationClips["Take 002"];
+                clip = skinningData.AnimationClips["Take 003"];
                 if (previousState != State.walk)
                     animationPlayer.StartClip(clip);
                 previousState = State.walk;
+                
             }
             else if (PlayerObject.elonState.State == State.idle)
             {
@@ -287,6 +288,41 @@ namespace ElonsRiot
                 if (previousState != State.idle)
                     animationPlayer.StartClip(clip);
                 previousState = State.idle;
+            }
+            else if (PlayerObject.elonState.State == State.walkShoot)
+            {
+                clip = skinningData.AnimationClips["Take 006"];
+                if (previousState != State.walkShoot)
+                    animationPlayer.StartClip(clip);
+                previousState = State.walkShoot;
+            }
+            else if (PlayerObject.elonState.State == State.idleShoot)
+            {
+                clip = skinningData.AnimationClips["Take 005"];
+                if (previousState != State.idleShoot)
+                    animationPlayer.StartClip(clip);
+                previousState = State.idleShoot;
+            }
+            else if (PlayerObject.elonState.State == State.climb)
+            {
+                clip = skinningData.AnimationClips["Take 004"];
+                if (previousState != State.climb)
+                    animationPlayer.StartClip(clip);
+                previousState = State.climb;
+            }
+            else if (PlayerObject.elonState.State == State.push)
+            {
+                clip = skinningData.AnimationClips["Take 007"];
+                if (previousState != State.push)
+                    animationPlayer.StartClip(clip);
+                previousState = State.push;
+            }
+            else if (PlayerObject.elonState.State == State.interact)
+            {
+                clip = skinningData.AnimationClips["Take 008"];
+                if (previousState != State.interact)
+                    animationPlayer.StartClip(clip);
+                previousState = State.interact;
             }
         }
 

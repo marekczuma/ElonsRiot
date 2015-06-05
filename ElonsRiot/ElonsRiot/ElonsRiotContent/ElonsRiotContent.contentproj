@@ -219,12 +219,26 @@
       <Name>elon-idle</Name>
       <Importer>FbxImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
-      <ProcessorParameters_MergeAnimations>3D/ludzik/elon-walk.fbx%3b3D/ludzik/elon-run.fbx</ProcessorParameters_MergeAnimations>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/elon-walk.fbx%3b3D/ludzik/elon-run.fbx%3b3D/ludzik/elon-walkshoot.fbx%3b3D/ludzik/elon-push.fbx%3b3D/ludzik/elon-climb.fbx%3b3D/ludzik/elon-interact.fbx%3b3D/ludzik/elon-idleshoot.fbx</ProcessorParameters_MergeAnimations>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\ludzik\palo-walk.FBX">
       <Name>palo-walk</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\skills.png">
+      <Name>skills</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\chod_2006.FBX">
+      <Name>chod_2006</Name>
       <Importer>FbxImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
     </Compile>

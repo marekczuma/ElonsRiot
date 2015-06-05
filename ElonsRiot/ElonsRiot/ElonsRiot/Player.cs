@@ -20,7 +20,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
-        public bool showGun, showProgress, showCrosshair, showItem1, showItem2;
+        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
         public Vector3 nearPoint;
@@ -57,6 +57,7 @@ namespace ElonsRiot
             showCrosshair = false;
             showItem1 = false; 
             showItem2 = false;
+            showSkills = false;
             boxes = new List<BoundingBox>();
         }
 
@@ -69,11 +70,34 @@ namespace ElonsRiot
             else if ((state.IsKeyDown(Keys.W)) || (state.IsKeyDown(Keys.S)) || (state.IsKeyDown(Keys.A)) || (state.IsKeyDown(Keys.D)))
             {
                 elonState.SetCurrentState(State.walk);
-
             }
             else if(state.IsKeyDown(Keys.M))
             {
                 PhysicManager.ClimbBox(this);
+            }
+            else if (state.IsKeyDown(Keys.D1))
+            {
+                elonState.SetCurrentState(State.climb);
+            }
+            else if (state.IsKeyDown(Keys.D2))
+            {
+                elonState.SetCurrentState(State.idleShoot);
+            }
+            else if (state.IsKeyDown(Keys.D3))
+            {
+                elonState.SetCurrentState(State.walkShoot);
+            }
+            else if (state.IsKeyDown(Keys.D4))
+            {
+                elonState.SetCurrentState(State.push);
+            }
+            else if (state.IsKeyDown(Keys.D5))
+            {
+                elonState.SetCurrentState(State.interact);
+            }
+            else if (state.IsKeyDown(Keys.D6))
+            {
+                elonState.SetCurrentState(State.walk);
             }
             else
             {
@@ -84,25 +108,25 @@ namespace ElonsRiot
         {
             
             oldPosition = Position;
-            if (state.IsKeyDown(Keys.W))
+            if (state.IsKeyDown(Keys.S))
             {
-                ChangePosition(new Vector3(0, 0, elonState.VelocityForward));
-                velocityName = "VelocityForward";
-            }
-            else if (state.IsKeyDown(Keys.S))
-            {
-                ChangePosition(new Vector3(0, 0,-elonState.VelocityBack ));
+                ChangePosition(new Vector3(0, 0, elonState.VelocityBack));
                 velocityName = "VelocityBack";
             }
-            if (state.IsKeyDown(Keys.D))
+            else if (state.IsKeyDown(Keys.W))
+            {
+                ChangePosition(new Vector3(0, 0,-elonState.VelocityForward ));
+                velocityName = "VelocityForward";
+            }
+            if (state.IsKeyDown(Keys.A))
             {
                 ChangePosition(new Vector3(-elonState.VelocitySide, 0,0 ));
-                velocityName = "LeftVelocitySide";
+                velocityName = "RightVelocitySide";
             }
-            else if (state.IsKeyDown(Keys.A))
+            else if (state.IsKeyDown(Keys.D))
             {
                 ChangePosition(new Vector3(elonState.VelocitySide, 0, 0 ));
-                velocityName = "VelocitySide";
+                velocityName = "LeftVelocitySide";
             }
             
             //obracanie playera
@@ -212,6 +236,14 @@ namespace ElonsRiot
             {
                 showItem1 = false;
                 showItem2 = false;
+            }
+            else if (state.IsKeyDown(Keys.NumPad8))
+            {
+                showSkills = true;
+            }
+            else if (state.IsKeyDown(Keys.NumPad9))
+            {
+                showSkills = false;
             }
         }
         public void ChangeAmmo(KeyboardState state)

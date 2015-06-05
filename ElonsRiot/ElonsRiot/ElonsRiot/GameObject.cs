@@ -215,6 +215,7 @@ namespace ElonsRiot
             RefreshMatrix();
             //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position) ;
         }
+
         public void SetRotation(Vector3 _rotation)
         {
             Rotation = _rotation;

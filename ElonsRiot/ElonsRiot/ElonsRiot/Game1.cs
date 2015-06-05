@@ -34,7 +34,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
-       //     graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
          //   myHUD = new HUD();
         }
         protected override void Initialize()
@@ -111,6 +111,10 @@ namespace ElonsRiot
             {
                 HUD.DrawItem2(spriteBatchHUD6, GraphicsDevice);
             }
+            if (MyScene.PlayerObject.showSkills == true)
+            {
+                HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice);
+            }
             base.Draw(gameTime);
         }
 
@@ -152,7 +156,7 @@ namespace ElonsRiot
                         if (result.Value < selectedDistance)
                         {
                             selectedDistance = result.Value;
-                            MyScene.PlayerObject.camera.offsetDistance.Z = 40;
+                            MyScene.PlayerObject.camera.offsetDistance.Z = -70;
                         }
                     }
                   //  else
