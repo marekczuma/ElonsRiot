@@ -261,23 +261,40 @@ namespace ElonsRiot
             List<Vector3> vecAB = new List<Vector3>();
             List<Vector3> vecAC = new List<Vector3>();
             List<Vector3> vecA = new List<Vector3>();
-          
-               //z
-             
+            if (referenceObject.Name.Contains("6") ||(referenceObject.Rotation.Y !=0 && referenceObject.Name.Contains("2") )
+                || (referenceObject.Rotation.Y ==0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")))
+            {
+
+                vecAB.Add(corners[4] - corners[0]);  //odwracam normalne w physic manager
+                vecAC.Add(corners[4] - corners[7]);
+                vecAB.Add(corners[5] - corners[1]);  
+                vecAC.Add(corners[5] - corners[6]);
+                vecA.Add(corners[4]);
+                vecA.Add(corners[5]);
+
+                vecA.Add(corners[5]);    //odwracam normalne w physic manager
+                vecA.Add(corners[1]);
+                vecAB.Add(corners[5] - corners[4]);
+                vecAC.Add(corners[5] - corners[6]);
+                vecAB.Add(corners[1] - corners[0]);
+                vecAC.Add(corners[1] - corners[2]);
+            }
+            else {
+               
                 vecAB.Add(corners[5] - corners[1]);   //odwracam normalne w physic manager
                 vecAC.Add(corners[5] - corners[6]);
                 vecAB.Add(corners[4] - corners[0]);
                 vecAC.Add(corners[4] - corners[7]);
                 vecA.Add(corners[5]);
                 vecA.Add(corners[4]);
-            //x
+            
                 vecA.Add(corners[1]);    //odwracam normalne w physic manager
                 vecA.Add(corners[5]);  
                 vecAB.Add(corners[1] - corners[0]);
                 vecAC.Add(corners[1] - corners[2]);
                 vecAB.Add(corners[5] - corners[4]);
                 vecAC.Add(corners[5] - corners[6]);
-           
+               }
             float dotProduct = 0;
             Vector3 normal = new Vector3(0, 0, 0);
 
@@ -293,9 +310,7 @@ namespace ElonsRiot
                  
                        tmpPlane.D = dotProduct;
                        tmpPlane.Normal = normal;
-                      
-                  
-                    planes.Add(tmpPlane);
+                       planes.Add(tmpPlane);
             }
          
         }
@@ -303,7 +318,23 @@ namespace ElonsRiot
         {
             GetCorners();
             Vector3[] corners = referenceObject.boundingBox.GetCorners();
-
+            if ((referenceObject.Rotation.Y != 0 && referenceObject.Name.Contains("2")) || referenceObject.Name.Contains("6") ||
+                (referenceObject.Rotation.Y == 0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")))
+            {
+                centersOfWalls[2].X = (corners[4].X + corners[6].X) / 2; //front
+                centersOfWalls[2].Y = (corners[4].Y + corners[6].Y) / 2;
+                centersOfWalls[2].Z = (corners[4].Z + corners[6].Z) / 2;
+                centersOfWalls[3].X = (corners[0].X + corners[2].X) / 2; //back
+                centersOfWalls[3].Y = (corners[0].Y + corners[2].Y) / 2;
+                centersOfWalls[3].Z = (corners[0].Z + corners[2].Z) / 2;
+                centersOfWalls[0].X = (corners[4].X + corners[3].X) / 2; //left
+                centersOfWalls[0].Y = (corners[4].Y + corners[3].Y) / 2;
+                centersOfWalls[0].Z = (corners[4].Z + corners[3].Z) / 2;
+                centersOfWalls[1].X = (corners[5].X + corners[2].X) / 2; //right
+                centersOfWalls[1].Y = (corners[5].Y + corners[2].Y) / 2;
+                centersOfWalls[1].Z = (corners[5].Z + corners[2].Z) / 2;
+            }
+            else{
             centersOfWalls[3].X = (corners[4].X + corners[6].X)/2; //front
             centersOfWalls[3].Y = (corners[4].Y + corners[6].Y)/2;
             centersOfWalls[3].Z = (corners[4].Z + corners[6].Z)/2;
@@ -316,23 +347,39 @@ namespace ElonsRiot
             centersOfWalls[0].X = (corners[5].X + corners[2].X) / 2; //right
             centersOfWalls[0].Y = (corners[5].Y + corners[2].Y) / 2;
             centersOfWalls[0].Z = (corners[5].Z + corners[2].Z) / 2;
+             }
         }
 
         public void setpointOfChangeWall()
         {
 
-            float distanceX = referenceObject.boundingBox.Max.X - referenceObject.boundingBox.Min.X;
-            float distanceZ = referenceObject.boundingBox.Max.Z - referenceObject.boundingBox.Min.Z;
+            float distanceX =(float) Math.Sqrt(Math.Pow(referenceObject.boundingBox.Max.X - referenceObject.boundingBox.Min.X,2));
+            float distanceZ = (float) Math.Sqrt(Math.Pow(referenceObject.boundingBox.Max.Z - referenceObject.boundingBox.Min.Z,2));
             if (distanceX < distanceZ)
             {
+                if (referenceObject.boundingBox.Min.Z < referenceObject.boundingBox.Max.Z) { 
                 referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(0, 0, referenceObject.boundingBox.Min.Z));
                 referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(0, 0, referenceObject.boundingBox.Max.Z));
+                }
+                else
+                {
+                    referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(0, 0, referenceObject.boundingBox.Max.Z));
+                    referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(0, 0, referenceObject.boundingBox.Min.Z));
+                }
                 referenceObject.message = "z";
             }
             else
             {
-                referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Min.X, 0, 0));
-                referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Max.X, 0, 0));
+                if (referenceObject.boundingBox.Min.X < referenceObject.boundingBox.Max.X)
+                {
+                    referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Min.X,0, 0));
+                    referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Max.X,0, 0));
+                }
+                else
+                {
+                    referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Max.X,0, 0));
+                    referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Min.X,0, 0));
+                }
                 referenceObject.message = "x";
             }
         }

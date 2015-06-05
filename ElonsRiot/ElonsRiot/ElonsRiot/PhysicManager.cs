@@ -136,6 +136,17 @@ namespace ElonsRiot
                       gObj.AAbox.setpointOfChangeWall();
 
                   }
+                //wyszukanie wszystkich sąsiadów 
+                foreach(GameObject gameObj in NotInteractiveGameObject)
+                {
+                    foreach(GameObject neighbor in NotInteractiveGameObject)
+                    {
+                        if(boxesCollision.TestAABBAABB(gameObj,neighbor))
+                        {
+                            gameObj.neighbors.Add(neighbor);
+                        }
+                    }
+                }
                 //inicjalizacja aktywnych
                   foreach (GameObject gObj in InteractiveGameObject)
                   {
@@ -230,8 +241,8 @@ namespace ElonsRiot
                                     Vector3 direction = character.newPosition - character.oldPosition;
                                     Vector3 invNormal = plane.Normal;
 
-                                   if (plane == gObj.AAbox.planes[0] || plane == gObj.AAbox.planes[2])
-                                   {
+                                   if (plane == gObj.AAbox.planes[0] || plane == gObj.AAbox.planes[2]) //filar i wall1,wall3,wall4 mają tutaj same == i dla 0 i 2
+                                   {                                                                    // dla wall2 to 1 i 3 i też ==
                                         invNormal.X *= -1;
                                         invNormal.Y *= -1;
                                         invNormal.Z *= -1;
@@ -239,7 +250,19 @@ namespace ElonsRiot
 
                                     invNormal = invNormal * (direction * plane.Normal).Length();
                                     Vector3 wallDir = direction - invNormal;
-                                    character.Position = character.oldPosition + wallDir;
+                                  //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
+                              foreach(GameObject neighbor in gObj.neighbors){
+                                    
+                                  if (boxesCollision.TestAABBAABB(character, neighbor))
+                                        {
+                                            character.Position = character.oldPosition;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            character.Position = character.oldPosition + wallDir;
+                                        }
+                                   }
                                 
                             }
                     }

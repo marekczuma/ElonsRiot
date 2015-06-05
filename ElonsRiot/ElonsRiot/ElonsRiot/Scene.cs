@@ -128,8 +128,6 @@ namespace ElonsRiot
              }
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
-              //  DrawModel(gObj);
-             //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
                 DrawBoudingBoxes(graphic, gObj);
             }

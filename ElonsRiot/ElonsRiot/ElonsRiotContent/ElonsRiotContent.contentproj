@@ -223,13 +223,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\palo-walk.FBX">
-      <Name>palo-walk</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="HUD\skills.png">
       <Name>skills</Name>
       <Importer>TextureImporter</Importer>

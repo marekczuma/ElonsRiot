@@ -36,7 +36,7 @@
 	</Scale>
 	<Interactive>false</Interactive>
 </GameObject>  
-	//magazyn
+	//magazyn 
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>0</X>
@@ -55,7 +55,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
+	<GameObject Name="wall2" Path="3D/placeholders/Wall2">  //jakies inne ustawienie
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -72,7 +72,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject>  
 	<GameObject Name="wall3" Path="3D/placeholders/Wall3">
 		<Position>
 		  <X>50</X>
@@ -90,8 +90,8 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
+	</GameObject> 
+	<GameObject Name="wall2" Path="3D/placeholders/Wall2"> //dziwne ustawienie
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -163,8 +163,8 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
+	</GameObject> 
+	<GameObject Name="wall2" Path="3D/placeholders/Wall2">  //dziwna sciana
 		<Position>
 		  <X>75</X>
 		  <Y>0</Y>
@@ -181,7 +181,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>102.5</X>
@@ -199,8 +199,8 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
-	<GameObject Name="wall6" Path="3D/placeholders/Wall6">
+	</GameObject> 
+	<GameObject Name="wall6" Path="3D/placeholders/Wall6">  //dziwna sciana
 		<Position>
 		  <X>65</X>
 		  <Y>0</Y>
@@ -217,8 +217,8 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
-	<GameObject Name="wall4" Path="3D/placeholders/Wall4">
+	</GameObject> 
+	<GameObject Name="wall4" Path="3D/placeholders/Wall4">  //dziwna sciana
 		<Position>
 		  <X>97</X>
 		  <Y>0</Y>
@@ -234,8 +234,8 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject>
+		<Interactive>false</Interactive> 
+	</GameObject> 
 	<GameObject Name="door2" Path="3D/placeholders/Wall5">
 		<Position>
 		  <X>75</X>
@@ -253,7 +253,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>true</Interactive>
-	</GameObject>
+	</GameObject> 
 	//Super pokój
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
 		<Position>
@@ -271,7 +271,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-	</GameObject>
+	</GameObject>  
 	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>50</X>
@@ -289,9 +289,9 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	//Otaczanie sceny
-	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
+	<GameObject Name="wall7" Path="3D/placeholders/Wall7">  //dziwna sciana
 		<Position>
 		  <X>0</X>
 		  <Y>0</Y>
@@ -308,8 +308,8 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
-	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
+	</GameObject> 
+	<GameObject Name="wall7" Path="3D/placeholders/Wall7"> //dziwna sciana
 		<Position>
 		  <X>0</X>
 		  <Y>0</Y>
@@ -326,7 +326,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
 		<Position>
 		  <X>120</X>
@@ -345,7 +345,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>
-	//Filary
+	//Filary 
 	<GameObject Name="filar" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>80</X>
@@ -438,5 +438,5 @@
 		</Scale>
 		<Mass>90</Mass>
 		<Interactive>true</Interactive>
-	</GameObject> 
+	</GameObject>   
 </Scene>
