@@ -129,9 +129,11 @@ namespace ElonsRiot
                       gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
-                      gObj.AAbox.GetCorners();
                       gObj.AAbox.createBoudingBox();
                       gObj.AAbox.createPlanes();
+                      gObj.AAbox.GetCorners();
+                      gObj.AAbox.createPointsOfCollision();
+                      gObj.AAbox.setpointOfChangeWall();
 
                   }
                 //inicjalizacja aktywnych
@@ -154,17 +156,18 @@ namespace ElonsRiot
             {
                 
                 character.AAbox.CreateRadiuses();
-                character.AAbox.GetRadius();
-                character.AAbox.GetCorners();
+                character.AAbox.GetCenter();
                 character.AAbox.UpdateBoundingBox();
+                character.AAbox.GetCorners();
                 character.AAbox.GetRefrecneObjectAndPlayer(character, player);
+                character.AAbox.createPointsOfCollision();
             }
             //atualizacja wrogów
             foreach (GameObject enemy in Enemies)
             {
 
                 enemy.AAbox.CreateRadiuses();
-                enemy.AAbox.GetRadius();
+                enemy.AAbox.GetCenter();
                 enemy.AAbox.GetCorners();
                 enemy.AAbox.UpdateBoundingBox();
                 enemy.AAbox.GetRefrecneObjectAndPlayer(enemy, player);
@@ -173,7 +176,7 @@ namespace ElonsRiot
             foreach (GameObject box in Boxes)
             {
                 box.AAbox.CreateRadiuses();
-                box.AAbox.GetRadius();
+                box.AAbox.GetCenter();
                 box.AAbox.GetCorners();
                 box.AAbox.UpdateBoundingBox();
                 box.AAbox.GetRefrecneObjectAndPlayer(box, player);
@@ -182,7 +185,7 @@ namespace ElonsRiot
             foreach (GameObject interactive in InteractiveGameObject)
             {
                 interactive.AAbox.CreateRadiuses();
-                interactive.AAbox.GetRadius();
+                interactive.AAbox.GetCenter();
                 interactive.AAbox.GetCorners();
                 interactive.AAbox.UpdateBoundingBox();
                 interactive.AAbox.GetRefrecneObjectAndPlayer(interactive, player);
@@ -216,24 +219,29 @@ namespace ElonsRiot
            //kolizja elemetów nieinteraktywnych z bahataterami 
             foreach(GameObject character in Characters)
             {
-                foreach(GameObject gObj in NotInteractiveGameObject)
+               foreach(GameObject gObj in NotInteractiveGameObject)
                 {
+
                     if (boxesCollision.TestAABBAABB(character, gObj))
                     {
-                        foreach (Plane plane in gObj.AAbox.planes)
-                        {
-                            if (boxesCollision.TestAABBPlane(character, plane))
-                            { 
-                                Vector3 direction = character.newPosition - character.oldPosition; 
-                                Vector3 invNormal = plane.Normal;
-                                invNormal.X *= -1;
-                                invNormal.Y *= -1;
-                                invNormal.Z *= -1;
-                                invNormal = invNormal * (direction * plane.Normal).Length();
-                                Vector3 wallDir = direction - invNormal; 
-                                character.Position = character.oldPosition + wallDir;
+                        Plane plane = checkPointOfChange(character, gObj);
+                          if (boxesCollision.TestAABBPlane(character, plane))
+                            {
+                                    Vector3 direction = character.newPosition - character.oldPosition;
+                                    Vector3 invNormal = plane.Normal;
+
+                                   if (plane == gObj.AAbox.planes[0] || plane == gObj.AAbox.planes[2])
+                                   {
+                                        invNormal.X *= -1;
+                                        invNormal.Y *= -1;
+                                        invNormal.Z *= -1;
+                                    }
+
+                                    invNormal = invNormal * (direction * plane.Normal).Length();
+                                    Vector3 wallDir = direction - invNormal;
+                                    character.Position = character.oldPosition + wallDir;
+                                
                             }
-                        }
                     }
                   }
             }
@@ -351,31 +359,61 @@ namespace ElonsRiot
                 player.ChangePosition(new Vector3(0, player.gravity, 0));
             }
         }
-
-
-
-        static void ResolveCollision(GameObject character, GameObject obj2)
+        public static Plane checkPointOfChange(GameObject character, GameObject gObj)
         {
-            //jesli odlegosc jest rowna/mniejsza odległosci np. w x to predkosc.x = 0 
-            float distanceX = character.AAbox.radiuses[0] + obj2.AAbox.radiuses[0];
-            float distanceY = character.AAbox.radiuses[1] + obj2.AAbox.radiuses[1];
-            float distanceZ = character.AAbox.radiuses[2] + obj2.AAbox.radiuses[2];
-            Vector3 distance = new Vector3(distanceX,distanceY,distanceZ);
-            Vector3 dis = character.center - character.Position;
-            Vector3 velocity = character.Position - character.oldPosition;
-            velocity.Normalize();
-            float r = character.AAbox.radiuses[0] + obj2.AAbox.radiuses[0];
-            float r2 = character.AAbox.radiuses[2] + obj2.AAbox.radiuses[2];
-            if (Math.Sqrt(Math.Pow(character.AAbox.center2.X - obj2.center.X, 2.0)) < r)
-                    {
-                        character.ChangePosition(new Vector3(0,0,velocity.Z));
-                    }
-            
-            else if (Math.Sqrt(Math.Pow(character.AAbox.center2.Z - obj2.center.Z, 2.0)) < r2)
+            List<Plane> planes = new List<Plane>();
+            List<Vector3> centerOfPlane = new List<Vector3>();
+            if(gObj.message == "x")
             {
-                character.ChangePosition(new Vector3(velocity.X, 0, 0));
+               if(character.Position.X < gObj.AAbox.pointOfChangeWall[0].X || character.Position.X > gObj.AAbox.pointOfChangeWall[1].X)
+                {
+                    planes.Add(gObj.AAbox.planes[0]);
+                    planes.Add(gObj.AAbox.planes[1]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[0]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
+                }
+                else
+               {
+                   planes.Add(gObj.AAbox.planes[2]);
+                   planes.Add(gObj.AAbox.planes[3]);
+                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
+                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
+               }
             }
-        
+            else
+            {
+                if (character.Position.Z < gObj.AAbox.pointOfChangeWall[0].Z || character.Position.Z > gObj.AAbox.pointOfChangeWall[1].Z)
+                {
+                    planes.Add(gObj.AAbox.planes[2]);
+                    planes.Add(gObj.AAbox.planes[3]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
+                }
+                else
+                {
+                    planes.Add(gObj.AAbox.planes[0]);
+                    planes.Add(gObj.AAbox.planes[1]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[0]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
+                }
+            }
+           return findClosestPlane(planes,character,centerOfPlane);
+        }
+
+        public static Plane findClosestPlane(List<Plane> planes,GameObject player,List<Vector3>centersOfPlanes)
+        {
+            float smallestDistance = float.MaxValue;
+            int whichWall = 0;
+            for (int i = 0; i < 2; i++)
+            {
+                float distance = (float)Math.Sqrt(Math.Pow(player.AAbox.center2.X - centersOfPlanes[i].X, 2) + Math.Pow(player.AAbox.center2.Y - centersOfPlanes[i].Y, 2) + Math.Pow(player.AAbox.center2.Z - centersOfPlanes[i].Z, 2));
+                if (distance < smallestDistance)
+                {
+                    smallestDistance = distance;
+                    whichWall = i;
+                }
+            }
+            return planes[whichWall];
         }
     }
 }

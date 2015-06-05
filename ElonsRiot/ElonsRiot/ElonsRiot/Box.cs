@@ -12,6 +12,7 @@ namespace ElonsRiot
     {
         public Box()
         {
+            this.actualCollidingPoints = new List<Vector3>();
             ActualCorners = null;
             this.referencePlayer = null;
             this.corners = null;
@@ -20,7 +21,9 @@ namespace ElonsRiot
             this.center = new Vector3(0, 0, 0);
             this.radiuses = new float[3];
             this.actualRadiuses = null;
-            this.planes = new Plane[2];
+            this.planes = new List<Plane>();
+            this.centersOfWalls = new Vector3[4];
+            this.pointOfChangeWall = new List<Vector3>();
         }
         public Vector3 center;
         public float[] radiuses;
@@ -33,11 +36,16 @@ namespace ElonsRiot
         public Vector3 min, max;
         public int length;
         public float height;
-        public Plane[] planes;
-            
+        public List<Plane> planes;
+        public Vector3[] centersOfWalls;
+        public List<Vector3> actualCollidingPoints;
+        public List<Vector3> pointOfChangeWall;
         public Box(Player gameObj)
         {
-            this.planes = new Plane[2];
+            this.pointOfChangeWall = new List<Vector3>();
+            this.actualCollidingPoints = new List<Vector3>();
+            this.centersOfWalls = new Vector3[4];
+            this.planes = new List<Plane>();
             ActualCorners = new Vector3[6];
             this.referencePlayer = gameObj;
             this.referenceObject = gameObj;
@@ -49,14 +57,17 @@ namespace ElonsRiot
             this.center = gameObj.center;
             this.actualRadiuses = new List<Vector3>();
             this.radiuses = new float[3];
-            GetRadius();
+            GetCenter();
             CreateRadiuses();
 
 
         }
         public Box(GameObject gameObj, Player pla)
         {
-            this.planes = new Plane[2];
+            this.pointOfChangeWall = new List<Vector3>();
+            this.actualCollidingPoints = new List<Vector3>();
+            this.centersOfWalls = new Vector3[4];
+            this.planes = new List<Plane>();
             ActualCorners = new Vector3[6];
             this.referenceObject = gameObj;
             createBoudingBox();
@@ -68,7 +79,7 @@ namespace ElonsRiot
             this.center = gameObj.center;
             this.actualRadiuses = new List<Vector3>();
             this.radiuses = new float[3];
-            GetRadius();
+            GetCenter();
             CreateRadiuses();
         }
      
@@ -85,14 +96,14 @@ namespace ElonsRiot
         {
           
             Matrix tmp = Matrix.Identity;
-            if ((referenceObject.Rotation.Y != 0 && referenceObject.ObjectPath != "3D/ludzik/dude"))
-            {
-                     tmp = referenceObject.MatrixWorld;
-            }
            
-            else
+            if (referenceObject.Name.Contains("character") || referenceObject.Name.Contains("enemy"))
             {
                 tmp = Matrix.CreateScale(referenceObject.Scale) * Matrix.CreateTranslation(referenceObject.Position);
+            }
+            else
+            {
+                tmp = referenceObject.MatrixWorld;
             }
 
             Vector3 meshMax = new Vector3(float.MinValue);
@@ -137,21 +148,20 @@ namespace ElonsRiot
             }
             
             referenceObject.boundingBox = new BoundingBox(meshMin, meshMax);
-
+            
         }
         public void UpdateBoundingBox()
         {
             Vector3 referenceMin = min;
             Vector3 referenceMax = max;
             Matrix tmp = Matrix.Identity;
-            if ((referenceObject.Rotation.Y != 0 && referenceObject.ObjectPath != "3D/ludzik/dude"))
-            {
-                tmp = referenceObject.MatrixWorld;
-            }
-
-            else
+            if (referenceObject.Name.Contains("character") || referenceObject.Name.Contains("enemy"))
             {
                 tmp = Matrix.CreateScale(referenceObject.Scale) * Matrix.CreateTranslation(referenceObject.Position);
+            }
+            else
+            {
+                tmp = referenceObject.MatrixWorld;
             }
             Matrix meshTransform = Matrix.Identity;
             foreach (ModelMesh mesh in referenceObject.GameObjectModel.Meshes)
@@ -162,7 +172,7 @@ namespace ElonsRiot
                 referenceMin = Vector3.Transform(referenceMin, meshTransform);
                 referenceMax = Vector3.Transform(referenceMax, meshTransform);
             }
-            if (referenceObject.ObjectPath == "3D/ludzik/dude")
+            if (referenceObject.Name.Contains("character") || referenceObject.Name.Contains("enemy"))
             {
                 referenceMax.Z += 1.5f;
                 referenceMin.Z -= 1.5f;
@@ -180,10 +190,13 @@ namespace ElonsRiot
             foreach (ModelMesh mesh in referenceObject.GameObjectModel.Meshes)
             {
                 meshTransform = referenceObject.boneTransformations[mesh.ParentBone.Index] * tmp;
-
+                foreach(ModelBone bones in referenceObject.GameObjectModel.Bones)
+                {
+                    Matrix stride = bones.Transform;
+                }
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
-
+                    
                     // The stride is how big, in bytes, one vertex is in the vertex buffer
                     // We have to use this as we do not know the make up of the vertex
                     int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
@@ -207,15 +220,17 @@ namespace ElonsRiot
                 // transform by mesh bone matrix
                 meshMin = Vector3.Transform(meshMin, meshTransform);
                 meshMax = Vector3.Transform(meshMax, meshTransform);
-                meshMax.X -= 2;
-                meshMin.X += 2;
+                meshMax.X -= 6;
+                meshMin.X += 6;
+                meshMax.Z -= 2;
+                meshMin.Z += 2;
                 referenceObject.boxes.Clear();
                 referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
             }
            
         }
         //potrzebne do kolizji z podłoga 
-        public void GetRadius()
+        public void GetCenter()
         {
             center2.X = (corners[1].X + corners[7].X) / 2;
             center2.Y = (corners[1].Y + corners[7].Y) / 2;
@@ -228,7 +243,7 @@ namespace ElonsRiot
         //potrzebne do wykrywania kolizji
         public void CreateRadiuses()
         {
-            
+            planes.Clear();
             radiuses[0] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[6].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[6].Y), 2)
              +   Math.Pow(Convert.ToDouble(corners[7].Z - corners[6].Z),2));//x
             radiuses[1] = (float)Math.Sqrt(Math.Pow(Convert.ToDouble(corners[7].X - corners[4].X), 2) + Math.Pow(Convert.ToDouble(corners[7].Y - corners[4].Y), 2)
@@ -242,45 +257,87 @@ namespace ElonsRiot
         
         public void createPlanes()
         {
-            Vector3[] vecAB = new Vector3[2];
-            Vector3[] vecAC = new Vector3[2];
-            Vector3[] vecA = new Vector3[2];
-            if (Math.Abs(corners[4].X - corners[5].X) > Math.Abs(corners[5].Z - corners[1].Z))
-            {
-                vecAB[0] = corners[1] - corners[0];
-                vecAC[0] = corners[3] - corners[0];
-                vecAB[1] = corners[4] - corners[5];
-                vecAC[1] = corners[6] - corners[5];
-                vecA[0] = corners[0];
-                vecA[1] = corners[5];
-
-            }
-            else
-            {
-                vecA[0] = corners[5];
-                vecA[1] = corners[0];
-                vecAB[0] = corners[1] - corners[5];
-                vecAC[0] = corners[6] - corners[5];
-                vecAB[1] = corners[4] - corners[0];
-                vecAC[1] = corners[3] - corners[0];
-            }
-
+            GetCorners();
+            List<Vector3> vecAB = new List<Vector3>();
+            List<Vector3> vecAC = new List<Vector3>();
+            List<Vector3> vecA = new List<Vector3>();
+          
+               //z
+             
+                vecAB.Add(corners[5] - corners[1]);   //odwracam normalne w physic manager
+                vecAC.Add(corners[5] - corners[6]);
+                vecAB.Add(corners[4] - corners[0]);
+                vecAC.Add(corners[4] - corners[7]);
+                vecA.Add(corners[5]);
+                vecA.Add(corners[4]);
+            //x
+                vecA.Add(corners[1]);    //odwracam normalne w physic manager
+                vecA.Add(corners[5]);  
+                vecAB.Add(corners[1] - corners[0]);
+                vecAC.Add(corners[1] - corners[2]);
+                vecAB.Add(corners[5] - corners[4]);
+                vecAC.Add(corners[5] - corners[6]);
+           
             float dotProduct = 0;
             Vector3 normal = new Vector3(0, 0, 0);
-            for(int i = 0; i < 2;i++)
+
+            for(int i = 0; i < vecA.Count();i++)
             {
 
                     normal = Vector3.Cross(vecAB[i], vecAC[i]);
                     normal.Normalize();
-
+                  
                     dotProduct = Vector3.Dot(normal, vecA[i]);
 
-                    planes[i] = new Plane();
-                    planes[i].Normal = normal;
-                    planes[i].D = dotProduct;
+                    Plane tmpPlane = new Plane();
+                 
+                       tmpPlane.D = dotProduct;
+                       tmpPlane.Normal = normal;
+                      
+                  
+                    planes.Add(tmpPlane);
             }
          
         }
+        public void createPointsOfCollision()
+        {
+            GetCorners();
+            Vector3[] corners = referenceObject.boundingBox.GetCorners();
+
+            centersOfWalls[3].X = (corners[4].X + corners[6].X)/2; //front
+            centersOfWalls[3].Y = (corners[4].Y + corners[6].Y)/2;
+            centersOfWalls[3].Z = (corners[4].Z + corners[6].Z)/2;
+            centersOfWalls[2].X = (corners[0].X + corners[2].X) / 2; //back
+            centersOfWalls[2].Y = (corners[0].Y + corners[2].Y) / 2;
+            centersOfWalls[2].Z = (corners[0].Z + corners[2].Z) / 2;
+            centersOfWalls[1].X = (corners[4].X + corners[3].X) / 2; //left
+            centersOfWalls[1].Y = (corners[4].Y + corners[3].Y) / 2;
+            centersOfWalls[1].Z = (corners[4].Z + corners[3].Z) / 2;
+            centersOfWalls[0].X = (corners[5].X + corners[2].X) / 2; //right
+            centersOfWalls[0].Y = (corners[5].Y + corners[2].Y) / 2;
+            centersOfWalls[0].Z = (corners[5].Z + corners[2].Z) / 2;
+        }
+
+        public void setpointOfChangeWall()
+        {
+
+            float distanceX = referenceObject.boundingBox.Max.X - referenceObject.boundingBox.Min.X;
+            float distanceZ = referenceObject.boundingBox.Max.Z - referenceObject.boundingBox.Min.Z;
+            if (distanceX < distanceZ)
+            {
+                referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(0, 0, referenceObject.boundingBox.Min.Z));
+                referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(0, 0, referenceObject.boundingBox.Max.Z));
+                referenceObject.message = "z";
+            }
+            else
+            {
+                referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Min.X, 0, 0));
+                referenceObject.AAbox.pointOfChangeWall.Add(new Vector3(referenceObject.boundingBox.Max.X, 0, 0));
+                referenceObject.message = "x";
+            }
+        }
+
+
 
     }
 }

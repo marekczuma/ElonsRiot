@@ -131,7 +131,7 @@ namespace ElonsRiot
               //  DrawModel(gObj);
              //   gObj.createBoudingBox();
                 gObj.RefreshMatrix();
-             //   DrawBoudingBoxes(graphic, gObj);
+                DrawBoudingBoxes(graphic, gObj);
             }
             DrawBoudingBox(graphic);
             DrawRay(graphic);
@@ -183,7 +183,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(100, 4, -90);
+            Vector3 tmpPos = new Vector3(100, 4, -20);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot);
             Elon.Name = "characterElon";

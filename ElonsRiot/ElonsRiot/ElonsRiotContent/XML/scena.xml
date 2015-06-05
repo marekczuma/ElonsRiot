@@ -144,7 +144,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>true</Interactive>
-	</GameObject>
+	</GameObject> 
 	//Strzelnica
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
 		<Position>
@@ -400,7 +400,7 @@
 		</Scale>
 		<Tag>escapePlace</Tag>
 		<Interactive>false</Interactive>
-	</GameObject>
+	</GameObject> 
 	<GameObject Name="filar" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>88</X>
