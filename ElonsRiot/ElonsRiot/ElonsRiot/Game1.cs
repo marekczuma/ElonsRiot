@@ -26,6 +26,9 @@ namespace ElonsRiot
         SpriteBatch spriteBatchHUD4;
         SpriteBatch spriteBatchHUD5;
         SpriteBatch spriteBatchHUD6;
+        SpriteBatch spriteBatchString;
+        bool isStatement = false;
+        GameObject currentInteractiveObject;
        // HUD myHUD;
 
         public Game1()
@@ -34,7 +37,7 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
          //   myHUD = new HUD();
         }
         protected override void Initialize()
@@ -56,6 +59,7 @@ namespace ElonsRiot
             spriteBatchHUD4 = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD5 = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD6 = new SpriteBatch(GraphicsDevice);
+            spriteBatchString = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
@@ -100,7 +104,8 @@ namespace ElonsRiot
 
             if (MyScene.PlayerObject.showCrosshair == true)
             {
-                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
+                Vector2 tmp = new Vector2(0, 0);
+                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice, tmp);
             }
 
             if (MyScene.PlayerObject.showItem1 == true)
@@ -115,21 +120,40 @@ namespace ElonsRiot
             {
                 HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice);
             }
+            if(isStatement)
+            {
+                HUD.DrawString(spriteBatchHUD4, "Uzyj! " + currentInteractiveObject.Name, GraphicsDevice);
+            }
             base.Draw(gameTime);
         }
 
         public void CheckRay(KeyboardState _state)
         {
-            
+            Ray pickRay2 = GetPickRay();
+            isStatement = false;
+            for (int i = 0; i < MyScene.GameObjects.Count; i++)
+            {
+                if (MyScene.GameObjects[i].Interactive == true)
+                {
+                    //Nullable<float> result2 = pickRay2.Intersects(MyScene.GameObjects[i].boundingBox);
+                    Nullable<float> result2 = MyScene.GameObjects[i].boundingBox.Intersects(pickRay2);
+                    if (result2.HasValue == true)
+                    {
+                        isStatement = true;
+                        currentInteractiveObject = MyScene.GameObjects[i];
+                    }
+                }
+            }
             if (_state.IsKeyDown(Keys.E))
             {
                 Ray pickRay = GetPickRay();
-                float selectedDistance = float.MaxValue;
+                float selectedDistance = 100;// float.MaxValue;
                 for (int i = 0; i < MyScene.GameObjects.Count; i++)
                 {
                     if (MyScene.GameObjects[i].Interactive == true)
                     {
-                        Nullable<float> result = pickRay.Intersects(MyScene.GameObjects[i].boundingBox);
+                        //Nullable<float> result = pickRay.Intersects(MyScene.GameObjects[i].boundingBox);
+                        Nullable<float> result = MyScene.GameObjects[i].boundingBox.Intersects(pickRay);
                         if (result.HasValue == true)
                         {
                             if (result.Value < selectedDistance)
@@ -167,16 +191,8 @@ namespace ElonsRiot
 
         Ray GetPickRay()
         {
-            Matrix world = Matrix.CreateTranslation(10, 0, 0);
-            Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
-            Vector3 farPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.target, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
-            Vector3 temp = farPoint;
-            temp.Y += 0.3f;
-            farPoint = temp;
-            temp = nearPoint;
-            temp.Y += 0.3f;
-            nearPoint = temp;
-            Vector3 direction = farPoint - nearPoint;
+            Vector3 nearPoint = MyScene.PlayerObject.camera.position;
+            Vector3 direction = MyScene.PlayerObject.camera.desiredTarget - nearPoint;
             direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction);
             return pickRay;
@@ -184,12 +200,18 @@ namespace ElonsRiot
 
         Ray GetPickRayCamera()
         {
-            Matrix world = Matrix.CreateTranslation(0, 0, 0);
-            Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
-            Vector3 farPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.Position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
-            Vector3 direction = farPoint - nearPoint;
+            //Matrix world = Matrix.CreateTranslation(0, 0, 0);
+            //Vector3 nearPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.camera.position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
+            //Vector3 farPoint = GraphicsDevice.Viewport.Unproject(MyScene.PlayerObject.Position, MyScene.PlayerObject.camera.projectionMatrix, MyScene.PlayerObject.camera.viewMatrix, world);
+            //Vector3 direction = farPoint - nearPoint;
+
+            Vector3 nearPoint = MyScene.PlayerObject.camera.position;
+            Vector3 direction = MyScene.PlayerObject.camera.desiredTarget - nearPoint;
             direction.Normalize();
-            Ray pickRay = new Ray(nearPoint, direction);
+            //Ray pickRay = new Ray(nearPoint, direction);
+
+           // direction.Normalize();
+            Ray pickRay = new Ray(nearPoint, direction );
             return pickRay;
         }
     }

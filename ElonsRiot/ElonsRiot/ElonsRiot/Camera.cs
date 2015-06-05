@@ -29,10 +29,10 @@ namespace ElonsRiot
         public Matrix bigView;
 
         private float yaw, pitch, roll;
-        private Matrix cameraRotation;
+        public Matrix cameraRotation;
 
         private Vector3 desiredPosition;
-        private Vector3 desiredTarget;
+        public Vector3 desiredTarget;
         public Vector3 offsetDistance;
         public BoundingFrustum frustum;
 

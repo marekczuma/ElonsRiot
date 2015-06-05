@@ -196,6 +196,7 @@ namespace ElonsRiot
             Elon.mass = 70;
             Elon.Tag = "Player";
             Elon.GraphicsDevice = GraphicsDevice;
+            Elon.Interactive = false;
             GameObjects.Add(Elon);
             PlayerObject = Elon;
         }
