@@ -70,6 +70,8 @@ namespace ElonsRiot
         public String message;
         [XmlIgnore]
         public string velocityName;
+        [XmlIgnore]
+        public List<GameObject> neighbors;
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -82,6 +84,7 @@ namespace ElonsRiot
             GameObjects = new List<GameObject>();
             AAbox = new Box();
             boxes = new List<BoundingBox>();
+            neighbors = new List<GameObject>();
             
         }
         public GameObject(Vector3 _position)

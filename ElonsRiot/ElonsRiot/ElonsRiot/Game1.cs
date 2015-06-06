@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
+using ElonsRiot.BSPTree;
 
 namespace ElonsRiot
 {
@@ -43,6 +44,7 @@ namespace ElonsRiot
         protected override void Initialize()
         {
             PhysicManager.setElements(graphics.GraphicsDevice);
+            CreateBSP.CreateLeafs();
             base.Initialize();
         }
 
@@ -82,7 +84,7 @@ namespace ElonsRiot
             CheckRay(state);
             //MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
-
+            CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
