@@ -141,10 +141,13 @@ namespace ElonsRiot
                 {
                     foreach(GameObject neighbor in NotInteractiveGameObject)
                     {
-                        if(boxesCollision.TestAABBAABB(gameObj,neighbor))
-                        {
-                            gameObj.neighbors.Add(neighbor);
-                        }
+                        if (gameObj.Name.Contains("Hall") == false &&  gameObj.Position != neighbor.Position) { 
+                            if(boxesCollision.TestAABBAABB(gameObj,neighbor) && neighbor.Name.Contains("Hall") == false)
+                            {
+                               gameObj.neighbors.Add(neighbor);
+                            }
+                         }
+                        
                     }
                 }
                 //inicjalizacja aktywnych
@@ -251,9 +254,9 @@ namespace ElonsRiot
                                     invNormal = invNormal * (direction * plane.Normal).Length();
                                     Vector3 wallDir = direction - invNormal;
                                   //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
-                              foreach(GameObject neighbor in gObj.neighbors){
+                                   foreach(GameObject neighbor in gObj.neighbors){
                                     
-                                  if (boxesCollision.TestAABBAABB(character, neighbor))
+                                        if (boxesCollision.TestAABBAABB(character, neighbor))
                                         {
                                             character.Position = character.oldPosition;
                                             break;
@@ -262,11 +265,14 @@ namespace ElonsRiot
                                         {
                                             character.Position = character.oldPosition + wallDir;
                                         }
-                                   }
-                                
-                            }
+                                  }
+                                  if (gObj.neighbors.Count == 0)
+                                  {
+                                      character.Position = character.oldPosition + wallDir;
+                                  }
+                         }
                     }
-                  }
+                }
             }
             
             //kolizja elemetów interaktywnych z bahataterami 

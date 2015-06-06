@@ -17,7 +17,7 @@ namespace ElonsRiot
             float r;
             int couter = 0;
             gameObjects.collisionCommunicat = "";
-            if (gameObjects.Name != player.Name && gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
+            if ( gameObjects.ObjectPath != "3D/Ziemia/bigFloor")
             {
                 r = (int)(player.AAbox.radiuses[2] + gameObjects.AAbox.radiuses[2]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.Z - gameObjects.AAbox.center2.Z, 2.0)) > r) {couter++;};
                 r = (int)(player.AAbox.radiuses[0] + gameObjects.AAbox.radiuses[0]); if ((int)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gameObjects.AAbox.center2.X, 2.0)) > r) { couter++;};
