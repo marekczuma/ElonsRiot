@@ -93,6 +93,10 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterState.cs" />
     <Compile Include="DecoyAI.cs" />
+    <Compile Include="Dialogues\DialogLine.cs" />
+    <Compile Include="Dialogues\DialoguesManager.cs" />
+    <Compile Include="Dialogues\Statement.cs" />
+    <Compile Include="Dialogues\XMLDialogues.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="HUD.cs" />

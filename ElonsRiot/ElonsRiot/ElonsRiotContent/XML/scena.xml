@@ -164,7 +164,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>  
-	 <GameObject Name="door1" Path="3D/placeholders/Wall5">
+	<!-- <GameObject Name="door1" Path="3D/placeholders/Wall5">
 		<Position>
 		  <X>50</X>
 		  <Y>0</Y>
@@ -181,7 +181,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>true</Interactive>
-	</GameObject> 
+	</GameObject> -->
 	//Strzelnica 
 	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
 		<Position>

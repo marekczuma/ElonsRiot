@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
 using ElonsRiot.BSPTree;
+using ElonsRiot.Dialogues;
 
 namespace ElonsRiot
 {
@@ -17,6 +18,7 @@ namespace ElonsRiot
     {
         //W³aœciwoœci
         Scene MyScene { get; set; }             //Scena. Dziêki niej ³adujemy wszystkie gameobjecty itd.
+        DialoguesManager MyDialogues{get;set;}
         KeyboardState state { get; set; }
         MouseState CurrentMouseState { get; set; }
         GraphicsDeviceManager graphics;
@@ -27,6 +29,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchHUD4;
         SpriteBatch spriteBatchHUD5;
         SpriteBatch spriteBatchHUD6;
+        SpriteBatch sptiteBatchDialogues;
        // HUD myHUD;
 
         public Game1()
@@ -34,8 +37,9 @@ namespace ElonsRiot
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
+            MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
-            //graphics.IsFullScreen = true;
+           // graphics.IsFullScreen = true;
          //   myHUD = new HUD();
         }
         protected override void Initialize()
@@ -58,7 +62,9 @@ namespace ElonsRiot
             spriteBatchHUD4 = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD5 = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD6 = new SpriteBatch(GraphicsDevice);
+            sptiteBatchDialogues = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
+            MyDialogues.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
@@ -81,6 +87,8 @@ namespace ElonsRiot
             //MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
+            MyDialogues.withLine(gameTime);
+            MyDialogues.checkStatements();
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -116,6 +124,11 @@ namespace ElonsRiot
             if (MyScene.PlayerObject.showSkills == true)
             {
                 HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice);
+            }
+            if (MyDialogues.IsCorrectRoom)
+            {
+                    HUD.DrawString(sptiteBatchDialogues, 
+                        MyDialogues.Statements[MyDialogues.AcctualStatementNumber].dialogLines.Line[MyDialogues.AcctualLineOfStatementCounter], GraphicsDevice);
             }
             base.Draw(gameTime);
         }
