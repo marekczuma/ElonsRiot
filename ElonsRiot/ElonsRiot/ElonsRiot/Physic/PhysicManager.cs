@@ -83,7 +83,6 @@ namespace ElonsRiot
                   foreach(GameObject character in Characters){
                       character.Initialize();
                       character.RefreshMatrix();
-                      character.GetCentre();
                       character.AAbox = new Box(character, player);
                       character.AAbox.GetCorners();
                       character.AAbox.createBoudingBox();
@@ -95,7 +94,6 @@ namespace ElonsRiot
                   {
                       box.Initialize();
                       box.RefreshMatrix();
-                      box.GetCentre();
                       box.AAbox = new Box(box, player);
                       box.AAbox.GetCorners();
                       box.AAbox.createBoudingBox();
@@ -107,7 +105,6 @@ namespace ElonsRiot
                   {
                       enemy.Initialize();
                       enemy.RefreshMatrix();
-                      enemy.GetCentre();
                       enemy.AAbox = new Box(enemy, player);
                       enemy.AAbox.GetCorners();
                       enemy.AAbox.createBoudingBox();
@@ -116,7 +113,6 @@ namespace ElonsRiot
                   }
                   //inicjalizjacja Plane dla podłogi
                   floor.Initialize();
-                  floor.GetCentre();
                   floor.RefreshMatrix();
                   floor.AAbox = new Box(player);
                   floor.AAbox.createBoudingBox();
@@ -126,7 +122,6 @@ namespace ElonsRiot
                   foreach (GameObject gObj in NotInteractiveGameObject)
                   {
                       gObj.Initialize();
-                      gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
                       gObj.AAbox.createBoudingBox();
@@ -154,7 +149,6 @@ namespace ElonsRiot
                   foreach (GameObject gObj in InteractiveGameObject)
                   {
                       gObj.Initialize();
-                      gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
                       gObj.AAbox.GetCorners();

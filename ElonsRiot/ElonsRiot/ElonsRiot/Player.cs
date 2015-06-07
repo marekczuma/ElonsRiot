@@ -111,22 +111,22 @@ namespace ElonsRiot
             if (state.IsKeyDown(Keys.S))
             {
                 ChangePosition(new Vector3(0, 0, elonState.VelocityBack));
-                velocityName = "VelocityBack";
+              
             }
             else if (state.IsKeyDown(Keys.W))
             {
                 ChangePosition(new Vector3(0, 0,-elonState.VelocityForward ));
-                velocityName = "VelocityForward";
+             
             }
             if (state.IsKeyDown(Keys.A))
             {
                 ChangePosition(new Vector3(-elonState.VelocitySide, 0,0 ));
-                velocityName = "RightVelocitySide";
+               
             }
             else if (state.IsKeyDown(Keys.D))
             {
                 ChangePosition(new Vector3(elonState.VelocitySide, 0, 0 ));
-                velocityName = "LeftVelocitySide";
+               
             }
             
             //obracanie playera

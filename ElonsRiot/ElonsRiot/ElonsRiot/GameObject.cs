@@ -52,24 +52,18 @@ namespace ElonsRiot
         [XmlIgnore]
         public Box AAbox;
         [XmlIgnore]
-        public Vector3 center;
-        [XmlIgnore]
-        public Plane plane;
+        public Plane plane; //korzysta z tego tylko ziemia, wiec trzeba przerobic
         [XmlIgnore]
         public Quaternion RotationQ;
         public float gravity;
         [XmlIgnore]
         public InterationTypes interactionType;
         [XmlIgnore]
-        public float velocity;
-        [XmlIgnore]
         public string collisionCommunicat;
         [XmlIgnore]
         public Vector3 oldPosition, newPosition;
         [XmlIgnore]
         public String message;
-        [XmlIgnore]
-        public string velocityName;
         [XmlIgnore]
         public List<GameObject> neighbors;
         public GameObject()
@@ -241,25 +235,6 @@ namespace ElonsRiot
             return Vector3.Distance(_target.Position, Position);
         }
        
-        public void GetCentre()
-        {
-            BoundingSphere sphere = new BoundingSphere();
-
-            Matrix tmp = Matrix.Identity;
-            tmp = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
-            Matrix meshTransform = new Matrix();
-
-            foreach (ModelMesh mesh in GameObjectModel.Meshes)
-            {
-                meshTransform = boneTransformations[mesh.ParentBone.Index] * tmp;
-
-
-                sphere = BoundingSphere.CreateMerged(sphere, mesh.BoundingSphere);
-                sphere = sphere.Transform(meshTransform);
-
-            }
-            this.center = sphere.Center;
-        }
        
         private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
         {

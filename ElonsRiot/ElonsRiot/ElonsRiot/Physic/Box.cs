@@ -18,14 +18,13 @@ namespace ElonsRiot
             this.corners = null;
             this.min = new Vector3(0, 0, 0);
             this.max = new Vector3(0, 0, 0);
-            this.center = new Vector3(0, 0, 0);
             this.radiuses = new float[3];
             this.actualRadiuses = null;
             this.planes = new List<Plane>();
             this.centersOfWalls = new Vector3[4];
             this.pointOfChangeWall = new List<Vector3>();
         }
-        public Vector3 center;
+
         public float[] radiuses;
         public Vector3 center2;
         Player referencePlayer;
@@ -49,12 +48,10 @@ namespace ElonsRiot
             ActualCorners = new Vector3[6];
             this.referencePlayer = gameObj;
             this.referenceObject = gameObj;
-      //      createBoudingBox();
             this.corners = new Vector3[8];
             this.corners = gameObj.boundingBox.GetCorners();
             this.min = gameObj.boundingBox.Min;
             this.max = gameObj.boundingBox.Max;
-            this.center = gameObj.center;
             this.actualRadiuses = new List<Vector3>();
             this.radiuses = new float[3];
             GetCenter();
@@ -76,7 +73,6 @@ namespace ElonsRiot
             this.min = gameObj.boundingBox.Min;
             this.max = gameObj.boundingBox.Max;
             this.referencePlayer = pla;
-            this.center = gameObj.center;
             this.actualRadiuses = new List<Vector3>();
             this.radiuses = new float[3];
             GetCenter();
@@ -235,8 +231,6 @@ namespace ElonsRiot
             center2.X = (corners[1].X + corners[7].X) / 2;
             center2.Y = (corners[1].Y + corners[7].Y) / 2;
             center2.Z = (corners[1].Z + corners[7].Z) / 2;
-        //   max = referenceObject.boundingBox.Max;
-           // min = referenceObject.boundingBox.Min;
         }
       
 

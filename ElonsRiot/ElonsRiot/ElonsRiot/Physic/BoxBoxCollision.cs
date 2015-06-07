@@ -27,59 +27,14 @@ namespace ElonsRiot
                 {
                     return false;
                 }
-                else {
-                 //   chceckWitchWall(player, gameObjects); //DZIALA dla małych obiektow
-                    return true;
-              }
+                return true;
+              
             }
 
             return false;
         }
-        public Plane checkWhichPlane(GameObject player,GameObject gObj)
-        {
-            Plane[] planes = new Plane[2];
-            if(gObj.collisionCommunicat == "z")
-            {
-                planes[0] = gObj.AAbox.planes[0];
-                planes[1] = gObj.AAbox.planes[1];
-            }
-            else
-            {
-                planes[0] = gObj.AAbox.planes[2];
-                planes[1] = gObj.AAbox.planes[3];
-            }
-            Plane plane = new Plane();
-            Vector3 c = player.AAbox.center2; 
-            float[] s = new float[2];
-            s[0] = Vector3.Dot(planes[0].Normal, c) - planes[0].D;
-            s[1] = Vector3.Dot(planes[1].Normal, c) - planes[1].D;
-            if(Math.Abs(s[0]) < Math.Abs(s[1]))
-            {
-                plane = planes[0];
-            }
-            else { plane = planes[1]; }
-            return plane;
-        }
-        public void chceckWitchWall(GameObject player, GameObject gObj)
-        {
-            float smallestDistance = float.MaxValue;
-            int whichWall = 0;
-            for(int i = 0; i < 4;i++)
-            {
-                float distance = (float)Math.Sqrt(Math.Pow(player.AAbox.center2.X - gObj.AAbox.centersOfWalls[i].X, 2) + Math.Pow(player.AAbox.center2.Y - gObj.AAbox.centersOfWalls[i].Y, 2) + Math.Pow(player.AAbox.center2.Z - gObj.AAbox.centersOfWalls[i].Z, 2));
-                if(distance < smallestDistance)
-                {
-                    smallestDistance = distance;
-                    whichWall = i;
-                }
-            }
-            if(whichWall == 0 || whichWall == 1)
-            {
-                gObj.collisionCommunicat = "x";
-            }
-            else { gObj.collisionCommunicat = "z"; }
-        }
        
+      
         /// <summary>
         /// Potrzebne gdy bohaterowie przesuwają paczki. Zawsze po zatrzymaniu będą 2 punkty dalej od paczki wiec trzeba wziąć to pod
         /// uwagę w czasie wyliczania czy mogą się wspiąć na paczkę. 
