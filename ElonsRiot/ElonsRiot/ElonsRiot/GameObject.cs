@@ -79,6 +79,7 @@ namespace ElonsRiot
             AAbox = new Box();
             boxes = new List<BoundingBox>();
             neighbors = new List<GameObject>();
+            gravity = -0.5f;
             
         }
         public GameObject(Vector3 _position)
@@ -88,6 +89,7 @@ namespace ElonsRiot
             RefreshMatrix();
             //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
             GameObjects = new List<GameObject>();
+            gravity = -0.5f;
         }
         public GameObject(Vector3 _position, Vector3 _rotation)
         {
@@ -97,6 +99,7 @@ namespace ElonsRiot
             RefreshMatrix();
             //MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(Rotation.Y)) * Matrix.CreateRotationX(MathHelper.ToRadians(Rotation.X)) * Matrix.CreateRotationZ(MathHelper.ToRadians(Rotation.Z)) * Matrix.CreateTranslation(Position);
             GameObjects = new List<GameObject>();
+            gravity = -0.5f;
         }
         public void LoadModels(ContentManager _contentManager)
         {
