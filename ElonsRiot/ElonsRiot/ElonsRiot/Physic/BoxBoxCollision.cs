@@ -78,7 +78,7 @@ namespace ElonsRiot
             //return Math.Abs(s) <= r;
             return s <= r;
         }
-
+        //kolizja małych boxow w postaci
         public bool TestAABBAABBTMP(GameObject player, GameObject gameObjects)
         {
             float[] radiuses = new float[3];

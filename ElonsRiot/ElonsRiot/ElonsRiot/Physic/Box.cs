@@ -23,6 +23,8 @@ namespace ElonsRiot
             this.planes = new List<Plane>();
             this.centersOfWalls = new Vector3[4];
             this.pointOfChangeWall = new List<Vector3>();
+            this.maxValueBoundingBoxes = new List<Vector3>();
+            this.minValueBoundingBoxes = new List<Vector3>();
         }
 
         public float[] radiuses;
@@ -39,8 +41,12 @@ namespace ElonsRiot
         public Vector3[] centersOfWalls;
         public List<Vector3> actualCollidingPoints;
         public List<Vector3> pointOfChangeWall;
+        public List<Vector3> minValueBoundingBoxes;
+        public List<Vector3> maxValueBoundingBoxes;
         public Box(Player gameObj)
         {
+            this.maxValueBoundingBoxes = new List<Vector3>();
+            this.minValueBoundingBoxes = new List<Vector3>();
             this.pointOfChangeWall = new List<Vector3>();
             this.actualCollidingPoints = new List<Vector3>();
             this.centersOfWalls = new Vector3[4];
@@ -75,6 +81,8 @@ namespace ElonsRiot
             this.referencePlayer = pla;
             this.actualRadiuses = new List<Vector3>();
             this.radiuses = new float[3];
+            this.maxValueBoundingBoxes = new List<Vector3>();
+            this.minValueBoundingBoxes = new List<Vector3>();
             GetCenter();
             CreateRadiuses();
         }
@@ -183,6 +191,7 @@ namespace ElonsRiot
             Vector3 meshMax = new Vector3(float.MinValue);
             Vector3 meshMin = new Vector3(float.MaxValue);
             Matrix meshTransform = new Matrix();
+            referenceObject.boxes.Clear();
             foreach (ModelMesh mesh in referenceObject.GameObjectModel.Meshes)
             {
                 meshTransform = referenceObject.boneTransformations[mesh.ParentBone.Index] * tmp;
@@ -211,19 +220,49 @@ namespace ElonsRiot
                         meshMin = Vector3.Min(meshMin, vertPosition);
                         meshMax = Vector3.Max(meshMax, vertPosition);
                     }
+                    minValueBoundingBoxes.Add(meshMin);
+                    maxValueBoundingBoxes.Add(meshMax);
+                    // transform by mesh bone matrix
+                    meshMin = Vector3.Transform(meshMin, meshTransform);
+                    meshMax = Vector3.Transform(meshMax, meshTransform);
+                    meshMax.X -= 1;
+                    meshMin.X += 1;
+                    referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
                 }
-
-                // transform by mesh bone matrix
-                meshMin = Vector3.Transform(meshMin, meshTransform);
-                meshMax = Vector3.Transform(meshMax, meshTransform);
-                meshMax.X -= 6;
-                meshMin.X += 6;
-                meshMax.Z -= 2;
-                meshMin.Z += 2;
-                referenceObject.boxes.Clear();
-                referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
+               
             }
            
+        }
+        public void UpdateBoundingBoxes()
+        {
+            referenceObject.boxes.Clear();
+            for (int i = 0; i < minValueBoundingBoxes.Count; i++)
+            {
+                Vector3 referenceMin = minValueBoundingBoxes[i];
+                Vector3 referenceMax = maxValueBoundingBoxes[i];
+                Matrix tmp = Matrix.Identity;
+                if (referenceObject.Name.Contains("character") || referenceObject.Name.Contains("enemy"))
+                {
+                    tmp = Matrix.CreateScale(referenceObject.Scale) * Matrix.CreateTranslation(referenceObject.Position);
+                }
+                else
+                {
+                    tmp = referenceObject.MatrixWorld;
+                }
+                Matrix meshTransform = Matrix.Identity;
+                foreach (ModelMesh mesh in referenceObject.GameObjectModel.Meshes)
+                {
+                    meshTransform = referenceObject.boneTransformations[mesh.ParentBone.Index] * tmp;
+
+                    // transform by mesh bone matrix
+                    referenceMin = Vector3.Transform(referenceMin, meshTransform);
+                    referenceMax = Vector3.Transform(referenceMax, meshTransform);
+                }
+                referenceMax.X -= 1;
+                referenceMin.X += 1;
+                referenceObject.boxes.Add(new BoundingBox(referenceMin, referenceMax));
+
+            }
         }
         //potrzebne do kolizji z podłoga 
         public void GetCenter()
@@ -232,8 +271,6 @@ namespace ElonsRiot
             center2.Y = (corners[1].Y + corners[7].Y) / 2;
             center2.Z = (corners[1].Z + corners[7].Z) / 2;
         }
-      
-
         //potrzebne do wykrywania kolizji
         public void CreateRadiuses()
         {
@@ -247,8 +284,7 @@ namespace ElonsRiot
             radiuses[0] = radiuses[0] / 2;
             radiuses[1] = radiuses[1] / 2;
             radiuses[2] = radiuses[2] / 2;
-        }
-        
+        }    
         public void createPlanes()
         {
             GetCorners();
@@ -256,7 +292,8 @@ namespace ElonsRiot
             List<Vector3> vecAC = new List<Vector3>();
             List<Vector3> vecA = new List<Vector3>();
             if (referenceObject.Name.Contains("6") ||(referenceObject.Rotation.Y !=0 && referenceObject.Name.Contains("2") )
-                || (referenceObject.Rotation.Y ==0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")))
+                || (referenceObject.Rotation.Y ==0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")) ||
+                (referenceObject.Name.Contains("door") && referenceObject.Rotation.Y == 0))
             {
 
                 vecAB.Add(corners[4] - corners[0]);  //odwracam normalne w physic manager
@@ -312,7 +349,7 @@ namespace ElonsRiot
         {
             GetCorners();
             Vector3[] corners = referenceObject.boundingBox.GetCorners();
-            if ((referenceObject.Rotation.Y != 0 && referenceObject.Name.Contains("2")) || referenceObject.Name.Contains("6") ||
+            if ((referenceObject.Name.Contains("door") && referenceObject.Rotation.Y == 0) || (referenceObject.Rotation.Y != 0 && referenceObject.Name.Contains("2")) || referenceObject.Name.Contains("6") ||
                 (referenceObject.Rotation.Y == 0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")))
             {
                 centersOfWalls[2].X = (corners[4].X + corners[6].X) / 2; //front
