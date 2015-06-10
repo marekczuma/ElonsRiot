@@ -136,7 +136,7 @@ namespace ElonsRiot
             }
             if(MyScene.ObjectDetector.Information)
             {
-                HUD.DrawString(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
+                HUD.DrawStringForInformation(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
             }
             if (MyDialogues.IsCorrectRoom)
             {

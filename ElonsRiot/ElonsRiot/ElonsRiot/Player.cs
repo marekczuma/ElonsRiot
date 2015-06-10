@@ -99,7 +99,7 @@ namespace ElonsRiot
             {
                 elonState.SetCurrentState(State.walk);
             }
-            else
+            else if(! state.IsKeyDown(Keys.E))
             {
                 elonState.SetCurrentState(State.idle);
             }
@@ -317,28 +317,6 @@ namespace ElonsRiot
                     Palo.DecoyGuards = tmpDecoy;
                     Palo.PaloState = FriendState.walk;
                     Palo.Walk = WalkState.decoy;
-                }
-            }
-            if(state.IsKeyDown(Keys.L))
-            {
-                GameObject tmpBox = GetObjectByRay(_scene, state, "boxForMovement",500);
-                //foreach(var elem in _scene.GameObjects)
-                //{
-                //    if(elem.Name == "boxForMovement")
-                //    {
-                //        tmpBox = elem;
-                //        break;
-                //    }
-                //}
-                if (tmpBox != null)
-                {
-                    BoxMovementAI tmpAI = new BoxMovementAI(this.Position);
-                    tmpAI.PointA = Palo.FindPlaceBehindObject(tmpBox, this.Position);
-                    tmpAI.Cube = tmpBox;
-                    tmpAI.CubeMass = tmpBox.mass;
-                    Palo.MoveBoxAI = tmpAI;
-                    Palo.PaloState = FriendState.walk;
-                    Palo.Walk = WalkState.moveBox;
                 }
             }
             if(state.IsKeyDown(Keys.O))
