@@ -100,6 +100,11 @@ namespace ElonsRiot
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width);
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+            
             if(MyScene.PlayerObject.showGun == true)
             {
                 HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,

@@ -36,6 +36,14 @@ namespace ElonsRiot
         AnimationPlayer animationPlayerPalo;
         AnimationPlayer animationPlayerEnemy;
 
+        public Effect effect;
+        Vector3 lightPos;
+        float lightPower;
+        float ambientPower;
+        Matrix lightViewProjection;
+        RenderTarget2D renderTarget;
+        Texture2D shadowMap;
+
         public Scene(ContentManager _contentManager, GraphicsDevice _graphicsDevice)
         {
             GameObjects = new List<GameObject>();
@@ -58,6 +66,11 @@ namespace ElonsRiot
         {
           //  physic = new Physic();
             XMLScene = DeserializeFromXML();
+
+            effect = ContentManager.Load<Effect>("Effects/LightEffect");
+            PresentationParameters pp = graphic.PresentationParameters;
+            renderTarget = new RenderTarget2D(graphic, pp.BackBufferWidth, pp.BackBufferHeight, false, graphic.DisplayMode.Format, DepthFormat.Depth24);
+
             GameObjects = XMLScene.GameObjects;
             LoadPalo();
             LoadElon();
@@ -79,6 +92,12 @@ namespace ElonsRiot
                     //elem.Initialize();
                     //elem.RefreshMatrix();
                 }
+            }
+
+            foreach (GameObject obj in GameObjects)
+            {
+                if (obj.Name != "characterElon" && obj.Name != "characterPalo" && obj.Tag != "guard")
+                    obj.LoadEffects(effect);
             }
             int indexElon = 0;
             int indexPalo = 0;
@@ -118,9 +137,26 @@ namespace ElonsRiot
             animationPlayerEnemy.StartClip(clipEnemy);
 
             basicEffect = new BasicEffect(graphic);
+
+            SetLightData();
         }
         public void DrawAllContent(GraphicsDevice graphic)
         {
+            graphic.SetRenderTarget(renderTarget);
+            graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+
+            foreach (var elem in GameObjects)
+            {
+                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil")
+                {
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap);
+                }
+            }
+            graphic.SetRenderTarget(null);
+            shadowMap = (Texture2D)renderTarget;
+
+            graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+
              foreach(var elem in VisibleGameObjects)
              {
                  if (elem.Name == "characterElon")
@@ -129,15 +165,28 @@ namespace ElonsRiot
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerPalo);
                  else if (elem.Tag == "guard")
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy);
-                 else
-                    elem.DrawModels(ContentManager, PlayerObject);               
+                 else if (elem.Name == "ceil")
+                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap);
+                         
                 elem.RefreshMatrix();
              }
+
+
+             foreach (var elem in VisibleGameObjects)
+             {
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil")
+                 {
+
+                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap);
+                 }
+             }
+
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
                 gObj.RefreshMatrix();
                 DrawBoudingBoxes(graphic, gObj);
             }
+            shadowMap = null;
             DrawBoudingBox(graphic);
             DrawRay(graphic);
 
@@ -284,7 +333,7 @@ namespace ElonsRiot
             }
             else if (PlayerObject.elonState.State == State.walk)
             {
-                clip = skinningData.AnimationClips["Take 003"];
+                clip = skinningData.AnimationClips["Take 002"];
                 if (previousState != State.walk)
                     animationPlayer.StartClip(clip);
                 previousState = State.walk;
@@ -433,6 +482,20 @@ namespace ElonsRiot
                 mesh.Draw();
 
             }
+        }
+
+        private void SetLightData()
+        {
+            ambientPower = 0.2f;
+
+            lightPos = new Vector3(100, 100, -250);
+            lightPower = 1.0f;
+
+
+            Matrix lightsView = Matrix.CreateLookAt(lightPos, new Vector3(lightPos.X, lightPos.Y - 80, lightPos.Z + 300), new Vector3(0, 1, 0));
+            Matrix lightsProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1f, 70f, 500f);
+
+            lightViewProjection = lightsView * lightsProjection;
         }
     }
 }

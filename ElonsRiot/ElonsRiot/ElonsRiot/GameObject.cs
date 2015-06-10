@@ -66,6 +66,9 @@ namespace ElonsRiot
         public String message;
         [XmlIgnore]
         public List<GameObject> neighbors;
+        [XmlIgnore]
+        public Texture2D[] textures;
+
         public GameObject()
         {
             //Rotation = new Vector3(-90, 0, 0);
@@ -112,16 +115,25 @@ namespace ElonsRiot
                     elem.LoadModels(_contentManager);
                 }
             }
+            if (Name != "characterElon" && Name != "characterPalo" && Tag != "guard")
+            {
+                textures = new Texture2D[7];
+                int i = 0;
+                foreach (ModelMesh mesh in GameObjectModel.Meshes)
+                    foreach (BasicEffect currentEffect in mesh.Effects)
+                        textures[i++] = currentEffect.Texture;
+            }
+
         }
-        public void DrawModels(ContentManager _contentManager, Player _playerObject)
+        public void DrawModels(ContentManager _contentManager, Player _playerObject, Vector3 lightPos, float lightPower, float ambientPower, Matrix lightsViewProjectionMatrix, string technique, Texture2D shadowMap)
         {
 
-            DrawSimpleModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix);
-            if( GameObjects != null)
+            DrawSimpleModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix, lightPos, lightPower, ambientPower, lightsViewProjectionMatrix, technique, shadowMap);
+            if (GameObjects != null)
             {
                 foreach(var elem in GameObjects)
                 {
-                    elem.DrawModels(_contentManager, _playerObject);
+                    elem.DrawModels(_contentManager, _playerObject, lightPos, lightPower, ambientPower, lightsViewProjectionMatrix, technique, shadowMap);
                 }
             }
         }
@@ -237,21 +249,28 @@ namespace ElonsRiot
         {
             return Vector3.Distance(_target.Position, Position);
         }
-       
-       
-        private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
+
+
+        private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Vector3 lightPos, float lightPower, float ambientPower, Matrix lightsViewProjectionMatrix, string technique, Texture2D shadowMap)
         {
+            Matrix[] modelTransforms = new Matrix[model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(modelTransforms);
+
+            int i = 0;
             foreach (ModelMesh mesh in model.Meshes)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (Effect effect in mesh.Effects)
                 {
-                    effect.World = mesh.ParentBone.Transform * world;
-                    effect.View = view;
-                    effect.Projection = projection;
-                    if (newTexture != null)
-                    {
-                        effect.Texture = newTexture;
-                    }
+                    Matrix worldMatrix = modelTransforms[mesh.ParentBone.Index] * world;
+                    effect.CurrentTechnique = effect.Techniques[technique];
+                    effect.Parameters["xCamerasViewProjection"].SetValue(view * projection);
+                    effect.Parameters["xLightsViewProjection"].SetValue(lightsViewProjectionMatrix);
+                    effect.Parameters["xWorld"].SetValue(worldMatrix);
+                    effect.Parameters["xTexture"].SetValue(textures[i++]);
+                    effect.Parameters["xLightPos"].SetValue(lightPos);
+                    effect.Parameters["xLightPower"].SetValue(lightPower);
+                    effect.Parameters["xAmbient"].SetValue(ambientPower);
+                    effect.Parameters["xShadowMap"].SetValue(shadowMap);
                 }
 
                 mesh.Draw();
@@ -300,7 +319,14 @@ namespace ElonsRiot
 
            }
         }
-        
+
+       public void LoadEffects(Effect effect)
+       {
+           foreach (ModelMesh mesh in GameObjectModel.Meshes)
+               foreach (ModelMeshPart meshPart in mesh.MeshParts)
+                   meshPart.Effect = effect.Clone();
+       }
+
         //aktualizacja danych fizycznych
         public void update()
        {
