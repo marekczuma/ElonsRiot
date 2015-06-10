@@ -114,7 +114,7 @@ namespace ElonsRiot
             if (MyScene.PlayerObject.showCrosshair == true)
             {
                 Vector2 tmp = new Vector2(0, 0);
-                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice, tmp);
+                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
             }
 
             if (MyScene.PlayerObject.showItem1 == true)

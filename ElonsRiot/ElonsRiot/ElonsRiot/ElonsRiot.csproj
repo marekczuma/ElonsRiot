@@ -95,6 +95,8 @@
     <Compile Include="ControlPlayer\InteractiveObjectsManager.cs" />
     <Compile Include="ControlPlayer\ObjectDetectionManager.cs" />
     <Compile Include="DecoyAI.cs" />
+    <Compile Include="DialogLine.cs" />
+    <Compile Include="DialoguesManager.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="HUD.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="Statement.cs" />
+    <Compile Include="XMLDialogues.cs" />
     <Compile Include="XMLScene.cs" />
   </ItemGroup>
   <ItemGroup>
