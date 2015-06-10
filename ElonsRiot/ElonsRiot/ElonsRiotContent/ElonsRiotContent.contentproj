@@ -251,13 +251,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Ziemia\terrain3.FBX">
-      <Name>terrain3</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\Ziemia\terrain4.FBX">
       <Name>terrain4</Name>
       <Importer>FbxImporter</Importer>

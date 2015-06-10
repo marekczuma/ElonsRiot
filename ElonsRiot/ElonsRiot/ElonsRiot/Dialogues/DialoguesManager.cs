@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using ElonsRiot.BSPTree;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-
+//komentuje
 namespace ElonsRiot.Dialogues
 {
     public class DialoguesManager
