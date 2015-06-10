@@ -34,8 +34,8 @@ namespace ElonsRiot
                     {
                         vertexData[i].Position = Vector3.Transform(vertexData[i].Position, meshTransform);
                     }
-                    Vector3 vecAB = vertexData[8].Position - vertexData[0].Position;
-                    Vector3 vecAC = vertexData[13].Position - vertexData[0].Position;
+                    Vector3 vecAB = vertexData[1].Position - vertexData[0].Position;
+                    Vector3 vecAC = vertexData[3].Position - vertexData[0].Position;
 
                     normal = Vector3.Cross(vecAB, vecAC);
                     normal.Normalize();
