@@ -167,7 +167,7 @@ namespace ElonsRiot
 
             foreach (GameObject obj in GameObjects)
             {
-                if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name == "terrain" || obj.Name == "ceil")
+                if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp")
                     VisibleGameObjects.Add(obj);
             }
 

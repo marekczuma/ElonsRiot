@@ -25,6 +25,7 @@ namespace ElonsRiot
             this.pointOfChangeWall = new List<Vector3>();
             this.maxValueBoundingBoxes = new List<Vector3>();
             this.minValueBoundingBoxes = new List<Vector3>();
+            this.centerOfRamp = new Vector3(0, 0, 0);
         }
 
         public float[] radiuses;
@@ -43,8 +44,10 @@ namespace ElonsRiot
         public List<Vector3> pointOfChangeWall;
         public List<Vector3> minValueBoundingBoxes;
         public List<Vector3> maxValueBoundingBoxes;
+        public Vector3 centerOfRamp;
         public Box(Player gameObj)
         {
+            this.centerOfRamp = new Vector3(0, 0, 0);
             this.maxValueBoundingBoxes = new List<Vector3>();
             this.minValueBoundingBoxes = new List<Vector3>();
             this.pointOfChangeWall = new List<Vector3>();
@@ -83,6 +86,7 @@ namespace ElonsRiot
             this.radiuses = new float[3];
             this.maxValueBoundingBoxes = new List<Vector3>();
             this.minValueBoundingBoxes = new List<Vector3>();
+            this.centerOfRamp = new Vector3(0, 0, 0);
             GetCenter();
             CreateRadiuses();
         }
@@ -415,7 +419,45 @@ namespace ElonsRiot
             }
         }
 
+        public void rampa()
+        {
+            GetCorners();
+            List<Vector3> vecAB = new List<Vector3>();
+            List<Vector3> vecAC = new List<Vector3>();
+            List<Vector3> vecA = new List<Vector3>();
+           
+                vecAB.Add(this.corners[1] - this.corners[0]);  //odwracam normalne w physic manager
+                vecAC.Add(this.corners[1] - this.corners[6]);
+                vecA.Add(this.corners[1]);
+            
+           
+            float dotProduct = 0;
+            Vector3 normal = new Vector3(0, 0, 0);
 
+            for (int i = 0; i < vecA.Count(); i++)
+            {
+
+                normal = Vector3.Cross(vecAB[i], vecAC[i]);
+                normal.Normalize();
+
+                dotProduct = Vector3.Dot(normal, vecA[i]);
+
+                Plane tmpPlane = new Plane();
+
+                tmpPlane.D = dotProduct;
+                tmpPlane.Normal = normal;
+                planes.Add(tmpPlane);
+            }
+
+            GetCorners();
+            Vector3[] corners = referenceObject.boundingBox.GetCorners();
+
+            centerOfRamp.X = (corners[0].X + corners[6].X) / 2; 
+            centerOfRamp.Y = (corners[0].Y + corners[6].Y) / 2;
+            centerOfRamp.Z = (corners[0].Z + corners[6].Z) / 2;
+         
+        }
+        
 
     }
 }
