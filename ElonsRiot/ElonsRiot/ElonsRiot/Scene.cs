@@ -16,6 +16,10 @@ namespace ElonsRiot
     public class Scene// : Microsoft.Xna.Framework.Game
     {
         public ContentManager ContentManager { get; set; }
+        //Interactions
+        public ControlPlayer.ObjectDetectionManager ObjectDetector { get; set; }
+        public Interaction.InteractiveObjectsList InteractiveObjects { get; set; }
+        public ControlPlayer.InteractiveObjectsManager InteractionsManager { get; set; }
         public GraphicsDevice GraphicsDevice { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public List<GameObject> NPCs { get; set; }
@@ -40,7 +44,9 @@ namespace ElonsRiot
             GraphicsDevice = _graphicsDevice;
             XMLScene = new XMLScene();
             VisibleGameObjects = new List<GameObject>();
-           
+            ObjectDetector = new ControlPlayer.ObjectDetectionManager(this);
+            InteractiveObjects = new Interaction.InteractiveObjectsList(this);
+            InteractionsManager = new ControlPlayer.InteractiveObjectsManager(this);
         }
         public Scene()
         {
@@ -56,6 +62,7 @@ namespace ElonsRiot
             LoadPalo();
             LoadElon();
             LoadGuards();
+            InteractiveObjects.AddToScene();
             Methods.setPlayer( PlayerObject,GameObjects);
             foreach (var elem in GameObjects)
             {
@@ -154,7 +161,7 @@ namespace ElonsRiot
             textReader.Close();
             return tmpGO;
         }
-        public void Update(Player player, GameTime gameTime)
+        public void Update(Player player, GameTime gameTime, KeyboardState _state)
         {
             VisibleGameObjects.Clear();
 
@@ -177,6 +184,8 @@ namespace ElonsRiot
             {
                 gobj.update();
             }
+            ObjectDetector.CheckRay();
+            InteractionsManager.ManageInteractiveObject(_state);
             
         }
         private void LoadElon()
@@ -236,7 +245,7 @@ namespace ElonsRiot
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/chod_2006";
             Palo.Tag = "Palo";
-            Palo.Interactive = true;
+            Palo.Interactive = false;
             Palo.mass = 100;
             PaloObject = Palo;
 

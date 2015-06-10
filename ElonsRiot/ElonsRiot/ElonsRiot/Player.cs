@@ -347,6 +347,8 @@ namespace ElonsRiot
             }
         }
 
+
+        //Do usunięcia
         public GameObject GetObjectByRay(Scene _scene, KeyboardState _state, string _name, float _distance)
         {
             Ray pickRay = GetPickRay(_scene);
@@ -367,7 +369,7 @@ namespace ElonsRiot
             }
             return null;
         }
-
+        //Do Usunięcia
         private Ray GetPickRay(Scene _scene)
         {
             Matrix world = Matrix.CreateTranslation(10, 0, 0);

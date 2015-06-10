@@ -7,54 +7,35 @@ using System.Text;
 
 namespace ElonsRiot.ControlPlayer
 {
-    class ObjectDetectionManager
+    public class ObjectDetectionManager
     {
         public Scene MyScene { get; set; }
+        public bool Information { get; set; }
+        public Interaction.InteractiveGameObject currentInteractiveObject = null;
 
-        public void CheckRay(KeyboardState _state)
+        public ObjectDetectionManager(Scene _myScene)
         {
+            MyScene = _myScene;
+            Information = false;
+        }
 
-
-
-            //Ray pickRay2 = GetPickRay();
-            //isStatement = false;
-            //for (int i = 0; i < MyScene.GameObjects.Count; i++)
-            //{
-            //    if (MyScene.GameObjects[i].Interactive == true)
-            //    {
-            //        //Nullable<float> result2 = pickRay2.Intersects(MyScene.GameObjects[i].boundingBox);
-            //        Nullable<float> result2 = MyScene.GameObjects[i].boundingBox.Intersects(pickRay2);
-            //        if (result2.HasValue == true)
-            //        {
-            //            isStatement = true;
-            //            currentInteractiveObject = MyScene.GameObjects[i];
-            //        }
-            //    }
-            //}
-            //if (_state.IsKeyDown(Keys.E))
-            //{
-            //    Ray pickRay = GetPickRay();
-            //    float selectedDistance = 100;// float.MaxValue;
-            //    for (int i = 0; i < MyScene.GameObjects.Count; i++)
-            //    {
-            //        if (MyScene.GameObjects[i].Interactive == true)
-            //        {
-            //            //Nullable<float> result = pickRay.Intersects(MyScene.GameObjects[i].boundingBox);
-            //            Nullable<float> result = MyScene.GameObjects[i].boundingBox.Intersects(pickRay);
-            //            if (result.HasValue == true)
-            //            {
-            //                if (result.Value < selectedDistance)
-            //                {
-
-            //                    // Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
-            //                    MyScene.GameObjects[i].ChangePosition(new Vector3(0.05f, 0f, 0.0f));
-            //                    //Interactions.Add(MyScene.GameObjects[i].interactionType);
-            //                    //Interactions.CallInteraction(MyScene.GameObjects[i]);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+        public void CheckRay()
+        {
+            Ray pickRay = GetPickRay();
+            Information = false;
+            for (int i = 0; i < MyScene.GameObjects.Count; i++)
+            {
+                if (MyScene.GameObjects[i].Interactive == true)
+                {
+                    //Nullable<float> result2 = pickRay2.Intersects(MyScene.GameObjects[i].boundingBox);
+                    Nullable<float> result = MyScene.GameObjects[i].boundingBox.Intersects(pickRay);
+                    if (result.HasValue == true)
+                    {
+                        Information = true;
+                        currentInteractiveObject = (Interaction.InteractiveGameObject)MyScene.GameObjects[i];
+                    }
+                }
+            }
         }
 
         Ray GetPickRay()

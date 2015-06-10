@@ -80,8 +80,8 @@ namespace ElonsRiot
 
             MyScene.PlayerControll(state, gameTime, CurrentMouseState);
             CurrentMouseState = Mouse.GetState();
-            MyScene.Update(MyScene.PlayerObject, gameTime);
-            CheckRay(state);
+            MyScene.Update(MyScene.PlayerObject, gameTime, state);
+            
             //MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
@@ -122,9 +122,9 @@ namespace ElonsRiot
             {
                 HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice);
             }
-            if(isStatement)
+            if(MyScene.ObjectDetector.Information)
             {
-                HUD.DrawString(spriteBatchHUD4, "Uzyj! " + currentInteractiveObject.Name, GraphicsDevice);
+                HUD.DrawString(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
             }
             base.Draw(gameTime);
         }

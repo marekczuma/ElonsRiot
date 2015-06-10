@@ -92,12 +92,16 @@
     <Compile Include="BSPTree\Leaf.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterState.cs" />
+    <Compile Include="ControlPlayer\InteractiveObjectsManager.cs" />
     <Compile Include="ControlPlayer\ObjectDetectionManager.cs" />
     <Compile Include="DecoyAI.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="Interactions.cs" />
+    <Compile Include="Interaction\Door.cs" />
+    <Compile Include="Interaction\InteractiveGameObject.cs" />
+    <Compile Include="Interaction\InteractiveObjectsList.cs" />
     <Compile Include="MyPlane.cs" />
     <Compile Include="PaloCharacter.cs" />
     <Compile Include="PhysicManager.cs" />
