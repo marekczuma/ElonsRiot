@@ -49,7 +49,7 @@ namespace ElonsRiot
                     if (gObj.Interactive == true)
                     {
 
-                        if (gObj.Name != "terrain" && !gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
+                        if (!gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
                         {
                             InteractiveGameObject.Add(gObj);
                         }
@@ -69,21 +69,20 @@ namespace ElonsRiot
                     {
                         Boxes.Add(gObj);
                     }
-                    if (gObj.Name.Contains("character"))
+                    if (gObj.Name.Contains("character") || gObj.Name.Contains("enemy"))
                     {
                         Characters.Add(gObj);
                     }
-                    if (gObj.Name.Contains("enemy"))
+                /*    if (gObj.Name.Contains("enemy"))
                     {
                         Enemies.Add(gObj);
-                    }
+                    }*/
                 }
                 
                 //tworzenie AAboxów dla bohaterów
                   foreach(GameObject character in Characters){
                       character.Initialize();
                       character.RefreshMatrix();
-                      character.GetCentre();
                       character.AAbox = new Box(character, player);
                       character.AAbox.GetCorners();
                       character.AAbox.createBoudingBox();
@@ -95,7 +94,6 @@ namespace ElonsRiot
                   {
                       box.Initialize();
                       box.RefreshMatrix();
-                      box.GetCentre();
                       box.AAbox = new Box(box, player);
                       box.AAbox.GetCorners();
                       box.AAbox.createBoudingBox();
@@ -107,7 +105,6 @@ namespace ElonsRiot
                   {
                       enemy.Initialize();
                       enemy.RefreshMatrix();
-                      enemy.GetCentre();
                       enemy.AAbox = new Box(enemy, player);
                       enemy.AAbox.GetCorners();
                       enemy.AAbox.createBoudingBox();
@@ -116,7 +113,6 @@ namespace ElonsRiot
                   }
                   //inicjalizjacja Plane dla podłogi
                   floor.Initialize();
-                  floor.GetCentre();
                   floor.RefreshMatrix();
                   floor.AAbox = new Box(player);
                   floor.AAbox.createBoudingBox();
@@ -126,7 +122,6 @@ namespace ElonsRiot
                   foreach (GameObject gObj in NotInteractiveGameObject)
                   {
                       gObj.Initialize();
-                      gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
                       gObj.AAbox.createBoudingBox();
@@ -150,16 +145,35 @@ namespace ElonsRiot
                         
                     }
                 }
+                //wyszukiwanie sasiadow obiektow interaktywnych 
+                foreach (GameObject gameObj in InteractiveGameObject)
+                {
+                    foreach (GameObject neighbor in NotInteractiveGameObject)
+                    {
+                        if (gameObj.Name == "door1" && neighbor.Name.Contains("4Hall"))
+                            {
+                                gameObj.neighbors.Add(neighbor);
+                                neighbor.neighbors.Add(gameObj);
+                            }
+                        if (gameObj.Name == "door2" && neighbor.Name.Contains("2Hall"))
+                        {
+                            gameObj.neighbors.Add(neighbor);
+                            neighbor.neighbors.Add(gameObj);
+                        }
+                      
+                    }
+                }
                 //inicjalizacja aktywnych
                   foreach (GameObject gObj in InteractiveGameObject)
                   {
                       gObj.Initialize();
-                      gObj.GetCentre();
                       gObj.RefreshMatrix();
                       gObj.AAbox = new Box(gObj, player);
                       gObj.AAbox.GetCorners();
                       gObj.AAbox.createBoudingBox();
-
+                      gObj.AAbox.createPlanes();
+                      gObj.AAbox.createPointsOfCollision();
+                      gObj.AAbox.setpointOfChangeWall();
                   }
 
                 isStart = false;
@@ -175,6 +189,12 @@ namespace ElonsRiot
                 character.AAbox.GetCorners();
                 character.AAbox.GetRefrecneObjectAndPlayer(character, player);
                 character.AAbox.createPointsOfCollision();
+                character.AAbox.UpdateBoundingBoxes();
+
+                character.AAbox.createPlanes();
+                character.AAbox.GetCorners();
+                character.AAbox.createPointsOfCollision();
+                character.AAbox.setpointOfChangeWall();
             }
             //atualizacja wrogów
             foreach (GameObject enemy in Enemies)
@@ -185,6 +205,7 @@ namespace ElonsRiot
                 enemy.AAbox.GetCorners();
                 enemy.AAbox.UpdateBoundingBox();
                 enemy.AAbox.GetRefrecneObjectAndPlayer(enemy, player);
+                enemy.AAbox.UpdateBoundingBoxes();
             }
             //aktualuzacja boxów
             foreach (GameObject box in Boxes)
@@ -194,6 +215,7 @@ namespace ElonsRiot
                 box.AAbox.GetCorners();
                 box.AAbox.UpdateBoundingBox();
                 box.AAbox.GetRefrecneObjectAndPlayer(box, player);
+                box.AAbox.UpdateBoundingBoxes();
             }
             //aktualuzacja aktywnych
             foreach (GameObject interactive in InteractiveGameObject)
@@ -203,19 +225,61 @@ namespace ElonsRiot
                 interactive.AAbox.GetCorners();
                 interactive.AAbox.UpdateBoundingBox();
                 interactive.AAbox.GetRefrecneObjectAndPlayer(interactive, player);
+                interactive.AAbox.createPlanes();
+                interactive.AAbox.createPointsOfCollision();
+                interactive.AAbox.setpointOfChangeWall();
             }
             //kolizja aktywnych z charakterami
-            foreach(GameObject character in Characters)
+            foreach (GameObject character in Characters)
             {
                 foreach (GameObject interactive in InteractiveGameObject)
+                {
                     if (boxesCollision.TestAABBAABB(character, interactive))
                     {
                         character.AAbox.createBoudingBoxes();
-                        if (boxesCollision.TestAABBAABBTMP(character, interactive))
+                        foreach (BoundingBox box in character.boxes)
                         {
-                            character.Position = character.oldPosition;
+                            if (boxesCollision.TestAABBAABBTMP(character, interactive))
+                            {
+
+                                Plane plane = getLongerWallInInteractiveObject(character, interactive);
+                                if (boxesCollision.TestAABBPlane(character, plane))
+                                {
+                                    Vector3 direction = character.newPosition - character.oldPosition;
+                                    Vector3 invNormal = plane.Normal;
+
+                                    if (plane == interactive.AAbox.planes[0] || plane == interactive.AAbox.planes[2]) //filar i wall1,wall3,wall4 mają tutaj same == i dla 0 i 2
+                                    {                                                                    // dla wall2 to 1 i 3 i też ==
+                                        invNormal.X *= -1;
+                                        invNormal.Y *= -1;
+                                        invNormal.Z *= -1;
+                                    }
+                                    invNormal = invNormal * (direction * plane.Normal).Length();
+                                    Vector3 wallDir = direction - invNormal;
+                                    //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
+                                    foreach (GameObject neighbor in interactive.neighbors)
+                                    {
+
+                                        if (boxesCollision.TestAABBAABB(character, neighbor))
+                                        {
+                                            character.Position = character.oldPosition;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            character.Position = character.oldPosition + wallDir;
+                                        }
+                                    }
+                                    if (interactive.neighbors.Count == 0)
+                                    {
+                                        character.Position = character.oldPosition + wallDir;
+                                    }
+
+                                }
+                            }
                         }
-                    }
+                   }
+                }
             }
             //kolija między charakterami
            foreach (GameObject character in Characters)
@@ -223,10 +287,32 @@ namespace ElonsRiot
                 foreach(GameObject character2 in Characters)
                  if (character.Name != character2.Name && boxesCollision.TestAABBAABB(character, character2))
                 {
-                    character.AAbox.createBoudingBoxes();
                      if(boxesCollision.TestAABBAABBTMP(character,character2))
                      {
-                         character.Position = character.oldPosition;
+                         foreach (BoundingBox box in character.boxes)
+                         {
+                             if (boxesCollision.TestAABBAABBTMP(character, character2))
+                             {
+
+                                 Plane plane = checkPointOfChange(character, character2);
+                                 if (boxesCollision.TestAABBPlane(character, plane))
+                                 {
+                                     Vector3 direction = character.newPosition - character.oldPosition;
+                                     Vector3 invNormal = plane.Normal;
+
+                                     if (plane == character2.AAbox.planes[0] || plane == character2.AAbox.planes[2]) //filar i wall1,wall3,wall4 mają tutaj same == i dla 0 i 2
+                                     {                                                                    // dla wall2 to 1 i 3 i też ==
+                                         invNormal.X *= -1;
+                                         invNormal.Y *= -1;
+                                         invNormal.Z *= -1;
+                                     }
+                                     invNormal = invNormal * (direction * plane.Normal).Length();
+                                     Vector3 wallDir = direction - invNormal;
+                                     
+                                      character.Position = character.oldPosition + wallDir;
+                                 }
+                             }
+                         }
                      }
                 }
             }
@@ -254,7 +340,7 @@ namespace ElonsRiot
                                     invNormal = invNormal * (direction * plane.Normal).Length();
                                     Vector3 wallDir = direction - invNormal;
                                   //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
-                                   foreach(GameObject neighbor in gObj.neighbors){
+                                  foreach(GameObject neighbor in gObj.neighbors){
                                     
                                         if (boxesCollision.TestAABBAABB(character, neighbor))
                                         {
@@ -266,6 +352,7 @@ namespace ElonsRiot
                                             character.Position = character.oldPosition + wallDir;
                                         }
                                   }
+                             
                                   if (gObj.neighbors.Count == 0)
                                   {
                                       character.Position = character.oldPosition + wallDir;
@@ -275,21 +362,7 @@ namespace ElonsRiot
                 }
             }
             
-            //kolizja elemetów interaktywnych z bahataterami 
-            foreach (GameObject character in Characters)
-            {
-                foreach (GameObject gObj in InteractiveGameObject)
-                {
-                    if (boxesCollision.TestAABBAABB(character, gObj))
-                    {
-                        character.AAbox.createBoudingBoxes();
-                        if (boxesCollision.TestAABBAABBTMP(character, gObj))
-                        {
-                            character.Position = character.oldPosition;
-                        }
-                    }
-                }
-            }
+           
           
             ChceckBoxesCollision(Boxes);
          //kolizja bohaterów z boxami 
@@ -304,7 +377,7 @@ namespace ElonsRiot
                 }
             } 
             //kolizka bohaterów z wrogami
-            foreach (GameObject character in Characters)
+       /*     foreach (GameObject character in Characters)
             {
                 foreach (GameObject enemy in Enemies)
                 {
@@ -330,7 +403,7 @@ namespace ElonsRiot
                         
                     }
                 }
-            }
+            }*/
             foreach(GameObject character in Characters)
             {
                 ActivateGravity(character, gameO, floor.plane);
@@ -388,12 +461,36 @@ namespace ElonsRiot
                 player.ChangePosition(new Vector3(0, player.gravity, 0));
             }
         }
+        public static Plane getLongerWallInInteractiveObject(GameObject character,GameObject gObj)
+        {
+             List<Plane> planes = new List<Plane>();
+            List<Vector3> centerOfPlane = new List<Vector3>();
+            if(gObj.message == "x")
+            {
+               
+                   planes.Add(gObj.AAbox.planes[2]);
+                   planes.Add(gObj.AAbox.planes[3]);
+                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
+                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
+               
+            }
+            else
+            {
+                    planes.Add(gObj.AAbox.planes[0]);
+                    planes.Add(gObj.AAbox.planes[1]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[0]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
+                
+             }
+           return findClosestPlane(planes,character,centerOfPlane);
+        }
         public static Plane checkPointOfChange(GameObject character, GameObject gObj)
         {
             List<Plane> planes = new List<Plane>();
             List<Vector3> centerOfPlane = new List<Vector3>();
             if(gObj.message == "x")
             {
+                //wyszedl poza zasieg
                if(character.Position.X < gObj.AAbox.pointOfChangeWall[0].X || character.Position.X > gObj.AAbox.pointOfChangeWall[1].X)
                 {
                     planes.Add(gObj.AAbox.planes[0]);

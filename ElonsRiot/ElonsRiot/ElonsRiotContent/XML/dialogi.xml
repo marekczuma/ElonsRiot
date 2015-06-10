@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dialogues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <statement>
+  <dialogLines>
+	 <line>Dialog line test hall 1.</line>
+	 <line>Dialog line test hall 2.</line> 
+   </dialogLines> 
+	 <place>Hall</place>
+ </statement>
+ <statement>
+	<dialogLines>
+	 <line>Dialog line test magazyn 1.</line>
+	 <line>Dialog line test magazyn 2.</line>
+	 <line>Dialog line test magazyn 3.</line>
+    </dialogLines>
+	<place>WareHouse</place>
+ </statement> 
+ <statement>
+	 <dialogLines>
+	  <line>Dialog line test strzelnica 1. </line>
+	  <line>Dialog line test strzelnica 2. </line>
+    </dialogLines>
+	<place>ShootingGallery</place>
+ </statement>
+  <statement>
+	<dialogLines>
+	 <line>Dialog line test magazyn 1.</line>
+	 <line>Dialog line test magazyn 2.</line>
+	 <line>Dialog line test magazyn 3.</line>
+    </dialogLines>
+	<place>WareHouse</place>
+ </statement> 
+</Dialogues>

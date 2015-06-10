@@ -86,10 +86,10 @@ namespace ElonsRiot
             graphics.DepthStencilState = DepthStencilState.Default;
         }
 
-        public static void DrawCrosshair(SpriteBatch spriteBatch, GraphicsDevice graphics, Vector2 shift)
+        public static void DrawCrosshair(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(crossHair, new Vector2(graphics.Viewport.Width/2 -24 + shift.X, graphics.Viewport.Height/2 -24 + shift.Y), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(crossHair, new Vector2(graphics.Viewport.Width/2 -24, graphics.Viewport.Height/2 -24), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
@@ -113,7 +113,7 @@ namespace ElonsRiot
         public static void DrawString(SpriteBatch spriteBatch,String message, GraphicsDevice graphic)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "" + message, new Vector2(100, graphic.Viewport.Height/2), Color.White);
+            spriteBatch.DrawString(font, "" + message, new Vector2(5, graphic.Viewport.Height - 30), Color.White);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
         }
