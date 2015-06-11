@@ -125,27 +125,27 @@ namespace ElonsRiot
             }
 
         }
-        public void DrawModels(ContentManager _contentManager, Player _playerObject, Vector3 lightPos, float lightPower, float ambientPower, Matrix lightsViewProjectionMatrix, string technique, Texture2D shadowMap)
+        public void DrawModels(ContentManager _contentManager, Player _playerObject, Vector3 lightPos, float lightPower, float ambientPower, Matrix lightsViewProjectionMatrix, string technique, Texture2D shadowMap, Matrix reflect, bool isMirror)
         {
 
-            DrawSimpleModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix, lightPos, lightPower, ambientPower, lightsViewProjectionMatrix, technique, shadowMap);
+            DrawSimpleModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix, lightPos, lightPower, ambientPower, lightsViewProjectionMatrix, technique, shadowMap, reflect, isMirror);
             if (GameObjects != null)
             {
                 foreach(var elem in GameObjects)
                 {
-                    elem.DrawModels(_contentManager, _playerObject, lightPos, lightPower, ambientPower, lightsViewProjectionMatrix, technique, shadowMap);
+                    elem.DrawModels(_contentManager, _playerObject, lightPos, lightPower, ambientPower, lightsViewProjectionMatrix, technique, shadowMap, reflect, isMirror);
                 }
             }
         }
 
-        public void DrawAnimatedModels(ContentManager _contentManager, Player _playerObject, AnimationPlayer animationPlayer)
+        public void DrawAnimatedModels(ContentManager _contentManager, Player _playerObject, AnimationPlayer animationPlayer, Matrix reflect, bool isMirror)
         {
-            DrawAnimatedModel(GameObjectModel, animationPlayer, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix);
+            DrawAnimatedModel(GameObjectModel, animationPlayer, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix, reflect, isMirror);
             if (GameObjects != null)
             {
                 foreach (var elem in GameObjects)
                 {
-                    elem.DrawAnimatedModels(_contentManager, _playerObject, animationPlayer);
+                    elem.DrawAnimatedModels(_contentManager, _playerObject, animationPlayer, reflect, isMirror);
                 }
             }
         }
@@ -251,17 +251,21 @@ namespace ElonsRiot
         }
 
 
-        private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Vector3 lightPos, float lightPower, float ambientPower, Matrix lightsViewProjectionMatrix, string technique, Texture2D shadowMap)
+        private void DrawSimpleModel(Model model, Matrix world, Matrix view, Matrix projection, Vector3 lightPos, float lightPower, float ambientPower, Matrix lightsViewProjectionMatrix, string technique, Texture2D shadowMap, Matrix reflect, bool isMirror)
         {
             Matrix[] modelTransforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(modelTransforms);
-
+            Matrix worldMatrix;
             int i = 0;
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (Effect effect in mesh.Effects)
-                {
-                    Matrix worldMatrix = modelTransforms[mesh.ParentBone.Index] * world;
+                {               
+                    if (isMirror)
+                        worldMatrix = modelTransforms[mesh.ParentBone.Index] * world * reflect;
+                    else
+                        worldMatrix = modelTransforms[mesh.ParentBone.Index] * world;
+
                     effect.CurrentTechnique = effect.Techniques[technique];
                     effect.Parameters["xCamerasViewProjection"].SetValue(view * projection);
                     effect.Parameters["xLightsViewProjection"].SetValue(lightsViewProjectionMatrix);
@@ -272,22 +276,23 @@ namespace ElonsRiot
                     effect.Parameters["xAmbient"].SetValue(ambientPower);
                     effect.Parameters["xShadowMap"].SetValue(shadowMap);
                 }
-
                 mesh.Draw();
             }
         }
 
-        private void DrawAnimatedModel(Model currentModel, AnimationPlayer animationPlayer, Matrix world, Matrix view, Matrix projection, Texture2D newTexture = null)
+        private void DrawAnimatedModel(Model currentModel, AnimationPlayer animationPlayer, Matrix world, Matrix view, Matrix projection, Matrix reflect, bool isMirror, Texture2D newTexture = null)
         {
             Matrix[] bones = animationPlayer.GetSkinTransforms();
-
             foreach (ModelMesh mesh in currentModel.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
                     effect.SetBoneTransforms(bones);
+                    if (isMirror)
+                        effect.World = mesh.ParentBone.Transform * world * reflect;
+                    else
+                        effect.World = mesh.ParentBone.Transform * world;
 
-                    effect.World = mesh.ParentBone.Transform * world;
                     effect.View = view;
                     effect.Projection = projection;
 
@@ -343,7 +348,10 @@ namespace ElonsRiot
         //    mass = 100;
         //}
        }
+
     }
+
+
 }
 
 

@@ -43,6 +43,8 @@ namespace ElonsRiot
             MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
             graphics.IsFullScreen = false;
+            graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
+            graphics.PreferMultiSampling = true;
         }
         protected override void Initialize()
         {

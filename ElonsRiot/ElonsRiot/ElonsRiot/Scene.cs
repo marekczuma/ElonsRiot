@@ -44,6 +44,28 @@ namespace ElonsRiot
         RenderTarget2D renderTarget;
         Texture2D shadowMap;
 
+        Vector3 mirrorPos;
+        Effect mirrorEffect;
+        Matrix reflect;
+        Matrix mirrorWorld;
+        VertexBuffer mirrorVertexBuffer;
+        IndexBuffer mirrorIndices;
+
+        DepthStencilState addIfMirror = new DepthStencilState()
+        {
+            StencilEnable = true,
+            StencilFunction = CompareFunction.Always,
+            StencilPass = StencilOperation.Increment
+        };
+
+        DepthStencilState checkMirror = new DepthStencilState()
+        {
+            StencilEnable = true,
+            StencilFunction = CompareFunction.Equal,
+            ReferenceStencil = 1,
+            StencilPass = StencilOperation.Keep
+        };
+
         public Scene(ContentManager _contentManager, GraphicsDevice _graphicsDevice)
         {
             GameObjects = new List<GameObject>();
@@ -65,11 +87,20 @@ namespace ElonsRiot
         public void LoadAllContent(GraphicsDevice graphic)
         {
           //  physic = new Physic();
+            mirrorPos = new Vector3(42, 2, 0);
+            mirrorWorld = Matrix.CreateTranslation(mirrorPos);
+
             XMLScene = DeserializeFromXML();
 
             effect = ContentManager.Load<Effect>("Effects/LightEffect");
+            mirrorEffect = ContentManager.Load<Effect>("Effects/MirrorEffect");
+
             PresentationParameters pp = graphic.PresentationParameters;
             renderTarget = new RenderTarget2D(graphic, pp.BackBufferWidth, pp.BackBufferHeight, false, graphic.DisplayMode.Format, DepthFormat.Depth24);
+
+            reflect = Matrix.CreateScale(1, 1, -1);
+            SetUpMirrorIndices(graphic);
+            SetUpMirrorVertices(graphic, mirrorPos);
 
             GameObjects = XMLScene.GameObjects;
             LoadPalo();
@@ -143,13 +174,17 @@ namespace ElonsRiot
         public void DrawAllContent(GraphicsDevice graphic)
         {
             graphic.SetRenderTarget(renderTarget);
-            graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+            //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+
+            graphic.DepthStencilState = DepthStencilState.Default;
+            graphic.RasterizerState = RasterizerState.CullCounterClockwise;
+
 
             foreach (var elem in GameObjects)
             {
                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil")
                 {
-                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap);
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap, reflect, false);
                 }
             }
             graphic.SetRenderTarget(null);
@@ -160,13 +195,13 @@ namespace ElonsRiot
              foreach(var elem in VisibleGameObjects)
              {
                  if (elem.Name == "characterElon")
-                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer);
+                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer, reflect, false);
                  else if (elem.Name == "characterPalo")
-                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerPalo);
+                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerPalo, reflect, false);
                  else if (elem.Tag == "guard")
-                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy);
+                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy, reflect, false);
                  else if (elem.Name == "ceil")
-                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap);
+                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                          
                 elem.RefreshMatrix();
              }
@@ -177,7 +212,7 @@ namespace ElonsRiot
                  if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil")
                  {
 
-                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap);
+                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
                  }
              }
 
@@ -189,6 +224,31 @@ namespace ElonsRiot
             shadowMap = null;
             DrawBoudingBox(graphic);
             DrawRay(graphic);
+
+            graphic.DepthStencilState = addIfMirror;
+
+            graphic.SetVertexBuffer(mirrorVertexBuffer);
+            graphic.Indices = mirrorIndices;
+            mirrorEffect.Parameters["WVP"].SetValue(mirrorWorld * PlayerObject.camera.viewMatrix * PlayerObject.camera.projectionMatrix);
+            mirrorEffect.CurrentTechnique.Passes[0].Apply();
+
+            graphic.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 4, 0, 2);
+
+            graphic.DepthStencilState = checkMirror;
+            graphic.Clear(ClearOptions.DepthBuffer, Color.Black, 1, 0);
+            graphic.RasterizerState = RasterizerState.CullClockwise;
+
+            foreach (GameObject obj in GameObjects)
+            {
+                if (obj.Name != "characterElon" && obj.Name != "characterPalo" && obj.Tag != "guard")
+                    obj.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, true);
+                else if (obj.Name == "characterElon")
+                    obj.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer, reflect, true);
+                else if (obj.Name == "characterPalo")
+                    obj.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerPalo, reflect, true);
+                else if (obj.Tag == "guard")
+                    obj.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy, reflect, true);
+            }
 
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -216,7 +276,7 @@ namespace ElonsRiot
 
             foreach (GameObject obj in GameObjects)
             {
-                if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp")
+          //      if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp")
                     VisibleGameObjects.Add(obj);
             }
 
@@ -496,6 +556,39 @@ namespace ElonsRiot
             Matrix lightsProjection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1f, 70f, 500f);
 
             lightViewProjection = lightsView * lightsProjection;
+        }
+
+        private void SetUpMirrorVertices(GraphicsDevice graphic, Vector3 mirrorPos)
+        {
+            VertexPositionColor[] mirrorVertices = new VertexPositionColor[4];
+
+            mirrorVertices[0].Position = new Vector3(mirrorPos.X - 10, mirrorPos.Y - 5, mirrorPos.Z);
+            mirrorVertices[1].Position = new Vector3(mirrorPos.X + 10, mirrorPos.Y - 5, mirrorPos.Z);
+            mirrorVertices[2].Position = new Vector3(mirrorPos.X + 10, mirrorPos.Y + 10, mirrorPos.Z);
+            mirrorVertices[3].Position = new Vector3(mirrorPos.X - 10, mirrorPos.Y + 10, mirrorPos.Z);
+
+            mirrorVertices[0].Color = Color.White;
+            mirrorVertices[1].Color = Color.White;
+            mirrorVertices[2].Color = Color.White;
+            mirrorVertices[3].Color = Color.White;
+
+            mirrorVertexBuffer = new VertexBuffer(graphic, VertexPositionColor.VertexDeclaration, 4, BufferUsage.WriteOnly);
+            mirrorVertexBuffer.SetData<VertexPositionColor>(mirrorVertices);
+        }
+
+        private void SetUpMirrorIndices(GraphicsDevice graphic)
+        {
+            UInt16[] indices = new UInt16[6];
+
+            indices[0] = 0;
+            indices[1] = 2;
+            indices[2] = 3;
+            indices[3] = 0;
+            indices[4] = 1;
+            indices[5] = 2;
+
+            mirrorIndices = new IndexBuffer(graphic, IndexElementSize.SixteenBits, 6, BufferUsage.WriteOnly);
+            mirrorIndices.SetData<UInt16>(indices);
         }
     }
 }

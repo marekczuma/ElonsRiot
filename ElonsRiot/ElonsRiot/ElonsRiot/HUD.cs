@@ -58,7 +58,7 @@ namespace ElonsRiot
             spriteBatch[1].Draw(healthValue, new Vector2(width - 340, -150), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
             spriteBatch[1].Draw(healthBar, new Vector2(width - 340, -150), null, Color.White, 0, Vector2.Zero, 0.65f, SpriteEffects.None, 0);
             spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
-            //spriteBatch[1].DrawString(font, "Visible objects: " + myScene.VisibleGameObjects.Count, new Vector2(300, 15), Color.White);
+            spriteBatch[1].DrawString(font, "position: " + myScene.PlayerObject.Position, new Vector2(300, 15), Color.White);
             //spriteBatch[1].DrawString(font, "OffsetDistance.Z: " + myScene.PlayerObject.camera.offsetDistance.Z, new Vector2(300, 30), Color.White);
 
             spriteBatch[1].End();
