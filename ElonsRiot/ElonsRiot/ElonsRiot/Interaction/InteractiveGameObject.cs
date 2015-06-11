@@ -9,7 +9,12 @@ namespace ElonsRiot.Interaction
     {
         public string Information { get; set; }
         
-        public virtual void Interaction()
+        public virtual void Interaction(Scene _scene)
+        {
+
+        }
+
+        public virtual void AfterInteraction(Scene _scene)
         {
 
         }

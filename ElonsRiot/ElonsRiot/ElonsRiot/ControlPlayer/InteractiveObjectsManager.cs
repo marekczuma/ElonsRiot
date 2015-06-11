@@ -20,7 +20,10 @@ namespace ElonsRiot.ControlPlayer
             {
                 if(_state.IsKeyDown(Keys.E))
                 {
-                    Scene.ObjectDetector.currentInteractiveObject.Interaction();
+                    Scene.ObjectDetector.currentInteractiveObject.Interaction(Scene);
+                }else
+                {
+                    Scene.ObjectDetector.currentInteractiveObject.AfterInteraction(Scene);
                 }
             }
         }

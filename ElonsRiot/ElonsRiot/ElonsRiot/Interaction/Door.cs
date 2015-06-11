@@ -12,7 +12,7 @@ namespace ElonsRiot.Interaction
         {
             Information = "Kliknij E zeby otworzyc drzwi";
         }
-        public override void Interaction()
+        public override void Interaction(Scene _scene)
         {
             ChangePosition(new Vector3(0.05f, 0f, 0.0f));
         }

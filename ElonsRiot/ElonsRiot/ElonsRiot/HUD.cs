@@ -121,6 +121,14 @@ namespace ElonsRiot
             graphic.DepthStencilState = DepthStencilState.Default;
         }
 
+        public static void DrawStringForInformation(SpriteBatch spriteBatch, String message, GraphicsDevice graphic)
+        {
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "" + message, new Vector2(20, graphic.Viewport.Height - 200), Color.White);
+            spriteBatch.End();
+            graphic.DepthStencilState = DepthStencilState.Default;
+        }
+
         public static void DrawSkills(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             spriteBatch.Begin();

@@ -533,23 +533,5 @@
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
 	</GameObject>
-	<GameObject Name="boxForMovement" Path="3D/Boxes/box">
-		<Position>
-		  <X>45</X>
-		  <Y>4</Y>
-		  <Z>-10</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>180</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>0.1</X>
-		  <Y>0.15</Y>
-		  <Z>0.05</Z>
-		</Scale>
-		<Mass>90</Mass>
-		<Interactive>true</Interactive>
-	</GameObject>   
+ 
 </Scene>
