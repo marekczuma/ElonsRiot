@@ -30,6 +30,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchHUD5;
         SpriteBatch spriteBatchHUD6;
         SpriteBatch spriteBatchString;
+        SpriteBatch spriteBatchLearning;
         bool isStatement = false;
         GameObject currentInteractiveObject;
         SpriteBatch sptiteBatchDialogues;
@@ -66,6 +67,7 @@ namespace ElonsRiot
             spriteBatchHUD6 = new SpriteBatch(GraphicsDevice);
             spriteBatchString = new SpriteBatch(GraphicsDevice);
             sptiteBatchDialogues = new SpriteBatch(GraphicsDevice);
+            spriteBatchLearning = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             MyDialogues.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
@@ -142,6 +144,10 @@ namespace ElonsRiot
             {
                     HUD.DrawString(sptiteBatchDialogues, 
                         MyDialogues.Statements[MyDialogues.AcctualStatementNumber].dialogLines.Line[MyDialogues.AcctualLineOfStatementCounter], GraphicsDevice);
+            }
+            if(MyScene.PaloObject.PaloLearningState == LearningState.Learning)
+            {
+                HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
             }
             base.Draw(gameTime);
         }

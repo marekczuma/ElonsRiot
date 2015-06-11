@@ -27,6 +27,7 @@ namespace ElonsRiot
         public XMLScene XMLScene { get; set; }
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
+        public GameTime time { get; set; }
         private BasicEffect basicEffect;
        // private Physic physic;
         public AnimationPlayer animationPlayer;
@@ -235,6 +236,7 @@ namespace ElonsRiot
             }
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
+            time = gameTime;
             
         }
         private void LoadElon()

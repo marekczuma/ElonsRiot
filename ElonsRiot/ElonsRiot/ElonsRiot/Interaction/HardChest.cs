@@ -16,13 +16,16 @@ namespace ElonsRiot.Interaction
         }
         public override void Interaction(Scene _scene)
         {
-            BoxMovementAI tmpAI = new BoxMovementAI(_scene.PlayerObject.Position);
-            tmpAI.PointA = _scene.PaloObject.FindPlaceBehindObject(this, _scene.PlayerObject.Position);
-            tmpAI.Cube = this;
-            tmpAI.CubeMass = this.mass;
-            _scene.PaloObject.MoveBoxAI = tmpAI;
-            _scene.PaloObject.PaloState = FriendState.walk;
-            _scene.PaloObject.Walk = WalkState.moveBox;
+            if (_scene.PaloObject.Skills.Using >= 30)
+            {
+                BoxMovementAI tmpAI = new BoxMovementAI(_scene.PlayerObject.Position);
+                tmpAI.PointA = _scene.PaloObject.FindPlaceBehindObject(this, _scene.PlayerObject.Position);
+                tmpAI.Cube = this;
+                tmpAI.CubeMass = this.mass;
+                _scene.PaloObject.MoveBoxAI = tmpAI;
+                _scene.PaloObject.PaloState = FriendState.walk;
+                _scene.PaloObject.Walk = WalkState.moveBox;
+            }
         }
     }
 }

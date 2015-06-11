@@ -99,6 +99,16 @@ namespace ElonsRiot
             {
                 elonState.SetCurrentState(State.walk);
             }
+            else if(state.IsKeyDown(Keys.L))
+            {
+                if(Palo.PaloLearningState == LearningState.idle)
+                {
+                    Palo.PaloLearningState = LearningState.Learning;
+                }else
+                {
+                    Palo.PaloLearningState = LearningState.idle;
+                }
+            }
             else if(! state.IsKeyDown(Keys.E))
             {
                 elonState.SetCurrentState(State.idle);
