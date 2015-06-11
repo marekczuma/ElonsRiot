@@ -7,7 +7,7 @@ using System.Text;
 namespace ElonsRiot
 {
     public enum FriendState { idle, walk, follow }
-    public enum LearningState { idle, EngineeringLearning, ShootingLearning, UsingLearning }
+    public enum LearningState { idle, Learning, EngineeringLearning, ShootingLearning, UsingLearning }
     public enum WalkState { decoy, moveBox }
     public class PaloCharacter : GameObject
     {
@@ -19,6 +19,8 @@ namespace ElonsRiot
         public DecoyAI DecoyGuards { get; set; }
         public BoxMovementAI MoveBoxAI { get; set; }
         public WalkState Walk { get; set; }
+        public Learning.PaloSkills Skills { get; set; }
+        public Learning.LearningManager LearningManager { get; set; }
         private float velocity;
         public float health;
         public int ammo;
@@ -33,6 +35,8 @@ namespace ElonsRiot
             health = 100;
             ammo = 50;
             ammoMax = 50;
+            Skills = new Learning.PaloSkills { Palo = this };
+            LearningManager = new Learning.LearningManager { Palo = this };
         }
 
         public void WalkForward()

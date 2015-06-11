@@ -106,6 +106,8 @@
     <Compile Include="Interaction\HardChest.cs" />
     <Compile Include="Interaction\InteractiveGameObject.cs" />
     <Compile Include="Interaction\InteractiveObjectsList.cs" />
+    <Compile Include="Learning\LearningManager.cs" />
+    <Compile Include="Learning\PaloSkills.cs" />
     <Compile Include="MyPlane.cs" />
     <Compile Include="PaloCharacter.cs" />
     <Compile Include="PhysicManager.cs" />

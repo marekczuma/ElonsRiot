@@ -21,9 +21,11 @@ namespace ElonsRiot.ControlPlayer
                 if(_state.IsKeyDown(Keys.E))
                 {
                     Scene.ObjectDetector.currentInteractiveObject.Interaction(Scene);
-                }else
+                    Scene.ObjectDetector.currentInteractiveObject.isUsing = true;
+                }else if (Scene.ObjectDetector.currentInteractiveObject.isUsing == true)
                 {
                     Scene.ObjectDetector.currentInteractiveObject.AfterInteraction(Scene);
+                    Scene.ObjectDetector.currentInteractiveObject.isUsing = false;
                 }
             }
         }

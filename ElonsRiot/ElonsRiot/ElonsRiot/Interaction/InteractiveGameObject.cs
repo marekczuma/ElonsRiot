@@ -8,7 +8,7 @@ namespace ElonsRiot.Interaction
     public class InteractiveGameObject : GameObject
     {
         public string Information { get; set; }
-        
+        public bool isUsing = false;
         public virtual void Interaction(Scene _scene)
         {
 
