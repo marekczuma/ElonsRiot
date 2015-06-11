@@ -81,7 +81,7 @@ namespace ElonsRiot.Dialogues
         {
             if (isNextStatements && isCorrectRoom) {
                     timeToNextLine += gameTime.ElapsedGameTime;
-                    if (timeToNextLine > TimeSpan.FromSeconds(15))  //co 15 sekund zmienia sie tekst
+                    if (timeToNextLine > TimeSpan.FromSeconds(5))  //co 15 sekund zmienia sie tekst
                     {
                         if (acctualLineOfStatementCounter < maxLine-1) { 
                              acctualLineOfStatementCounter++;
