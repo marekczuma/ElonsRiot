@@ -17,9 +17,7 @@ namespace ElonsRiot
         static List<GameObject> Boxes;
         static List<GameObject> Characters;
         static List<GameObject> Floors;
-        static GameObject Palo;
-        static Player Elon;
-        static bool isStart;
+        public static bool isStart;
         public static bool isClimbing;
         static SpriteBatch spriteBatchHUD;
         static GraphicsDevice graphicDevice;
@@ -40,154 +38,190 @@ namespace ElonsRiot
             spriteBatchHUD = new SpriteBatch(graphic);
             graphicDevice = graphic;
         }
+        public static void InitializePhysicManager(List<GameObject> gameO, Player player)
+        {
+            foreach (GameObject gObj in gameO)
+            {
+                if (gObj.Interactive == true)
+                {
 
+                    if (!gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
+                    {
+                        InteractiveGameObject.Add(gObj);
+                    }
+                }
+                else
+                {
+                    if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
+                    {
+                        NotInteractiveGameObject.Add(gObj);
+                    }
+                }
+                if (gObj.Name.Contains("terrain"))
+                {
+                    Floors.Add(gObj);
+                }
+                if (gObj.Name.Contains("box"))
+                {
+                    Boxes.Add(gObj);
+                }
+                if (gObj.Name.Contains("character") || gObj.Name.Contains("enemy"))
+                {
+                    Characters.Add(gObj);
+                }
+                if (gObj.Name.Contains("ramp"))
+                {
+                    ramp = gObj;
+                }
+            }
+
+            //tworzenie AAboxów dla bohaterów
+            foreach (GameObject character in Characters)
+            {
+                character.Initialize();
+                character.RefreshMatrix();
+                character.AAbox = new Box(character, player);
+                character.AAbox.GetCorners();
+                character.AAbox.createBoudingBox();
+                character.AAbox.createBoudingBoxes();
+
+            }
+            //tworzenie AAboxów dla boxów
+            foreach (GameObject box in Boxes)
+            {
+                box.Initialize();
+                box.RefreshMatrix();
+                box.AAbox = new Box(box, player);
+                box.AAbox.GetCorners();
+                box.AAbox.createBoudingBox();
+                box.AAbox.createBoudingBoxes();
+
+            }
+
+            //inicjalizjacja Plane dla podłogi
+            foreach (GameObject floor in Floors)
+            {
+                floor.Initialize();
+                floor.RefreshMatrix();
+                floor.AAbox = new Box(floor, player);
+                floor.AAbox.createBoudingBox();
+                new MyPlane(floor);
+                floor.RefreshMatrix();
+            }
+            //inicjalizacja rampy
+            if (ramp.GameObjectModel != null)
+            {
+                ramp.Initialize();
+                ramp.RefreshMatrix();
+                ramp.AAbox = new Box(ramp, player);
+                ramp.AAbox.createBoudingBox();
+                ramp.AAbox.createPlanes();
+                ramp.AAbox.GetCorners();
+                ramp.AAbox.rampa();
+            }
+            //inicjalizjacja nieaktywnych
+            foreach (GameObject gObj in NotInteractiveGameObject)
+            {
+                gObj.Initialize();
+                gObj.RefreshMatrix();
+                gObj.AAbox = new Box(gObj, player);
+                gObj.AAbox.createBoudingBox();
+                gObj.AAbox.createPlanes();
+                gObj.AAbox.GetCorners();
+                gObj.AAbox.createPointsOfCollision();
+                gObj.AAbox.setpointOfChangeWall();
+
+            }
+            //wyszukanie wszystkich sąsiadów 
+            foreach (GameObject gameObj in NotInteractiveGameObject)
+            {
+                foreach (GameObject neighbor in NotInteractiveGameObject)
+                {
+                    if (gameObj.Name.Contains("Hall") == false && gameObj.Position != neighbor.Position)
+                    {
+                        if (boxesCollision.TestAABBAABB(gameObj, neighbor) && neighbor.Name.Contains("Hall") == false)
+                        {
+                            gameObj.neighbors.Add(neighbor);
+                        }
+                    }
+
+                }
+            }
+            //wyszukiwanie sasiadow obiektow interaktywnych 
+            foreach (GameObject gameObj in InteractiveGameObject)
+            {
+                foreach (GameObject neighbor in NotInteractiveGameObject)
+                {
+                    if (gameObj.Name == "door1" && neighbor.Name.Contains("4Hall"))
+                    {
+                        gameObj.neighbors.Add(neighbor);
+                        neighbor.neighbors.Add(gameObj);
+                    }
+                    if (gameObj.Name == "door2" && neighbor.Name.Contains("2Hall"))
+                    {
+                        gameObj.neighbors.Add(neighbor);
+                        neighbor.neighbors.Add(gameObj);
+                    }
+
+                }
+            }
+            //inicjalizacja aktywnych
+            foreach (GameObject gObj in InteractiveGameObject)
+            {
+                gObj.Initialize();
+                gObj.RefreshMatrix();
+                gObj.AAbox = new Box(gObj, player);
+                gObj.AAbox.GetCorners();
+                gObj.AAbox.createBoudingBox();
+                gObj.AAbox.createPlanes();
+                gObj.AAbox.createPointsOfCollision();
+                gObj.AAbox.setpointOfChangeWall();
+            }
+        }
+        public static void sortObject(List<GameObject> gameO)
+        {
+            foreach (GameObject gObj in gameO)
+            {
+                if (gObj.Interactive == true)
+                {
+
+                    if (!gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
+                    {
+                        InteractiveGameObject.Add(gObj);
+                    }
+                }
+                else
+                {
+                    if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
+                    {
+                        NotInteractiveGameObject.Add(gObj);
+                    }
+                }
+                if (gObj.Name.Contains("terrain"))
+                {
+                    Floors.Add(gObj);
+                }
+                if (gObj.Name.Contains("box"))
+                {
+                    Boxes.Add(gObj);
+                }
+                if (gObj.Name.Contains("character") || gObj.Name.Contains("enemy"))
+                {
+                    Characters.Add(gObj);
+                }
+                if (gObj.Name.Contains("ramp"))
+                {
+                    ramp = gObj;
+                }
+            }
+        }
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
         {
 
-            if (isStart == true)
-            {
-                foreach (GameObject gObj in gameO)
-                {
-                    if (gObj.Interactive == true)
-                    {
-
-                        if (!gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
-                        {
-                            InteractiveGameObject.Add(gObj);
-                        }
-                    }
-                    else
-                    {
-                        if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
-                        {
-                            NotInteractiveGameObject.Add(gObj);
-                        }
-                    }
-                    if (gObj.Name.Contains("terrain"))
-                    {
-                        Floors.Add(gObj);
-                    }
-                    if (gObj.Name.Contains("box"))
-                    {
-                        Boxes.Add(gObj);
-                    }
-                    if (gObj.Name.Contains("character") || gObj.Name.Contains("enemy"))
-                    {
-                        Characters.Add(gObj);
-                    }
-                    if (gObj.Name.Contains("ramp"))
-                    {
-                        ramp = gObj;
-                    }
-                }
-                
-                //tworzenie AAboxów dla bohaterów
-                  foreach(GameObject character in Characters){
-                      character.Initialize();
-                      character.RefreshMatrix();
-                      character.AAbox = new Box(character, player);
-                      character.AAbox.GetCorners();
-                      character.AAbox.createBoudingBox();
-                      character.AAbox.createBoudingBoxes();
-                      
-                     }
-                  //tworzenie AAboxów dla boxów
-                  foreach (GameObject box in Boxes)
-                  {
-                      box.Initialize();
-                      box.RefreshMatrix();
-                      box.AAbox = new Box(box, player);
-                      box.AAbox.GetCorners();
-                      box.AAbox.createBoudingBox();
-                      box.AAbox.createBoudingBoxes();
-
-                  }
-                
-                  //inicjalizjacja Plane dla podłogi
-                  foreach (GameObject floor in Floors)
-                  {
-                      floor.Initialize();
-                      floor.RefreshMatrix();
-                      floor.AAbox = new Box(floor, player);
-                      floor.AAbox.createBoudingBox();
-                      new MyPlane(floor);
-                      floor.RefreshMatrix();
-                  }
-                //inicjalizacja rampy
-                  if (ramp.GameObjectModel != null) { 
-                  ramp.Initialize();
-                  ramp.RefreshMatrix();
-                  ramp.AAbox = new Box(ramp, player);
-                  ramp.AAbox.createBoudingBox();
-                  ramp.AAbox.createPlanes();
-                  ramp.AAbox.GetCorners();
-                  ramp.AAbox.rampa();
-            }
-                //inicjalizjacja nieaktywnych
-                  foreach (GameObject gObj in NotInteractiveGameObject)
-                  {
-                      gObj.Initialize();
-                      gObj.RefreshMatrix();
-                      gObj.AAbox = new Box(gObj, player);
-                      gObj.AAbox.createBoudingBox();
-                      gObj.AAbox.createPlanes();
-                      gObj.AAbox.GetCorners();
-                      gObj.AAbox.createPointsOfCollision();
-                      gObj.AAbox.setpointOfChangeWall();
-
-                  }
-                //wyszukanie wszystkich sąsiadów 
-                foreach(GameObject gameObj in NotInteractiveGameObject)
-                {
-                    foreach(GameObject neighbor in NotInteractiveGameObject)
-                    {
-                        if (gameObj.Name.Contains("Hall") == false &&  gameObj.Position != neighbor.Position) { 
-                            if(boxesCollision.TestAABBAABB(gameObj,neighbor) && neighbor.Name.Contains("Hall") == false)
-                            {
-                               gameObj.neighbors.Add(neighbor);
-                            }
-                         }
-                        
-                    }
-                }
-                //wyszukiwanie sasiadow obiektow interaktywnych 
-                foreach (GameObject gameObj in InteractiveGameObject)
-                {
-                    foreach (GameObject neighbor in NotInteractiveGameObject)
-                    {
-                        if (gameObj.Name == "door1" && neighbor.Name.Contains("4Hall"))
-                            {
-                                gameObj.neighbors.Add(neighbor);
-                                neighbor.neighbors.Add(gameObj);
-                            }
-                        if (gameObj.Name == "door2" && neighbor.Name.Contains("2Hall"))
-                        {
-                            gameObj.neighbors.Add(neighbor);
-                            neighbor.neighbors.Add(gameObj);
-                        }
-                      
-                    }
-                }
-                //inicjalizacja aktywnych
-                  foreach (GameObject gObj in InteractiveGameObject)
-                  {
-                      gObj.Initialize();
-                      gObj.RefreshMatrix();
-                      gObj.AAbox = new Box(gObj, player);
-                      gObj.AAbox.GetCorners();
-                      gObj.AAbox.createBoudingBox();
-                      gObj.AAbox.createPlanes();
-                      gObj.AAbox.createPointsOfCollision();
-                      gObj.AAbox.setpointOfChangeWall();
-                  }
-
-                isStart = false;
-            }
-            
             //atualizacja bohaterów
             foreach (GameObject character in Characters)
             {
-                
+
                 character.AAbox.CreateRadiuses();
                 character.AAbox.GetCenter();
                 character.AAbox.UpdateBoundingBox();
@@ -201,7 +235,7 @@ namespace ElonsRiot
                 character.AAbox.createPointsOfCollision();
                 character.AAbox.setpointOfChangeWall();
             }
-        
+
             //aktualuzacja boxów
             foreach (GameObject box in Boxes)
             {
@@ -273,93 +307,95 @@ namespace ElonsRiot
                                 }
                             }
                         }
-                   }
+                    }
                 }
             }
             //kolija między charakterami
-           foreach (GameObject character in Characters)
+            foreach (GameObject character in Characters)
             {
-                foreach(GameObject character2 in Characters)
-                 if (character.Name != character2.Name && boxesCollision.TestAABBAABB(character, character2))
-                {
-                     if(boxesCollision.TestAABBAABBTMP(character,character2))
-                     {
-                         foreach (BoundingBox box in character.boxes)
-                         {
-                             if (boxesCollision.TestAABBAABBTMP(character, character2))
-                             {
+                foreach (GameObject character2 in Characters)
+                    if (character.Name != character2.Name && boxesCollision.TestAABBAABB(character, character2))
+                    {
+                        if (boxesCollision.TestAABBAABBTMP(character, character2))
+                        {
+                            foreach (BoundingBox box in character.boxes)
+                            {
+                                if (boxesCollision.TestAABBAABBTMP(character, character2))
+                                {
 
-                                 Plane plane = checkPointOfChange(character, character2);
-                                 if (boxesCollision.TestAABBPlane(character, plane))
-                                 {
-                                     Vector3 direction = character.newPosition - character.oldPosition;
-                                     Vector3 invNormal = plane.Normal;
+                                    Plane plane = checkPointOfChange(character, character2);
+                                    if (boxesCollision.TestAABBPlane(character, plane))
+                                    {
+                                        Vector3 direction = character.newPosition - character.oldPosition;
+                                        Vector3 invNormal = plane.Normal;
 
-                                     if (plane == character2.AAbox.planes[0] || plane == character2.AAbox.planes[2]) //filar i wall1,wall3,wall4 mają tutaj same == i dla 0 i 2
-                                     {                                                                    // dla wall2 to 1 i 3 i też ==
-                                         invNormal.X *= -1;
-                                         invNormal.Y *= -1;
-                                         invNormal.Z *= -1;
-                                     }
-                                     invNormal = invNormal * (direction * plane.Normal).Length();
-                                     Vector3 wallDir = direction - invNormal;
-                                     
-                                      character.Position = character.oldPosition + wallDir;
-                                 }
-                             }
-                         }
-                     }
-                }
+                                        if (plane == character2.AAbox.planes[0] || plane == character2.AAbox.planes[2]) //filar i wall1,wall3,wall4 mają tutaj same == i dla 0 i 2
+                                        {                                                                    // dla wall2 to 1 i 3 i też ==
+                                            invNormal.X *= -1;
+                                            invNormal.Y *= -1;
+                                            invNormal.Z *= -1;
+                                        }
+                                        invNormal = invNormal * (direction * plane.Normal).Length();
+                                        Vector3 wallDir = direction - invNormal;
+
+                                        character.Position = character.oldPosition + wallDir;
+                                    }
+                                }
+                            }
+                        }
+                    }
             }
-           //kolizja elemetów nieinteraktywnych z bahataterami 
-            foreach(GameObject character in Characters)
+            //kolizja elemetów nieinteraktywnych z bahataterami 
+            foreach (GameObject character in Characters)
             {
-              
-               foreach(GameObject gObj in NotInteractiveGameObject)
+
+                foreach (GameObject gObj in NotInteractiveGameObject)
                 {
 
                     if (boxesCollision.TestAABBAABB(character, gObj))
                     {
-                        
-                          Plane plane = checkPointOfChange(character, gObj);
-                          if (boxesCollision.TestAABBPlane(character, plane))
+
+                        Plane plane = checkPointOfChange(character, gObj);
+                        if (boxesCollision.TestAABBPlane(character, plane))
+                        {
+                            Vector3 direction = character.newPosition - character.oldPosition;
+                            Vector3 invNormal = plane.Normal;
+
+                            if (plane == gObj.AAbox.planes[0] || plane == gObj.AAbox.planes[2])
                             {
-                                    Vector3 direction = character.newPosition - character.oldPosition;
-                                    Vector3 invNormal = plane.Normal;
+                                invNormal.X *= -1;
+                                invNormal.Y *= -1;
+                                invNormal.Z *= -1;
+                            }
 
-                                   if (plane == gObj.AAbox.planes[0] || plane == gObj.AAbox.planes[2]) 
-                                   {                                                                   
-                                        invNormal.X *= -1;
-                                        invNormal.Y *= -1;
-                                        invNormal.Z *= -1;
-                                    }
+                            invNormal = invNormal * (direction * plane.Normal).Length();
+                            Vector3 wallDir = direction - invNormal;
+                            //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
+                            foreach (GameObject neighbor in gObj.neighbors)
+                            {
 
-                                    invNormal = invNormal * (direction * plane.Normal).Length();
-                                    Vector3 wallDir = direction - invNormal;
-                                  //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
-                                  foreach(GameObject neighbor in gObj.neighbors){
-                                    
-                                        if (boxesCollision.TestAABBAABB(character, neighbor))
-                                        {
-                                            character.Position = character.oldPosition;
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            character.Position = character.oldPosition + wallDir;
-                                        }
-                                  }
-                             
-                                  if (gObj.neighbors.Count == 0)
-                                  {
-                                      character.Position = character.oldPosition + wallDir;
-                                  }
-                         }
+                                if (boxesCollision.TestAABBAABB(character, neighbor))
+                                {
+                                    character.Position = character.oldPosition;
+                                    break;
+                                }
+                                else
+                                {
+                                    character.Position = character.oldPosition + wallDir;
+                                }
+                            }
+
+                            if (gObj.neighbors.Count == 0)
+                            {
+                                character.Position = character.oldPosition + wallDir;
+                            }
+                        }
                     }
                 }
             }
-            if (ramp.GameObjectModel != null) { 
-            //kolizja rampy z bahataterami 
+            if (ramp.GameObjectModel != null)
+            {
+                //kolizja rampy z bahataterami 
                 foreach (GameObject character in Characters)
                 {
                     if ((int)character.Position.Y >= ramp.boundingBox.Max.Y - 0.3f)
@@ -370,57 +406,57 @@ namespace ElonsRiot
                     {
                         isGoDown = false;
                     }
-                        if (boxesCollision.TestAABBAABB(character, ramp))
+                    if (boxesCollision.TestAABBAABB(character, ramp))
+                    {
+
+                        Plane plane = ramp.AAbox.planes[4];
+                        if (boxesCollision.TestAABBPlane(character, plane))
                         {
-                        
-                            Plane plane = ramp.AAbox.planes[4];
-                            if (boxesCollision.TestAABBPlane(character, plane))
+                            Vector3 direction = character.newPosition - character.oldPosition;
+                            Vector3 invNormal = plane.Normal;
+                            if (isGoDown == true) { direction = -direction; }
+                            invNormal = invNormal * (direction * plane.Normal).Length();
+                            Vector3 wallDir = direction - invNormal;
+                            if (isGoDown == false)
                             {
-                                Vector3 direction = character.newPosition - character.oldPosition;
-                                Vector3 invNormal = plane.Normal;
-                                if (isGoDown == true) { direction = -direction; }
-                                invNormal = invNormal * (direction * plane.Normal).Length();
-                                Vector3 wallDir = direction - invNormal;
-                                if (isGoDown == false)
-                                {
-                                    character.Position = character.oldPosition + wallDir;
-                                }
-                            
-                                if( isGoDown == true)
-                                {
-                                    character.Position = character.oldPosition - wallDir;
-                                
-                                }
+                                character.Position = character.oldPosition + wallDir;
+                            }
+
+                            if (isGoDown == true)
+                            {
+                                character.Position = character.oldPosition - wallDir;
+
                             }
                         }
                     }
-             }
-           
+                }
+            }
+
             ChceckBoxesCollision(Boxes);
-         //kolizja bohaterów z boxami 
+            //kolizja bohaterów z boxami 
             foreach (GameObject character in Characters)
             {
                 foreach (GameObject box in Boxes)
                 {
-                    if(boxesCollision.TestAABBAABB(character,box))
+                    if (boxesCollision.TestAABBAABB(character, box))
                     {
                         character.SetPositionY(character.oldPosition.Y);
                     }
                 }
-            } 
+            }
             //grawitacja
-            foreach(GameObject character in Characters)
+            foreach (GameObject character in Characters)
             {
-               
-                ActivateGravity(character,Floors);
-            } 
-       
+
+                ActivateGravity(character, Floors);
+            }
+
         }
-        
+
         static bool isFirst = false;
         public static void ChceckBoxesCollision(List<GameObject> Boxes)
         {
-           
+
             foreach (GameObject box in Boxes)
             {
                 if (isFirst == false)
@@ -429,83 +465,83 @@ namespace ElonsRiot
                     isFirst = true;
                 }
                 Interactions.CallInteraction(box);
-                
+
             }
         }
-      
+
         public static void ClimbBox(GameObject character)
         {
-                foreach (GameObject box in Boxes)
+            foreach (GameObject box in Boxes)
+            {
+                if (boxesCollision.TestAABBAABBWithError(character, box))
                 {
-                    if (boxesCollision.TestAABBAABBWithError(character, box))
-                    {
-                        character.SetPosition(new Vector3(box.Position.X, box.AAbox.max.Y, box.Position.Z));
-                    }
+                    character.SetPosition(new Vector3(box.Position.X, box.AAbox.max.Y, box.Position.Z));
                 }
+            }
         }
-       
+
         public static void ActivateGravity(GameObject player, List<GameObject> Floors)
         {
-           
+
             BoxBoxCollision boxesCollision = new BoxBoxCollision();
             int counter = 0;
-           
-                if (boxesCollision.TestAABBAABB(player,ramp))
-                {
-                    if (boxesCollision.TestAABBPlane(player, ramp.AAbox.planes[4])) 
-                    { 
-                       counter++;
-                    }
-                }
-                foreach (GameObject floor in Floors)
-                {
-                    if (boxesCollision.TestAABBAABB(player, floor))
-                    {
-                        if (boxesCollision.TestAABBPlane(player, floor.plane))
-                        {
-                            counter++;
-                        }
 
-                    }
+            if (boxesCollision.TestAABBAABB(player, ramp))
+            {
+                if (boxesCollision.TestAABBPlane(player, ramp.AAbox.planes[4]))
+                {
+                    counter++;
                 }
-               
-            
-            if(counter == 0)
+            }
+            foreach (GameObject floor in Floors)
+            {
+                if (boxesCollision.TestAABBAABB(player, floor))
+                {
+                    if (boxesCollision.TestAABBPlane(player, floor.plane))
+                    {
+                        counter++;
+                    }
+
+                }
+            }
+
+
+            if (counter == 0)
             {
                 player.ChangePosition(new Vector3(0, player.gravity, 0));
             }
         }
-        public static Plane getLongerWallInInteractiveObject(GameObject character,GameObject gObj)
+        public static Plane getLongerWallInInteractiveObject(GameObject character, GameObject gObj)
         {
-             List<Plane> planes = new List<Plane>();
+            List<Plane> planes = new List<Plane>();
             List<Vector3> centerOfPlane = new List<Vector3>();
-            if(gObj.message == "x")
+            if (gObj.message == "x")
             {
-               
-                   planes.Add(gObj.AAbox.planes[2]);
-                   planes.Add(gObj.AAbox.planes[3]);
-                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
-                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
-               
+
+                planes.Add(gObj.AAbox.planes[2]);
+                planes.Add(gObj.AAbox.planes[3]);
+                centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
+                centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
+
             }
             else
             {
-                    planes.Add(gObj.AAbox.planes[0]);
-                    planes.Add(gObj.AAbox.planes[1]);
-                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[0]);
-                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
-                
-             }
-           return findClosestPlane(planes,character,centerOfPlane);
+                planes.Add(gObj.AAbox.planes[0]);
+                planes.Add(gObj.AAbox.planes[1]);
+                centerOfPlane.Add(gObj.AAbox.centersOfWalls[0]);
+                centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
+
+            }
+            return findClosestPlane(planes, character, centerOfPlane);
         }
         public static Plane checkPointOfChange(GameObject character, GameObject gObj)
         {
             List<Plane> planes = new List<Plane>();
             List<Vector3> centerOfPlane = new List<Vector3>();
-            if(gObj.message == "x")
+            if (gObj.message == "x")
             {
                 //wyszedl poza zasieg
-               if(character.Position.X < gObj.AAbox.pointOfChangeWall[0].X || character.Position.X > gObj.AAbox.pointOfChangeWall[1].X)
+                if (character.Position.X < gObj.AAbox.pointOfChangeWall[0].X || character.Position.X > gObj.AAbox.pointOfChangeWall[1].X)
                 {
                     planes.Add(gObj.AAbox.planes[0]);
                     planes.Add(gObj.AAbox.planes[1]);
@@ -513,12 +549,12 @@ namespace ElonsRiot
                     centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
                 }
                 else
-               {
-                   planes.Add(gObj.AAbox.planes[2]);
-                   planes.Add(gObj.AAbox.planes[3]);
-                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
-                   centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
-               }
+                {
+                    planes.Add(gObj.AAbox.planes[2]);
+                    planes.Add(gObj.AAbox.planes[3]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[2]);
+                    centerOfPlane.Add(gObj.AAbox.centersOfWalls[3]);
+                }
             }
             else
             {
@@ -537,10 +573,10 @@ namespace ElonsRiot
                     centerOfPlane.Add(gObj.AAbox.centersOfWalls[1]);
                 }
             }
-           return findClosestPlane(planes,character,centerOfPlane);
+            return findClosestPlane(planes, character, centerOfPlane);
         }
 
-        public static Plane findClosestPlane(List<Plane> planes,GameObject player,List<Vector3>centersOfPlanes)
+        public static Plane findClosestPlane(List<Plane> planes, GameObject player, List<Vector3> centersOfPlanes)
         {
             float smallestDistance = float.MaxValue;
             int whichWall = 0;

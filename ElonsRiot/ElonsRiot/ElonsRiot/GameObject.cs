@@ -16,6 +16,8 @@ namespace ElonsRiot
         //Wrzucane z XMLa
         [XmlAttribute("Name")]
         public string Name { get; set; }
+        [XmlAttribute("Id")]
+        public string id { get; set; }
         [XmlElement("Position")]
         public Vector3 Position { get; set; }
         [XmlElement("Rotation")]

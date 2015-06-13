@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
 using ElonsRiot.BSPTree;
 using ElonsRiot.Dialogues;
+using ElonsRiot.Music;
 
 namespace ElonsRiot
 {
@@ -50,7 +51,7 @@ namespace ElonsRiot
         protected override void Initialize()
         {
             PhysicManager.setElements(graphics.GraphicsDevice);
-            CreateBSP.CreateLeafs();
+            MusicManager.Initialize(Content);
             base.Initialize();
         }
 

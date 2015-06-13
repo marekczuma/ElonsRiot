@@ -108,6 +108,7 @@
     <Compile Include="Interaction\InteractiveObjectsList.cs" />
     <Compile Include="Learning\LearningManager.cs" />
     <Compile Include="Learning\PaloSkills.cs" />
+    <Compile Include="Music\MusicManager.cs" />
     <Compile Include="MyPlane.cs" />
     <Compile Include="PaloCharacter.cs" />
     <Compile Include="PhysicManager.cs" />

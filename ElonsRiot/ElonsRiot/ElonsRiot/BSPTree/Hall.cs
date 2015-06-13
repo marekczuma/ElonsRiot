@@ -10,23 +10,37 @@ namespace ElonsRiot.BSPTree
     {
         public float[] x, z;
         public string name;
-        public Hall(float[] _x,float[] _z,string _name)
-         {
+        public string id;
+        public List<GameObject> gameObjectInHall;
+        public Hall(float[] _x, float[] _z, string _name, string _id)
+        {
             x = _x;
             z = _z;
             name = _name;
-          }
-       public bool checkIsPlayerInside(Vector3 playerPosition)
+            id = _id;
+            gameObjectInHall = new List<GameObject>();
+        }
+        public bool checkIsPlayerInside(Vector3 playerPosition)
         {
             if (playerPosition.X > x[0] && playerPosition.X < x[1])
             {
-                if(playerPosition.Z > z[0] && playerPosition.Z < z[1])
+                if (playerPosition.Z > z[0] && playerPosition.Z < z[1])
                 {
                     return true;
                 }
             }
 
             return false;
+        }
+        public void SortObjects(List<GameObject> gameObjects)
+        {
+            foreach (GameObject gObject in gameObjects)
+            {
+                if (gObject.id.Contains(this.id))
+                {
+                    gameObjectInHall.Add(gObject);
+                }
+            }
         }
     }
 }
