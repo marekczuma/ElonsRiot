@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using SkinnedModel;
 using ElonsRiot.BSPTree;
 using ElonsRiot.Music;
+using ElonsRiot.Particles;
 
 namespace ElonsRiot
 {
@@ -178,7 +179,7 @@ namespace ElonsRiot
             CreateBSP.CreateLeafs(GameObjects);
             PhysicManager.InitializePhysicManager(GameObjects, PlayerObject);
         }
-        public void DrawAllContent(GraphicsDevice graphic)
+        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, GameTime gameTime)
         {
             graphic.SetRenderTarget(renderTarget);
             //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
@@ -222,6 +223,7 @@ namespace ElonsRiot
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
                  }
              }
+             explosion.DrawParticle(gameTime);
 
             foreach (GameObject gObj in this.VisibleGameObjects)
             {

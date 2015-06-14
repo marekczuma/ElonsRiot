@@ -12,6 +12,8 @@ using System.Diagnostics;
 using ElonsRiot.BSPTree;
 using ElonsRiot.Dialogues;
 using ElonsRiot.Music;
+using ElonsRiot.Particles;
+
 
 namespace ElonsRiot
 {
@@ -36,11 +38,17 @@ namespace ElonsRiot
         GameObject currentInteractiveObject;
         SpriteBatch sptiteBatchDialogues;
        // HUD myHUD;
+        ParticleSystem explosionParticles;
+        List<Projectile> projectiles = new List<Projectile>();
+        TimeSpan timeToNextProjectile = TimeSpan.Zero;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            explosionParticles = new ExplosionParticleSystem(this, Content);
+            Components.Add(explosionParticles);
+
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
@@ -83,6 +91,11 @@ namespace ElonsRiot
         }
         protected override void Update(GameTime gameTime)
         {
+            if (MyScene.PlayerObject.showShootExplosion)
+            {
+                UpdateProjectiles(gameTime);
+            }
+
             state = Keyboard.GetState();
             // Allows the game to exit
             if (state.IsKeyDown(Keys.Escape))
@@ -101,10 +114,12 @@ namespace ElonsRiot
         }
         protected override void Draw(GameTime gameTime)
         {
+            explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
-            MyScene.DrawAllContent(graphics.GraphicsDevice);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health,MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width);
+            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, gameTime);
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width);
 
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -241,6 +256,21 @@ namespace ElonsRiot
            // direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction );
             return pickRay;
+        }
+
+        void UpdateProjectiles(GameTime gameTime)
+        {
+            projectiles.Add(new Projectile(explosionParticles, MyScene.PlayerObject.newPosition, MyScene.PlayerObject.RotationQ));
+
+            int i = 0;
+
+            while (i < projectiles.Count)
+            {
+                if (!projectiles[i].Update(gameTime))
+                    projectiles.RemoveAt(i);
+                else
+                    i++;
+            }
         }
     }
 }
