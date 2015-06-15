@@ -187,7 +187,7 @@ namespace ElonsRiot
             CreateBSP.CreateLeafs(GameObjects);
             PhysicManager.InitializePhysicManager(GameObjects, PlayerObject);
         }
-        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, GameTime gameTime)
+        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, ParticleSystem bigExplosion, GameTime gameTime)
         {
             graphic.SetRenderTarget(renderTarget);
             //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
@@ -243,6 +243,8 @@ namespace ElonsRiot
             // gun.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
 
              explosion.DrawParticle(gameTime);
+             bigExplosion.DrawParticle(gameTime);
+
 
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
