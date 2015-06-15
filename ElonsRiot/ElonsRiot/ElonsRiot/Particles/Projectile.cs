@@ -12,6 +12,7 @@ namespace ElonsRiot.Particles
         const float gravity = 0;
 
         ParticleSystem explosionParticles;
+ //       ParticleSystem bigExplosionParticles;
 
         Vector3 position;
         Vector3 velocity;
@@ -21,22 +22,35 @@ namespace ElonsRiot.Particles
 
         public Projectile(ParticleSystem explosionParticles, Player playerObject)
         {
-            this.explosionParticles = explosionParticles;
-
-            if (playerObject.elonState.State == State.walkShoot)
+            if (playerObject.showShootExplosion)
             {
-                playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.35f, playerObject.RotationQ);
-                position = playerObject.newPosition + 5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
-            }
-            else if (playerObject.elonState.State == State.idleShoot)
-            {
-                playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.15f, playerObject.RotationQ);
-                position = playerObject.newPosition + 5.5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
-            }
+                this.explosionParticles = explosionParticles;
 
-            velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
-            velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
-            velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+                if (playerObject.elonState.State == State.walkShoot)
+                {
+                    playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.35f, playerObject.RotationQ);
+                    position = playerObject.newPosition + 5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
+                }
+                else if (playerObject.elonState.State == State.idleShoot)
+                {
+                    playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.15f, playerObject.RotationQ);
+                    position = playerObject.newPosition + 5.5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
+                }
+
+                velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+                velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
+                velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            }
+            if (playerObject.showBigExplosion)
+            {
+                this.explosionParticles = explosionParticles;
+                position = playerObject.newPosition + 20.0f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 10.0f;
+
+                velocity.X = (float)(random.NextDouble() - 5) * sidewaysVelocityRange;
+                velocity.Y = (float)(random.NextDouble() + 5) * verticalVelocityRange;
+                velocity.Z = (float)(random.NextDouble() - 5) * sidewaysVelocityRange;
+            }
+            
         }
 
         public bool Update (GameTime gameTime)

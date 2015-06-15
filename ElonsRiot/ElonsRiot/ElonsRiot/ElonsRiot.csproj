@@ -112,6 +112,7 @@
     <Compile Include="Music\MusicManager.cs" />
     <Compile Include="MyPlane.cs" />
     <Compile Include="PaloCharacter.cs" />
+    <Compile Include="Particles\BigExplosionParticleSystem.cs" />
     <Compile Include="Particles\ParticleEmitter.cs" />
     <Compile Include="Particles\ParticleSettings.cs" />
     <Compile Include="Particles\ParticleSystem.cs" />

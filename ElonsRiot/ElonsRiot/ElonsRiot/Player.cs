@@ -21,7 +21,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         public float angle;
         public Vector3 oldPosition, newPosition;
-        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion;
+        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion, showBigExplosion;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
         public Vector3 nearPoint;
@@ -135,6 +135,15 @@ namespace ElonsRiot
                 else
                 {
                     showShootExplosion = false;
+                }
+            }
+            else if (state.IsKeyDown(Keys.D7))
+            {
+                if (!oldState.IsKeyDown(Keys.D7))
+                    showBigExplosion = true;
+                else
+                {
+                    showBigExplosion = false;
                 }
             }
             else if(state.IsKeyDown(Keys.L))

@@ -41,13 +41,16 @@ namespace ElonsRiot
         ParticleSystem explosionParticles;
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
+        ParticleSystem bigExplosionParticles;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             explosionParticles = new ExplosionParticleSystem(this, Content);
+            bigExplosionParticles = new BigExplosionParticleSystem(this, Content);
             Components.Add(explosionParticles);
+            Components.Add(bigExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             MyDialogues = new DialoguesManager();
@@ -96,6 +99,11 @@ namespace ElonsRiot
                 UpdateProjectiles(gameTime);
             }
 
+            if (MyScene.PlayerObject.showBigExplosion)
+            {
+                UpdateBigProjectiles(gameTime);
+            }
+
             state = Keyboard.GetState();
             // Allows the game to exit
             if (state.IsKeyDown(Keys.Escape))
@@ -116,10 +124,12 @@ namespace ElonsRiot
         protected override void Draw(GameTime gameTime)
         {
             explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
+            bigExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
+
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
-            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, gameTime);
+            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, gameTime);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width);
 
             GraphicsDevice.BlendState = BlendState.Opaque;
@@ -221,6 +231,22 @@ namespace ElonsRiot
         void UpdateProjectiles(GameTime gameTime)
         {
             projectiles.Add(new Projectile(explosionParticles, MyScene.PlayerObject));
+
+            int i = 0;
+
+            while (i < projectiles.Count)
+            {
+                if (!projectiles[i].Update(gameTime))
+                    projectiles.RemoveAt(i);
+                else
+                    i++;
+            }
+        }
+
+        void UpdateBigProjectiles(GameTime gameTime)
+        {
+            
+            projectiles.Add(new Projectile(bigExplosionParticles, MyScene.PlayerObject));
 
             int i = 0;
 
