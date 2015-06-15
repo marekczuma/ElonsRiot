@@ -277,7 +277,7 @@ namespace ElonsRiot
         public void Update(Player player, GameTime gameTime, KeyboardState _state)
         {
             VisibleGameObjects.Clear();
-            GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
+            //GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
             Console.WriteLine(GameObjects.Count);
             CreateBSP.checkPositionOfPlayer(player.Position);
             actualGameObjects = GameObjects;//CreateBSP.ListOfVisibleObj();
