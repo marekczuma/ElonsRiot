@@ -302,7 +302,7 @@ namespace ElonsRiot
                     VisibleGameObjects.Add(obj);
                 }
             }
-            Debug.WriteLine(VisibleGameObjects.Count.ToString());
+          //  Debug.WriteLine(VisibleGameObjects.Count.ToString());
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
