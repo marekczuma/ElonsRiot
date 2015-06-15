@@ -21,12 +21,12 @@ namespace ElonsRiot
         private bool isMouseMovement;
         private float angle;
         public Vector3 oldPosition, newPosition;
-        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills;
+        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
         public Vector3 nearPoint;
         public Vector3 farPoint;
-        
+        KeyboardState oldState;
         public Player()
         {
             nearPoint = new Vector3(0, 0, 0);
@@ -110,7 +110,12 @@ namespace ElonsRiot
             }
             else if (state.IsKeyDown(Keys.D6))
             {
-                elonState.SetCurrentState(State.walk);
+                if (!oldState.IsKeyDown(Keys.D6))
+                    showShootExplosion = true;
+                else
+                {
+                    showShootExplosion = false;
+                }
             }
             else if(state.IsKeyDown(Keys.L))
             {
@@ -126,7 +131,7 @@ namespace ElonsRiot
             {
                 elonState.SetCurrentState(State.idle);
             }
-            
+            oldState = state;
         }
         public void Movement(KeyboardState state, MouseState _oldMouseState)
         {

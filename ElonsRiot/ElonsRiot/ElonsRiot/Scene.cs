@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using SkinnedModel;
+using ElonsRiot.BSPTree;
+using ElonsRiot.Music;
+using ElonsRiot.Particles;
 
 namespace ElonsRiot
 {
@@ -26,6 +29,7 @@ namespace ElonsRiot
         public List<GameObject> GameObjects { get; set; }
         public List<GameObject> NPCs { get; set; }
         public List<GameObject> VisibleGameObjects {get; set;}
+        public List<GameObject> ActualGameOjects { get; set; }
         public XMLScene XMLScene { get; set; }
         public Player PlayerObject { get; set; }
         public PaloCharacter PaloObject { get; set; }
@@ -72,6 +76,7 @@ namespace ElonsRiot
         public Scene(ContentManager _contentManager, GraphicsDevice _graphicsDevice)
         {
             GameObjects = new List<GameObject>();
+            ActualGameOjects = new List<GameObject>();
             NPCs = new List<GameObject>();
             ContentManager = _contentManager;
             GraphicsDevice = _graphicsDevice;
@@ -176,8 +181,10 @@ namespace ElonsRiot
             basicEffect = new BasicEffect(graphic);
 
             SetLightData();
+            CreateBSP.CreateLeafs(GameObjects);
+            PhysicManager.InitializePhysicManager(GameObjects, PlayerObject);
         }
-        public void DrawAllContent(GraphicsDevice graphic)
+        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, GameTime gameTime)
         {
             graphic.SetRenderTarget(renderTarget);
             //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
@@ -222,6 +229,7 @@ namespace ElonsRiot
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
                  }
              }
+             explosion.DrawParticle(gameTime);
 
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
@@ -284,6 +292,7 @@ namespace ElonsRiot
             VisibleGameObjects.Clear();
             GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
             Console.WriteLine(GameObjects.Count);
+            CreateBSP.checkPositionOfPlayer(player.Position);
             foreach (GameObject obj in GameObjects)
             {
           //      if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp")
@@ -319,6 +328,7 @@ namespace ElonsRiot
             //Elon.Position = new Vector3(-100, 4 , 13);
             //Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon-idle";
+            Elon.id = "ABCDEF";
             Elon.Palo = PaloObject;
             Elon.Palo.Elon = Elon;
             Elon.mass = 70;
@@ -339,6 +349,7 @@ namespace ElonsRiot
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
             Marian.Scene = this;
+            Marian.id = "ABCDEF";
             Marian.oldPosition = new Vector3(90, 4, 35);
             Marian.newPosition = new Vector3(90, 4, 35);
             //Guard Zenon = new Guard();
@@ -367,6 +378,7 @@ namespace ElonsRiot
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/chod_2006";
+            Palo.id = "ABCDEF";
             Palo.Tag = "Palo";
             Palo.Interactive = false;
             Palo.mass = 100;

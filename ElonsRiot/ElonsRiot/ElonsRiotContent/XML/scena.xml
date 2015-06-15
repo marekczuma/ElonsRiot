@@ -311,7 +311,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-	</GameObject> 
+	</GameObject>  -->
 	<GameObject Name="wall1" Id="D" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>50</X>
@@ -533,4 +533,5 @@
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
 	</GameObject>
+ 
 </Scene>

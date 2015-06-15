@@ -17,7 +17,7 @@ namespace ElonsRiot
         static List<GameObject> Boxes;
         static List<GameObject> Characters;
         static List<GameObject> Floors;
-        static bool isStart;
+        public static bool isStart;
         public static bool isClimbing;
         static SpriteBatch spriteBatchHUD;
         static GraphicsDevice graphicDevice;
@@ -38,7 +38,7 @@ namespace ElonsRiot
             spriteBatchHUD = new SpriteBatch(graphic);
             graphicDevice = graphic;
         }
-        public static void startPhysicManager(GameTime gameTime, List<GameObject> gameO, Player player)
+        public static void InitializePhysicManager(List<GameObject> gameO, Player player)
         {
             foreach (GameObject gObj in gameO)
             {
@@ -177,16 +177,46 @@ namespace ElonsRiot
                 gObj.AAbox.createPointsOfCollision();
                 gObj.AAbox.setpointOfChangeWall();
             }
-            isStart = false;
+        }
+        public static void sortObject(List<GameObject> gameO)
+        {
+            foreach (GameObject gObj in gameO)
+            {
+                if (gObj.Interactive == true)
+                {
+
+                    if (!gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
+                    {
+                        InteractiveGameObject.Add(gObj);
+                    }
+                }
+                else
+                {
+                    if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
+                    {
+                        NotInteractiveGameObject.Add(gObj);
+                    }
+                }
+                if (gObj.Name.Contains("terrain"))
+                {
+                    Floors.Add(gObj);
+                }
+                if (gObj.Name.Contains("box"))
+                {
+                    Boxes.Add(gObj);
+                }
+                if (gObj.Name.Contains("character") || gObj.Name.Contains("enemy"))
+                {
+                    Characters.Add(gObj);
+                }
+                if (gObj.Name.Contains("ramp"))
+                {
+                    ramp = gObj;
+                }
+            }
         }
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
         {
-
-            if (isStart == true)
-            {
-                startPhysicManager(gameTime, gameO, player);
-
-            }
 
             //atualizacja bohaterów
             foreach (GameObject character in Characters)
