@@ -12,9 +12,9 @@ namespace ElonsRiot
     static class HUD
     {
         public static SpriteFont font;
-        public static Texture2D healthBar;
+        public static Texture2D healthBarElon;
+        public static Texture2D healthBarPalo;
         public static Texture2D healthValue;
-        public static Texture2D healthBackground;
         public static Vector2 scale;
         public static Texture2D gunElon;
         public static Texture2D dialoguesBackground;
@@ -30,9 +30,9 @@ namespace ElonsRiot
         public static void LoadHUD(ContentManager content, float health)
         {
             font = content.Load<SpriteFont>("HUD/HUDFont");
-            healthBar = content.Load<Texture2D>("HUD/healthBar");
+            healthBarElon = content.Load<Texture2D>("HUD/elonBar");
+            healthBarPalo = content.Load<Texture2D>("HUD/paloBar");
             healthValue = content.Load<Texture2D>("HUD/health");
-            healthBackground = content.Load<Texture2D>("HUD/healthEmpty");
             gunElon = content.Load<Texture2D>("HUD/Gun/gunElon");
             gunPalo = content.Load<Texture2D>("HUD/Gun/GunPalo");
             progress = content.Load<Texture2D>("HUD/progress");
@@ -46,29 +46,28 @@ namespace ElonsRiot
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width)
         {
-            scale = new Vector2(0.65f * (healthElon / 100), 0.65f);
+            float scaleFloat = 0.12f;
+            scale = new Vector2(scaleFloat * (healthElon / 100), scaleFloat);
 
             spriteBatch[0].Begin();
 
-            spriteBatch[0].Draw(healthBackground, new Vector2(0, -150), null, Color.White, 0, Vector2.Zero, 0.65f, SpriteEffects.None, 0);
-            spriteBatch[0].Draw(healthValue, new Vector2(0, -150), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
-            spriteBatch[0].Draw(healthBar, new Vector2(0, -150), null, Color.White, 0, Vector2.Zero, 0.65f, SpriteEffects.None, 0);
-            spriteBatch[0].DrawString(font, "" + healthElon, new Vector2(150, 5), Color.White);
+            spriteBatch[0].Draw(healthBarElon, new Vector2(0, 10), null, Color.White, 0, Vector2.Zero, scaleFloat, SpriteEffects.None, 0);
+            spriteBatch[0].Draw(healthValue, new Vector2(0, 10), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+           // spriteBatch[0].DrawString(font, "" + healthElon, new Vector2(150, 5), Color.White);
 
             spriteBatch[0].End();
 
-            scalePalo = new Vector2(0.65f * (healthPalo / 100), 0.65f);
+            scalePalo = new Vector2(scaleFloat * (healthPalo / 100), scaleFloat);
             spriteBatch[1].Begin();
-            spriteBatch[1].Draw(healthBackground, new Vector2(width - 340, -150), null, Color.White, 0, Vector2.Zero, 0.65f, SpriteEffects.None, 0);
-            spriteBatch[1].Draw(healthValue, new Vector2(width - 340, -150), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
-            spriteBatch[1].Draw(healthBar, new Vector2(width - 340, -150), null, Color.White, 0, Vector2.Zero, 0.65f, SpriteEffects.None, 0);
-            spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
-            spriteBatch[1].DrawString(font, "position: " + myScene.PlayerObject.Position, new Vector2(300, 15), Color.White);
-            foreach (var elem in myScene.GameObjects)
-            {
-                if (elem.Name == "gun")
-                    spriteBatch[1].DrawString(font, "gunPos: " + elem.Position, new Vector2(300, 40), Color.White);
-            }
+            spriteBatch[1].Draw(healthBarPalo, new Vector2(width - 320, 10), null, Color.White, 0, Vector2.Zero, scaleFloat, SpriteEffects.None, 0);
+            spriteBatch[1].Draw(healthValue, new Vector2(width - 320, 10), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
+           // spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
+           // spriteBatch[1].DrawString(font, "position: " + myScene.PlayerObject.Position, new Vector2(300, 15), Color.White);
+            //foreach (var elem in myScene.GameObjects)
+            //{
+            //    if (elem.Name == "gun")
+            //        spriteBatch[1].DrawString(font, "gunPos: " + elem.Position, new Vector2(300, 40), Color.White);
+            //}
             //spriteBatch[1].DrawString(font, "OffsetDistance.Z: " + myScene.PlayerObject.camera.offsetDistance.Z, new Vector2(300, 30), Color.White);
 
             spriteBatch[1].End();
@@ -80,13 +79,13 @@ namespace ElonsRiot
         public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammoElon,float ammoPalo,float ammoMax, GraphicsDevice graphics,int width)
         {
             spriteBatch[0].Begin();
-            spriteBatch[0].Draw(gunElon, new Vector2(5, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
-            spriteBatch[0].DrawString(font, "" + ammoElon + "/" + ammoMax, new Vector2(160, 50), Color.White);
+            spriteBatch[0].Draw(gunElon, new Vector2(5, 75), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+            spriteBatch[0].DrawString(font, "" + ammoElon + "/" + ammoMax, new Vector2(160, 75), Color.White);
             spriteBatch[0].End();
-            spriteBatch[1].Begin();
-            spriteBatch[1].Draw(gunPalo, new Vector2(width - 170, 50), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
-            spriteBatch[1].DrawString(font, "" + ammoPalo + "/" + ammoMax, new Vector2(width - 220, 50), Color.White);
-            spriteBatch[1].End();
+          //  spriteBatch[1].Begin();
+         //   spriteBatch[1].Draw(gunPalo, new Vector2(width - 170, 75), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+        //    spriteBatch[1].DrawString(font, "" + ammoPalo + "/" + ammoMax, new Vector2(width - 220, 75), Color.White);
+        //    spriteBatch[1].End();
             graphics.DepthStencilState = DepthStencilState.Default;
 
         }

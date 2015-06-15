@@ -90,16 +90,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HUD\health.png">
-      <Name>health</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="HUD\healthBar.png">
-      <Name>healthBar</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="HUD\healthEmpty.png">
       <Name>healthEmpty</Name>
       <Importer>TextureImporter</Importer>
@@ -377,10 +367,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+
     <Compile Include="3D\Placeholders\Bomba.FBX">
       <Name>Bomba</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\elonBar.png">
+      <Name>elonBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\paloBar.png">
+      <Name>paloBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\health.png">
+      <Name>health</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

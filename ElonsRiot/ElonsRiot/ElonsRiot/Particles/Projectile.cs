@@ -49,6 +49,7 @@ namespace ElonsRiot.Particles
                 {
                     if (element.Name == "Drzwi 2")
                     {
+                        element.ChangePosition(new Vector3(12, 0, 0));
                         playerObject.Scene.GameObjects.Remove(element);
                         break;
                     }

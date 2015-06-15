@@ -288,6 +288,11 @@ namespace ElonsRiot
                     VisibleGameObjects.Add(obj);
                 //}
             }
+            if (PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot)
+                PlayerObject.showGun = true;
+            else
+                PlayerObject.showGun = false;
+
           //  Debug.WriteLine(VisibleGameObjects.Count.ToString());
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
