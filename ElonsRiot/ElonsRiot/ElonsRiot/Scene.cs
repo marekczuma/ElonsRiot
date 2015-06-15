@@ -86,6 +86,7 @@ namespace ElonsRiot
             InteractiveObjects = new Interaction.InteractiveObjectsList(this);
             InteractionsManager = new ControlPlayer.InteractiveObjectsManager(this);
             ShootingManager = new Shooting.ShootingManager { Scene = this };
+
         }
         public Scene()
         {
@@ -378,6 +379,7 @@ namespace ElonsRiot
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
             Palo.ObjectPath = "3D/ludzik/chod_2006";
+            Palo.Scene = this;
             Palo.id = "ABCDEF";
             Palo.Tag = "Palo";
             Palo.Interactive = false;

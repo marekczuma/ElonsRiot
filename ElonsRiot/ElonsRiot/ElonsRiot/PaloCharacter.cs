@@ -21,6 +21,7 @@ namespace ElonsRiot
         public WalkState Walk { get; set; }
         public Learning.PaloSkills Skills { get; set; }
         public Learning.LearningManager LearningManager { get; set; }
+        public Scene Scene { get; set; }
         private float velocity;
         public float health;
         public int ammo;
@@ -36,7 +37,7 @@ namespace ElonsRiot
             ammo = 50;
             ammoMax = 50;
             Skills = new Learning.PaloSkills { Palo = this };
-            LearningManager = new Learning.LearningManager { Palo = this };
+            LearningManager = new Learning.LearningManager { Palo = this, Scene = Scene  };
         }
 
         public void WalkForward()
@@ -120,7 +121,7 @@ namespace ElonsRiot
         {
             Vector3 goodDirection = (_targetPosition - _object.Position) * (-1);
             goodDirection.Normalize();
-            goodDirection *= 6;
+            goodDirection *= 15;
             Vector3 newPosition = _object.Position + goodDirection;
             return newPosition;
         }
@@ -155,7 +156,7 @@ namespace ElonsRiot
             {
                 StandBehindBox(MoveBoxAI.PointA);
                 GameObject tmpA = new GameObject(MoveBoxAI.PointA);
-                if(getDistance(tmpA) <= 2)
+                if(getDistance(tmpA) <= 5)
                 {
                     MoveBoxAI.AIncluded = true;
                 }

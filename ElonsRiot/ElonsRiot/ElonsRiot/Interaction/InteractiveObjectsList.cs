@@ -25,10 +25,10 @@ namespace ElonsRiot.Interaction
             Door Door2 = new Door { Name = "Drzwi 2", ObjectPath = "3D/placeholders/Wall5", Interactive = true, Position = new Vector3(86, 0, 0), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1.2f, 0.75f, 1) };
             Door2.id = "ACF";
             InteractiveObjects.Add(Door2);
-            HardChest BigChest = new HardChest { Name = "boxForMovement", ObjectPath = "3D/Boxes/box", Interactive = true, Position = new Vector3(45, 0, -19), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(0.1f, 0.15f, 0.05f) };
+            HardChest BigChest = new HardChest { Name = "boxForMovement", ObjectPath = "3D/Boxes/box", Interactive = true, Position = new Vector3(30, 0, -10), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(0.1f, 0.15f, 0.05f) };
             BigChest.id = "ABCDEF";
             InteractiveObjects.Add(BigChest);
-            Chest JustChest = new Chest { Name = "boxForMovement", ObjectPath = "3D/Boxes/box", Interactive = true, Position = new Vector3(25, 0, -20), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(0.05f, 0.05f, 0.05f) };
+            Chest JustChest = new Chest { Name = "boxForMovement", ObjectPath = "3D/Boxes/box", Interactive = true, Position = new Vector3(15, 0, -10), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(0.05f, 0.05f, 0.05f) };
             JustChest.id = "ABCDEF";
             InteractiveObjects.Add(JustChest);
         }

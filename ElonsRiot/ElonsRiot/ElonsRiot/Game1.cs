@@ -183,7 +183,7 @@ namespace ElonsRiot
                         if (result.Value < selectedDistance)
                         {
                             selectedDistance = result.Value;
-                            MyScene.PlayerObject.camera.offsetDistance.Z = -70;
+                            MyScene.PlayerObject.camera.offsetDistance.Z = -100;
                         }
                     }
                   //  else
