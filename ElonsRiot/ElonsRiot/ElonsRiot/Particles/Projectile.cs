@@ -44,7 +44,23 @@ namespace ElonsRiot.Particles
             if (playerObject.showBigExplosion)
             {
                 this.explosionParticles = explosionParticles;
-                position = playerObject.newPosition + 20.0f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 10.0f;
+                position = new Vector3(86,4,-7);
+                foreach(var element in playerObject.Scene.GameObjects)
+                {
+                    if (element.Name == "Drzwi 2")
+                    {
+                        playerObject.Scene.GameObjects.Remove(element);
+                        break;
+                    }
+                }
+                foreach (var element in playerObject.Scene.GameObjects)
+                {
+                    if (element.Name == "Bomba")
+                    {
+                        playerObject.Scene.GameObjects.Remove(element);
+                        break;
+                    }
+                }
 
                 velocity.X = (float)(random.NextDouble() - 5) * sidewaysVelocityRange;
                 velocity.Y = (float)(random.NextDouble() + 5) * verticalVelocityRange;

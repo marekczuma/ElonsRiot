@@ -63,16 +63,7 @@ namespace ElonsRiot.Shooting
                     }
                 }
             }
-            else if (target.Tag != "guard")
-            {
-                for (int i = 0; i < Scene.GameObjects.Count; i++)
-                {
-                    if (Scene.GameObjects[i] == target)
-                    {
-                        Scene.GameObjects.Remove(Scene.GameObjects[i]);
-                    }
-                }
-            }
+
         }
         
     }

@@ -29,6 +29,7 @@ namespace ElonsRiot
         public Vector3 nearPoint;
         public Vector3 farPoint;
         KeyboardState oldState;
+        public bool isBomb = false;
         public Player()
         {
             nearPoint = new Vector3(0, 0, 0);
@@ -129,6 +130,15 @@ namespace ElonsRiot
             else if (state.IsKeyDown(Keys.D5))
             {
                 elonState.SetCurrentState(State.interact);
+                if (isBomb == false)
+                {
+                    GameObject tmp = new GameObject { Name = "Bomba", ObjectPath = "3D/Placeholders/Bomba", Position = new Vector3(86, 5, -1f), Scale = new Vector3(1, 3, 1), id = "ABCDEF", Rotation = new Vector3(90,0,0) };
+                    tmp.LoadModels(Scene.ContentManager);
+
+                    Scene.GameObjects.Add(tmp);
+                    isBomb = true;
+                }
+
             }
             else if (state.IsKeyDown(Keys.D6))
             {
