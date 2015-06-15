@@ -20,7 +20,7 @@ namespace ElonsRiot
         public int ammo;
         public int ammoMax;
         private bool isMouseMovement;
-        private float angle;
+        public float angle;
         public Vector3 oldPosition, newPosition;
         public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion;
         public PaloCharacter Palo { get; set; }
@@ -93,6 +93,16 @@ namespace ElonsRiot
                     Scene.ShootingManager.Shot(this, RotationQ);
                 }
             }
+            else if (state.IsKeyDown(Keys.D2) && state.IsKeyDown(Keys.D6))
+            {
+                elonState.SetCurrentState(State.idleShoot);
+                if (!oldState.IsKeyDown(Keys.D6))
+                    showShootExplosion = true;
+                else
+                {
+                    showShootExplosion = false;
+                }
+            }
             else if (state.IsKeyDown(Keys.D3))
             {
                 elonState.SetCurrentState(State.walkShoot);
@@ -112,6 +122,16 @@ namespace ElonsRiot
             }
             else if (state.IsKeyDown(Keys.D6))
             {
+                if (!oldState.IsKeyDown(Keys.D6))
+                    showShootExplosion = true;
+                else
+                {
+                    showShootExplosion = false;
+                }
+            }
+            else if (state.IsKeyDown(Keys.D3) && state.IsKeyDown(Keys.D6))
+            {
+                elonState.SetCurrentState(State.walkShoot);
                 if (!oldState.IsKeyDown(Keys.D6))
                     showShootExplosion = true;
                 else
