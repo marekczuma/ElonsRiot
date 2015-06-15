@@ -161,8 +161,8 @@ namespace ElonsRiot
 
                 if (position.Y > 20)
                     position.Y = 20;
-                else if (position.Y < 10)
-                    position.Y = 10;
+                else if (position.Y < 5)
+                    position.Y = 5;
             //}
 
                 if (currentMouseState.ScrollWheelValue < previousScrollValue)

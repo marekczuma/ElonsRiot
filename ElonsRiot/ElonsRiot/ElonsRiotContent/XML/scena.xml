@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
- <GameObject Name="terrain" Path="3D/Placeholders/Floor">
+ <GameObject Name="terrain" Id="ABCDEF" Path="3D/Placeholders/Floor">
     <Position>
       <X>0</X>
-      <Y>0</Y>
+      <Y>-3</Y>
       <Z>0</Z>
     </Position>
     <Rotation>
@@ -18,7 +18,7 @@
 	</Scale>
 	<Interactive>false</Interactive>
 </GameObject>  
- <GameObject Name="ceil" Path="3D/Ziemia/bigFloor">
+ <GameObject Name="ceil" Id="ABCDEF" Path="3D/Ziemia/bigFloor">
     <Position>
       <X>0</X>
       <Y>20</Y>
@@ -37,7 +37,7 @@
 	<Interactive>false</Interactive>
 </GameObject>   
 	//magazyn 
-	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
+	<GameObject Name="wall1" Id="BE" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>0</X>
 		  <Y>0</Y>
@@ -55,7 +55,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">  //jakies inne ustawienie
+	<GameObject Name="wall2" Id ="BE" Path="3D/placeholders/Wall2">  //jakies inne ustawienie
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -73,7 +73,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>  
-	<GameObject Name="wall3" Path="3D/placeholders/Wall3">
+	<GameObject Name="wall3" Id="BE" Path="3D/placeholders/Wall3">
 		<Position>
 		  <X>50</X>
 		  <Y>0</Y>
@@ -91,7 +91,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	 <GameObject Name="wall2" Path="3D/placeholders/Wall2"> //dziwne ustawienie
+	 <GameObject Name="wall2" Id="BE" Path="3D/placeholders/Wall2"> //dziwne ustawienie
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -109,7 +109,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>  
-	<GameObject Name="wall4" Path="3D/placeholders/Wall4">
+	<GameObject Name="wall4" Id="BE" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>50</X>
 		  <Y>0</Y>
@@ -128,7 +128,7 @@
 		<Interactive>false</Interactive>
 	</GameObject> 
 	//korytarz 
-		<GameObject Name="wall4Hall" Path="3D/placeholders/Wall4">
+		<GameObject Name="wall4Hall" Id="EA" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>55</X>
 		  <Y>0</Y>
@@ -146,7 +146,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-		<GameObject Name="wall4Hall" Path="3D/placeholders/Wall4">
+		<GameObject Name="wall4Hall" Id="EA" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>55</X>
 		  <Y>0</Y>
@@ -166,7 +166,7 @@
 	</GameObject>  
 	 
 	//Strzelnica 
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
+	<GameObject Name="wall2" Id="CF" Path="3D/placeholders/Wall2">
 		<Position>
 		  <X>50</X>
 		  <Y>0</Y>
@@ -184,7 +184,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">  //dziwna sciana
+	<GameObject Name="wall2" Id="CF" Path="3D/placeholders/Wall2">  //dziwna sciana
 		<Position>
 		  <X>75</X>
 		  <Y>0</Y>
@@ -202,7 +202,7 @@
 		</Scale>
 		<Interactive>false</Interactive> 
 	</GameObject> 
-	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
+	<GameObject Name="wall1" Id="CF" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>102.5</X>
 		  <Y>0</Y>
@@ -220,7 +220,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall6" Path="3D/placeholders/Wall6">  //dziwna sciana
+	<GameObject Name="wall6" Id="CF" Path="3D/placeholders/Wall6">  //dziwna sciana
 		<Position>
 		  <X>65</X>
 		  <Y>0</Y>
@@ -238,7 +238,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall4" Path="3D/placeholders/Wall4">  //dziwna sciana
+	<GameObject Name="wall4" Id="CF" Path="3D/placeholders/Wall4">  //dziwna sciana
 		<Position>
 		  <X>97</X>
 		  <Y>0</Y>
@@ -257,7 +257,7 @@
 		<Interactive>false</Interactive> 
 	</GameObject> 
 	//korytarz
-		<GameObject Name="wall2Hall" Path="3D/placeholders/Wall2">  
+		<GameObject Name="wall2Hall" Id="FA" Path="3D/placeholders/Wall2">  
 		<Position>
 		  <X>92</X>
 		  <Y>0</Y>
@@ -275,7 +275,7 @@
 		</Scale>
 		<Interactive>false</Interactive> 
 	</GameObject> 
-			<GameObject Name="wall2Hall" Path="3D/placeholders/Wall2">  
+			<GameObject Name="wall2Hall" Id="FA" Path="3D/placeholders/Wall2">  
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -295,7 +295,7 @@
 	</GameObject> 
 	
 	//Super pokój 
-	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
+	<GameObject Name="wall1" Id="D" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>0</X>
 		  <Y>0</Y>
@@ -311,8 +311,8 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-	</GameObject>  
-	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
+	</GameObject> 
+	<GameObject Name="wall1" Id="D" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>50</X>
 		  <Y>0</Y>
@@ -330,8 +330,8 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	//Otaczanie sceny 
-	<GameObject Name="wall7" Path="3D/placeholders/Wall7">  //dziwna sciana
+//Otaczanie sceny 
+	<GameObject Name="wall7" Id="ACEF" Path="3D/placeholders/Wall7">  //dziwna sciana
 		<Position>
 		  <X>0</X>
 		  <Y>0</Y>
@@ -349,7 +349,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall7" Path="3D/placeholders/Wall7"> //dziwna sciana
+	<GameObject Name="wall7" Id="ADEF" Path="3D/placeholders/Wall7"> //dziwna sciana
 		<Position>
 		  <X>0</X>
 		  <Y>0</Y>
@@ -367,7 +367,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall7" Path="3D/placeholders/Wall7">
+	<GameObject Name="wall7" Id="AEF" Path="3D/placeholders/Wall7">
 		<Position>
 		  <X>120</X>
 		  <Y>0</Y>
@@ -386,7 +386,7 @@
 		<Interactive>false</Interactive>
 	</GameObject> 
 	//Hall 
-	<GameObject Name="wall4" Path="3D/placeholders/Wall4">
+	<GameObject Name="wall4" Id="AEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>106</X>  
 		  <Y>0</Y>
@@ -404,7 +404,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>  
-	<GameObject Name="wall2" Path="3D/placeholders/Wall2">
+	<GameObject Name="wall2" Id="AEf" Path="3D/placeholders/Wall2">
 		<Position>
 		  <X>60</X>
 		  <Y>0</Y>
@@ -422,7 +422,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-		<GameObject Name="wall4" Path="3D/placeholders/Wall4">
+		<GameObject Name="wall4" Id="AEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>70</X>
 		  <Y>0</Y>
@@ -440,7 +440,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="wall1" Path="3D/placeholders/Wall1">
+	<GameObject Name="wall1" Id="AEF" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>60</X>
 		  <Y>0</Y>
@@ -459,7 +459,7 @@
 		<Interactive>false</Interactive>
 	</GameObject> 
 	//Filary 
-	<GameObject Name="filar" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="AEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -477,7 +477,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>
-	<GameObject Name="filar" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="AEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -495,7 +495,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>
-	<GameObject Name="filar" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="AEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -514,7 +514,7 @@
 		<Tag>escapePlace</Tag>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="filar" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="AEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>88</X>
 		  <Y>0</Y>
@@ -533,5 +533,4 @@
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
 	</GameObject>
- 
 </Scene>

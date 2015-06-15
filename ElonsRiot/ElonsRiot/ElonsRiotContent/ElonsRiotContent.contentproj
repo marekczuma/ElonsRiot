@@ -307,10 +307,50 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HUD\nauka.png">
+      <Name>nauka</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\Button.FBX">
+      <Name>Button</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Effects\MirrorEffect.fx">
       <Name>MirrorEffect</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\kamien.FBX">
+      <Name>kamien</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\Stone-Texture02.jpg">
+      <Name>Stone-Texture02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\Stone-Texture022.jpg">
+      <Name>Stone-Texture022</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\Bullet.FBX">
+      <Name>Bullet</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
