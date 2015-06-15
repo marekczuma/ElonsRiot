@@ -28,13 +28,13 @@ namespace ElonsRiot.Particles
 
                 if (playerObject.elonState.State == State.walkShoot)
                 {
-                    playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.35f, playerObject.RotationQ);
-                    position = playerObject.newPosition + 5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
+                    playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.25f, playerObject.RotationQ);
+                    position = playerObject.newPosition + 4.2f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 6.9f;
                 }
                 else if (playerObject.elonState.State == State.idleShoot)
                 {
-                    playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.15f, playerObject.RotationQ);
-                    position = playerObject.newPosition + 5.5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
+                    playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.05f, playerObject.RotationQ);
+                    position = playerObject.newPosition + 4.7f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 6.9f;
                 }
 
                 velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
