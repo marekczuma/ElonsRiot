@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace ElonsRiot
 {
@@ -47,9 +48,9 @@ namespace ElonsRiot
             target = new Vector3();
 
             viewMatrix = Matrix.Identity;
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 16 / 9, 0.5f, 500f);
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 16 / 9, 0.5f, 800f);
 
-            bigView = Matrix.Multiply(viewMatrix, 2f);
+            bigView = Matrix.Multiply(viewMatrix, 1f);
 
             frustum = new BoundingFrustum(bigView * projectionMatrix);
 
@@ -107,7 +108,7 @@ namespace ElonsRiot
 
         public void UpdateFrustum()
         {
-            bigView = Matrix.Multiply(viewMatrix, 2f);
+            bigView = Matrix.Multiply(viewMatrix, 1f);
             Matrix viewProjection = bigView * projectionMatrix;
             frustum.Matrix = viewProjection;
         }
@@ -121,6 +122,7 @@ namespace ElonsRiot
 
         private void UpdateViewMatrix(Matrix chasedObjectsWorld, CharacterState elonState)
         {
+          
                 cameraRotation.Forward.Normalize();
                 chasedObjectsWorld.Right.Normalize();
                 chasedObjectsWorld.Up.Normalize();
@@ -159,6 +161,10 @@ namespace ElonsRiot
             //{
                 position.Y += smoothedMouseMovement.Y / 60 - 5;
 
+                if (position.Y > 25)
+                    position.Y = 25;
+                else if (position.Y < 5)
+                    position.Y = 5;
                 if (position.Y > 20)
                     position.Y = 20;
                 else if (position.Y < 5)
@@ -174,13 +180,31 @@ namespace ElonsRiot
                     offsetDistance.Z += 15.0f;
                 }
 
-                if (offsetDistance.Z < -550)
-                    offsetDistance.Z = -550;
+                if (offsetDistance.Z < -750)
+                    offsetDistance.Z = -750;
                 else if (offsetDistance.Z > -70)
                     offsetDistance.Z = -70;
 
             previousScrollValue = currentMouseState.ScrollWheelValue;
             
+        }
+
+        public bool IsVisible(GameObject obj,BoundingFrustum Playerfrustum)
+        {
+            bool isVisible = false;
+            Vector3[] corners = obj.boundingBox.GetCorners();
+            for (int i = 0; i < corners.Count(); i++)
+            {
+                if (Playerfrustum.Contains(corners[i]) != ContainmentType.Disjoint)
+                {
+                    isVisible = true;
+                }
+            }
+            if (obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp" || Playerfrustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name == "gun")
+            {
+                isVisible = true;
+            }
+            return isVisible;
         }
     }
 }

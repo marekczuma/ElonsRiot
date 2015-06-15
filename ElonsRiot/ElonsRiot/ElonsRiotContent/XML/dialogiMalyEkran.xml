@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dialogues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <statement>
+  <dialogLines>
+	 <line>Elon: .. i dlaczego uzyles czasowej dezaktywacji? Jestes cyborgiem, powinienes</line>
+	 <line>przewidziec tysiac scenariuszy w jedna sekunde.I akurat ten przegapiles?!</line> 
+	 <line>Palo: Zadanie nie bylo sprecyzowane. Mialem unieszkodliwic monitoring. </line>
+	 <line> Nie podales estymacji czasowej.</line>
+	 <line>Elon:A jak poprosze cie o przebudowanie sie w transformersa ..</line>
+	 <line>.. i wymontowanie dysku twardego?</line>
+	 <line>Palo: Skanuje w poszukiwaniu 'tranformers'.. </line>
+     <line>.. nie posiadam niezbednych danych aby zainicjowac restrukturyzacje. </line>
+	 <line>Elon: Kuzwa! Stworzylem pierwszego cyborga-idiote. Pieprzyc taka robote...</line>
+	 <line> </line>
+	 <line>Palo: Przynajmniej zdobyles trzy czesci systemu.</line>
+	 <line>Elon: Trzy czesci,trzy czesci.. co mi po trzech czesciach?! Jesli nie znajdziemy</line>
+	 <line> tej ostatniej zanimm uruchomia sie kamery to wszystko szlag jasny trafi!</line>
+	 <line>Palo: Wykrylem niebezpieczny wzrost cisnienia. Elonie powinienes sie uspokoic.</line>
+	 <line>Grozi ci zawal serca.</line>
+	 <line> Elon: agrr.. eh.. </line>
+	 <line> Palo: Czy czujesz sie juz lepiej?</line>
+   </dialogLines> 
+	 <place>Hall</place>
+ </statement>
+ <statement>
+	<dialogLines>
+	 <line>Elon: Tutaj nic nie ma!..Palo przeanalizuj mape bazy i znajdz te przekleta droge</line>
+	 <line>Palo:Zlokalizowalem polaczenie miedzy miedzy magazynem a laboratorium.</line>
+	 <line>Elon:Gedzie do.. dobra, gdzie dokladnie jest to polaczenie?</line>
+	 <line>Palo: Prawa sciana od wejscia.</line>
+    </dialogLines>
+	<place>WareHouse</place>
+ </statement> 
+ <statement>
+	 <dialogLines>
+	  <line>Elon: No,wreszcie na miejscu!</line>
+	  <line>Palo: Odradzam. Lasery w ciagu sekundy zakoncza twoje funkcje zyciowe.</line>
+	  <line>Elon: Cholera, nie dam rady zlamac zabezpieczen. </line>
+	  <line>Palo: Przeskanowalem budowe czujnikow. Jesli zniszczymy je w jednym momencie.</line>
+	  <line>..alarm nie zostanie uruchomiony.</line>
+	  <line>Elon: Palo, jestes genialny! Jestem taki dumny.</line>
+	  <line>Palo: Tak. </line>
+    </dialogLines>
+	<place>Laboratory</place>
+ </statement>
+  <statement>
+	<dialogLines>
+	  <line>Elon: Stoj,Palo! Slyszysz to? </line>
+	  <line>Palo: Wykrylem trzy formy zycia na lewo od wejscia</line>
+	  <line>Elon: Tak,wiem.. nie mozemy tam tak po prostu wejsc.Jesli by cie uszkodzili</line>
+	  <line>..moglibysmy stracic dane.</line>
+	  <line>Palo:Jak chcesz sie tam wiec dostac?</line>
+	  <line>Elon: Coz..oddawaj dysk i wlaz do srodka. Sprobuj sprowadzic ich do hallu.</line>
+    </dialogLines>
+	<place>Hall</place>
+ </statement> 
+  <statement>
+	<dialogLines>
+	  <line>Elon: Pieprzony rzad ..najpierw rozwijaja przed toba wizje pieknego, bezpiecznego </line>
+	  <line>swiata, mamia cie ta utopijna wizja i obrazem twojej osoby jako bohatera</line>
+      <line>.. a potem okazuje sie, ze wszystko to klamstwo.</line>
+	  <line>Palo:Odnotowalem sprzecznosc informacji. Czy nie bylo ci wiadomo,ze </line>
+	  <line>.. bedziesz tworzyl chipy wszczepiane ludziom?</line>
+	  <line>Elon: Bylo..poniekad. Jednak przedstawiono nam to calkiem inaczej.</line> 
+	  <line>One mialy chronic ludzi, nie zamieniac w bezmyslne zombi. I nie mialy byc niebezpieczne</line>
+	  <line>..tymczasem tak wielu ludzi zginelo w trakcie testow.</line>
+	  <line>Palo: I mimo to pracowales dalej?</line> 
+	  <line>Elon: No przeciez, ze nie!Co ty sobie wyobrazasz?!Ze przychodze sobie rano do pracy</line> 
+	  <line>wstawiam wode na kawe i w miedzyczasie zabijam tuzin ludzi?!Przeciez nic o tym nie wiedzialem! </line>
+	  <line>Pracowalem w calkiem innym zespole, dopiero niedawno sie dowiedzialem..</line>
+	  <line>..a zreszta co ja sie bede maszynie tlumaczyl. </line>
+    </dialogLines>
+	<place>ShootingGallery</place>
+ </statement> 
+</Dialogues>

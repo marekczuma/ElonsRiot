@@ -19,12 +19,21 @@ namespace ElonsRiot.Particles
 
         static Random random = new Random();
 
-        public Projectile(ParticleSystem explosionParticles, Vector3 pos, Quaternion rotation)
+        public Projectile(ParticleSystem explosionParticles, Player playerObject)
         {
             this.explosionParticles = explosionParticles;
 
-       //     position = Vector3.Transform(pos, rotation);
-            position = Vector3.Transform(position, Matrix.CreateTranslation(new Vector3(pos.X, pos.Y + 5, pos.Z + 5)));
+            if (playerObject.elonState.State == State.walkShoot)
+            {
+                playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.35f, playerObject.RotationQ);
+                position = playerObject.newPosition + 5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
+            }
+            else if (playerObject.elonState.State == State.idleShoot)
+            {
+                playerObject.newPosition += Vector3.Transform(Vector3.Right * 1.15f, playerObject.RotationQ);
+                position = playerObject.newPosition + 5.5f * Vector3.Transform(Vector3.Forward, playerObject.RotationQ) + Vector3.Up * 5.8f;
+            }
+
             velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
             velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
             velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;

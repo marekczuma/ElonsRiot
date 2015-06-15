@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dialogues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <statement>
+  <dialogLines>
+	 <line>Bo sie ucze bardzo 1</line> 
+	 <line>Bo sie ucze bardzo 2</line>
+	 <line>Bo sie ucze bardzo 3</line>
+	 <line>Bo sie ucze bardzo 4</line>
+	 <line>Bo sie ucze bardzo 5</line>
+   </dialogLines> 
+	 <place>PaloLerning</place>
+ </statement>
+ <statement>
+ <dialogLines>
+	 <line>Bo przycisnalem guzik 1</line> 
+	 <line>Bo przycisnalem guzik 2</line>
+	 <line>Bo przycisnalem guzik 3</line>
+	 <line>Bo przycisnalem guzik 4 </line>
+	 <line>Bo przycisnalem guzik 5</line>
+   </dialogLines> 
+	 <place>OnKey</place>
+ </statement>
+ <statement>
+ </Dialogues>
