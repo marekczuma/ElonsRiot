@@ -48,9 +48,9 @@ namespace ElonsRiot
             target = new Vector3();
 
             viewMatrix = Matrix.Identity;
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 16 / 9, 0.5f, 500f);
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 16 / 9, 0.5f, 800f);
 
-            bigView = Matrix.Multiply(viewMatrix, 0.1f);
+            bigView = Matrix.Multiply(viewMatrix, 1f);
 
             frustum = new BoundingFrustum(bigView * projectionMatrix);
 
@@ -108,7 +108,7 @@ namespace ElonsRiot
 
         public void UpdateFrustum()
         {
-            bigView = Matrix.Multiply(viewMatrix, 0.1f);
+            bigView = Matrix.Multiply(viewMatrix, 1f);
             Matrix viewProjection = bigView * projectionMatrix;
             frustum.Matrix = viewProjection;
         }

@@ -21,7 +21,7 @@ namespace ElonsRiot
     {
         //W³aœciwoœci
         Scene MyScene { get; set; }             //Scena. Dziêki niej ³adujemy wszystkie gameobjecty itd.
-        DialoguesManager MyDialogues{get;set;}
+     //   DialoguesManager MyDialogues{get;set;}
         KeyboardState state { get; set; }
         MouseState CurrentMouseState { get; set; }
         GraphicsDeviceManager graphics;
@@ -53,7 +53,7 @@ namespace ElonsRiot
             Components.Add(bigExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
-            MyDialogues = new DialoguesManager();
+         //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
             graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
@@ -83,7 +83,7 @@ namespace ElonsRiot
             sptiteBatchDialogues = new SpriteBatch(GraphicsDevice);
             spriteBatchLearning = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
-            MyDialogues.InitializeDialoguesManager();
+            DialoguesManager.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
@@ -116,8 +116,8 @@ namespace ElonsRiot
             //MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
-            MyDialogues.withLine(gameTime);
-            MyDialogues.checkStatements();
+            DialoguesManager.withLine(gameTime);
+            DialoguesManager.checkStatements();
             CheckRay(state);
             base.Update(gameTime);
         }
@@ -169,10 +169,20 @@ namespace ElonsRiot
             {
                 HUD.DrawStringForInformation(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
             }
-            if (MyDialogues.IsCorrectRoom)
+            if (DialoguesManager.IsCorrectRoom)
             {
-                    HUD.DrawString(sptiteBatchDialogues, 
-                        MyDialogues.Statements[MyDialogues.AcctualStatementNumber].dialogLines.Line[MyDialogues.AcctualLineOfStatementCounter], GraphicsDevice);
+                    HUD.DrawString(sptiteBatchDialogues,
+                        DialoguesManager.Statements[DialoguesManager.AcctualStatementNumber].dialogLines.Line[DialoguesManager.AcctualLineOfStatementCounter], GraphicsDevice);
+            }
+            if(DialoguesManager.IsPressed)
+            {
+                HUD.DrawString(sptiteBatchDialogues,
+                       DialoguesManager.OnKeystatements[0].dialogLines.Line[DialoguesManager.ActualLineOnPress], GraphicsDevice);
+            }
+            if (DialoguesManager.IsLerning)
+            {
+                HUD.DrawString(sptiteBatchDialogues,
+                       DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
             }
             if(MyScene.PaloObject.PaloLearningState == LearningState.Learning)
             {

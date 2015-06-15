@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ElonsRiot.Dialogues;
+using ElonsRiot.Music;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -77,7 +79,8 @@ namespace ElonsRiot
             }
             else if(state.IsKeyDown(Keys.M))
             {
-                PhysicManager.ClimbBox(this);
+                //PhysicManager.ClimbBox(this);
+                DialoguesManager.IsPressed = true;
             }
             else if (state.IsKeyDown(Keys.D1))
             {
@@ -89,17 +92,19 @@ namespace ElonsRiot
                 if (state.IsKeyDown(Keys.G))
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
+                    MusicManager.PlaySound(1);
+                    if (!oldState.IsKeyDown(Keys.G))
+                        showShootExplosion = true;
+                    else
+                    {
+                        showShootExplosion = false;
+                    }
                 }
             }
             else if (state.IsKeyDown(Keys.D2) && state.IsKeyDown(Keys.D6))
             {
                 elonState.SetCurrentState(State.idleShoot);
-                if (!oldState.IsKeyDown(Keys.D6))
-                    showShootExplosion = true;
-                else
-                {
-                    showShootExplosion = false;
-                }
+               
             }
             else if (state.IsKeyDown(Keys.D3))
             {
@@ -107,6 +112,13 @@ namespace ElonsRiot
                 if (state.IsKeyDown(Keys.G))
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
+                    MusicManager.PlaySound(1);
+                    if (!oldState.IsKeyDown(Keys.G))
+                        showShootExplosion = true;
+                    else
+                    {
+                        showShootExplosion = false;
+                    }
                     
                 }
             }
@@ -151,9 +163,11 @@ namespace ElonsRiot
                 if(Palo.PaloLearningState == LearningState.idle)
                 {
                     Palo.PaloLearningState = LearningState.Learning;
+                    DialoguesManager.IsLerning = true;
                 }else
                 {
                     Palo.PaloLearningState = LearningState.idle;
+                    DialoguesManager.IsLerning = false;
                 }
             }
             else if(! state.IsKeyDown(Keys.E))
