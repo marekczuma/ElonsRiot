@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ElonsRiot.Dialogues;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -77,7 +78,8 @@ namespace ElonsRiot
             }
             else if(state.IsKeyDown(Keys.M))
             {
-                PhysicManager.ClimbBox(this);
+                //PhysicManager.ClimbBox(this);
+                DialoguesManager.IsPressed = true;
             }
             else if (state.IsKeyDown(Keys.D1))
             {
@@ -122,9 +124,11 @@ namespace ElonsRiot
                 if(Palo.PaloLearningState == LearningState.idle)
                 {
                     Palo.PaloLearningState = LearningState.Learning;
+                    DialoguesManager.IsLerning = true;
                 }else
                 {
                     Palo.PaloLearningState = LearningState.idle;
+                    DialoguesManager.IsLerning = false;
                 }
             }
             else if(! state.IsKeyDown(Keys.E))
