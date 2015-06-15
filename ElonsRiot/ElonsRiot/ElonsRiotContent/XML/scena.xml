@@ -163,8 +163,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>  
-	 
+	</GameObject>  	 
 	//Strzelnica 
 	<GameObject Name="wall2" Id="CF" Path="3D/placeholders/Wall2">
 		<Position>
@@ -311,7 +310,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-	</GameObject>  -->
+	</GameObject> 
 	<GameObject Name="wall1" Id="D" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>50</X>
@@ -532,6 +531,6 @@
 		</Scale>
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
-	</GameObject>
+	</GameObject> 
  
 </Scene>

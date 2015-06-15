@@ -35,7 +35,7 @@ namespace ElonsRiot
         public PaloCharacter PaloObject { get; set; }
         public GameTime time { get; set; }
         private BasicEffect basicEffect;
-       // private Physic physic;
+        private List<GameObject> actualGameObjects;
         public AnimationPlayer animationPlayer;
         State previousState = State.idle;
         AnimationClip clip;
@@ -86,6 +86,7 @@ namespace ElonsRiot
             InteractiveObjects = new Interaction.InteractiveObjectsList(this);
             InteractionsManager = new ControlPlayer.InteractiveObjectsManager(this);
             ShootingManager = new Shooting.ShootingManager { Scene = this };
+            actualGameObjects = new List<GameObject>();
         }
         public Scene()
         {
@@ -293,12 +294,15 @@ namespace ElonsRiot
             GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
             Console.WriteLine(GameObjects.Count);
             CreateBSP.checkPositionOfPlayer(player.Position);
-            foreach (GameObject obj in GameObjects)
+            actualGameObjects = CreateBSP.ListOfVisibleObj();
+            foreach (GameObject obj in actualGameObjects)
             {
-          //      if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp")
+                if(PlayerObject.camera.IsVisible(obj,PlayerObject.camera.frustum))
+                {
                     VisibleGameObjects.Add(obj);
+                }
             }
-
+            Debug.WriteLine(VisibleGameObjects.Count.ToString());
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
