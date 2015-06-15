@@ -23,6 +23,8 @@ namespace ElonsRiot
         public ControlPlayer.ObjectDetectionManager ObjectDetector { get; set; }
         public Interaction.InteractiveObjectsList InteractiveObjects { get; set; }
         public ControlPlayer.InteractiveObjectsManager InteractionsManager { get; set; }
+        //Shooting System
+        public Shooting.ShootingManager ShootingManager { get; set; }
         public GraphicsDevice GraphicsDevice { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public List<GameObject> NPCs { get; set; }
@@ -33,7 +35,7 @@ namespace ElonsRiot
         public PaloCharacter PaloObject { get; set; }
         public GameTime time { get; set; }
         private BasicEffect basicEffect;
-       // private Physic physic;
+        private List<GameObject> actualGameObjects;
         public AnimationPlayer animationPlayer;
         State previousState = State.idle;
         AnimationClip clip;
@@ -85,6 +87,8 @@ namespace ElonsRiot
             ObjectDetector = new ControlPlayer.ObjectDetectionManager(this);
             InteractiveObjects = new Interaction.InteractiveObjectsList(this);
             InteractionsManager = new ControlPlayer.InteractiveObjectsManager(this);
+            ShootingManager = new Shooting.ShootingManager { Scene = this };
+            actualGameObjects = new List<GameObject>();
         }
         public Scene()
         {
@@ -115,6 +119,8 @@ namespace ElonsRiot
             LoadElon();
             LoadGuards();
             InteractiveObjects.AddToScene();
+            BSPTree.CreateBSP.CreateLeafs(GameObjects);
+            BSPTree.CreateBSP.checkPositionOfPlayer(PlayerObject.Position);
             Methods.setPlayer( PlayerObject,GameObjects);
             foreach (var elem in GameObjects)
             {
@@ -192,8 +198,7 @@ namespace ElonsRiot
 
             foreach (var elem in GameObjects)
             {
-                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "gun")
-                {
+s				                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun")                {
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap, reflect, false);
                 }
 
@@ -236,15 +241,15 @@ namespace ElonsRiot
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy, reflect, false);
                  else if (elem.Name == "ceil")
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
-                         
+                 else if (elem.Name == "Kuleczka")
+                     elem.DrawNoEffectModels(ContentManager, PlayerObject, reflect, false);
                 elem.RefreshMatrix();
              }
 
 
              foreach (var elem in VisibleGameObjects)
              {
-                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "gun")
-                 {
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun")                 {
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
                  }
                  else if ((PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot) && elem.Name == "gun")
@@ -279,7 +284,7 @@ namespace ElonsRiot
 
             foreach (var elem in GameObjects)
             {
-                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "gun")
+if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "gun" && elem.Name != "Kuleczaka")
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, true);
                 else if (elem.Name == "characterElon")
                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer, reflect, true);
@@ -288,7 +293,8 @@ namespace ElonsRiot
                 else if (elem.Tag == "guard")
                     elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy, reflect, true);
                 else if ((PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot) && elem.Name == "gun")
-                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);                else if (obj.Name == "Kuleczka")
+                    obj.DrawNoEffectModels(ContentManager, PlayerObject, reflect, true);
             }
 
         }
@@ -314,14 +320,18 @@ namespace ElonsRiot
         public void Update(Player player, GameTime gameTime, KeyboardState _state)
         {
             VisibleGameObjects.Clear();
+            GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
+            Console.WriteLine(GameObjects.Count);
             CreateBSP.checkPositionOfPlayer(player.Position);
-           // ActualGameOjects = CreateBSP.ListOfVisibleObj();
-            foreach (GameObject obj in GameObjects)
+            actualGameObjects = CreateBSP.ListOfVisibleObj();
+            foreach (GameObject obj in actualGameObjects)
             {
-          //      if (PlayerObject.camera.frustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp")
+                if(PlayerObject.camera.IsVisible(obj,PlayerObject.camera.frustum))
+                {
                     VisibleGameObjects.Add(obj);
+                }
             }
-
+          //  Debug.WriteLine(VisibleGameObjects.Count.ToString());
             PhysicManager.update(gameTime, GameObjects, PlayerObject);
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
@@ -338,14 +348,15 @@ namespace ElonsRiot
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
-          
+            ShootingManager.BulletsMovement();
         }
         private void LoadElon()
         {
             Vector3 tmpPos = new Vector3(100, 4, -20);
             Vector3 tmpRot = new Vector3(0, 180, 0);
-            Player Elon = new Player(tmpPos, tmpRot);
+            Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
+            Elon.id = "ABCDEF";
             Elon.Scale = new Vector3(0.035f, 0.035f, 0.035f);
             //Elon.Position = new Vector3(-100, 4 , 13);
             //Elon.Rotation = new Vector3(0, 0, 0);
@@ -364,11 +375,13 @@ namespace ElonsRiot
         {
             Guard Marian = new Guard();
             Marian.Name = "enemyMarian";
-            Marian.Scale = new Vector3(0.09f, 0.09f, 0.09f);
+            Marian.id = "ABCDEF";
+            Marian.Scale = new Vector3(0.12f, 0.12f, 0.12f);
             Marian.Position = new Vector3(90, 4, 35);
             Marian.Rotation = new Vector3(86, 0, 34);
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
+            Marian.Scene = this;
             Marian.id = "ABCDEF";
             Marian.oldPosition = new Vector3(90, 4, 35);
             Marian.newPosition = new Vector3(90, 4, 35);
@@ -391,6 +404,7 @@ namespace ElonsRiot
         {
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "characterPalo";
+            Palo.id = "ABCDEF";
             Palo.Scale = new Vector3(0.32f, 0.32f, 0.32f);
             Palo.Position = new Vector3(110, 4, -30);
             Palo.oldPosition = new Vector3(110, 4, -30);

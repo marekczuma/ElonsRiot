@@ -122,7 +122,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Quests\HiddenPassageAI.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="Shooting\Bullet.cs" />
+    <Compile Include="Shooting\NPCShooting.cs" />
+    <Compile Include="Shooting\PlayerShooting.cs" />
+    <Compile Include="Shooting\ShootingManager.cs" />
     <Compile Include="Statement.cs" />
     <Compile Include="XMLDialogues.cs" />
     <Compile Include="XMLScene.cs" />

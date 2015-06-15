@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
 
 namespace ElonsRiot
 {
@@ -16,6 +17,7 @@ namespace ElonsRiot
         public static Texture2D healthBackground;
         public static Vector2 scale;
         public static Texture2D gunElon;
+        public static Texture2D dialoguesBackground;
         public static Texture2D gunPalo;
         public static Texture2D progress;
         public static Texture2D crossHair;
@@ -39,6 +41,7 @@ namespace ElonsRiot
             newItem2 = content.Load<Texture2D>("HUD/item2");
             skills = content.Load<Texture2D>("HUD/skills");
             learning = content.Load<Texture2D>("HUD/nauka");
+            dialoguesBackground = content.Load<Texture2D>("HUD/background");
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width)
@@ -117,10 +120,20 @@ namespace ElonsRiot
 
         public static void DrawString(SpriteBatch spriteBatch,String message, GraphicsDevice graphic)
         {
+            float messageScale = 1f;
+            if(message.Count() > 122)
+            {
+                float count = 1228/message.Count();
+                count = count / 10;
+                messageScale =count;
+            }
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "" + message, new Vector2(5, graphic.Viewport.Height - 30), Color.White);
+            spriteBatch.Draw(dialoguesBackground, new Vector2(20, graphic.Viewport.Height - 80), null, Color.White, 0, Vector2.Zero, 0.96f, SpriteEffects.None, 0);
+           // spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White);
+            spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
+            //Debug.WriteLine(message.Count());
         }
 
         public static void DrawStringForInformation(SpriteBatch spriteBatch, String message, GraphicsDevice graphic)

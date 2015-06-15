@@ -52,7 +52,7 @@ namespace ElonsRiot
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }
@@ -110,6 +110,7 @@ namespace ElonsRiot
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
             MyDialogues.withLine(gameTime);
             MyDialogues.checkStatements();
+            CheckRay(state);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -172,47 +173,6 @@ namespace ElonsRiot
 
         public void CheckRay(KeyboardState _state)
         {
-            Ray pickRay2 = GetPickRay();
-            isStatement = false;
-            for (int i = 0; i < MyScene.GameObjects.Count; i++)
-            {
-                if (MyScene.GameObjects[i].Interactive == true)
-                {
-                    //Nullable<float> result2 = pickRay2.Intersects(MyScene.GameObjects[i].boundingBox);
-                    Nullable<float> result2 = MyScene.GameObjects[i].boundingBox.Intersects(pickRay2);
-                    if (result2.HasValue == true)
-                    {
-                        isStatement = true;
-                        currentInteractiveObject = MyScene.GameObjects[i];
-                    }
-                }
-            }
-            if (_state.IsKeyDown(Keys.E))
-            {
-                Ray pickRay = GetPickRay();
-                float selectedDistance = 100;// float.MaxValue;
-                for (int i = 0; i < MyScene.GameObjects.Count; i++)
-                {
-                    if (MyScene.GameObjects[i].Interactive == true)
-                    {
-                        //Nullable<float> result = pickRay.Intersects(MyScene.GameObjects[i].boundingBox);
-                        Nullable<float> result = MyScene.GameObjects[i].boundingBox.Intersects(pickRay);
-                        if (result.HasValue == true)
-                        {
-                            if (result.Value < selectedDistance)
-                            {
-                                
-                               // Interactions interactionsClass = new Interactions(MyScene.GameObjects[i].interactionType, MyScene.GameObjects[i]);
-                                MyScene.GameObjects[i].ChangePosition(new Vector3(0.05f, 0f, 0.0f));
-                                //Interactions.Add(MyScene.GameObjects[i].interactionType);
-                                //Interactions.CallInteraction(MyScene.GameObjects[i]);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
                 Ray pickCameraRay = GetPickRayCamera();
                 float selectedDistance = 2;
                 for (int i = 0; i < MyScene.GameObjects.Count; i++)
@@ -229,7 +189,7 @@ namespace ElonsRiot
                   //  else
                        // MyScene.PlayerObject.camera.offsetDistance.Z = 150;
                 }
-            }
+            
         }
 
         Ray GetPickRay()

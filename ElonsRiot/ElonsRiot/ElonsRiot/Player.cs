@@ -12,6 +12,7 @@ namespace ElonsRiot
     public class Player : GameObject
     {
         public GraphicsDevice GraphicsDevice { get; set; }
+        public Scene Scene { get; set; }
         public CharacterState elonState {get; set;}    //STAN ELONA - TO JEST KLASA KUŹWA!
         public Camera camera;
         public float health;
@@ -26,8 +27,6 @@ namespace ElonsRiot
         public Vector3 nearPoint;
         public Vector3 farPoint;
         KeyboardState oldState;
-
-
         public Player()
         {
             nearPoint = new Vector3(0, 0, 0);
@@ -43,7 +42,7 @@ namespace ElonsRiot
             ammoMax = 50;
         }
 
-        public Player(Vector3 _position, Vector3 _rotation)
+        public Player(Vector3 _position, Vector3 _rotation, Scene _scene)
         {
             Position = _position;
             Rotation = _rotation;
@@ -57,15 +56,17 @@ namespace ElonsRiot
             ammoMax = 50;
             showGun = false;
             showProgress = false;
-            showCrosshair = false;
+            showCrosshair = true;
             showItem1 = false; 
             showItem2 = false;
             showSkills = false;
             boxes = new List<BoundingBox>();
+            Scene = _scene;
         }
 
         public void SetState(KeyboardState state)
         {
+            
             if (state.IsKeyDown(Keys.LeftShift))
             {
                 elonState.SetCurrentState(State.run);
@@ -85,6 +86,10 @@ namespace ElonsRiot
             else if (state.IsKeyDown(Keys.D2))
             {
                 elonState.SetCurrentState(State.idleShoot);
+                if (state.IsKeyDown(Keys.G))
+                {
+                    Scene.ShootingManager.Shot(this, RotationQ);
+                }
             }
             else if (state.IsKeyDown(Keys.D2) && state.IsKeyDown(Keys.D6))
             {
@@ -99,6 +104,11 @@ namespace ElonsRiot
             else if (state.IsKeyDown(Keys.D3))
             {
                 elonState.SetCurrentState(State.walkShoot);
+                if (state.IsKeyDown(Keys.G))
+                {
+                    Scene.ShootingManager.Shot(this, RotationQ);
+                    
+                }
             }
             else if (state.IsKeyDown(Keys.D4))
             {

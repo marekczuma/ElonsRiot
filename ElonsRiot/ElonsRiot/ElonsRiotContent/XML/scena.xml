@@ -163,8 +163,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject>  
-	 
+	
 	//Strzelnica 
 	<GameObject Name="wall2" Id="CF" Path="3D/placeholders/Wall2">
 		<Position>

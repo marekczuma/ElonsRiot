@@ -151,6 +151,18 @@ namespace ElonsRiot
                 }
             }
         }
+        public void DrawNoEffectModels(ContentManager _contentManager, Player _playerObject, Matrix reflect, bool isMirror)
+        {
+            DrawNoEffectModel(GameObjectModel, MatrixWorld, _playerObject.camera.viewMatrix, _playerObject.camera.projectionMatrix, reflect, isMirror);
+            if (GameObjects != null)
+            {
+                foreach (var elem in GameObjects)
+                {
+                    elem.DrawNoEffectModels(_contentManager, _playerObject, reflect, isMirror);
+                }
+            }
+        }
+
         public void RefreshMatrix()
         {
             MatrixWorld = Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.Pi) * Matrix.CreateFromQuaternion(RotationQ) * Matrix.CreateTranslation(Position);    // Matrix.CreateRotationY(MathHelper.Pi) * Matrix.CreateTranslation(Position) * Matrix.CreateFromQuaternion(RotationQ);
@@ -175,6 +187,7 @@ namespace ElonsRiot
         }
         public void WalkToTarget(GameObject _target, float velocity, float stopDistance)
         {
+            this.oldPosition = this.Position;
             GameObject rightTarget = _target;
             Vector3 tmpPos = rightTarget.Position;
             tmpPos.Y = this.Position.Y;
@@ -188,6 +201,7 @@ namespace ElonsRiot
             {
                 this.oldPosition = this.Position;
                 MoveWithDirectionRotate(toTarget / distanceEP);
+                newPosition = Position;
             }
         }
         public void ChangePosition(Vector3 _position)
@@ -307,7 +321,30 @@ namespace ElonsRiot
                 mesh.Draw();
             }
         }
-        
+
+        private void DrawNoEffectModel(Model currentModel, Matrix world, Matrix view, Matrix projection, Matrix reflect, bool isMirror, Texture2D newTexture = null)
+        {
+            foreach (ModelMesh mesh in currentModel.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    if (isMirror)
+                        effect.World = mesh.ParentBone.Transform * world * reflect;
+                    else
+                        effect.World = mesh.ParentBone.Transform * world;
+
+                    effect.View = view;
+                    effect.Projection = projection;
+
+                    if (newTexture != null)
+                    {
+                        effect.Texture = newTexture;
+                    }
+                }
+
+                mesh.Draw();
+            }
+        }
      //ustawianie rodzaju interakcji
        public void setInteractionType()
         {
