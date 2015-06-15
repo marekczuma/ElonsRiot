@@ -11,7 +11,7 @@ namespace ElonsRiot.Shooting
         public Scene Scene { get; set; }
         public GameObject targetGO { get; set; }
         public GameObject Shooter { get; set; }
-        private float velocity = 0.8f;
+        private float velocity = 0.9f;
 
         
         public Bullet()
