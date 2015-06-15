@@ -458,7 +458,7 @@
 		<Interactive>false</Interactive>
 	</GameObject> 
 	//Filary 
-	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -470,13 +470,13 @@
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
-		  <X>0.3</X>
+		  <X>1</X>
 		  <Y>1</Y>
-		  <Z>5</Z>
+		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>
-	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -488,13 +488,13 @@
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
-		  <X>0.3</X>
+		  <X>1</X>
 		  <Y>1</Y>
-		  <Z>5</Z>
+		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>
-	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
@@ -506,14 +506,14 @@
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
-		  <X>0.3</X>
+		  <X>1</X>
 		  <Y>1</Y>
-		  <Z>5</Z>
+		  <Z>1</Z>
 		</Scale>
 		<Tag>escapePlace</Tag>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/Wall4">
+	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
 		  <X>88</X>
 		  <Y>0</Y>
@@ -525,9 +525,9 @@
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
-		  <X>0.05</X>
-		  <Y>0.25</Y>
-		  <Z>0.5</Z>
+		  <X>1</X>
+		  <Y>1</Y>
+		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
