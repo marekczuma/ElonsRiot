@@ -17,7 +17,7 @@ namespace ElonsRiot.Learning
         {
             Timer = 0;
             TimerStatement = 0;
-            spriteBatchStatement = new SpriteBatch(Scene.GraphicsDevice);
+            //spriteBatchStatement = new SpriteBatch(Scene.GraphicsDevice);
         }
 
         public void DrawStatement(string _statement)
