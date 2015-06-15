@@ -169,8 +169,10 @@ namespace ElonsRiot
             }
             else if (state.IsKeyDown(Keys.D7))
             {
-                if (!oldState.IsKeyDown(Keys.D7))
+                if (!oldState.IsKeyDown(Keys.D7)){
                     showBigExplosion = true;
+                    MusicManager.PlaySound(2);
+                }
                 else
                 {
                     showBigExplosion = false;
