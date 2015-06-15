@@ -1,4 +1,5 @@
 ﻿using ElonsRiot.Dialogues;
+using ElonsRiot.Music;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -91,17 +92,19 @@ namespace ElonsRiot
                 if (state.IsKeyDown(Keys.G))
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
+                    MusicManager.PlaySound(1);
+                    if (!oldState.IsKeyDown(Keys.G))
+                        showShootExplosion = true;
+                    else
+                    {
+                        showShootExplosion = false;
+                    }
                 }
             }
             else if (state.IsKeyDown(Keys.D2) && state.IsKeyDown(Keys.D6))
             {
                 elonState.SetCurrentState(State.idleShoot);
-                if (!oldState.IsKeyDown(Keys.D6))
-                    showShootExplosion = true;
-                else
-                {
-                    showShootExplosion = false;
-                }
+               
             }
             else if (state.IsKeyDown(Keys.D3))
             {
@@ -109,6 +112,13 @@ namespace ElonsRiot
                 if (state.IsKeyDown(Keys.G))
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
+                    MusicManager.PlaySound(1);
+                    if (!oldState.IsKeyDown(Keys.G))
+                        showShootExplosion = true;
+                    else
+                    {
+                        showShootExplosion = false;
+                    }
                     
                 }
             }
