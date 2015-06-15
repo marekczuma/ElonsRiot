@@ -260,7 +260,7 @@ namespace ElonsRiot
 
         void UpdateProjectiles(GameTime gameTime)
         {
-            projectiles.Add(new Projectile(explosionParticles, MyScene.PlayerObject.newPosition, MyScene.PlayerObject.RotationQ));
+            projectiles.Add(new Projectile(explosionParticles, MyScene.PlayerObject));
 
             int i = 0;
 

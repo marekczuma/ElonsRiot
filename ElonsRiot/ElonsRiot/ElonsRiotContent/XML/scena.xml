@@ -533,5 +533,22 @@
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
 	</GameObject>
- 
+ 	<GameObject Name="gun" Id="ABCDEF" Path="3D/placeholders/gun">
+		<Position>
+		  <X>100</X>
+		  <Y>5</Y>
+		  <Z>-25</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.05</X>
+		  <Y>0.05</Y>
+		  <Z>0.05</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject>
 </Scene>

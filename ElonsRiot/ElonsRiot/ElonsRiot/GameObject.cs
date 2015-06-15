@@ -351,6 +351,14 @@ namespace ElonsRiot
         //}
        }
 
+        //Vector3 RotatePointAroundPivot(Vector3 pos, Vector3 pivot, Quaternion rotation)
+        //{
+        //    Vector3 dir = pos - pivot;
+        //    dir = Quaternion * dir;
+        //    pos = dir + pos;
+        //    return pos;
+        //}
+
     }
 
 

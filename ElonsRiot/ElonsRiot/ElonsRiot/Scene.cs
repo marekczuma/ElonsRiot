@@ -55,6 +55,8 @@ namespace ElonsRiot
         Matrix mirrorWorld;
         VertexBuffer mirrorVertexBuffer;
         IndexBuffer mirrorIndices;
+        Quaternion gunRotation;
+        Vector3 gunPosition;
 
         DepthStencilState addIfMirror = new DepthStencilState()
         {
@@ -186,13 +188,35 @@ namespace ElonsRiot
 
             graphic.DepthStencilState = DepthStencilState.Default;
             graphic.RasterizerState = RasterizerState.CullCounterClockwise;
-
+ //           gun.Position = PlayerObject.Position + 4.7f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 5.2f;
 
             foreach (var elem in GameObjects)
             {
-                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil")
+                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "gun")
                 {
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap, reflect, false);
+                }
+
+                if (elem.Name == "gun")
+                {
+                    if (PlayerObject.elonState.State == State.walkShoot)
+                    {
+                        gunPosition = PlayerObject.Position;
+                        gunPosition += Vector3.Transform(Vector3.Right*1.2f, PlayerObject.RotationQ);
+                        elem.Position = gunPosition + 3f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
+
+                    }
+                    else if (PlayerObject.elonState.State == State.idleShoot)
+                    {
+                        gunPosition = PlayerObject.Position;
+                        gunPosition += Vector3.Transform(Vector3.Right*1f, PlayerObject.RotationQ);
+                        elem.Position = gunPosition + 3.5f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
+
+                    }
+                        gunRotation = PlayerObject.RotationQ;
+                    //    gunRotation *= Quaternion.CreateFromAxisAngle(Vector3.Up, 80);
+
+                        elem.RotationQ = gunRotation;
                 }
             }
             graphic.SetRenderTarget(null);
@@ -202,6 +226,8 @@ namespace ElonsRiot
 
              foreach(var elem in VisibleGameObjects)
              {
+
+
                  if (elem.Name == "characterElon")
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer, reflect, false);
                  else if (elem.Name == "characterPalo")
@@ -217,12 +243,16 @@ namespace ElonsRiot
 
              foreach (var elem in VisibleGameObjects)
              {
-                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil")
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "gun")
                  {
-
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
                  }
+                 else if ((PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot) && elem.Name == "gun")
+                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+            
              }
+            // gun.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+
              explosion.DrawParticle(gameTime);
 
             foreach (GameObject gObj in this.VisibleGameObjects)
@@ -247,16 +277,18 @@ namespace ElonsRiot
             graphic.Clear(ClearOptions.DepthBuffer, Color.Black, 1, 0);
             graphic.RasterizerState = RasterizerState.CullClockwise;
 
-            foreach (GameObject obj in GameObjects)
+            foreach (var elem in GameObjects)
             {
-                if (obj.Name != "characterElon" && obj.Name != "characterPalo" && obj.Tag != "guard")
-                    obj.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, true);
-                else if (obj.Name == "characterElon")
-                    obj.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer, reflect, true);
-                else if (obj.Name == "characterPalo")
-                    obj.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerPalo, reflect, true);
-                else if (obj.Tag == "guard")
-                    obj.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy, reflect, true);
+                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "gun")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, true);
+                else if (elem.Name == "characterElon")
+                    elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayer, reflect, true);
+                else if (elem.Name == "characterPalo")
+                    elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerPalo, reflect, true);
+                else if (elem.Tag == "guard")
+                    elem.DrawAnimatedModels(ContentManager, PlayerObject, animationPlayerEnemy, reflect, true);
+                else if ((PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot) && elem.Name == "gun")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
             }
 
         }
@@ -338,7 +370,6 @@ namespace ElonsRiot
             Marian.ObjectPath = "3D/ludzik/dude";
             Marian.Tag = "guard";
             Marian.id = "ABCDEF";
-            Marian.oldPosition =
             Marian.oldPosition = new Vector3(90, 4, 35);
             Marian.newPosition = new Vector3(90, 4, 35);
             //Guard Zenon = new Guard();
