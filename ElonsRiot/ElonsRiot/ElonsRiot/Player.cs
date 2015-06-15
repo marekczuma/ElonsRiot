@@ -93,8 +93,12 @@ namespace ElonsRiot
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
                     MusicManager.PlaySound(1);
+
                     if (!oldState.IsKeyDown(Keys.G))
+                    {
                         showShootExplosion = true;
+                        ammo--;
+                    }
                     else
                     {
                         showShootExplosion = false;
@@ -109,12 +113,16 @@ namespace ElonsRiot
             else if (state.IsKeyDown(Keys.D3))
             {
                 elonState.SetCurrentState(State.walkShoot);
+                
                 if (state.IsKeyDown(Keys.G))
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
                     MusicManager.PlaySound(1);
                     if (!oldState.IsKeyDown(Keys.G))
+                    {
+                        ammo--;
                         showShootExplosion = true;
+                    }
                     else
                     {
                         showShootExplosion = false;
