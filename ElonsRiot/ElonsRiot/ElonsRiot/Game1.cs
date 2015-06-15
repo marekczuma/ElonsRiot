@@ -52,7 +52,7 @@ namespace ElonsRiot
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
             MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }

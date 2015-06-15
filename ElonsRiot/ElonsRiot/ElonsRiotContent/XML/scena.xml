@@ -146,7 +146,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-		<GameObject Name="wall4Hall" Id="EA" Path="3D/placeholders/Wall4">
+	<GameObject Name="wall4Hall" Id="EA" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>55</X>
 		  <Y>0</Y>
@@ -163,7 +163,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	
+	</GameObject> 
 	//Strzelnica 
 	<GameObject Name="wall2" Id="CF" Path="3D/placeholders/Wall2">
 		<Position>
@@ -310,7 +310,7 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-	</GameObject>  -->
+	</GameObject>  
 	<GameObject Name="wall1" Id="D" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>50</X>
@@ -550,4 +550,5 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject>
+	
 </Scene>
