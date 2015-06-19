@@ -175,7 +175,7 @@ namespace ElonsRiot
 
             SkinningData skinningDataEnemy = GameObjects[indexMarian].GameObjectModel.Tag as SkinningData;
             animationPlayerEnemy = new AnimationPlayer(skinningDataEnemy);
-            AnimationClip clipEnemy = skinningDataEnemy.AnimationClips["Take 001"];
+            AnimationClip clipEnemy = skinningDataEnemy.AnimationClips["Take001"];
 
           //  animationPlayer.StartClip(clip);
             animationPlayerPalo.StartClip(clipPalo);
@@ -357,10 +357,10 @@ namespace ElonsRiot
             Guard Marian = new Guard();
             Marian.Name = "enemyMarian";
             Marian.id = "ABCDEF";
-            Marian.Scale = new Vector3(0.12f, 0.12f, 0.12f);
+            Marian.Scale = new Vector3(0.4f, 0.4f, 0.4f);
             Marian.Position = new Vector3(90, 4, 35);
             Marian.Rotation = new Vector3(86, 0, 34);
-            Marian.ObjectPath = "3D/ludzik/dude";
+            Marian.ObjectPath = "3D/ludzik/soldier_walk";
             Marian.Tag = "guard";
             Marian.Scene = this;
             Marian.id = "ABCDEF";

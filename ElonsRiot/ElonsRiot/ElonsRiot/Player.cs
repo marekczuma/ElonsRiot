@@ -413,7 +413,7 @@ namespace ElonsRiot
             }
             if(state.IsKeyDown(Keys.O))
             {
-                Palo.RotateToBox(Palo.MoveBoxAI.Cube);
+                                    Palo.RotateToBox(Palo.MoveBoxAI.Cube);
             }
         }
 

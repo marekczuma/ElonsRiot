@@ -1,9 +1,12 @@
+//Parametry kamery
 float4x4 View;
 float4x4 Projection;
 float2 ViewportScale;
 
+//Aktualny czas w sekundach
 float CurrentTime;
 
+//Parametry opisujące animację particli
 float Duration;
 float DurationRandomness;
 float3 Gravity;
@@ -11,10 +14,13 @@ float EndVelocity;
 float4 MinColor;
 float4 MaxColor;
 
+//Parametry opisujące minimalną i maksymalną wartość z zakresu
+//Konkretne wartości są wyliczane oddzielnie dla każdej cząsteczki przy pomocy rand
 float2 RotateSpeed;
 float2 StartSize;
 float2 EndSize;
 
+//Textura i sampler particli
 texture Texture;
 
 sampler Sampler = sampler_state
@@ -29,6 +35,8 @@ sampler Sampler = sampler_state
 	AddressV = Clamp;
 };
 
+//Input vertex shadera opisuje pozycję początkową, prędkość cząsteczki i czas w którym została stworzona
+// wraz z losowymi wartościami wpływającymi na jej rozmiar i rotację
 struct VertexShaderInput
 {
 	float2 Corner : POSITION0;
