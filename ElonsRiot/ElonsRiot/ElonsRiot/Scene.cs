@@ -38,10 +38,16 @@ namespace ElonsRiot
         private List<GameObject> actualGameObjects;
         public AnimationPlayer animationPlayer;
         State previousState = State.idle;
+        GuardState previousGuardState = GuardState.idle;
         AnimationClip clip;
+        AnimationClip clipPalo;
+        AnimationClip clipEnemy;
         public SkinningData skinningData;
+        SkinningData skinningDataEnemy;
+        SkinningData skinningDataPalo;
         AnimationPlayer animationPlayerPalo;
         AnimationPlayer animationPlayerEnemy;
+        Guard Marian;
 
         public Effect effect;
         Vector3 lightPos;
@@ -58,7 +64,10 @@ namespace ElonsRiot
         VertexBuffer mirrorVertexBuffer;
         IndexBuffer mirrorIndices;
 
-        
+        float playSpeed;
+        TimeSpan elapsedTime;
+        int indexMarian;
+        float guardTime;
 
         DepthStencilState addIfMirror = new DepthStencilState()
         {
@@ -99,6 +108,8 @@ namespace ElonsRiot
         public void LoadAllContent(GraphicsDevice graphic)
         {
           //  physic = new Physic();
+           // playSpeed = 2.0f;
+
             mirrorPos = new Vector3(42, 2, 0);
             mirrorWorld = Matrix.CreateTranslation(mirrorPos);
 
@@ -146,7 +157,7 @@ namespace ElonsRiot
             }
             int indexElon = 0;
             int indexPalo = 0;
-            int indexMarian = 0;
+            indexMarian = 0;
             for (int i=0; i<GameObjects.Count; i++)
             {
                 if (GameObjects[i].Name == "characterElon")
@@ -169,17 +180,18 @@ namespace ElonsRiot
             animationPlayer.StartClip(clip);
 
             //Palo anim
-            SkinningData skinningDataPalo = GameObjects[indexPalo].GameObjectModel.Tag as SkinningData;
+            skinningDataPalo = GameObjects[indexPalo].GameObjectModel.Tag as SkinningData;
             animationPlayerPalo = new AnimationPlayer(skinningDataPalo);
-            AnimationClip clipPalo = skinningDataPalo.AnimationClips["Take 001"];
+            clipPalo = skinningDataPalo.AnimationClips["Take 001"];
 
-            SkinningData skinningDataEnemy = GameObjects[indexMarian].GameObjectModel.Tag as SkinningData;
+            skinningDataEnemy = GameObjects[indexMarian].GameObjectModel.Tag as SkinningData;
             animationPlayerEnemy = new AnimationPlayer(skinningDataEnemy);
-            AnimationClip clipEnemy = skinningDataEnemy.AnimationClips["Take001"];
+            clipEnemy = skinningDataEnemy.AnimationClips["Take002"];
 
           //  animationPlayer.StartClip(clip);
             animationPlayerPalo.StartClip(clipPalo);
             animationPlayerEnemy.StartClip(clipEnemy);
+            guardTime = 1.42f;
 
             basicEffect = new BasicEffect(graphic);
 
@@ -276,6 +288,9 @@ namespace ElonsRiot
         }
         public void Update(Player player, GameTime gameTime, KeyboardState _state)
         {
+            elapsedTime = TimeSpan.FromSeconds(
+                gameTime.ElapsedGameTime.TotalSeconds * playSpeed);
+
             VisibleGameObjects.Clear();
             //GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
             Console.WriteLine(GameObjects.Count);
@@ -299,9 +314,11 @@ namespace ElonsRiot
             PaloControl();
             NPCControl();
             ElonAnimationUpdate(gameTime.ElapsedGameTime);
+            guardAnimationUpdate(gameTime);
             animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
             animationPlayerPalo.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-            animationPlayerEnemy.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+            animationPlayerEnemy.Update(elapsedTime, true, Matrix.Identity);
+
 
             foreach(GameObject gobj in GameObjects)
             {
@@ -354,16 +371,15 @@ namespace ElonsRiot
         }
         private void LoadGuards()
         {
-            Guard Marian = new Guard();
+            Marian = new Guard();
             Marian.Name = "enemyMarian";
             Marian.id = "ABCDEF";
             Marian.Scale = new Vector3(0.4f, 0.4f, 0.4f);
-            Marian.Position = new Vector3(90, 4, 35);
+            Marian.Position = new Vector3(90, 4, 25);
             Marian.Rotation = new Vector3(86, 0, 34);
             Marian.ObjectPath = "3D/ludzik/soldier_walk";
             Marian.Tag = "guard";
             Marian.Scene = this;
-            Marian.id = "ABCDEF";
             Marian.oldPosition = new Vector3(90, 4, 35);
             Marian.newPosition = new Vector3(90, 4, 35);
             //Guard Zenon = new Guard();
@@ -481,6 +497,52 @@ namespace ElonsRiot
                 if (previousState != State.interact)
                     animationPlayer.StartClip(clip);
                 previousState = State.interact;
+            }
+        }
+
+        private void guardAnimationUpdate(GameTime gameTime)
+        {
+            if (Marian.State == GuardState.idle)
+            {
+                if (previousGuardState != GuardState.dead)
+                {
+                    playSpeed = 0.7f;
+
+                    clipEnemy = skinningDataEnemy.AnimationClips["Take002"];
+                    if (previousGuardState != GuardState.idle)
+                        animationPlayerEnemy.StartClip(clipEnemy);
+                    previousGuardState = GuardState.idle;
+                }
+            }
+            else if (Marian.State == GuardState.chase)
+            {
+                if (previousGuardState != GuardState.dead)
+                {
+                    playSpeed = 0.7f;
+                    clipEnemy = skinningDataEnemy.AnimationClips["Take002"];
+                    if (previousGuardState != GuardState.chase)
+                        animationPlayerEnemy.StartClip(clipEnemy);
+                    previousGuardState = GuardState.chase;
+                }
+            }
+            else if (Marian.State == GuardState.dead)
+            {
+                playSpeed = 2.0f;
+
+                clipEnemy = skinningDataEnemy.AnimationClips["Take003"];
+                if (previousGuardState != GuardState.dead)
+                    animationPlayerEnemy.StartClip(clipEnemy);
+                previousGuardState = GuardState.dead;
+
+
+
+                if (guardTime > 0)
+                {
+                    guardTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (guardTime <= 0)
+                        GameObjects.Remove(GameObjects[indexMarian]);
+                }
             }
         }
 

@@ -27,7 +27,7 @@ namespace ElonsRiot
 
         public void Die()
         {
-            Scene.GameObjects.Remove(this);
+            State = GuardState.dead;
         }
     }
 }
