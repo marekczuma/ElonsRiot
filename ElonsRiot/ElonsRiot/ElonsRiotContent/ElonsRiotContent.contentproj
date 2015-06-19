@@ -405,17 +405,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\cyborg_tekstura_mala.jpg">
-      <Name>cyborg_tekstura_mala</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+    <Compile Include="3D\ludzik\soldier_idle.X">
+      <Name>soldier_idle</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\run.X">
-      <Name>run</Name>
+    <Compile Include="3D\ludzik\soldier_death.X">
+      <Name>soldier_death</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\soldier_walk.X">
+      <Name>soldier_walk</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x</ProcessorParameters_MergeAnimations>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
