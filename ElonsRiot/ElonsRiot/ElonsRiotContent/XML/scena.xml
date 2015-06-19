@@ -3,7 +3,7 @@
  <GameObject Name="terrain" Id="ABCDEF" Path="3D/Placeholders/Floor">
     <Position>
       <X>0</X>
-      <Y>-3</Y>
+      <Y>-1.5</Y>
       <Z>0</Z>
     </Position>
     <Rotation>

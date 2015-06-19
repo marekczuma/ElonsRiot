@@ -171,7 +171,7 @@ namespace ElonsRiot
             //Palo anim
             SkinningData skinningDataPalo = GameObjects[indexPalo].GameObjectModel.Tag as SkinningData;
             animationPlayerPalo = new AnimationPlayer(skinningDataPalo);
-            AnimationClip clipPalo = skinningDataPalo.AnimationClips["Take 001"];
+            AnimationClip clipPalo = skinningDataPalo.AnimationClips["Take001"];
 
             SkinningData skinningDataEnemy = GameObjects[indexMarian].GameObjectModel.Tag as SkinningData;
             animationPlayerEnemy = new AnimationPlayer(skinningDataEnemy);
@@ -249,10 +249,10 @@ namespace ElonsRiot
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
                 gObj.RefreshMatrix();
-                DrawBoudingBoxes(graphic, gObj);
+             //   DrawBoudingBoxes(graphic, gObj);
             }
             shadowMap = null;
-            DrawBoudingBox(graphic);
+        //    DrawBoudingBox(graphic);
             DrawRay(graphic);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -277,7 +277,7 @@ namespace ElonsRiot
         public void Update(Player player, GameTime gameTime, KeyboardState _state)
         {
             VisibleGameObjects.Clear();
-            GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
+            //GameObjects = BSPTree.CreateBSP.ListOfVisibleObj();
             Console.WriteLine(GameObjects.Count);
             CreateBSP.checkPositionOfPlayer(player.Position);
             actualGameObjects = GameObjects;//CreateBSP.ListOfVisibleObj();
@@ -386,12 +386,12 @@ namespace ElonsRiot
             PaloCharacter Palo = new PaloCharacter();
             Palo.Name = "characterPalo";
             Palo.id = "ABCDEF";
-            Palo.Scale = new Vector3(0.32f, 0.32f, 0.32f);
+            Palo.Scale = new Vector3(2, 2, 2);
             Palo.Position = new Vector3(110, 4, -30);
             Palo.oldPosition = new Vector3(110, 4, -30);
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
-            Palo.ObjectPath = "3D/ludzik/chod_2006";
+            Palo.ObjectPath = "3D/ludzik/run";
             Palo.Scene = this;
             Palo.id = "ABCDEF";
             Palo.Tag = "Palo";
