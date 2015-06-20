@@ -420,13 +420,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\palo_walk.X">
-      <Name>palo_walk</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\ludzik\palo_run.X">
       <Name>palo_run</Name>
       <Importer>XImporter</Importer>
