@@ -261,11 +261,11 @@ namespace ElonsRiot
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
                 gObj.RefreshMatrix();
-             //   DrawBoudingBoxes(graphic, gObj);
-       //         DrawBoudingBoxes(graphic, gObj);
+               
+                DrawBoudingBoxes(graphic, gObj);
             }
             shadowMap = null;
-        //    DrawBoudingBox(graphic);
+           DrawBoudingBox(graphic);
             DrawRay(graphic);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
