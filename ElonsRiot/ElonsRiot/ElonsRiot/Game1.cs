@@ -118,7 +118,7 @@ namespace ElonsRiot
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
             DialoguesManager.withLine(gameTime);
             DialoguesManager.checkStatements();
-            CheckRay(state);
+            //CheckRay(state);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -203,7 +203,7 @@ namespace ElonsRiot
                         if (result.Value < selectedDistance)
                         {
                             selectedDistance = result.Value;
-                            MyScene.PlayerObject.camera.offsetDistance.Z = -100;
+                            MyScene.PlayerObject.camera.offsetDistance.Z = -150;
                         }
                     }
                   //  else

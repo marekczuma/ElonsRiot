@@ -183,6 +183,7 @@ namespace ElonsRiot
             skinningDataPalo = GameObjects[indexPalo].GameObjectModel.Tag as SkinningData;
             animationPlayerPalo = new AnimationPlayer(skinningDataPalo);
             clipPalo = skinningDataPalo.AnimationClips["Take001"];
+            AnimationClip clipPalo = skinningDataPalo.AnimationClips["Take 001"];
 
             skinningDataEnemy = GameObjects[indexMarian].GameObjectModel.Tag as SkinningData;
             animationPlayerEnemy = new AnimationPlayer(skinningDataEnemy);
@@ -261,6 +262,7 @@ namespace ElonsRiot
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
                 gObj.RefreshMatrix();
+             //   DrawBoudingBoxes(graphic, gObj);
        //         DrawBoudingBoxes(graphic, gObj);
             }
             shadowMap = null;
@@ -404,6 +406,8 @@ namespace ElonsRiot
             Palo.id = "ABCDEF";
             Palo.Scale = new Vector3(0.8f, 0.8f, 0.8f);
             Palo.Position = new Vector3(110, 6, -30);
+            Palo.Scale = new Vector3(0.4f, 0.4f, 0.4f);
+            Palo.Position = new Vector3(110, 4, -30);
             Palo.oldPosition = new Vector3(110, 4, -30);
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
@@ -414,7 +418,6 @@ namespace ElonsRiot
             Palo.Interactive = false;
             Palo.mass = 100;
             PaloObject = Palo;
-
             GameObjects.Add(Palo);
         }
         private void PaloControl()
