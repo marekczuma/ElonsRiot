@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SkinnedModel;
 
 namespace ElonsRiot
 {
@@ -26,6 +27,10 @@ namespace ElonsRiot
         public float health;
         public int ammo;
         public int ammoMax;
+        public AnimationClip clip;
+        public AnimationPlayer animationPlayer;
+        public SkinningData skinningData;
+
         public PaloCharacter()
         {
             distance = 1.0f;
@@ -54,7 +59,7 @@ namespace ElonsRiot
         }
         public void WalkToPlayer()
         {
-            WalkToTarget(Elon, velocity, 20);
+            WalkToTarget(Elon, velocity, 10);
         }
 
         public List<Guard> FindGuards(float _range, Scene _scene)
@@ -99,7 +104,7 @@ namespace ElonsRiot
                 WalkToTarget(DecoyGuards.PointB, velocity, 1);
                 if(getDistance(DecoyGuards.PointB) <= 10)
                 {
-                    Guards = FindGuards(30, _scene);
+                    Guards = FindGuards(50, _scene);
                     Call(Guards);
                     DecoyGuards.BIncluded = true;
                 }
@@ -195,6 +200,14 @@ namespace ElonsRiot
             {
                 MoveBox();
             }
+        }
+
+        public void LoadAnimation()
+        {
+            skinningData = GameObjectModel.Tag as SkinningData;
+            animationPlayer = new AnimationPlayer(skinningData);
+            clip = skinningData.AnimationClips["Take001"];
+            animationPlayer.StartClip(clip);
         }
     }
 }

@@ -149,10 +149,15 @@ namespace ElonsRiot
                 meshMin = Vector3.Transform(meshMin, meshTransform);
                 meshMax = Vector3.Transform(meshMax, meshTransform);
             }
-            if (referenceObject.ObjectPath == "3D/ludzik/dude")
+            if (referenceObject.Name.Contains("Palo"))
             {
-                meshMax.Z += 1.5f;
-                meshMin.Z -= 1.5f;
+               // meshMax.Z += 5f;
+               // meshMin.Z -= 5f;
+                meshMax.X += 8f;
+                meshMin.X -= 8f;
+                meshMax.Y += 8f;
+                meshMin.Y -= 8f;
+
             }
             
             referenceObject.boundingBox = new BoundingBox(meshMin, meshMax);
@@ -180,10 +185,25 @@ namespace ElonsRiot
                 referenceMin = Vector3.Transform(referenceMin, meshTransform);
                 referenceMax = Vector3.Transform(referenceMax, meshTransform);
             }
-            if (referenceObject.Name.Contains("character") || referenceObject.Name.Contains("enemy"))
+            if (referenceObject.Name.Contains("character") && referenceObject.Name != "enemyMarian" && !referenceObject.Name.Contains("Palo"))
             {
                 referenceMax.Z += 1.5f;
                 referenceMin.Z -= 1.5f;
+            }
+            else if (referenceObject.Name == "enemyMarian")
+            {
+                referenceMax.Z -= 1.5f;
+                referenceMin.Z += 1.5f;
+            }
+            else if (referenceObject.Name.Contains("Palo"))
+            {
+                referenceMax.Z += 5f;
+                referenceMin.Z -= 5f;
+                referenceMax.X += 3f;
+                referenceMin.X -= 3f;
+                referenceMax.Y -= 7f;
+                referenceMin.Y += 7f;
+
             }
             referenceObject.boundingBox = new BoundingBox(referenceMin, referenceMax); 
         }
@@ -229,8 +249,25 @@ namespace ElonsRiot
                     // transform by mesh bone matrix
                     meshMin = Vector3.Transform(meshMin, meshTransform);
                     meshMax = Vector3.Transform(meshMax, meshTransform);
-                    meshMax.X -= 1;
-                    meshMin.X += 1;
+                    if (referenceObject.Name != "enemyMarian" && !referenceObject.Name.Contains("Palo"))
+                    {
+                        meshMax.X -= 1;
+                        meshMin.X += 1;
+                    }
+                    if (referenceObject.Name == "enemyMarian")
+                    {
+                        meshMax.X += 1;
+                        meshMin.X -= 1;
+                    }
+                    else if (referenceObject.Name.Contains("Palo"))
+                    {
+                        meshMax.Z += 5f;
+                        meshMin.Z -= 5f;
+                        meshMax.X += 3f;
+                        meshMin.X -= 3f;
+                        meshMax.Y -= 7f;
+                        meshMin.Y += 7f;
+                    }
                     referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
                 }
                
@@ -262,8 +299,19 @@ namespace ElonsRiot
                     referenceMin = Vector3.Transform(referenceMin, meshTransform);
                     referenceMax = Vector3.Transform(referenceMax, meshTransform);
                 }
-                referenceMax.X -= 1;
-                referenceMin.X += 1;
+                if(!referenceObject.Name.Contains("Palo")){
+                    referenceMax.X -= 1;
+                    referenceMin.X += 1;
+                  }
+                else if (referenceObject.Name.Contains("Palo"))
+                {
+                    referenceMax.Z += 3f;
+                    referenceMin.Z -= 3f;
+                    referenceMax.X += 2f;
+                    referenceMin.X -= 2f;
+                    referenceMax.Y -= 7f;
+                    referenceMin.Y += 7f;
+                 }
                 referenceObject.boxes.Add(new BoundingBox(referenceMin, referenceMax));
 
             }
