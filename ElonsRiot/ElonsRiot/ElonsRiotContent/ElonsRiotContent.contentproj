@@ -434,9 +434,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\palo_push.FBX">
+    <Compile Include="3D\ludzik\palo_push.X">
       <Name>palo_push</Name>
-      <Importer>FbxImporter</Importer>
+      <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
     </Compile>
   </ItemGroup>
