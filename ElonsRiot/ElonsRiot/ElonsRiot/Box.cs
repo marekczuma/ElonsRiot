@@ -180,10 +180,15 @@ namespace ElonsRiot
                 referenceMin = Vector3.Transform(referenceMin, meshTransform);
                 referenceMax = Vector3.Transform(referenceMax, meshTransform);
             }
-            if (referenceObject.Name.Contains("character") || referenceObject.Name.Contains("enemy"))
+            if (referenceObject.Name.Contains("character") && referenceObject.Name != "enemyMarian")
             {
                 referenceMax.Z += 1.5f;
                 referenceMin.Z -= 1.5f;
+            }
+            else if (referenceObject.Name == "enemyMarian")
+            {
+                referenceMax.Z -= 1.5f;
+                referenceMin.Z += 1.5f;
             }
             referenceObject.boundingBox = new BoundingBox(referenceMin, referenceMax); 
         }
@@ -229,8 +234,16 @@ namespace ElonsRiot
                     // transform by mesh bone matrix
                     meshMin = Vector3.Transform(meshMin, meshTransform);
                     meshMax = Vector3.Transform(meshMax, meshTransform);
-                    meshMax.X -= 1;
-                    meshMin.X += 1;
+                    if (referenceObject.Name != "enemyMarian")
+                    {
+                        meshMax.X -= 1;
+                        meshMin.X += 1;
+                    }
+                    if (referenceObject.Name == "enemyMarian")
+                    {
+                        meshMax.X += 1;
+                        meshMin.X -= 1;
+                    }
                     referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
                 }
                

@@ -173,7 +173,7 @@ namespace ElonsRiot
         }
         public void MoveWithDirectionRotate(Vector3 deltaVector)
         {
-            Vector3 deltaVectorCopy = new Vector3(-deltaVector.X, 0, -deltaVector.Z);
+            Vector3 deltaVectorCopy = new Vector3(deltaVector.X, 0, deltaVector.Z);
             Position += deltaVector;
             deltaVectorCopy.Normalize();
             Matrix mat = Matrix.CreateLookAt(Position,

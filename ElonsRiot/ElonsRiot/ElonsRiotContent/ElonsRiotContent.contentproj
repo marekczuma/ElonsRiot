@@ -405,13 +405,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\soldier_idle.X">
-      <Name>soldier_idle</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\ludzik\soldier_death.X">
       <Name>soldier_death</Name>
       <Importer>XImporter</Importer>
@@ -423,7 +416,35 @@
       <Name>soldier_walk</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
-      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x</ProcessorParameters_MergeAnimations>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x%3b</ProcessorParameters_MergeAnimations>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\palo_walk.X">
+      <Name>palo_walk</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\palo_run.X">
+      <Name>palo_run</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\palo_death.X">
+      <Name>palo_death</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\palo_push.FBX">
+      <Name>palo_push</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

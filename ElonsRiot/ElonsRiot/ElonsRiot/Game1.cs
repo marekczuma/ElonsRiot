@@ -194,7 +194,7 @@ namespace ElonsRiot
         public void CheckRay(KeyboardState _state)
         {
                 Ray pickCameraRay = GetPickRayCamera();
-                float selectedDistance = 2;
+                float selectedDistance = 1;
                 for (int i = 0; i < MyScene.GameObjects.Count; i++)
                 {
                     Nullable<float> result = pickCameraRay.Intersects(MyScene.GameObjects[i].boundingBox);

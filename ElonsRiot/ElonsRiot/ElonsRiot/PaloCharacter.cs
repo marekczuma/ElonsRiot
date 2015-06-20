@@ -54,7 +54,7 @@ namespace ElonsRiot
         }
         public void WalkToPlayer()
         {
-            WalkToTarget(Elon, velocity, 20);
+            WalkToTarget(Elon, velocity, 10);
         }
 
         public List<Guard> FindGuards(float _range, Scene _scene)
@@ -99,7 +99,7 @@ namespace ElonsRiot
                 WalkToTarget(DecoyGuards.PointB, velocity, 1);
                 if(getDistance(DecoyGuards.PointB) <= 10)
                 {
-                    Guards = FindGuards(30, _scene);
+                    Guards = FindGuards(50, _scene);
                     Call(Guards);
                     DecoyGuards.BIncluded = true;
                 }

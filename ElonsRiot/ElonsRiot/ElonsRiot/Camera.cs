@@ -180,10 +180,10 @@ namespace ElonsRiot
                     offsetDistance.Z += 15.0f;
                 }
 
-                if (offsetDistance.Z < -750)
-                    offsetDistance.Z = -750;
-                else if (offsetDistance.Z > -70)
-                    offsetDistance.Z = -70;
+                //if (offsetDistance.Z < -750)
+                //    offsetDistance.Z = -750;
+                //else if (offsetDistance.Z > -70)
+                //    offsetDistance.Z = -70;
 
             previousScrollValue = currentMouseState.ScrollWheelValue;
             
