@@ -118,7 +118,7 @@ namespace ElonsRiot
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
             DialoguesManager.withLine(gameTime);
             DialoguesManager.checkStatements();
-            CheckRay(state);
+            //CheckRay(state);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)

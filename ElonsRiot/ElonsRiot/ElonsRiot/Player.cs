@@ -35,7 +35,7 @@ namespace ElonsRiot
             nearPoint = new Vector3(0, 0, 0);
             farPoint = new Vector3(0, 0, 0);
             elonState = new CharacterState(State.idle);
-            camera = new Camera();
+            camera = new Camera(this);
             isMouseMovement = false;
             angle = 0;
             health = 100.0f;
@@ -51,7 +51,7 @@ namespace ElonsRiot
             Rotation = _rotation;
             RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
             elonState = new CharacterState(State.idle);
-            camera = new Camera();
+            camera = new Camera(this);
             isMouseMovement = false;
             angle = 0;
             health = 100.0f;
@@ -89,6 +89,7 @@ namespace ElonsRiot
             }
             else if (state.IsKeyDown(Keys.D2))
             {
+                camera.SetOffsetDistance();
                 elonState.SetCurrentState(State.idleShoot);
                 if (state.IsKeyDown(Keys.G))
                 {
@@ -105,11 +106,6 @@ namespace ElonsRiot
                         showShootExplosion = false;
                     }
                 }
-            }
-            else if (state.IsKeyDown(Keys.D2) && state.IsKeyDown(Keys.D6))
-            {
-                elonState.SetCurrentState(State.idleShoot);
-               
             }
             else if (state.IsKeyDown(Keys.D3))
             {
@@ -238,13 +234,20 @@ namespace ElonsRiot
 
             if (delta < 0)
             {
-                angle -= 0.08f;
-                //angle += delta / 10;
+                if(elonState.State == State.idleShoot)
+                {
+                    angle -= 0.005f;
+                }else
+                    angle -= 0.08f;
             }
             else if (delta > 0)
             {
-                angle += 0.08f;
-                //angle -= delta / 10;
+                if (elonState.State == State.idleShoot)
+                {
+                    angle += 0.005f;
+                }
+                else
+                    angle += 0.08f;
             }
             //ChangeRotation(new Vector3(0, angle, 0));
             RotateQuaternions(angle);
@@ -256,7 +259,7 @@ namespace ElonsRiot
         }
         public void CameraUpdate(GameTime gameTime)
         {
-            camera.Update(this.MatrixWorld, elonState, this.Rotation);
+            camera.Update(this.MatrixWorld, elonState, this.Rotation, this);
             camera.UpdateCamera(gameTime);
 
         }

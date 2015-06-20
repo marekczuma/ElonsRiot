@@ -405,13 +405,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\soldier_idle.X">
-      <Name>soldier_idle</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\ludzik\soldier_death.X">
       <Name>soldier_death</Name>
       <Importer>XImporter</Importer>

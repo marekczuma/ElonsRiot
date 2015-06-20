@@ -35,14 +35,15 @@ namespace ElonsRiot
         private Vector3 desiredPosition;
         public Vector3 desiredTarget;
         public Vector3 offsetDistance;
+        public Vector3 oldOffset;
         public BoundingFrustum frustum;
 
-        public Camera()
+        public Camera(Player player)
         {
-            ResetCamera();
+            ResetCamera(player.elonState);
         }
 
-        public void ResetCamera()
+        public void ResetCamera(CharacterState elonState)
         {
             position = new Vector3(110, 4, -120);
             target = new Vector3();
@@ -62,10 +63,18 @@ namespace ElonsRiot
 
             desiredPosition = position;
             desiredTarget = target;
-            offsetDistance = new Vector3(0, 0, -450);
-            
+            if (elonState.State == State.idleShoot)
+            {
+                offsetDistance = new Vector3(0, 0, 25);
+            }else
+            {
+                offsetDistance = new Vector3(0, 0, -450);
+            }
         }
-
+        public void SetOffsetDistance()
+        {
+            oldOffset = offsetDistance;
+        }
         public void Rotate()
         {
             float yawRadians = MathHelper.ToRadians(yaw);
@@ -96,14 +105,20 @@ namespace ElonsRiot
             Rotate();
         }
 
-        public void Update(Matrix chasedObjectsWorld, CharacterState elonState, Vector3 rotation)
+        public void Update(Matrix chasedObjectsWorld, CharacterState elonState, Vector3 rotation, Player player)
         {
             MouseState mouseState = Mouse.GetState();
 
             HandleInput(elonState, rotation);
-            UpdateViewMatrix(chasedObjectsWorld, elonState);
+            UpdateViewMatrix(chasedObjectsWorld, elonState, player);
             UpdateFrustum();
-
+            if (elonState.State == State.idleShoot)
+            {
+                offsetDistance = new Vector3(0, 0, 25);
+            }else
+            {
+                offsetDistance = oldOffset;
+            }
         }
 
         public void UpdateFrustum()
@@ -120,27 +135,32 @@ namespace ElonsRiot
             RotateSmoothly(smoothedMouseMovement.X, smoothedMouseMovement.Y);
         }
 
-        private void UpdateViewMatrix(Matrix chasedObjectsWorld, CharacterState elonState)
+        private void UpdateViewMatrix(Matrix chasedObjectsWorld, CharacterState elonState, Player player)
         {
-          
-                cameraRotation.Forward.Normalize();
-                chasedObjectsWorld.Right.Normalize();
-                chasedObjectsWorld.Up.Normalize();
+            cameraRotation.Forward.Normalize();
+            chasedObjectsWorld.Right.Normalize();
+            chasedObjectsWorld.Up.Normalize();
 
-                cameraRotation = Matrix.CreateRotationX(pitch) * Matrix.CreateRotationY(yaw) * Matrix.CreateFromAxisAngle(cameraRotation.Forward, roll);
-
+            cameraRotation = Matrix.CreateRotationX(pitch) * Matrix.CreateRotationY(yaw) * Matrix.CreateFromAxisAngle(cameraRotation.Forward, roll);
+            
+            if (elonState.State == State.idleShoot)
+            {
+                GameObject tmpDesire = new GameObject { Position = player.Position };
+                tmpDesire.Position += 10.0f * Vector3.Transform(Vector3.Forward, player.RotationQ) + Vector3.Up * 6.8f;
+                target = tmpDesire.Position;
+            }else
+            {
                 desiredTarget = chasedObjectsWorld.Translation;
+                
                 desiredTarget.Y += 7;
                 target = desiredTarget;
+            }
+            desiredPosition = Vector3.Transform(offsetDistance, chasedObjectsWorld);
+            position = Vector3.SmoothStep(position, desiredPosition, 0.15f);
 
-
-                desiredPosition = Vector3.Transform(offsetDistance, chasedObjectsWorld);
-                position = Vector3.SmoothStep(position, desiredPosition, 0.15f);
-
-                yaw = MathHelper.SmoothStep(yaw, 0.0f, 0.1f);
-                pitch = MathHelper.SmoothStep(pitch, 0.0f, 0.1f);
-                roll = MathHelper.SmoothStep(roll, 0.0f, 0.2f);
-
+            yaw = MathHelper.SmoothStep(yaw, 0.0f, 0.1f);
+            pitch = MathHelper.SmoothStep(pitch, 0.0f, 0.1f);
+            roll = MathHelper.SmoothStep(roll, 0.0f, 0.2f);
             viewMatrix = Matrix.CreateLookAt(position, target, Vector3.Up);
         }
 
@@ -159,31 +179,42 @@ namespace ElonsRiot
             smoothedMouseMovement.Y = (float)deltaY;
             //if (elonState.State == State.run || elonState.State == State.walk || elonState.State == State.jump)
             //{
+                //position.Y += smoothedMouseMovement.Y / 60 - 5;
+            if (elonState.State == State.idleShoot)
+            {
+                position.Y += smoothedMouseMovement.Y / 110 - 5;
+                if (position.Y > 10)
+                    position.Y = 10;
+                else if (position.Y < 7)
+                    position.Y = 7;
+                
+            }else
+            {
                 position.Y += smoothedMouseMovement.Y / 60 - 5;
-
                 if (position.Y > 25)
                     position.Y = 25;
                 else if (position.Y < 5)
                     position.Y = 5;
-                if (position.Y > 20)
-                    position.Y = 20;
-                else if (position.Y < 5)
-                    position.Y = 5;
+            }
+
             //}
-
-                if (currentMouseState.ScrollWheelValue < previousScrollValue)
+                if (elonState.State != State.idleShoot)
                 {
-                    offsetDistance.Z -= 15.0f;
-                }
-                else if (currentMouseState.ScrollWheelValue > previousScrollValue)
-                {
-                    offsetDistance.Z += 15.0f;
-                }
+                    if (currentMouseState.ScrollWheelValue < previousScrollValue)
+                    {
+                        offsetDistance.Z -= 15.0f;
+                    }
+                    else if (currentMouseState.ScrollWheelValue > previousScrollValue)
+                    {
+                        offsetDistance.Z += 15.0f;
+                    }
 
-                if (offsetDistance.Z < -750)
-                    offsetDistance.Z = -750;
-                else if (offsetDistance.Z > -150)
-                    offsetDistance.Z = -150;
+                    if (offsetDistance.Z < -750)
+                        offsetDistance.Z = -750;
+                    else if (offsetDistance.Z > -150)
+                        offsetDistance.Z = -150;
+                    oldOffset = offsetDistance;
+                }
 
             previousScrollValue = currentMouseState.ScrollWheelValue;
             
@@ -206,5 +237,6 @@ namespace ElonsRiot
             }
             return isVisible;
         }
-    }
+    } /// Przydałoby się trochę podnieść target przy celowaniu, bo celujemy w podłogę jeśli jesteśmy za daleko od celu
+      /// ew. dodać możliwość niewielkiej zmiany Y
 }
