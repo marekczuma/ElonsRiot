@@ -190,6 +190,15 @@ namespace ElonsRiot
                 referenceMax.Z += 1.5f;
                 referenceMin.Z -= 1.5f;
             }
+            else if(referenceObject.Name.Contains("stuff"))
+            {
+               // referenceMax.X += 1f;
+               // referenceMin.X -= 1f;
+           //     referenceMax.Y += 1f;
+           //     referenceMin.Y -= 1f;
+              //  referenceMax.Z += 1f;
+             //   referenceMin.Z -= 1f;
+            }
             else if (referenceObject.Name == "enemyMarian")
             {
                 referenceMax.Z -= 1.5f;
@@ -268,6 +277,7 @@ namespace ElonsRiot
                         meshMax.Y += 8f;
                         meshMin.Y -= 8f;
                     }
+                    
                     referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
                 }
                
@@ -299,7 +309,8 @@ namespace ElonsRiot
                     referenceMin = Vector3.Transform(referenceMin, meshTransform);
                     referenceMax = Vector3.Transform(referenceMax, meshTransform);
                 }
-                if(!referenceObject.Name.Contains("Palo")){
+                if (!referenceObject.Name.Contains("Palo") && !referenceObject.Name.Contains("stuff"))
+                {
                     referenceMax.X -= 1;
                     referenceMin.X += 1;
                   }
@@ -312,6 +323,15 @@ namespace ElonsRiot
                     referenceMax.Y += 8f;
                     referenceMin.Y -= 8f;
                  }
+                else if (referenceObject.Name.Contains("stuff"))
+                {
+                //  referenceMax.X += 1f;
+                  //  referenceMin.X -= 1f;
+                    referenceMax.Y += 1f;
+                    referenceMin.Y -= 1f;
+                   // referenceMax.Z += 1f;
+                  //  referenceMin.Z -= 1f;
+                } 
                 referenceObject.boxes.Add(new BoundingBox(referenceMin, referenceMax));
 
             }

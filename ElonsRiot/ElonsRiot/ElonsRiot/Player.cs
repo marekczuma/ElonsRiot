@@ -13,6 +13,7 @@ namespace ElonsRiot
 {
     public class Player : GameObject
     {
+        public Equipment equipment;
         public GraphicsDevice GraphicsDevice { get; set; }
         public Scene Scene { get; set; }
         public CharacterState elonState {get; set;}    //STAN ELONA - TO JEST KLASA KUŹWA!
@@ -47,6 +48,7 @@ namespace ElonsRiot
 
         public Player(Vector3 _position, Vector3 _rotation, Scene _scene)
         {
+            equipment = new Equipment();
             Position = _position;
             Rotation = _rotation;
             RotationQ = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(Rotation.Y));
@@ -81,7 +83,8 @@ namespace ElonsRiot
             else if(state.IsKeyDown(Keys.M))
             {
                 //PhysicManager.ClimbBox(this);
-                DialoguesManager.IsPressed = true;
+               // DialoguesManager.IsPressed = true;
+                equipment.PressButton = true;
             }
             else if (state.IsKeyDown(Keys.D1))
             {

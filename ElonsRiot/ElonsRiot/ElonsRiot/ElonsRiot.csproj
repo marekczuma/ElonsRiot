@@ -97,6 +97,7 @@
     <Compile Include="DecoyAI.cs" />
     <Compile Include="DialogLine.cs" />
     <Compile Include="DialoguesManager.cs" />
+    <Compile Include="Equipment.cs" />
     <Compile Include="ExplosionParticleSystem.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Guard.cs" />
