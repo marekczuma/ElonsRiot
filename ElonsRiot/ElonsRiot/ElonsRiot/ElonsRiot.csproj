@@ -108,6 +108,7 @@
     <Compile Include="Interaction\HardChest.cs" />
     <Compile Include="Interaction\InteractiveGameObject.cs" />
     <Compile Include="Interaction\InteractiveObjectsList.cs" />
+    <Compile Include="Interaction\Stuff.cs" />
     <Compile Include="Learning\LearningManager.cs" />
     <Compile Include="Learning\PaloSkills.cs" />
     <Compile Include="Music\MusicManager.cs" />

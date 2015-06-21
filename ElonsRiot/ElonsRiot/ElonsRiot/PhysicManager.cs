@@ -438,7 +438,7 @@ namespace ElonsRiot
             {
                 ActivateGravity(character, Floors);
             }
-            foreach (GameObject stuffs in Stuffs)
+        /*    foreach (GameObject stuffs in Stuffs)
             {
                 ActivateGravity(stuffs, Floors);
             }
@@ -453,7 +453,7 @@ namespace ElonsRiot
                  {
                      player.equipment.DeleteElement(stuff, player, gameO);
                  }
-            }
+            }*/
             
         }
 

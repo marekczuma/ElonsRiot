@@ -31,6 +31,9 @@ namespace ElonsRiot.Interaction
             Chest JustChest = new Chest { Name = "boxForMovement", ObjectPath = "3D/Boxes/box", Interactive = true, Position = new Vector3(15, 0, -10), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(0.05f, 0.05f, 0.05f) };
             JustChest.id = "ABCDEF";
             InteractiveObjects.Add(JustChest);
+            Stuff stuff = new Stuff { Name = "thing", ObjectPath = "3D/placeholders/stuff", Interactive = true, Position = new Vector3(100, 2, -40), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(0.5f, 0.5f, 0.5f) };
+            stuff.id = "ABCDEF";
+            InteractiveObjects.Add(stuff);
         }
 
         public void AddToScene()
