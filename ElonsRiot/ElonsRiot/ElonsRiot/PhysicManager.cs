@@ -17,6 +17,7 @@ namespace ElonsRiot
         static List<GameObject> Boxes;
         static List<GameObject> Characters;
         static List<GameObject> Floors;
+        public static List<GameObject> Stuffs;
         public static bool isStart;
         public static bool isClimbing;
         static SpriteBatch spriteBatchHUD;
@@ -34,6 +35,7 @@ namespace ElonsRiot
             Boxes = new List<GameObject>();
             Characters = new List<GameObject>();
             Floors = new List<GameObject>();
+            Stuffs = new List<GameObject>();
             ramp = new GameObject();
             spriteBatchHUD = new SpriteBatch(graphic);
             graphicDevice = graphic;
@@ -54,7 +56,10 @@ namespace ElonsRiot
                 {
                     if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
                     {
-                        NotInteractiveGameObject.Add(gObj);
+                        if (!gObj.Name.Contains("character") && !gObj.Name.Contains("stuff")) 
+                        {
+                            NotInteractiveGameObject.Add(gObj);
+                        }
                     }
                 }
                 if (gObj.Name.Contains("terrain"))
@@ -72,6 +77,10 @@ namespace ElonsRiot
                 if (gObj.Name.Contains("ramp"))
                 {
                     ramp = gObj;
+                }
+                if (gObj.Name.Contains("stuff"))
+                {
+                    Stuffs.Add(gObj);
                 }
             }
 
@@ -97,7 +106,16 @@ namespace ElonsRiot
                 box.AAbox.createBoudingBoxes();
 
             }
-
+            //tworzenie AAboxów dla stuffs
+            foreach (GameObject stuff in Stuffs)
+            {
+                stuff.Initialize();
+                stuff.RefreshMatrix();
+                stuff.AAbox = new Box(stuff, player);
+                stuff.AAbox.GetCorners();
+                stuff.AAbox.createBoudingBox();
+                stuff.AAbox.createBoudingBoxes();
+            }
             //inicjalizjacja Plane dla podłogi
             foreach (GameObject floor in Floors)
             {
@@ -178,50 +196,12 @@ namespace ElonsRiot
                 gObj.AAbox.setpointOfChangeWall();
             }
         }
-        public static void sortObject(List<GameObject> gameO)
-        {
-            foreach (GameObject gObj in gameO)
-            {
-                if (gObj.Interactive == true)
-                {
-
-                    if (!gObj.Name.Contains("character") && !gObj.Name.Contains("enemy") && !gObj.Name.Contains("box"))
-                    {
-                        InteractiveGameObject.Add(gObj);
-                    }
-                }
-                else
-                {
-                    if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
-                    {
-                        NotInteractiveGameObject.Add(gObj);
-                    }
-                }
-                if (gObj.Name.Contains("terrain"))
-                {
-                    Floors.Add(gObj);
-                }
-                if (gObj.Name.Contains("box"))
-                {
-                    Boxes.Add(gObj);
-                }
-                if (gObj.Name.Contains("character") || gObj.Name.Contains("enemy"))
-                {
-                    Characters.Add(gObj);
-                }
-                if (gObj.Name.Contains("ramp"))
-                {
-                    ramp = gObj;
-                }
-            }
-        }
+       
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
-        {
-
+        {  
             //atualizacja bohaterów
             foreach (GameObject character in Characters)
             {
-
                 character.AAbox.CreateRadiuses();
                 character.AAbox.GetCenter();
                 character.AAbox.UpdateBoundingBox();
@@ -235,7 +215,6 @@ namespace ElonsRiot
                 character.AAbox.createPointsOfCollision();
                 character.AAbox.setpointOfChangeWall();
             }
-
             //aktualuzacja boxów
             foreach (GameObject box in Boxes)
             {
@@ -245,6 +224,16 @@ namespace ElonsRiot
                 box.AAbox.UpdateBoundingBox();
                 box.AAbox.GetRefrecneObjectAndPlayer(box, player);
                 box.AAbox.UpdateBoundingBoxes();
+            }
+            //aktualuzacja stuffs
+            foreach (GameObject stuff in Stuffs)
+            {
+                stuff.AAbox.CreateRadiuses();
+                stuff.AAbox.GetCenter();
+                stuff.AAbox.GetCorners();
+                stuff.AAbox.UpdateBoundingBox();
+                stuff.AAbox.GetRefrecneObjectAndPlayer(stuff, player);
+                stuff.AAbox.UpdateBoundingBoxes();
             }
             //aktualuzacja aktywnych
             foreach (GameObject interactive in InteractiveGameObject)
@@ -447,10 +436,25 @@ namespace ElonsRiot
             //grawitacja
             foreach (GameObject character in Characters)
             {
-
                 ActivateGravity(character, Floors);
             }
-
+        /*    foreach (GameObject stuffs in Stuffs)
+            {
+                ActivateGravity(stuffs, Floors);
+            }
+            //
+            foreach(GameObject stuff in Stuffs)
+            {
+                if(boxesCollision.TestAABBAABB(player,stuff))
+                {
+                    player.equipment.AddElement(stuff, gameO);
+                }
+                if(player.equipment.PressButton == true)
+                 {
+                     player.equipment.DeleteElement(stuff, player, gameO);
+                 }
+            }*/
+            
         }
 
         static bool isFirst = false;
@@ -485,22 +489,24 @@ namespace ElonsRiot
 
             BoxBoxCollision boxesCollision = new BoxBoxCollision();
             int counter = 0;
-
-            if (boxesCollision.TestAABBAABB(player, ramp))
+            if (ramp.GameObjectModel != null)
             {
-                if (boxesCollision.TestAABBPlane(player, ramp.AAbox.planes[4]))
+                if (boxesCollision.TestAABBAABB(player, ramp))
                 {
-                    counter++;
+                    if (boxesCollision.TestAABBPlane(player, ramp.AAbox.planes[4]))
+                    {
+                        counter++;
+                    }
                 }
             }
             foreach (GameObject floor in Floors)
             {
                 if (boxesCollision.TestAABBAABB(player, floor))
                 {
-                    if (boxesCollision.TestAABBPlane(player, floor.plane))
-                    {
+                 //   if (boxesCollision.TestAABBPlane(player, floor.plane))
+                 //   {
                         counter++;
-                    }
+                //    }
 
                 }
             }

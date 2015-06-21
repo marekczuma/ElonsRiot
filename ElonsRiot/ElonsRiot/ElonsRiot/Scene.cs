@@ -271,6 +271,7 @@ namespace ElonsRiot
             Console.WriteLine(GameObjects.Count);
             CreateBSP.checkPositionOfPlayer(player.Position);
             actualGameObjects = GameObjects;//CreateBSP.ListOfVisibleObj();
+         //   foreach(GameObject stuff in PhysicManager.Stuffs)
             foreach (GameObject obj in actualGameObjects)
             {
                 //if(PlayerObject.camera.IsVisible(obj,PlayerObject.camera.frustum))

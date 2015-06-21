@@ -441,6 +441,27 @@
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\stuff.FBX">
+      <Name>stuff</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\sciana.FBX">
+      <Name>sciana</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\tekstura-01-01.jpg">
+      <Name>tekstura-01-01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
