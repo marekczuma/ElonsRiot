@@ -46,7 +46,7 @@ namespace ElonsRiot
         {
             skinningData = GameObjectModel.Tag as SkinningData;
             animationPlayer = new AnimationPlayer(skinningData);
-            clip = skinningData.AnimationClips["Take002"];
+            clip = skinningData.AnimationClips["Take001"];
             animationPlayer.StartClip(clip);
         }
 
@@ -61,7 +61,7 @@ namespace ElonsRiot
                 {
                     playSpeed = 0.7f;
 
-                    clip = skinningData.AnimationClips["Take002"];
+                    clip = skinningData.AnimationClips["Take001"];
                     if (previousGuardState != GuardState.idle)
                         animationPlayer.StartClip(clip);
                     previousGuardState = GuardState.idle;

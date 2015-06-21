@@ -42,6 +42,8 @@ namespace ElonsRiot
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
         ParticleSystem bigExplosionParticles;
+        public float countdownTime;
+        public float bigExplosionTime;
 
         public Game1()
         {
@@ -85,6 +87,8 @@ namespace ElonsRiot
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             DialoguesManager.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
+            countdownTime = 6;
+            bigExplosionTime = 0.15f;
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
@@ -118,6 +122,8 @@ namespace ElonsRiot
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
             DialoguesManager.withLine(gameTime);
             DialoguesManager.checkStatements();
+            if (MyScene.PlayerObject.isBomb)
+                Countdown(gameTime);
             //CheckRay(state);
             base.Update(gameTime);
         }
@@ -130,7 +136,7 @@ namespace ElonsRiot
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, gameTime);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width);
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
 
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -266,6 +272,24 @@ namespace ElonsRiot
                     projectiles.RemoveAt(i);
                 else
                     i++;
+            }
+        }
+
+        void Countdown(GameTime gameTime)
+        {
+            if (countdownTime > 0)
+            {
+                countdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else if (bigExplosionTime > 0)
+            {
+                bigExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                MyScene.PlayerObject.showBigExplosion = true;
+                MusicManager.PlaySound(2);
+            }
+            else
+            {
+                MyScene.PlayerObject.showBigExplosion = false;
             }
         }
     }
