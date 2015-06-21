@@ -1,0 +1,8 @@
+¯eby dodaæ interaktywy obiekt:
+1) Wewn¹trz folderu "Interaction" wrzuæ klasê interaktywn¹ - np "thing" jeœli chcemy zrobiæ zbieralny przedmiot albo "Door" jeœli chcemy zrobiæ przesuwalne drzwi.
+2) Niech klasa dzidziczy po InteractiveGameObject
+3) Klasa InteractiveGameObject udostêpnia dwie metody które wypada wype³niæ. Pierwsza z nich to Interaction(). Tutaj wrzucamy to co ma robiæ dany obiekt w momencie w którym uruchomiona zostanie interakcja. Pamiêtaæ musimy, ¿e interakcja w naszej grze trwa póki trzymamy klawisz (równie¿ gdy ju¿ nie mamy go na "widoku")
+4) Druga metoda to AfterInteraction(). Ta metoda zostanie wywo³ana gdy puœcimy klawisz. Tutaj warto pozwalniaæ ró¿ne zasoby jeœli takowe s¹.
+5) W konstruktorze trzeba przypisaæ tekst do w³aœciwoœci Information. To tekst który wyœwietli nam siê gdy najedziemy na przedmiot. Interakcje zawsze s¹ uruchamiane klawiszem "E", wiêc np tekst dla drzwi to "Kliknij E zeby otworzyc drzwi".
+6) Gdy ju¿ stworzyliœmy klasê, teraz udajmy siê do klasy InteractiveObjectsList. Tam w metodzie FillList() dodajemy obiekt klasy - na przyk³adzie ju¿ dodanych
+7) Kompilujemy program, otwieramy grê i udajemy siê do naszego interaktywnego obiektu ciesz¹c siê nowo zaimplementowanym mechanizmem.

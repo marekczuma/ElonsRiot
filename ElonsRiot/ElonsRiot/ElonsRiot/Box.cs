@@ -210,8 +210,8 @@ namespace ElonsRiot
                 referenceMin.Z -= 5f;
                 referenceMax.X += 3f;
                 referenceMin.X -= 3f;
-                referenceMax.Y += 8f;
-                referenceMin.Y -= 8f;
+                referenceMax.Y -= 7f;
+                referenceMin.Y += 7f;
 
             }
             referenceObject.boundingBox = new BoundingBox(referenceMin, referenceMax); 
@@ -274,8 +274,8 @@ namespace ElonsRiot
                         meshMin.Z -= 5f;
                         meshMax.X += 3f;
                         meshMin.X -= 3f;
-                        meshMax.Y += 8f;
-                        meshMin.Y -= 8f;
+                        meshMax.Y -= 7f;
+                        meshMin.Y += 7f;
                     }
                     
                     referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
@@ -320,8 +320,8 @@ namespace ElonsRiot
                     referenceMin.Z -= 3f;
                     referenceMax.X += 2f;
                     referenceMin.X -= 2f;
-                    referenceMax.Y += 8f;
-                    referenceMin.Y -= 8f;
+                    referenceMax.Y -= 7f;
+                    referenceMin.Y += 7f;
                  }
                 else if (referenceObject.Name.Contains("stuff"))
                 {

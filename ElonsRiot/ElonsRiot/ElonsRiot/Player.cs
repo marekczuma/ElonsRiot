@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using SkinnedModel;
 
 namespace ElonsRiot
 {
@@ -31,6 +32,11 @@ namespace ElonsRiot
         public Vector3 farPoint;
         KeyboardState oldState;
         public bool isBomb = false;
+        public AnimationClip clip;
+        public AnimationPlayer animationPlayer;
+        public SkinningData skinningData;
+        State previousState = State.idle;
+
         public Player()
         {
             nearPoint = new Vector3(0, 0, 0);
@@ -461,6 +467,75 @@ namespace ElonsRiot
             direction.Normalize();
             Ray pickRay = new Ray(nearPoint, direction);
             return pickRay;
+        }
+
+        public void LoadAnimation()
+        {
+            skinningData = GameObjectModel.Tag as SkinningData;
+            animationPlayer = new AnimationPlayer(skinningData);
+            clip = skinningData.AnimationClips["Take 001"];
+            animationPlayer.StartClip(clip);
+        }
+
+        public void AnimationUpdate(TimeSpan time)
+        {
+            if (elonState.State == State.run)
+            {
+                clip = skinningData.AnimationClips["Take 003"];
+                if (previousState != State.run)
+                    animationPlayer.StartClip(clip);
+                previousState = State.run;
+            }
+            else if (elonState.State == State.walk)
+            {
+                clip = skinningData.AnimationClips["Take 002"];
+                if (previousState != State.walk)
+                    animationPlayer.StartClip(clip);
+                previousState = State.walk;
+
+            }
+            else if (elonState.State == State.idle)
+            {
+                clip = skinningData.AnimationClips["Take 001"];
+                if (previousState != State.idle)
+                    animationPlayer.StartClip(clip);
+                previousState = State.idle;
+            }
+            else if (elonState.State == State.walkShoot)
+            {
+                clip = skinningData.AnimationClips["Take 006"];
+                if (previousState != State.walkShoot)
+                    animationPlayer.StartClip(clip);
+                previousState = State.walkShoot;
+            }
+            else if (elonState.State == State.idleShoot)
+            {
+                clip = skinningData.AnimationClips["Take 005"];
+                if (previousState != State.idleShoot)
+                    animationPlayer.StartClip(clip);
+                previousState = State.idleShoot;
+            }
+            else if (elonState.State == State.climb)
+            {
+                clip = skinningData.AnimationClips["Take 004"];
+                if (previousState != State.climb)
+                    animationPlayer.StartClip(clip);
+                previousState = State.climb;
+            }
+            else if (elonState.State == State.push)
+            {
+                clip = skinningData.AnimationClips["Take 007"];
+                if (previousState != State.push)
+                    animationPlayer.StartClip(clip);
+                previousState = State.push;
+            }
+            else if (elonState.State == State.interact)
+            {
+                clip = skinningData.AnimationClips["Take 008"];
+                if (previousState != State.interact)
+                    animationPlayer.StartClip(clip);
+                previousState = State.interact;
+            }
         }
     }
 }
