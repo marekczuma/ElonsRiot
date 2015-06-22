@@ -213,13 +213,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\chod_2006.FBX">
-      <Name>chod_2006</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\Placeholders\ramp.FBX">
       <Name>ramp</Name>
       <Importer>FbxImporter</Importer>
@@ -440,7 +433,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-<ItemGroup>
+  <ItemGroup>
     <Compile Include="3D\Placeholders\Button.FBX">
       <Name>Button</Name>
       <Importer>FbxImporter</Importer>
@@ -454,14 +447,15 @@
       <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
-<ItemGroup>
+  <ItemGroup>
     <Compile Include="3D\ludzik\palo_walk.X">
       <Name>palo_walk</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
       <ProcessorParameters_MergeAnimations>3D/ludzik/palo_push.x%3b3D/ludzik/palo_idle.x%3b3D/ludzik/palo_shoot.x</ProcessorParameters_MergeAnimations>
     </Compile>
-  </ItemGroup>  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
