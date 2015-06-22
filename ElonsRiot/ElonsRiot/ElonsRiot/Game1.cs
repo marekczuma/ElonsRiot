@@ -55,7 +55,7 @@ namespace ElonsRiot
             Components.Add(bigExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
-         //   MyDialogues = new DialoguesManager();
+            //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
             graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
@@ -98,6 +98,7 @@ namespace ElonsRiot
         }
         protected override void Update(GameTime gameTime)
         {
+            MyScene.time = gameTime;
             if (MyScene.PlayerObject.showShootExplosion)
             {
                 UpdateProjectiles(gameTime);
