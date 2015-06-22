@@ -3,8 +3,8 @@
  <GameObject Name="terrain" Id="ABCDEF" Path="3D/Placeholders/Floor">
     <Position>
       <X>0</X>
-      <Y>-1.5</Y>
-      <Z>0</Z>
+      <Y>-7</Y>
+      <Z>-28</Z>
     </Position>
     <Rotation>
       <X>0</X>
@@ -39,9 +39,9 @@
 	//magazyn 
 	<GameObject Name="wall1" Id="ABCDEF" Path="3D/placeholders/Wall1">
 		<Position>
-		  <X>0</X>
+		  <X>-0.5</X>
 		  <Y>0</Y>
-		  <Z>0</Z>
+		  <Z>0.5</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
@@ -59,7 +59,7 @@
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
-		  <Z>50</Z>
+		  <Z>50.5</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
@@ -75,7 +75,7 @@
 	</GameObject>  
 	<GameObject Name="wall3" Id="ABCDEF" Path="3D/placeholders/Wall3">
 		<Position>
-		  <X>50</X>
+		  <X>50.5</X>
 		  <Y>0</Y>
 		  <Z>10</Z>
 		</Position>
@@ -91,7 +91,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	 <GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2"> //dziwne ustawienie
+	 <GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2">
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -108,12 +108,51 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
+		<Tag>hiddenPassage</Tag>
 	</GameObject>  
+	<GameObject Name="ButtonA" Id="ABCDEF" Path="3D/placeholders/Button"> //przyciski do questa
+		<Position>
+		  <X>7</X>
+		  <Y>-4</Y>
+		  <Z>30</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+		<Tag>Button</Tag>
+	</GameObject>
+	<GameObject Name="ButtonB" Id="ABCDEF" Path="3D/placeholders/Button"> //przyciski do questa
+		<Position>
+		  <X>43</X>
+		  <Y>-4</Y>
+		  <Z>-10</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+		<Tag>Button</Tag>
+	</GameObject>
 	<GameObject Name="wall4" Id="ABCDEF" Path="3D/placeholders/Wall4">
 		<Position>
-		  <X>50</X>
+		  <X>50.5</X>
 		  <Y>0</Y>
-		  <Z>-45</Z>
+		  <Z>-44.5</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
@@ -127,8 +166,27 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
+	<GameObject Name="wall4" Id="ABCDEF" Path="3D/placeholders/Wall4">
+		<Position>
+		  <X>50.5</X>
+		  <Y>0</Y>
+		  <Z>-44.5</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+
 	//korytarz 
-		<GameObject Name="wall4Hall" Id="ABCDEF" Path="3D/placeholders/Wall4">
+<!--		<GameObject Name="wall4Hall" Id="ABCDEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>55</X>
 		  <Y>0</Y>
@@ -162,12 +220,12 @@
 		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject> 
+		<Interactive>false</Interactive> 
+	</GameObject>  -->
 	//Strzelnica 
 	<GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2">
 		<Position>
-		  <X>50</X>
+		  <X>50.5</X>
 		  <Y>0</Y>
 		  <Z>75</Z>
 		</Position>
@@ -221,7 +279,7 @@
 	</GameObject> 
 	<GameObject Name="wall6" Id="ABCDEF" Path="3D/placeholders/Wall6">  //dziwna sciana
 		<Position>
-		  <X>65</X>
+		  <X>66</X>
 		  <Y>0</Y>
 		  <Z>0</Z>
 		</Position>
@@ -239,9 +297,9 @@
 	</GameObject> 
 	<GameObject Name="wall4" Id="ABCDEF" Path="3D/placeholders/Wall4">  //dziwna sciana
 		<Position>
-		  <X>97</X>
+		  <X>98</X>
 		  <Y>0</Y>
-		  <Z>0</Z>
+		  <Z>-0.5</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
@@ -255,7 +313,7 @@
 		</Scale>
 		<Interactive>false</Interactive> 
 	</GameObject> 
-	//korytarz
+<!--	//korytarz
 		<GameObject Name="wall2Hall" Id="ABCDEF" Path="3D/placeholders/Wall2">  
 		<Position>
 		  <X>92</X>
@@ -291,7 +349,7 @@
 		  <Z>0.3</Z>
 		</Scale>
 		<Interactive>false</Interactive> 
-	</GameObject> 
+	</GameObject> -->
 	
 	//Super pokój 
 	<GameObject Name="wall1" Id="ABCDEF" Path="3D/placeholders/Wall1">
@@ -329,48 +387,11 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-//Otaczanie sceny 
-	<GameObject Name="wall7" Id="ABCDEF" Path="3D/placeholders/Wall7">  //dziwna sciana
+		<GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2"> //dziwna sciana
 		<Position>
-		  <X>0</X>
+		  <X>25</X>
 		  <Y>0</Y>
-		  <Z>100</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>1</X>
-		  <Y>0.75</Y>
-		  <Z>1</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject> 
-	<GameObject Name="wall7" Id="ABCDEF" Path="3D/placeholders/Wall7"> //dziwna sciana
-		<Position>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>-150</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>1</X>
-		  <Y>0.75</Y>
-		  <Z>1</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject> 
-	<GameObject Name="wall7" Id="ABCDEF" Path="3D/placeholders/Wall7">
-		<Position>
-		  <X>120</X>
-		  <Y>0</Y>
-		  <Z>-30</Z>
+		  <Z>-150.5</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
@@ -380,12 +401,67 @@
 		<Scale> 
 		  <X>1</X>
 		  <Y>0.75</Y>
+		  <Z>0.98</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+//Otaczanie sceny 
+		<GameObject Name="wall3" Id="ABCDEF" Path="3D/placeholders/Wall3"> //dziwna sciana
+		<Position>
+		  <X>86.5</X>
+		  <Y>0</Y>
+		  <Z>-150.5</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.9</X>
+		  <Y>0.75</Y>
+		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject>
+	<GameObject Name="wall6" Id="ABCDEF" Path="3D/placeholders/Wall6">  //dziwna sciana
+		<Position>
+		  <X>112.8</X>
+		  <Y>0</Y>
+		  <Z>90</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>0.65</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="wall7" Id="ABCDEF" Path="3D/placeholders/Wall7">
+		<Position>
+		  <X>123</X>
+		  <Y>0</Y>
+		  <Z>-30</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.96</X>
+		  <Y>0.75</Y>
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
 	//Hall 
-	<GameObject Name="wall4" Id="ABCDEF" Path="3D/placeholders/Wall4">
+<!--	<GameObject Name="wall4" Id="ABCDEF" Path="3D/placeholders/Wall4">
 		<Position>
 		  <X>106</X>  
 		  <Y>0</Y>
@@ -456,7 +532,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject> 
+	</GameObject> -->
 	//Filary 
 	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
@@ -549,7 +625,45 @@
 		  <Z>0.05</Z>
 		</Scale>
 		<Interactive>false</Interactive>
+	</GameObject> 
+	//marek
+  
+	<GameObject Name="ButtonA" Id="ABCDEF" Path="3D/placeholders/Button"> //przyciski do questa
+		<Position>
+		  <X>7</X> 
+		  <Y>-4</Y>
+		  <Z>30</Z> 
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+		<Tag>Button</Tag>
 	</GameObject>
-
-	
+	<GameObject Name="ButtonB" Id="ABCDEF" Path="3D/placeholders/Button"> //przyciski do questa
+		<Position>
+		  <X>43</X>
+		  <Y>-4</Y>
+		  <Z>-10</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+		<Tag>Button</Tag>
+	</GameObject>
 </Scene>

@@ -23,6 +23,8 @@ namespace ElonsRiot
         public ControlPlayer.ObjectDetectionManager ObjectDetector { get; set; }
         public Interaction.InteractiveObjectsList InteractiveObjects { get; set; }
         public ControlPlayer.InteractiveObjectsManager InteractionsManager { get; set; }
+        //Quests
+        public Quests.QuestManager QuestManager { get; set; }
         //Shooting System
         public Shooting.ShootingManager ShootingManager { get; set; }
         public GraphicsDevice GraphicsDevice { get; set; }
@@ -86,6 +88,7 @@ namespace ElonsRiot
             InteractionsManager = new ControlPlayer.InteractiveObjectsManager(this);
             ShootingManager = new Shooting.ShootingManager { Scene = this };
             actualGameObjects = new List<GameObject>();
+            QuestManager = new Quests.QuestManager(this);
         }
         public Scene()
         {
@@ -276,7 +279,7 @@ namespace ElonsRiot
             {
                 //if(PlayerObject.camera.IsVisible(obj,PlayerObject.camera.frustum))
                // {
-                    VisibleGameObjects.Add(obj);
+                 VisibleGameObjects.Add(obj);
                 //}
             }
             if (PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot)
@@ -329,10 +332,11 @@ namespace ElonsRiot
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
             ShootingManager.BulletsMovement();
+            QuestManager.UpdateQuests();
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(100, 4, -20);
+            Vector3 tmpPos = new Vector3(100, 10, -20);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";

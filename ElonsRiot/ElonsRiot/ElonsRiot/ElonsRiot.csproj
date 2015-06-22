@@ -127,6 +127,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Quests\HiddenPassageAI.cs" />
+    <Compile Include="Quests\QuestManager.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Shooting\Bullet.cs" />
     <Compile Include="Shooting\NPCShooting.cs" />
