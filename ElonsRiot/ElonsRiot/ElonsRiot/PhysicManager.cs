@@ -122,6 +122,7 @@ namespace ElonsRiot
                 floor.Initialize();
                 floor.RefreshMatrix();
                 floor.AAbox = new Box(floor, player);
+                floor.AAbox.GetCorners();
                 floor.AAbox.createBoudingBox();
                 new MyPlane(floor);
                 floor.RefreshMatrix();
@@ -503,10 +504,10 @@ namespace ElonsRiot
             {
                 if (boxesCollision.TestAABBAABB(player, floor))
                 {
-                 //   if (boxesCollision.TestAABBPlane(player, floor.plane))
-                 //   {
+                    if (boxesCollision.TestAABBPlane(player, floor.plane))
+                    {
                         counter++;
-                //    }
+                   }
 
                 }
             }
