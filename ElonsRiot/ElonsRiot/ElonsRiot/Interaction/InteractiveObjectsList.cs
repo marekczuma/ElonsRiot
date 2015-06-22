@@ -38,6 +38,9 @@ namespace ElonsRiot.Interaction
             Stuff stuff = new Stuff { Name = "boxForMovement", ObjectPath = "3D/placeholders/stuff", Interactive = true, Position = new Vector3(100, 2, -40), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(0.05f, 0.05f, 0.05f) };
             stuff.id = "ABCDEF";
             InteractiveObjects.Add(stuff);
+       //     Wall wallMV = new Wall { Name = "wall2", ObjectPath = "3D/placeholders/Wall2", Interactive = true, Position = new Vector3(25, 0, -50), Rotation = new Vector3(0,90, 0), Scale = new Vector3(1f, 0.75f,1f) };
+       //     wallMV.id = "ABCDEF";
+//InteractiveObjects.Add(wallMV);
         }
 
         public void AddToScene()

@@ -23,6 +23,7 @@ namespace ElonsRiot
         static SpriteBatch spriteBatchHUD;
         static GraphicsDevice graphicDevice;
         static GameObject ramp;
+        static GameObject movableWall;
         static bool isGoDown;
         public static void setElements(GraphicsDevice graphic)
         {
@@ -39,6 +40,7 @@ namespace ElonsRiot
             ramp = new GameObject();
             spriteBatchHUD = new SpriteBatch(graphic);
             graphicDevice = graphic;
+            movableWall = new GameObject();
         }
         public static void InitializePhysicManager(List<GameObject> gameO, Player player)
         {
@@ -81,6 +83,10 @@ namespace ElonsRiot
                 if (gObj.Name.Contains("stuff"))
                 {
                     Stuffs.Add(gObj);
+                }
+                if(gObj.Name.Contains("MV"))
+                {
+                    movableWall = gObj;
                 }
             }
 
@@ -196,6 +202,15 @@ namespace ElonsRiot
                 gObj.AAbox.createPointsOfCollision();
                 gObj.AAbox.setpointOfChangeWall();
             }
+            //inicjalizacja ruchomej sciany
+            movableWall.Initialize();
+            movableWall.RefreshMatrix();
+            movableWall.AAbox = new Box(movableWall, player);
+            movableWall.AAbox.GetCorners();
+            movableWall.AAbox.createBoudingBox();
+            movableWall.AAbox.createPlanes();
+            movableWall.AAbox.createPointsOfCollision();
+            movableWall.AAbox.setpointOfChangeWall();
         }
        
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
@@ -248,6 +263,15 @@ namespace ElonsRiot
                 interactive.AAbox.createPointsOfCollision();
                 interactive.AAbox.setpointOfChangeWall();
             }
+            //aktualuzacja ruchomej sciany
+            movableWall.AAbox.CreateRadiuses();
+            movableWall.AAbox.GetCenter();
+            movableWall.AAbox.GetCorners();
+            movableWall.AAbox.UpdateBoundingBox();
+            movableWall.AAbox.GetRefrecneObjectAndPlayer(movableWall, player);
+            movableWall.AAbox.createPlanes();
+            movableWall.AAbox.createPointsOfCollision();
+            movableWall.AAbox.setpointOfChangeWall();
             //kolizja aktywnych z charakterami
             foreach (GameObject character in Characters)
             {
