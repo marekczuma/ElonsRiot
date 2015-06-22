@@ -393,7 +393,7 @@ namespace ElonsRiot
             Palo.oldPosition = new Vector3(110, 4, -30);
             Palo.newPosition = new Vector3(110, 4, -30); 
             Palo.Rotation = new Vector3(0, 0, 0);
-            Palo.ObjectPath = "3D/ludzik/palo_run";
+            Palo.ObjectPath = "3D/ludzik/palo_walk";
             Palo.Scene = this;
             Palo.id = "ABCDEF";
             Palo.Tag = "Palo";
@@ -404,7 +404,7 @@ namespace ElonsRiot
         }
         private void PaloControl()
         {
-            if (PaloObject.PaloState == FriendState.follow)
+            if ((PaloObject.PaloState == FriendState.follow) || (PaloObject.PaloState == FriendState.idleFollow))
             {
                 PaloObject.WalkToPlayer();
             }

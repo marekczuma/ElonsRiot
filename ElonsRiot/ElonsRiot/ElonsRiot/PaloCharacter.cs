@@ -7,7 +7,7 @@ using SkinnedModel;
 
 namespace ElonsRiot
 {
-    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot }
+    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot, idleFollow }
     public enum LearningState { idle, Learning, EngineeringLearning, ShootingLearning, UsingLearning }
     public class PaloCharacter : GameObject
     {
@@ -194,14 +194,14 @@ namespace ElonsRiot
         {
             skinningData = GameObjectModel.Tag as SkinningData;
             animationPlayer = new AnimationPlayer(skinningData);
-            clip = skinningData.AnimationClips["Take001"];
+            clip = skinningData.AnimationClips["Take003"];
             animationPlayer.StartClip(clip);
         }
         public void AnimationUpdate(GameTime gameTime)
         {
-            if (PaloState == FriendState.idle)
+            if ((PaloState == FriendState.idle) ||(PaloState == FriendState.idleFollow))
             {
-                clip = skinningData.AnimationClips["Take001"];
+                clip = skinningData.AnimationClips["Take003"];
                 if (previousState != FriendState.idle)
                     animationPlayer.StartClip(clip);
                 previousState = FriendState.idle;
@@ -222,7 +222,7 @@ namespace ElonsRiot
             }
             else if (PaloState == FriendState.shoot)
             {
-                clip = skinningData.AnimationClips["Take001"];
+                clip = skinningData.AnimationClips["Take004"];
                 if (previousState != FriendState.shoot)
                     animationPlayer.StartClip(clip);
                 previousState = FriendState.shoot; 

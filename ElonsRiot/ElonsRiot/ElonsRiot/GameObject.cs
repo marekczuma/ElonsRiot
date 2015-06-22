@@ -199,9 +199,23 @@ namespace ElonsRiot
 
             if (getDistance(rightTarget) > stopDistance)
             {
+                if (this is PaloCharacter)
+                {
+                    PaloCharacter tmpPalo = (PaloCharacter)this;
+                    tmpPalo.PaloState = FriendState.follow;
+                }
+
                 this.oldPosition = this.Position;
                 MoveWithDirectionRotate(toTarget / distanceEP);
                 newPosition = Position;
+            }
+            else
+            {
+                if (this is PaloCharacter)
+                {
+                    PaloCharacter tmpPalo = (PaloCharacter)this;
+                    tmpPalo.PaloState = FriendState.idleFollow;
+                }
             }
         }
         public void ChangePosition(Vector3 _position)

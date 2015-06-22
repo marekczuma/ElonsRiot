@@ -405,23 +405,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\palo_run.X">
-      <Name>palo_run</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-      <ProcessorParameters_MergeAnimations>3D/ludzik/palo_push.x</ProcessorParameters_MergeAnimations>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\ludzik\palo_death.X">
       <Name>palo_death</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\ludzik\palo_push.X">
-      <Name>palo_push</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
     </Compile>
@@ -431,7 +416,7 @@
       <Name>soldier_idle</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
-      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x%3b3D/ludzik/soldier_walk.x%3b</ProcessorParameters_MergeAnimations>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x%3b3D/ludzik/soldier_walk.x%3b3D/ludzik/soldier_shoot.x%3b</ProcessorParameters_MergeAnimations>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +445,14 @@
       <Name>tekstura-01-01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\palo_walk.X">
+      <Name>palo_walk</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/palo_push.x%3b3D/ludzik/palo_idle.x%3b3D/ludzik/palo_shoot.x</ProcessorParameters_MergeAnimations>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
