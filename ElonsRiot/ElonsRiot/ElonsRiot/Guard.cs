@@ -7,7 +7,7 @@ using SkinnedModel;
 
 namespace ElonsRiot
 {
-    public enum GuardState { idle, chase, attack, dead };
+    public enum GuardState { idle, chase, attack, dead, shoot };
     public class Guard : GameObject
     {
         public GameObject Target {get; set;}
@@ -96,6 +96,17 @@ namespace ElonsRiot
                         Scene.GameObjects.Remove(this);
                         isDead = true;
                     }
+                }
+            }
+            else if (State == GuardState.shoot)
+            {
+                if (previousGuardState != GuardState.dead)
+                {
+                    playSpeed = 1f;
+                    clip = skinningData.AnimationClips["Take004"];
+                    if (previousGuardState != GuardState.shoot)
+                        animationPlayer.StartClip(clip);
+                    previousGuardState = GuardState.shoot;
                 }
             }
         }
