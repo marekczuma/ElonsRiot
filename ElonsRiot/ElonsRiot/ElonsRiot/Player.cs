@@ -197,6 +197,7 @@ namespace ElonsRiot
                     {
                         Palo.PaloLearningState = LearningState.Learning;
                         DialoguesManager.IsLerning = true;
+                        DialoguesManager.mixDailogues();
                     }
                     else
                     {

@@ -188,8 +188,11 @@ namespace ElonsRiot
             }
             if (DialoguesManager.IsLerning)
             {
-                HUD.DrawString(sptiteBatchDialogues,
-                       DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
+                if (DialoguesManager.ActualLineLerning != -1)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                           DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
+                }
             }
             if(MyScene.PaloObject.PaloLearningState == LearningState.Learning)
             {
