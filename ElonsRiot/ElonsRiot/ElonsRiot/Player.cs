@@ -212,7 +212,6 @@ namespace ElonsRiot
                 if (interactTime > 0)
                 {
                     interactTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
                     if (interactTime <= 0)
                         elonState.SetCurrentState(State.idle);
                 }
