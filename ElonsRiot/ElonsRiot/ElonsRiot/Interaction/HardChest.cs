@@ -23,8 +23,8 @@ namespace ElonsRiot.Interaction
                 tmpAI.Cube = this;
                 tmpAI.CubeMass = this.mass;
                 _scene.PaloObject.MoveBoxAI = tmpAI;
-                _scene.PaloObject.PaloState = FriendState.walk;
-                _scene.PaloObject.Walk = WalkState.moveBox;
+                _scene.PaloObject.PaloState = FriendState.moveToBox;
+               // _scene.PaloObject.Walk = WalkState.moveBox;
             }
         }
     }

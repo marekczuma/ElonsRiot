@@ -12,6 +12,7 @@ namespace ElonsRiot
     static class HUD
     {
         public static SpriteFont font;
+        public static SpriteFont bigFont;
         public static Texture2D healthBarElon;
         public static Texture2D healthBarPalo;
         public static Texture2D healthValue;
@@ -30,6 +31,7 @@ namespace ElonsRiot
         public static void LoadHUD(ContentManager content, float health)
         {
             font = content.Load<SpriteFont>("HUD/HUDFont");
+            bigFont = content.Load<SpriteFont>("HUD/CountdownFont");
             healthBarElon = content.Load<Texture2D>("HUD/elonBar");
             healthBarPalo = content.Load<Texture2D>("HUD/paloBar");
             healthValue = content.Load<Texture2D>("HUD/health");
@@ -44,7 +46,7 @@ namespace ElonsRiot
             dialoguesBackground = content.Load<Texture2D>("HUD/background");
         }
 
-        public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width)
+        public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
         {
             float scaleFloat = 0.12f;
             scale = new Vector2(scaleFloat * (healthElon / 100), scaleFloat);
@@ -56,13 +58,20 @@ namespace ElonsRiot
            // spriteBatch[0].DrawString(font, "" + healthElon, new Vector2(150, 5), Color.White);
 
             spriteBatch[0].End();
-
+            
             scalePalo = new Vector2(scaleFloat * (healthPalo / 100), scaleFloat);
             spriteBatch[1].Begin();
             spriteBatch[1].Draw(healthBarPalo, new Vector2(width - 320, 10), null, Color.White, 0, Vector2.Zero, scaleFloat, SpriteEffects.None, 0);
             spriteBatch[1].Draw(healthValue, new Vector2(width - 320, 10), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
            // spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
-           // spriteBatch[1].DrawString(font, "position: " + myScene.PlayerObject.Position, new Vector2(300, 15), Color.White);
+            
+            if (countdownTime > 2 && countdownTime < 3)
+                spriteBatch[1].DrawString(bigFont, "3", new Vector2(width/2-30, 50), Color.Maroon);
+            else if (countdownTime > 1 && countdownTime < 2)
+                spriteBatch[1].DrawString(bigFont, "2", new Vector2(width / 2 - 30, 50), Color.Maroon);
+            else if (countdownTime > 0 && countdownTime < 1)
+                spriteBatch[1].DrawString(bigFont, "1", new Vector2(width / 2 - 30, 50), Color.Maroon);
+
             //foreach (var elem in myScene.GameObjects)
             //{
             //    if (elem.Name == "gun")

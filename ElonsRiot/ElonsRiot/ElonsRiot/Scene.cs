@@ -38,7 +38,7 @@ namespace ElonsRiot
         public GameTime time { get; set; }
         private BasicEffect basicEffect;
         private List<GameObject> actualGameObjects;
-        
+
         Guard Marian;
         Guard Zenon;
 
@@ -249,7 +249,7 @@ namespace ElonsRiot
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
-            PlayerObject.SetState(_state);
+            PlayerObject.SetState(_state, gameTime);
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
             PlayerObject.ChangeHealth(_state);
@@ -292,8 +292,10 @@ namespace ElonsRiot
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
             NPCControl();
-            PlayerObject.AnimationUpdate(gameTime.ElapsedGameTime);
+            PlayerObject.AnimationUpdate(gameTime);
             PlayerObject.animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+
+            PaloObject.AnimationUpdate(gameTime);
             PaloObject.animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
 
             foreach (var npc in NPCs)
@@ -334,7 +336,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(100, 4, -20);
+            Vector3 tmpPos = new Vector3(100, 10, -20);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
@@ -361,7 +363,7 @@ namespace ElonsRiot
             Marian.Scale = new Vector3(0.4f, 0.4f, 0.4f);
             Marian.Position = new Vector3(90, 4, 35);
             Marian.Rotation = new Vector3(86, 0, 34);
-            Marian.ObjectPath = "3D/ludzik/soldier_walk";
+            Marian.ObjectPath = "3D/ludzik/soldier_idle";
             Marian.Tag = "guard";
             Marian.Scene = this;
             Marian.oldPosition = new Vector3(90, 4, 35);
@@ -373,7 +375,7 @@ namespace ElonsRiot
             Zenon.Scale = new Vector3(0.4f, 0.4f, 0.4f);
             Zenon.Position = new Vector3(80, 0, 34);
             Zenon.Rotation = new Vector3(0, 0, 0);
-            Zenon.ObjectPath = "3D/ludzik/soldier_walk";
+            Zenon.ObjectPath = "3D/ludzik/soldier_idle";
             Zenon.oldPosition = new Vector3(80, 0, 34);
             Zenon.newPosition = new Vector3(80, 0, 34);
             Zenon.Tag = "guard";
@@ -409,9 +411,14 @@ namespace ElonsRiot
             if (PaloObject.PaloState == FriendState.follow)
             {
                 PaloObject.WalkToPlayer();
-            }else if(PaloObject.PaloState == FriendState.walk)
+            }
+            else if(PaloObject.PaloState == FriendState.decoy)
             {
-                PaloObject.ChooseAction(this);
+                PaloObject.Decoy(this);
+            }
+            else if ((PaloObject.PaloState == FriendState.moveBox) || (PaloObject.PaloState == FriendState.moveToBox))
+            {
+                PaloObject.MoveBox();
             }
         }
         private void NPCControl()

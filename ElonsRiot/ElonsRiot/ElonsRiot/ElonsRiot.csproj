@@ -103,6 +103,7 @@
     <Compile Include="Guard.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="Interactions.cs" />
+    <Compile Include="Interaction\BombDoor.cs" />
     <Compile Include="Interaction\Chest.cs" />
     <Compile Include="Interaction\Door.cs" />
     <Compile Include="Interaction\HardChest.cs" />

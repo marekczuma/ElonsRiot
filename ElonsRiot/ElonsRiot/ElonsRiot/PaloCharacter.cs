@@ -7,9 +7,8 @@ using SkinnedModel;
 
 namespace ElonsRiot
 {
-    public enum FriendState { idle, walk, follow }
+    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot }
     public enum LearningState { idle, Learning, EngineeringLearning, ShootingLearning, UsingLearning }
-    public enum WalkState { decoy, moveBox }
     public class PaloCharacter : GameObject
     {
         public float distance { get; set; }
@@ -19,7 +18,6 @@ namespace ElonsRiot
         public List<Guard> Guards { get; set; }
         public DecoyAI DecoyGuards { get; set; }
         public BoxMovementAI MoveBoxAI { get; set; }
-        public WalkState Walk { get; set; }
         public Learning.PaloSkills Skills { get; set; }
         public Learning.LearningManager LearningManager { get; set; }
         public Scene Scene { get; set; }
@@ -30,11 +28,13 @@ namespace ElonsRiot
         public AnimationClip clip;
         public AnimationPlayer animationPlayer;
         public SkinningData skinningData;
+        public FriendState previousState;
 
         public PaloCharacter()
         {
             distance = 1.0f;
             PaloState = FriendState.idle;
+            previousState = FriendState.idle;
             PaloLearningState = LearningState.idle;
             velocity = 0.12f;
             Guards = new List<Guard>();
@@ -98,7 +98,6 @@ namespace ElonsRiot
             {
                 return;
             }
-            PaloState = FriendState.walk;
             if(!DecoyGuards.BIncluded)
             {
                 WalkToTarget(DecoyGuards.PointB, velocity, 1);
@@ -156,7 +155,6 @@ namespace ElonsRiot
             {
                 return;
             }
-            PaloState = FriendState.walk;
             if (!MoveBoxAI.AIncluded)
             {
                 StandBehindBox(MoveBoxAI.PointA);
@@ -168,6 +166,7 @@ namespace ElonsRiot
             }else if(!MoveBoxAI.BIncluded)
             {
                 //RotateToBox(MoveBoxAI.Cube);
+                PaloState = FriendState.moveBox;
                 GameObject tmpB = new GameObject(MoveBoxAI.PointB);
                 WalkToTarget(tmpB,velocity,2);
                 if (getDistance(tmpB) <= 2)
@@ -184,21 +183,10 @@ namespace ElonsRiot
                    MoveBoxAI.IsFinished = true;
                    MoveBoxAI.Cube.mass = MoveBoxAI.CubeMass;
                 }
+                PaloState = FriendState.moveToBox;
             }else
             {
                 PaloState = FriendState.idle;
-            }
-        }
-
-        //Jak jest walk to jaką akcję ma wybrać
-        public void ChooseAction(Scene _scene)
-        {
-            if(Walk == WalkState.decoy)
-            {
-                Decoy(_scene);
-            }else if(Walk == WalkState.moveBox)
-            {
-                MoveBox();
             }
         }
 
@@ -208,6 +196,37 @@ namespace ElonsRiot
             animationPlayer = new AnimationPlayer(skinningData);
             clip = skinningData.AnimationClips["Take001"];
             animationPlayer.StartClip(clip);
+        }
+        public void AnimationUpdate(GameTime gameTime)
+        {
+            if (PaloState == FriendState.idle)
+            {
+                clip = skinningData.AnimationClips["Take001"];
+                if (previousState != FriendState.idle)
+                    animationPlayer.StartClip(clip);
+                previousState = FriendState.idle;
+            }
+            else if ((PaloState == FriendState.walk) || (PaloState == FriendState.moveToBox) || (PaloState == FriendState.decoy) || (PaloState == FriendState.follow))
+            {
+                clip = skinningData.AnimationClips["Take001"];
+                if (previousState != FriendState.walk)
+                    animationPlayer.StartClip(clip);
+                previousState = FriendState.walk;
+            }
+            else if (PaloState == FriendState.moveBox)
+            {
+                clip = skinningData.AnimationClips["Take002"];
+                if (previousState != FriendState.moveBox)
+                    animationPlayer.StartClip(clip);
+                previousState = FriendState.moveBox; 
+            }
+            else if (PaloState == FriendState.shoot)
+            {
+                clip = skinningData.AnimationClips["Take001"];
+                if (previousState != FriendState.shoot)
+                    animationPlayer.StartClip(clip);
+                previousState = FriendState.shoot; 
+            }
         }
     }
 }

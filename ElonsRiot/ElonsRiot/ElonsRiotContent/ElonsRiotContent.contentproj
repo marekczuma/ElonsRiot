@@ -36,6 +36,36 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="3D\Placeholders\Wall1.FBX">
+      <Name>Wall1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\Wall2.FBX">
+      <Name>Wall2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\Wall3.FBX">
+      <Name>Wall3</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\Wall4.FBX">
+      <Name>Wall4</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\Wall5.FBX">
+      <Name>Wall5</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\Wall6.FBX">
+      <Name>Wall6</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <Compile Include="3D\Ziemia\terrain.FBX">
       <Name>terrain</Name>
       <Importer>FbxImporter</Importer>
@@ -101,43 +131,6 @@
       <Name>HUDFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\Placeholders\Wall1.FBX">
-      <Name>Wall1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\Placeholders\Wall2.FBX">
-      <Name>Wall2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\Placeholders\Wall3.FBX">
-      <Name>Wall3</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\Placeholders\Wall4.FBX">
-      <Name>Wall4</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\Placeholders\Wall5.FBX">
-      <Name>Wall5</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\Placeholders\Wall6.FBX">
-      <Name>Wall6</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\Placeholders\Wall7.FBX">
-      <Name>Wall7</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -405,25 +398,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\ludzik\soldier_death.X">
-      <Name>soldier_death</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\ludzik\soldier_walk.X">
-      <Name>soldier_walk</Name>
-      <Importer>XImporter</Importer>
-      <Processor>MergeAnimationsProcessor</Processor>
-      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x%3b</ProcessorParameters_MergeAnimations>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\ludzik\palo_run.X">
       <Name>palo_run</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/palo_push.x</ProcessorParameters_MergeAnimations>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -438,6 +417,21 @@
       <Name>palo_push</Name>
       <Importer>XImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\ludzik\soldier_idle.X">
+      <Name>soldier_idle</Name>
+      <Importer>XImporter</Importer>
+      <Processor>MergeAnimationsProcessor</Processor>
+      <ProcessorParameters_MergeAnimations>3D/ludzik/soldier_death.x%3b3D/ludzik/soldier_walk.x%3b</ProcessorParameters_MergeAnimations>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\CountdownFont.spritefont">
+      <Name>CountdownFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +458,13 @@
   <ItemGroup>
     <Compile Include="3D\Placeholders\Button.FBX">
       <Name>Button</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\Wall7.FBX">
+      <Name>Wall7</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>

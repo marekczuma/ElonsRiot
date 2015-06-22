@@ -36,6 +36,7 @@ namespace ElonsRiot
         public AnimationPlayer animationPlayer;
         public SkinningData skinningData;
         State previousState = State.idle;
+        public float interactTime;
 
         public Player()
         {
@@ -50,6 +51,7 @@ namespace ElonsRiot
             gravity = -0.12f;
             ammo = 50;
             ammoMax = 50;
+
         }
 
         public Player(Vector3 _position, Vector3 _rotation, Scene _scene)
@@ -65,6 +67,7 @@ namespace ElonsRiot
             health = 100.0f;
             ammo = 50;
             ammoMax = 50;
+            interactTime = 2.9f;
             showGun = false;
             showProgress = false;
             showCrosshair = true;
@@ -75,7 +78,7 @@ namespace ElonsRiot
             Scene = _scene;
         }
 
-        public void SetState(KeyboardState state)
+        public void SetState(KeyboardState state, GameTime gameTime)
         {
             
             if (state.IsKeyDown(Keys.LeftShift))
@@ -195,7 +198,17 @@ namespace ElonsRiot
                     DialoguesManager.IsLerning = false;
                 }
             }
-            else if(! state.IsKeyDown(Keys.E))
+            else if((!state.IsKeyDown(Keys.E)) && (elonState.State == State.interact))
+            {
+                if (interactTime > 0)
+                {
+                    interactTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (interactTime <= 0)
+                        elonState.SetCurrentState(State.idle);
+                }
+            }
+            else if (!state.IsKeyDown(Keys.E))
             {
                 elonState.SetCurrentState(State.idle);
             }
@@ -419,8 +432,8 @@ namespace ElonsRiot
                     }
                     DecoyAI tmpDecoy = new DecoyAI(placeB, placeC);
                     Palo.DecoyGuards = tmpDecoy;
-                    Palo.PaloState = FriendState.walk;
-                    Palo.Walk = WalkState.decoy;
+                    Palo.PaloState = FriendState.decoy;
+                    //Palo.Walk = WalkState.decoy;
                 }
             }
             if(state.IsKeyDown(Keys.O))
@@ -477,7 +490,7 @@ namespace ElonsRiot
             animationPlayer.StartClip(clip);
         }
 
-        public void AnimationUpdate(TimeSpan time)
+        public void AnimationUpdate(GameTime gameTime)
         {
             if (elonState.State == State.run)
             {
@@ -535,6 +548,8 @@ namespace ElonsRiot
                 if (previousState != State.interact)
                     animationPlayer.StartClip(clip);
                 previousState = State.interact;
+
+                
             }
         }
     }
