@@ -36,6 +36,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchLearning;
         SpriteBatch spriteBatchVideo;
         bool isStatement = false;
+        public bool isTalking = false;
         GameObject currentInteractiveObject;
         SpriteBatch sptiteBatchDialogues;
        // HUD myHUD;
@@ -207,6 +208,7 @@ namespace ElonsRiot
                     HUD.DrawString(sptiteBatchDialogues,
                            DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
                 }
+               
                 if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
                 {
                     HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
