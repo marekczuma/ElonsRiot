@@ -29,6 +29,7 @@ namespace ElonsRiot
         public AnimationPlayer animationPlayer;
         public SkinningData skinningData;
         public FriendState previousState;
+        public Shooting.NPCShooting PaloShooting { get; set; }
 
         public PaloCharacter(Scene _scene)
         {
@@ -45,6 +46,7 @@ namespace ElonsRiot
             Skills = new Learning.PaloSkills { Palo = this };
             LearningManager = new Learning.LearningManager(Scene);
             LearningManager.Palo = this;
+            PaloShooting = new Shooting.NPCShooting(Scene);
         }
 
         public void WalkForward()

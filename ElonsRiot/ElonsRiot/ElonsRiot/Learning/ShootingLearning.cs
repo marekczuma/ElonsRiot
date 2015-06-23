@@ -15,6 +15,10 @@ namespace ElonsRiot.Learning
         public Vector3 PosB { get; set; } //Pozycja strzelecka Pala
 
         public bool IsStarted { get; set; }
+        public bool ElonShoot { get; set; }
+        public bool ElonAfterFirst { get; set; }
+
+
 
         public ShootingLearning(Scene _scene)
         {
@@ -23,6 +27,8 @@ namespace ElonsRiot.Learning
             Scene = _scene;
             Tins = new List<Tin>();
             IsStarted = false;
+            ElonAfterFirst = true;
+            ElonShoot = true;
         }
 
         public void FillTins()
@@ -44,7 +50,10 @@ namespace ElonsRiot.Learning
         public void MoveElonAndPalo()
         {
             Scene.PlayerObject.Position = PosA;
+            Scene.PlayerObject.newPosition = PosA;
+            Scene.PlayerObject.oldPosition = PosA;
             Scene.PaloObject.Position = PosB;
+            Scene.PaloObject.RotateQuaternions(MathHelper.ToRadians(180));
         }
 }
     }

@@ -46,10 +46,30 @@ namespace ElonsRiot.Learning
                 {
                     ShootingLearning.MoveElonAndPalo();
                     ShootingLearning.IsStarted = true;
+                    Palo.PaloState = FriendState.shoot;
+                    
                 }
                 else
                 {
-
+                    if(ShootingLearning.ElonShoot)
+                    {
+                        if (ShootingLearning.ElonAfterFirst)
+                        {
+                            Scene.PlayerObject.ammo = 1;
+                            ShootingLearning.ElonAfterFirst = false;
+                        }
+                        if(Scene.PlayerObject.ammo <1)
+                        {
+                            ShootingLearning.ElonShoot = false;
+                        }
+                    }else
+                    {
+                        Palo.PaloShooting.TinShot(ShootingLearning.Tins[1]);
+                        ShootingLearning.ElonShoot = true;
+                        ShootingLearning.ElonAfterFirst = true;
+                                                                                                                                                           
+                        //Palo.NPCShooting.Shoot(T
+                    }
                 }
             }
         }
