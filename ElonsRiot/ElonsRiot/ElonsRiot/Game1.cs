@@ -36,7 +36,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchString;
         SpriteBatch spriteBatchLearning;
         SpriteBatch spriteBatchVideo;
-        bool isStatement = false;
+        bool isEnd = false;
         public bool isTalking = false;
         GameObject currentInteractiveObject;
         SpriteBatch sptiteBatchDialogues;
@@ -105,7 +105,7 @@ namespace ElonsRiot
             countdownTime = 6;
             hackingCuntdownTime = 6;
             bigExplosionTime = 0.15f;
-            stringTime = 0.15f;
+            stringTime = 0f;
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
@@ -216,7 +216,13 @@ namespace ElonsRiot
                     HUD.DrawString(sptiteBatchDialogues,
                            DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
                 }
-               
+                if(isEnd == true && stringTime <4)
+                {
+                    HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+                   // HUD.DrawString(sptiteBatchDialogues, "Palo:Przeanalizowalem budowe czujek.Mozemy je unieszkodliwic jesli zestrzelimy je jednoczesnie", this.GraphicsDevice);
+                    isEnd = false;
+                }
+                
                 if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
                 {
                     HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
@@ -312,7 +318,9 @@ namespace ElonsRiot
             }
             else
             {
-                HUD.DrawString(spriteBatchHUD7, "Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+                //HUD.DrawString(spriteBatchHUD7, "Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+                isEnd = true;
+                stringTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
         }
         void Countdown(GameTime gameTime)
