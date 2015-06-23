@@ -59,7 +59,7 @@ namespace ElonsRiot
             Components.Add(bigExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
-            //   MyDialogues = new DialoguesManager();
+         //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
             graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
@@ -107,7 +107,6 @@ namespace ElonsRiot
         }
         protected override void Update(GameTime gameTime)
         {
-            MyScene.time = gameTime;
             if (MyScene.PlayerObject.showShootExplosion)
             {
                 UpdateProjectiles(gameTime);
@@ -144,7 +143,6 @@ namespace ElonsRiot
         {
             explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             bigExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
-
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
@@ -200,11 +198,8 @@ namespace ElonsRiot
             }
             if (DialoguesManager.IsLerning)
             {
-                if (DialoguesManager.ActualLineLerning != -1)
-                {
-                    HUD.DrawString(sptiteBatchDialogues,
-                           DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
-                }
+                HUD.DrawString(sptiteBatchDialogues,
+                       DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
             }
             if(MyScene.PaloObject.PaloLearningState == LearningState.Learning)
             {
@@ -317,6 +312,7 @@ namespace ElonsRiot
             Texture2D videoTexture = null;
             if (MyScene.PlayerObject.introEnd)
                 player.Stop();
+
             if (player.State != MediaState.Stopped)
                 videoTexture = player.GetTexture();
             else
