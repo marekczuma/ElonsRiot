@@ -231,7 +231,7 @@ namespace ElonsRiot
                     isVisible = true;
                 }
             }
-            if (obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp" || Playerfrustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name == "gun")
+            if (obj.Name.Contains("terrain") || obj.Name == "ceil" || obj.Name == "ramp" || Playerfrustum.Contains(obj.boundingBox) != ContainmentType.Disjoint || obj.Name == "gun" || obj.Name =="gunPalo")
             {
                 isVisible = true;
             }

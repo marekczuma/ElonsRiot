@@ -25,7 +25,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         public float angle;
         public Vector3 oldPosition, newPosition;
-        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion, showBigExplosion;
+        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion, showBigExplosion, showTinExplosion;
         public bool introEnd = false;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;

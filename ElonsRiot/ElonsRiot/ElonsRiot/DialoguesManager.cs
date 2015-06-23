@@ -113,7 +113,7 @@ namespace ElonsRiot.Dialogues
             acctualLineOfStatementCounter = 0;
             actuallLineOfLerningStatement = 0;
             acctualStatementNumber = 0;
-            actualLineLerning = -1;
+            actualLineLerning = 0;
             isNextStatements = true;
             isStart = true;
             isPressed = false;
