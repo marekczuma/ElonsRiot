@@ -244,7 +244,7 @@
 	<GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2">  //dziwna sciana
 		<Position>
 		  <X>75</X>
-		  <Y>0</Y>
+		  <Y>-4</Y>
 		  <Z>50</Z>
 		</Position>
 		<Rotation>
