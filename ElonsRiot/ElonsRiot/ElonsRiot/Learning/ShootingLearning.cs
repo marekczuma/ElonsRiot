@@ -18,9 +18,9 @@ namespace ElonsRiot.Learning
 
         public void FillTins()
         {
-            Tin HighTin1 = new Tin { Scene = Scene, Position = new Vector3(55, 0, 80), Scale = new Vector3(0.3f,0.8f,0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "Asset Wysoka puszka1", id = "ABCDEF", IsPlayer = true, Tag = "Tin" };
+            Tin HighTin1 = new Tin { Scene = Scene, Position = new Vector3(55, 0, 80), Scale = new Vector3(0.3f,0.8f,0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset Wysoka puszka1", id = "ABCDEF", IsPlayer = true, Tag = "Tin" };
             Tins.Add(HighTin1);
-            Tin HighTin2 = new Tin { Scene = Scene, Position = new Vector3(65, 0, 80), Scale = new Vector3(0.3f, 0.8f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "Asset Wysoka puszka2", id = "ABCDEF", IsPlayer = false, Tag = "Tin" };
+            Tin HighTin2 = new Tin { Scene = Scene, Position = new Vector3(65, 0, 80), Scale = new Vector3(0.3f, 0.8f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset Wysoka puszka2", id = "ABCDEF", IsPlayer = false, Tag = "Tin" };
             Tins.Add(HighTin2);
         }
 
