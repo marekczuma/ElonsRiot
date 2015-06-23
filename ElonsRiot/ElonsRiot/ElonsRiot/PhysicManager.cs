@@ -23,6 +23,7 @@ namespace ElonsRiot
         static SpriteBatch spriteBatchHUD;
         static GraphicsDevice graphicDevice;
         static GameObject ramp;
+        static GameObject movableWall;
         static bool isGoDown;
         public static void setElements(GraphicsDevice graphic)
         {
@@ -39,6 +40,7 @@ namespace ElonsRiot
             ramp = new GameObject();
             spriteBatchHUD = new SpriteBatch(graphic);
             graphicDevice = graphic;
+            movableWall = new GameObject();
         }
         public static void InitializePhysicManager(List<GameObject> gameO, Player player)
         {
@@ -56,7 +58,7 @@ namespace ElonsRiot
                 {
                     if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
                     {
-                        if (!gObj.Name.Contains("character") && !gObj.Name.Contains("stuff")) 
+                        if (!gObj.Name.Contains("character") && !gObj.Name.Contains("stuff") && !gObj.Name.Contains("MV")) 
                         {
                             NotInteractiveGameObject.Add(gObj);
                         }
@@ -81,6 +83,10 @@ namespace ElonsRiot
                 if (gObj.Name.Contains("stuff"))
                 {
                     Stuffs.Add(gObj);
+                }
+                if(gObj.Name.Contains("MV"))
+                {
+                    movableWall = gObj;
                 }
             }
 
@@ -196,6 +202,15 @@ namespace ElonsRiot
                 gObj.AAbox.createPointsOfCollision();
                 gObj.AAbox.setpointOfChangeWall();
             }
+            //inicjalizacja ruchomej sciany
+            movableWall.Initialize();
+            movableWall.RefreshMatrix();
+            movableWall.AAbox = new Box(movableWall, player);
+            movableWall.AAbox.GetCorners();
+            movableWall.AAbox.createBoudingBox();
+            movableWall.AAbox.createPlanes();
+            movableWall.AAbox.createPointsOfCollision();
+            movableWall.AAbox.setpointOfChangeWall();
         }
        
         public static void update(GameTime gameTime, List<GameObject> gameO, Player player)
@@ -248,6 +263,15 @@ namespace ElonsRiot
                 interactive.AAbox.createPointsOfCollision();
                 interactive.AAbox.setpointOfChangeWall();
             }
+            //aktualuzacja ruchomej sciany
+            movableWall.AAbox.CreateRadiuses();
+            movableWall.AAbox.GetCenter();
+            movableWall.AAbox.GetCorners();
+            movableWall.AAbox.UpdateBoundingBox();
+            movableWall.AAbox.GetRefrecneObjectAndPlayer(movableWall, player);
+            movableWall.AAbox.createPlanes();
+            movableWall.AAbox.createPointsOfCollision();
+            movableWall.AAbox.setpointOfChangeWall();
             //kolizja aktywnych z charakterami
             foreach (GameObject character in Characters)
             {
@@ -300,6 +324,56 @@ namespace ElonsRiot
                     }
                 }
             }
+            //ruchoma sciana
+            foreach (GameObject character in Characters)
+            {
+                  if (boxesCollision.TestAABBAABB(character, movableWall))
+                    {
+                        character.AAbox.createBoudingBoxes();
+                        foreach (BoundingBox box in character.boxes)
+                        {
+                            if (boxesCollision.TestAABBAABBTMP(character, movableWall))
+                            {
+
+                                Plane plane = getLongerWallInInteractiveObject(character, movableWall);
+                                if (boxesCollision.TestAABBPlane(character, plane))
+                                {
+                                    Vector3 direction = character.newPosition - character.oldPosition;
+                                    Vector3 invNormal = plane.Normal;
+
+                                    if (plane == movableWall.AAbox.planes[0] || plane == movableWall.AAbox.planes[2]) //filar i wall1,wall3,wall4 mają tutaj same == i dla 0 i 2
+                                    {                                                                    // dla wall2 to 1 i 3 i też ==
+                                        invNormal.X *= -1;
+                                        invNormal.Y *= -1;
+                                        invNormal.Z *= -1;
+                                    }
+                                    invNormal = invNormal * (direction * plane.Normal).Length();
+                                    Vector3 wallDir = direction - invNormal;
+                                    //trzeba sprawidzic sasiadów, bo inaczej przechodzi przez rogi ścian ze sobą sasiadujacych
+                                    foreach (GameObject neighbor in movableWall.neighbors)
+                                    {
+
+                                        if (boxesCollision.TestAABBAABB(character, neighbor))
+                                        {
+                                            character.Position = character.oldPosition;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            character.Position = character.oldPosition + wallDir;
+                                        }
+                                    }
+                                    if (movableWall.neighbors.Count == 0)
+                                    {
+                                        character.Position = character.oldPosition + wallDir;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            
             //kolija między charakterami
             foreach (GameObject character in Characters)
             {

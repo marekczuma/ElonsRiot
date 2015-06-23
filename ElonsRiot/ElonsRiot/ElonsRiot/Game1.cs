@@ -59,7 +59,7 @@ namespace ElonsRiot
             Components.Add(bigExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
-         //   MyDialogues = new DialoguesManager();
+            //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
             graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
@@ -107,6 +107,7 @@ namespace ElonsRiot
         }
         protected override void Update(GameTime gameTime)
         {
+            MyScene.time = gameTime;
             if (MyScene.PlayerObject.showShootExplosion)
             {
                 UpdateProjectiles(gameTime);
@@ -199,8 +200,11 @@ namespace ElonsRiot
             }
             if (DialoguesManager.IsLerning)
             {
-                HUD.DrawString(sptiteBatchDialogues,
-                       DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
+                if (DialoguesManager.ActualLineLerning != -1)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                           DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
+                }
             }
             if(MyScene.PaloObject.PaloLearningState == LearningState.Learning)
             {

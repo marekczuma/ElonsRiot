@@ -91,7 +91,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	 <GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2">
+	 <GameObject Name="wall2MV" Id="ABCDEF" Path="3D/placeholders/Wall2">
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -109,7 +109,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 		<Tag>hiddenPassage</Tag>
-	</GameObject>  
+	</GameObject> 
 	<GameObject Name="ButtonA" Id="ABCDEF" Path="3D/placeholders/Button"> //przyciski do questa
 		<Position>
 		  <X>7</X>

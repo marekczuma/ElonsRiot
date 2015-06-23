@@ -13,15 +13,17 @@ namespace ElonsRiot.Interaction
             this.Information = "Kliknij E, aby podniesc przedmiot";
             stuffs = new List<GameObject>();
         }
-        public virtual void Interaction(Scene _scene)
+        public override void Interaction(Scene _scene)
         {
-            //TO DO: play animation
-             stuffs.Add(this);
-           _scene.GameObjects.Remove(this);
-           _scene.InteractiveObjects.InteractiveObjects.Remove(this);
+          
+          _scene.PlayerObject.elonState.SetCurrentState(State.interact);
+          stuffs.Add(this);
+          _scene.GameObjects.Remove(this);
+          _scene.InteractiveObjects.InteractiveObjects.Remove(this);
+       
         }
 
-        public virtual void AfterInteraction(Scene _scene)
+        public override void AfterInteraction(Scene _scene)
         {
 
         }

@@ -50,7 +50,7 @@ namespace ElonsRiot.BSPTree
             rootLeaf.RightChild.AddHall(WareHouseHall);
 
             x = new float[] { 3f, 47.5f };
-            z = new float[] { -150.0f, -48f };
+            z = new float[] { -150.0f, -50f };
             rootLeaf.RightChild.LeftChild = new Leaf(x, z, "Laboratory", "D");  //tajemniczy pokoj
             rootLeaf.RightChild.LeftChild.SortObjects(gameObjects);
         }

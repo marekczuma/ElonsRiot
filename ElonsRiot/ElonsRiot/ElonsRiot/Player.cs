@@ -39,6 +39,8 @@ namespace ElonsRiot
         State previousState = State.idle;
         public float interactTime;
 
+        private float timer = 0;
+
         public Player()
         {
             nearPoint = new Vector3(0, 0, 0);
@@ -81,7 +83,8 @@ namespace ElonsRiot
 
         public void SetState(KeyboardState state, GameTime gameTime)
         {
-            
+            float timeInMS = Scene.time.ElapsedGameTime.Milliseconds;
+            timer -= timeInMS;
             if (state.IsKeyDown(Keys.LeftShift))
             {
                 elonState.SetCurrentState(State.run);
@@ -178,15 +181,22 @@ namespace ElonsRiot
             }
             else if(state.IsKeyDown(Keys.L))
             {
-                if(Palo.PaloLearningState == LearningState.idle)
+                if (timer <= 0)
                 {
-                    Palo.PaloLearningState = LearningState.Learning;
-                    DialoguesManager.IsLerning = true;
-                }else
-                {
-                    Palo.PaloLearningState = LearningState.idle;
-                    DialoguesManager.IsLerning = false;
+                    if (Palo.PaloLearningState == LearningState.idle)
+                    {
+                        Palo.PaloLearningState = LearningState.Learning;
+                        DialoguesManager.IsLerning = true;
+                        DialoguesManager.mixDailogues();
+                    }
+                    else
+                    {
+                        Palo.PaloLearningState = LearningState.idle;
+                        DialoguesManager.IsLerning = false;
+                    }
+                    timer = 500;
                 }
+                
             }
             else if(state.IsKeyDown(Keys.Back))
             {
@@ -387,16 +397,23 @@ namespace ElonsRiot
         }
         public void SetPaloState(KeyboardState state, Scene _scene)
         {
+            float timeInMS = Scene.time.ElapsedGameTime.Milliseconds;
+            timer -= timeInMS;
             if (state.IsKeyDown(Keys.Space))
             {
-                if (Palo.PaloState != FriendState.follow)
+                if (timer <= 0)
                 {
-                    Palo.PaloState = FriendState.follow;
+                    if (Palo.PaloState != FriendState.follow)
+                    {
+                        Palo.PaloState = FriendState.follow;
+                    }
+                    else if (Palo.PaloState == FriendState.follow)
+                    {
+                        Palo.PaloState = FriendState.idle;
+                    }
+                    timer = 500;
                 }
-                else if (Palo.PaloState == FriendState.follow)
-                {
-                    Palo.PaloState = FriendState.idle;
-                }
+                
             }
             if(state.IsKeyDown(Keys.P))
             {
@@ -433,7 +450,7 @@ namespace ElonsRiot
             }
             if(state.IsKeyDown(Keys.O))
             {
-                                    Palo.RotateToBox(Palo.MoveBoxAI.Cube);
+                Palo.RotateToBox(Palo.MoveBoxAI.Cube);
             }
         }
 
