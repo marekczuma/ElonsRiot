@@ -34,7 +34,7 @@ namespace ElonsRiot.Interaction
             Chest JustChest = new Chest { Name = "boxForMovement", ObjectPath = "3D/placeholders/skrzynka1", Interactive = true, Position = new Vector3(15, 0, -10), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1f, 1f, 1f) };
             JustChest.id = "ABCDEF";
             InteractiveObjects.Add(JustChest);
-            Stuff stuff = new Stuff { Name = "stuff", ObjectPath = "3D/placeholders/stuff", Interactive = true, Position = new Vector3(5,5, 11), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(0.1f, 0.1f, 0.1f) };
+            Stuff stuff = new Stuff { Name = "stuff", ObjectPath = "3D/placeholders/Bomba", Interactive = true, Position = new Vector3(3,5.5f, 11), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(1f, 2f, 1f) };
             stuff.id = "ABCDEF";
             InteractiveObjects.Add(stuff);
             Door Door3 = new Door { Name = "Drzwi 3", ObjectPath = "3D/placeholders/drzwi", Interactive = true, Position = new Vector3(20f, 0, -100), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1, 0.75f, 1) };
