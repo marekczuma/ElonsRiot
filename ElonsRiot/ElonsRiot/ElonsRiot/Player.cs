@@ -33,6 +33,7 @@ namespace ElonsRiot
         public Vector3 farPoint;
         KeyboardState oldState;
         public bool isBomb = false;
+        public bool isHacking = false;
         public AnimationClip clip;
         public AnimationPlayer animationPlayer;
         public SkinningData skinningData;
@@ -157,6 +158,10 @@ namespace ElonsRiot
 
                     Scene.GameObjects.Add(tmp);
                     isBomb = true;
+                }
+                else if(isHacking == false)
+                {
+                    isHacking = true;
                 }
 
             }

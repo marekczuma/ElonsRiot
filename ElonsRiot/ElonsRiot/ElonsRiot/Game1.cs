@@ -32,6 +32,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchHUD4;
         SpriteBatch spriteBatchHUD5;
         SpriteBatch spriteBatchHUD6;
+        SpriteBatch spriteBatchHUD7;
         SpriteBatch spriteBatchString;
         SpriteBatch spriteBatchLearning;
         SpriteBatch spriteBatchVideo;
@@ -45,7 +46,9 @@ namespace ElonsRiot
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
         ParticleSystem bigExplosionParticles;
         public float countdownTime;
+        public float hackingCuntdownTime;
         public float bigExplosionTime;
+        public float stringTime;
 
         Video intro;
         VideoPlayer player;
@@ -87,6 +90,7 @@ namespace ElonsRiot
             spriteBatchHUD4 = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD5 = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD6 = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD7 = new SpriteBatch(GraphicsDevice);
             spriteBatchString = new SpriteBatch(GraphicsDevice);
             sptiteBatchDialogues = new SpriteBatch(GraphicsDevice);
             spriteBatchLearning = new SpriteBatch(GraphicsDevice);
@@ -99,7 +103,9 @@ namespace ElonsRiot
             player = new VideoPlayer();
             player.Play(intro);
             countdownTime = 6;
+            hackingCuntdownTime = 6;
             bigExplosionTime = 0.15f;
+            stringTime = 0.15f;
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
@@ -140,6 +146,8 @@ namespace ElonsRiot
             }
             if (MyScene.PlayerObject.isBomb)
                 Countdown(gameTime);
+            if(MyScene.PlayerObject.isHacking)
+                HackingCountdown(gameTime);
             //CheckRay(state);
             base.Update(gameTime);
         }
@@ -152,7 +160,7 @@ namespace ElonsRiot
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, gameTime);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
-
+            HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCuntdownTime);
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
@@ -296,7 +304,17 @@ namespace ElonsRiot
                     i++;
             }
         }
-
+        void HackingCountdown(GameTime gameTime)
+        {
+            if (hackingCuntdownTime > 0)
+            {
+                hackingCuntdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                HUD.DrawString(spriteBatchHUD7, "Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+            }
+        }
         void Countdown(GameTime gameTime)
         {
             if (countdownTime > 0)
