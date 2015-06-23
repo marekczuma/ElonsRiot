@@ -108,18 +108,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\sciana\iron_texture.jpg">
-      <Name>iron_texture</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\sciana\iron_texture637.jpg">
-      <Name>iron_texture637</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="HUD\healthEmpty.png">
       <Name>healthEmpty</Name>
       <Importer>TextureImporter</Importer>
@@ -560,13 +548,6 @@
       <Name>supermaszyna_gora</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\Placeholders\ncover-commandline.jpg">
-      <Name>ncover-commandline</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
