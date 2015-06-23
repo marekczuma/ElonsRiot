@@ -112,6 +112,17 @@ namespace ElonsRiot
 
 
         }
+        public static void DrawProgress(SpriteBatch[] spriteBatch, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
+        {
+            spriteBatch[1].Begin();
+            if (countdownTime > 2 && countdownTime < 3)
+                spriteBatch[1].DrawString(bigFont, "3", new Vector2(width / 2 - 30, 50), Color.Blue);
+            else if (countdownTime > 1 && countdownTime < 2)
+                spriteBatch[1].DrawString(bigFont, "2", new Vector2(width / 2 - 30, 50), Color.Blue);
+            else if (countdownTime > 0 && countdownTime < 1)
+                spriteBatch[1].DrawString(bigFont, "1", new Vector2(width / 2 - 30, 50), Color.Blue);
+            spriteBatch[1].End();
+        }
         public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammoElon,float ammoPalo,float ammoMax, GraphicsDevice graphics,int width)
         {
             spriteBatch[0].Begin();

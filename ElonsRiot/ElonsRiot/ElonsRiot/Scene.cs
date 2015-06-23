@@ -356,8 +356,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(80, 10, -25);
-            Vector3 tmpPos = new Vector3(100, 10, -10);
+			Vector3 tmpPos = new Vector3(80, 10, -25);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
