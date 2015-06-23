@@ -113,7 +113,7 @@ namespace ElonsRiot.Dialogues
             acctualLineOfStatementCounter = 0;
             actuallLineOfLerningStatement = 0;
             acctualStatementNumber = 0;
-            actualLineLerning = 0;
+            actualLineLerning = -1;
             isNextStatements = true;
             isStart = true;
             isPressed = false;
@@ -141,7 +141,23 @@ namespace ElonsRiot.Dialogues
                 isCorrectRoom = false;
             }
         }
-     
+        public static void mixDailogues()
+        {
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            int secondsSinceEpoch = (int)t.TotalSeconds;
+            Random random = new Random(secondsSinceEpoch);
+          ///  List<Statement> tmp = lerningStatements;
+
+            for (int i = 0; i < lerningStatements[0].dialogLines.Line.Count; i++)
+            {
+                int index1 = random.Next(0, lerningStatements[0].dialogLines.Line.Count - 1);
+                int index2 = random.Next(0, lerningStatements[0].dialogLines.Line.Count - 1);
+                string tmpSta = lerningStatements[0].dialogLines.Line[index1];
+                lerningStatements[0].dialogLines.Line[index1] = lerningStatements[0].dialogLines.Line[index2];
+                lerningStatements[0].dialogLines.Line[index2] = tmpSta;
+            }
+          //  lerningStatements = tmp;
+        }
         //oblicza czy mozna juz zmienic na kolejna linie dialogu
         public static void withLine(GameTime gameTime)
         {
@@ -208,7 +224,6 @@ namespace ElonsRiot.Dialogues
                     {
                         actualLineLerning++;
                         timeToNextLerning = TimeSpan.Zero;
-                       
                     }
                     else
                     {

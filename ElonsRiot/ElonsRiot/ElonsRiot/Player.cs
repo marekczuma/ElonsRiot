@@ -26,6 +26,7 @@ namespace ElonsRiot
         public float angle;
         public Vector3 oldPosition, newPosition;
         public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion, showBigExplosion;
+        public bool introEnd = false;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
         public Vector3 nearPoint;
@@ -178,17 +179,6 @@ namespace ElonsRiot
                     showShootExplosion = false;
                 }
             }
-            else if (state.IsKeyDown(Keys.D7))
-            {
-                if (!oldState.IsKeyDown(Keys.D7)){
-                    showBigExplosion = true;
-                    MusicManager.PlaySound(2);
-                }
-                else
-                {
-                    showBigExplosion = false;
-                }
-            }
             else if(state.IsKeyDown(Keys.L))
             {
                 if (timer <= 0)
@@ -197,6 +187,7 @@ namespace ElonsRiot
                     {
                         Palo.PaloLearningState = LearningState.Learning;
                         DialoguesManager.IsLerning = true;
+                        DialoguesManager.mixDailogues();
                     }
                     else
                     {
@@ -207,6 +198,11 @@ namespace ElonsRiot
                 }
                 
             }
+            else if(state.IsKeyDown(Keys.Back))
+            {
+                introEnd = true;
+            }
+
             else if((!state.IsKeyDown(Keys.E)) && (elonState.State == State.interact))
             {
                 if (interactTime > 0)
