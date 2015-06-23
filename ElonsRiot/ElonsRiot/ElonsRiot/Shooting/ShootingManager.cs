@@ -63,6 +63,16 @@ namespace ElonsRiot.Shooting
                         tmpGuard.Die();
                     }
                 }
+            }else if(target.Tag == "Tin")
+            {
+                for (int i = 0; i < Scene.GameObjects.Count; i++)
+                {
+                    if (Scene.GameObjects[i] == target)
+                    {
+                        Learning.Tin tmpTin = (Learning.Tin)target;
+                        tmpTin.Destroy();
+                    }
+                }
             }
 
         }
