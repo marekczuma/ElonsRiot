@@ -10,10 +10,19 @@ namespace ElonsRiot.Learning
     {
         public Scene Scene { get; set; }
         public List<Tin> Tins {get; set;}
+
+        public Vector3 PosA { get; set; } //Pozycja strzelecka Elona
+        public Vector3 PosB { get; set; } //Pozycja strzelecka Pala
+
+        public bool IsStarted { get; set; }
+
         public ShootingLearning(Scene _scene)
         {
+            PosA = new Vector3(55, 0, 43);
+            PosB = new Vector3(65, 0, 43);
             Scene = _scene;
             Tins = new List<Tin>();
+            IsStarted = false;
         }
 
         public void FillTins()
@@ -32,5 +41,10 @@ namespace ElonsRiot.Learning
                 Scene.GameObjects.Add(element);
             }
         }
-    }
+        public void MoveElonAndPalo()
+        {
+            Scene.PlayerObject.Position = PosA;
+            Scene.PaloObject.Position = PosB;
+        }
 }
+    }

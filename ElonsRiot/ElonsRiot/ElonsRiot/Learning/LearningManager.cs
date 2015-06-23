@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,22 @@ namespace ElonsRiot.Learning
         public void AddObjectToScene()
         {
             ShootingLearning.AddObjectsToScene();
+        }
+
+        public void LearningUpdate()
+        {
+            if ((Palo.PaloLearningState == LearningState.Learning) || (Vector3.Distance(Scene.PlayerObject.Position, ShootingLearning.PosA) <= 5))
+            {
+                if (!ShootingLearning.IsStarted)
+                {
+                    ShootingLearning.MoveElonAndPalo();
+                    ShootingLearning.IsStarted = true;
+                }
+                else
+                {
+
+                }
+            }
         }
 
 

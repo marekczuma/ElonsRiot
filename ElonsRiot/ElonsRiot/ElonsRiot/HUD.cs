@@ -170,7 +170,7 @@ namespace ElonsRiot
             spriteBatch.Begin();
             spriteBatch.Draw(dialoguesBackground, new Vector2(20, graphic.Viewport.Height - 80), null, Color.White, 0, Vector2.Zero, 0.96f, SpriteEffects.None, 0);
            // spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White);
-           spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
             //Debug.WriteLine(message.Count());

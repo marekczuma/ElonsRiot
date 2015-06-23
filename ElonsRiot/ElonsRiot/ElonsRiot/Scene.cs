@@ -293,6 +293,7 @@ namespace ElonsRiot
             //physic.update(gameTime, GameObjects, PlayerObject);
             PaloControl();
             NPCControl();
+            PaloObject.LearningManager.LearningUpdate();
             PlayerObject.AnimationUpdate(gameTime);
             PlayerObject.animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
 
