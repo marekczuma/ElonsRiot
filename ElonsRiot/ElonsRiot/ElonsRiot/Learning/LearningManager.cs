@@ -10,13 +10,16 @@ namespace ElonsRiot.Learning
     {
         public PaloCharacter Palo { get; set; }
         public Scene Scene { get; set; }
+        public ShootingLearning ShootingLearning { get; set; }
         public float Timer { get; set; }
         public float TimerStatement { get; set; }
         SpriteBatch spriteBatchStatement;
-        public LearningManager()
+        public LearningManager(Scene _scene)
         {
+            Scene = _scene;
             Timer = 0;
             TimerStatement = 0;
+            ShootingLearning = new ShootingLearning(Scene);
             //spriteBatchStatement = new SpriteBatch(Scene.GraphicsDevice);
         }
 
@@ -27,6 +30,11 @@ namespace ElonsRiot.Learning
             {
                 
             }
+        }
+
+        public void AddObjectToScene()
+        {
+            ShootingLearning.AddObjectsToScene();
         }
 
 

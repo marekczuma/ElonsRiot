@@ -121,6 +121,7 @@ namespace ElonsRiot
             LoadElon();
             LoadGuards();
             InteractiveObjects.AddToScene();
+            PaloObject.LearningManager.AddObjectToScene();
             BSPTree.CreateBSP.CreateLeafs(GameObjects);
             BSPTree.CreateBSP.checkPositionOfPlayer(PlayerObject.Position);
             Methods.setPlayer( PlayerObject,GameObjects);
@@ -389,7 +390,7 @@ namespace ElonsRiot
         }
         private void LoadPalo()
         {
-            PaloCharacter Palo = new PaloCharacter();
+            PaloCharacter Palo = new PaloCharacter(this);
             Palo.Name = "characterPalo";
             Palo.id = "ABCDEF";
             Palo.Scale = new Vector3(32.0f, 32.0f, 32.0f);

@@ -407,6 +407,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3D\Placeholders\Tin.FBX">
+      <Name>Tin</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <Compile Include="3D\Placeholders\box.FBX">
       <Name>box</Name>
       <Importer>FbxImporter</Importer>
