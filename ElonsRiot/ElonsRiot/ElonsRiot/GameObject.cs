@@ -199,7 +199,7 @@ namespace ElonsRiot
 
             if (getDistance(rightTarget) > stopDistance)
             {
-                if (this is PaloCharacter)
+                if (this is PaloCharacter && _target is Player)
                 {
                     PaloCharacter tmpPalo = (PaloCharacter)this;
                     tmpPalo.PaloState = FriendState.follow;

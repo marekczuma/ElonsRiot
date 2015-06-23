@@ -34,6 +34,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchHUD6;
         SpriteBatch spriteBatchString;
         SpriteBatch spriteBatchLearning;
+        SpriteBatch spriteBatchVideo;
         bool isStatement = false;
         GameObject currentInteractiveObject;
         SpriteBatch sptiteBatchDialogues;
@@ -44,6 +45,9 @@ namespace ElonsRiot
         ParticleSystem bigExplosionParticles;
         public float countdownTime;
         public float bigExplosionTime;
+
+        Video intro;
+        VideoPlayer player;
 
         public Game1()
         {
@@ -84,9 +88,14 @@ namespace ElonsRiot
             spriteBatchString = new SpriteBatch(GraphicsDevice);
             sptiteBatchDialogues = new SpriteBatch(GraphicsDevice);
             spriteBatchLearning = new SpriteBatch(GraphicsDevice);
+            spriteBatchVideo = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             DialoguesManager.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
+
+            intro = Content.Load<Video>("Video/Intro");
+            player = new VideoPlayer();
+            player.Play(intro);
             countdownTime = 6;
             bigExplosionTime = 0.15f;
            // MyRay.setReferences(GraphicsDevice, MyScene);
@@ -120,8 +129,11 @@ namespace ElonsRiot
             //MyRay.setReferences(GraphicsDevice, MyScene);
             //myHUD.DrawHUD(spriteBatchHUD);
             CreateBSP.checkPositionOfPlayer(MyScene.PlayerObject.Position);
-            DialoguesManager.withLine(gameTime);
-            DialoguesManager.checkStatements();
+            if (MyScene.PlayerObject.introEnd)
+            {
+                DialoguesManager.withLine(gameTime);
+                DialoguesManager.checkStatements();
+            }
             if (MyScene.PlayerObject.isBomb)
                 Countdown(gameTime);
             //CheckRay(state);
@@ -194,6 +206,9 @@ namespace ElonsRiot
             {
                 HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
             }
+
+            playIntro();
+
             base.Draw(gameTime);
         }
 
@@ -290,6 +305,24 @@ namespace ElonsRiot
             else
             {
                 MyScene.PlayerObject.showBigExplosion = false;
+            }
+        }
+
+        void playIntro()
+        {
+            Texture2D videoTexture = null;
+            if (MyScene.PlayerObject.introEnd)
+                player.Stop();
+            if (player.State != MediaState.Stopped)
+                videoTexture = player.GetTexture();
+            else
+                MyScene.PlayerObject.introEnd = true;
+
+            if (videoTexture != null)
+            {
+                spriteBatchVideo.Begin();
+                spriteBatchVideo.Draw(videoTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatchVideo.End();
             }
         }
     }
