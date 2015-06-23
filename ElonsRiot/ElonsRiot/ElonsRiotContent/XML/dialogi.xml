@@ -47,10 +47,8 @@
 	 <dialogLines>
 	  <line>Elon: No,wreszcie na miejscu!</line>
 	  <line>Palo: Odradzam. Lasery w ciagu sekundy zakoncza twoje funkcje zyciowe.</line>
-	  <line>Elon: Cholera, nie dam rady zlamac zabezpieczen. </line>
-	  <line>Palo: Przeskanowalem budowe czujnikow. Jesli zniszczymy je w jednym momencie alarm nie zostanie uruchomiony.</line>
-	  <line>Elon: Palo, jestes genialny! Jestem taki dumny.</line>
-	  <line>Palo: Tak. </line>
+	  <line>Elon: Jakie lasery? </line>
+	  <line>Palo: Teren przy drzwiach.</line>
     </dialogLines>
 	<place>Laboratory</place>
  </statement>

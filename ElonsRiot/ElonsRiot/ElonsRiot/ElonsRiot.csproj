@@ -106,6 +106,7 @@
     <Compile Include="Interaction\BombDoor.cs" />
     <Compile Include="Interaction\Chest.cs" />
     <Compile Include="Interaction\Door.cs" />
+    <Compile Include="Interaction\EngineeringStuff.cs" />
     <Compile Include="Interaction\HardChest.cs" />
     <Compile Include="Interaction\InteractiveGameObject.cs" />
     <Compile Include="Interaction\InteractiveObjectsList.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Particles\ParticleSettings.cs" />
     <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="Particles\ParticleVertex.cs" />
+    <Compile Include="Particles\TinExplosionParticleSystem.cs" />
     <Compile Include="PhysicManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Particles\Projectile.cs" />

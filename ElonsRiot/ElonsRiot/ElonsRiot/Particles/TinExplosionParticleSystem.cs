@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ElonsRiot.Particles
 {
-    class BigExplosionParticleSystem : ParticleSystem
+    class TinExplosionParticleSystem : ParticleSystem
     {
-        public BigExplosionParticleSystem(Game1 game, ContentManager content)
+        public TinExplosionParticleSystem(Game1 game, ContentManager content)
             : base(game, content)
         { }
 
@@ -20,11 +20,11 @@ namespace ElonsRiot.Particles
             settings.Duration = TimeSpan.FromSeconds(0.25f);
             settings.DurationRandomness = 0;
 
-            settings.MinHorizontalVelocity = 10;
-            settings.MaxHorizontalVelocity = 20;
+            settings.MinHorizontalVelocity = 3;
+            settings.MaxHorizontalVelocity = 7;
 
-            settings.MinVerticalVelocity = 10;
-            settings.MaxVerticalVelocity = 20;
+            settings.MinVerticalVelocity = 3;
+            settings.MaxVerticalVelocity = 7;
 
             settings.EndVelocity = 0;
 
@@ -34,11 +34,11 @@ namespace ElonsRiot.Particles
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
 
-            settings.MinStartSize = 20f;
-            settings.MaxStartSize = 25f;
+            settings.MinStartSize = 5f;
+            settings.MaxStartSize = 10f;
 
-            settings.MinEndSize = 40;
-            settings.MaxEndSize = 50;
+            settings.MinEndSize = 5;
+            settings.MaxEndSize = 10;
 
             settings.BlendState = BlendState.Additive;
         }

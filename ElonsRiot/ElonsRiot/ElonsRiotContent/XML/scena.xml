@@ -513,7 +513,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="AssetLaptop" Id="ABCDEF" Path="3D/placeholders/laptop"> //dziwna sciana
+	<!--<GameObject Name="AssetLaptop" Id="ABCDEF" Path="3D/placeholders/laptop"> //dziwna sciana
 		<Position>
 		  <X>8</X>
 		  <Y>3</Y>
@@ -530,7 +530,7 @@
 		  <Z>0.5</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-	</GameObject> 
+	</GameObject> -->
 	<GameObject Name="AssetMug" Id="ABCDEF" Path="3D/placeholders/kubeczek"> //dziwna sciana
 		<Position>
 		  <X>10</X>
@@ -953,5 +953,23 @@
 		</Scale>
 		<Interactive>false</Interactive>
 		<Tag>Button</Tag>
+	</GameObject>
+	<GameObject Name="gunPalo" Id="ABCDEF" Path="3D/placeholders/gun">
+		<Position>
+		  <X>100</X>
+		  <Y>5</Y>
+		  <Z>-25</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.05</X>
+		  <Y>0.05</Y>
+		  <Z>0.05</Z>
+		</Scale>
+		<Interactive>false</Interactive>
 	</GameObject>
 </Scene>
