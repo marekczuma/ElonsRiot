@@ -108,18 +108,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\sciana\iron_texture.jpg">
-      <Name>iron_texture</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="3D\sciana\iron_texture637.jpg">
-      <Name>iron_texture637</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="HUD\healthEmpty.png">
       <Name>healthEmpty</Name>
       <Importer>TextureImporter</Importer>
@@ -459,7 +447,8 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-  </ItemGroup><ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="HUD\Legend\legendL.png">
       <Name>legendL</Name>
       <Importer>TextureImporter</Importer>
@@ -509,7 +498,61 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\szafa2_otwarta.FBX">
+      <Name>szafa2_otwarta</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\czujniki.FBX">
+      <Name>czujniki</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\barierka_strzelnica.FBX">
+      <Name>barierka_strzelnica</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\komputer_dol.FBX">
+      <Name>komputer_dol</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\skrzynka1.FBX">
+      <Name>skrzynka1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\skrzynka2.FBX">
+      <Name>skrzynka2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\supermaszyna_dol.FBX">
+      <Name>supermaszyna_dol</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="3D\Placeholders\supermaszyna_gora.FBX">
+      <Name>supermaszyna_gora</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\bigFloor.FBX">
+      <Name>bigFloor</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
