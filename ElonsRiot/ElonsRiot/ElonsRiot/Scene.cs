@@ -38,6 +38,8 @@ namespace ElonsRiot
         public GameTime time { get; set; }
         private BasicEffect basicEffect;
         private List<GameObject> actualGameObjects;
+        public Vector3 currentTinPos;
+        public float tinExplosionTime;
 
         Guard Marian;
         Guard Zenon;
@@ -174,8 +176,9 @@ namespace ElonsRiot
             SetLightData();
             CreateBSP.CreateLeafs(GameObjects);
             PhysicManager.InitializePhysicManager(GameObjects, PlayerObject);
+            tinExplosionTime = 0.1f;
         }
-        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, ParticleSystem bigExplosion, GameTime gameTime)
+        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, ParticleSystem bigExplosion, ParticleSystem tinExplosion, GameTime gameTime)
         {
             graphic.SetRenderTarget(renderTarget);
             //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
@@ -185,7 +188,7 @@ namespace ElonsRiot
 
             foreach (var elem in GameObjects)
             {
-                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba")                
+                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo")                
                 {
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap, reflect, false);
                 }
@@ -220,12 +223,15 @@ namespace ElonsRiot
             {
                 if ((PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot) && elem.Name == "gun")
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+                
+                if((PaloObject.PaloState == FriendState.shoot) && elem.Name == "gunPalo")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
             }
 
 
              foreach (var elem in VisibleGameObjects)
              {
-                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba")                 
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo")                 
                  {
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
                  }
@@ -236,7 +242,7 @@ namespace ElonsRiot
 
              explosion.DrawParticle(gameTime);
              bigExplosion.DrawParticle(gameTime);
-
+             tinExplosion.DrawParticle(gameTime);
 
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
@@ -324,11 +330,24 @@ namespace ElonsRiot
                         gunPosition += Vector3.Transform(Vector3.Right * 1f, PlayerObject.RotationQ);
                         gobj.Position = gunPosition + 3.5f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
                     }
-
-
+                }
+                if (gobj.Name == "gunPalo")
+                {
+                    Vector3 gunPosition;
+                    gobj.RotationQ = PaloObject.RotationQ;
+                    if (PaloObject.PaloState == FriendState.shoot)
+                    {
+                        gunPosition = PaloObject.Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 2.15f, PaloObject.RotationQ);
+                        gobj.Position = gunPosition + 5.0f * Vector3.Transform(Vector3.Forward, PaloObject.RotationQ) + Vector3.Up * 7.8f;
+                    }
                 }
                 gobj.update();
             }
+
+            //if (PlayerObject.showTinExplosion)
+            //    tinExplosionUpdate(gameTime);
+
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
@@ -337,7 +356,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(10, 10, -90);
+			Vector3 tmpPos = new Vector3(80, 10, -25);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
@@ -584,6 +603,18 @@ namespace ElonsRiot
 
             mirrorIndices = new IndexBuffer(graphic, IndexElementSize.SixteenBits, 6, BufferUsage.WriteOnly);
             mirrorIndices.SetData<UInt16>(indices);
+        }
+
+        public void tinExplosionUpdate(GameTime gameTime)
+        {
+            if (tinExplosionTime > 0)
+            {
+                tinExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                PlayerObject.showTinExplosion = false;
+            }
         }
     }
 }

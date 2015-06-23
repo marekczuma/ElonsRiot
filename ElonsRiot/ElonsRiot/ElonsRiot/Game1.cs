@@ -45,6 +45,7 @@ namespace ElonsRiot
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
         ParticleSystem bigExplosionParticles;
+        ParticleSystem tinExplosionParticles;
         public float countdownTime;
         public float hackingCuntdownTime;
         public float bigExplosionTime;
@@ -59,8 +60,10 @@ namespace ElonsRiot
             Content.RootDirectory = "Content";
             explosionParticles = new ExplosionParticleSystem(this, Content);
             bigExplosionParticles = new BigExplosionParticleSystem(this, Content);
+            tinExplosionParticles = new TinExplosionParticleSystem(this, Content);
             Components.Add(explosionParticles);
             Components.Add(bigExplosionParticles);
+            Components.Add(tinExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
          //   MyDialogues = new DialoguesManager();
@@ -119,12 +122,16 @@ namespace ElonsRiot
 
             if (MyScene.PlayerObject.showShootExplosion)
             {
-                UpdateProjectiles(gameTime);
+                UpdateProjectiles(gameTime, explosionParticles);
             }
 
             if (MyScene.PlayerObject.showBigExplosion)
             {
-                UpdateBigProjectiles(gameTime);
+                UpdateProjectiles(gameTime, bigExplosionParticles);
+            }
+            if (MyScene.PlayerObject.showTinExplosion)
+            {
+                UpdateProjectiles(gameTime, tinExplosionParticles);
             }
 
             state = Keyboard.GetState();
@@ -148,17 +155,19 @@ namespace ElonsRiot
                 Countdown(gameTime);
             if(MyScene.PlayerObject.isHacking)
                 HackingCountdown(gameTime);
-            //CheckRay(state);
+     		if(MyScene.PlayerObject.showTinExplosion)
+                tinExplosionUpdate(gameTime);            //CheckRay(state);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
             explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             bigExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
+            tinExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
-            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, gameTime);
+            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, gameTime);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
             HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCuntdownTime);
             GraphicsDevice.BlendState = BlendState.Opaque;
@@ -280,25 +289,11 @@ namespace ElonsRiot
             return pickRay;
         }
 
-        void UpdateProjectiles(GameTime gameTime)
+
+        void UpdateProjectiles(GameTime gameTime, ParticleSystem explosion)
         {
-            projectiles.Add(new Projectile(explosionParticles, MyScene.PlayerObject));
 
-            int i = 0;
-
-            while (i < projectiles.Count)
-            {
-                if (!projectiles[i].Update(gameTime))
-                    projectiles.RemoveAt(i);
-                else
-                    i++;
-            }
-        }
-
-        void UpdateBigProjectiles(GameTime gameTime)
-        {
-            
-            projectiles.Add(new Projectile(bigExplosionParticles, MyScene.PlayerObject));
+            projectiles.Add(new Projectile(explosion, MyScene));
 
             int i = 0;
 
@@ -338,6 +333,19 @@ namespace ElonsRiot
             else
             {
                 MyScene.PlayerObject.showBigExplosion = false;
+            }
+        }
+
+        public void tinExplosionUpdate(GameTime gameTime)
+        {
+            if (MyScene.tinExplosionTime > 0)
+            {
+                MyScene.tinExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                MusicManager.PlaySound(2);
+            }
+            else
+            {
+                MyScene.PlayerObject.showTinExplosion = false;
             }
         }
 
