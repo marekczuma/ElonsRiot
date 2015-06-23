@@ -134,13 +134,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Placeholders\iron_texture.jpg">
-      <Name>iron_texture</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\Boxes\stairs2.FBX">
       <Name>stairs2</Name>
       <Importer>FbxImporter</Importer>
@@ -220,13 +213,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Placeholders\schody.tga">
-      <Name>schody</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\Ziemia\terrain4.FBX">
       <Name>terrain4</Name>
       <Importer>FbxImporter</Importer>
@@ -241,45 +227,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Placeholders\sciana1.JPG">
-      <Name>sciana1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\Placeholders\sciana2.jpg">
-      <Name>sciana2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\Placeholders\Floor.FBX">
       <Name>Floor</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\Placeholders\tileable-metal-textures-8 %281%29.jpg">
-      <Name>tileable-metal-textures-8 %281%29</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\Placeholders\rock_stones_0103_01_preview.jpg">
-      <Name>rock_stones_0103_01_preview</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="3D\Placeholders\podloga.jpg">
-      <Name>podloga</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -427,13 +378,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Placeholders\tekstura-01-01.jpg">
-      <Name>tekstura-01-01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="3D\Placeholders\Button.FBX">
       <Name>Button</Name>
       <Importer>FbxImporter</Importer>
@@ -520,6 +464,20 @@
     </Compile>
     <Compile Include="3D\Placeholders\szafa1_szara.FBX">
       <Name>szafa1_szara</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\serwer.FBX">
+      <Name>serwer</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3D\Placeholders\szara2_zamkn.FBX">
+      <Name>szara2_zamkn</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>

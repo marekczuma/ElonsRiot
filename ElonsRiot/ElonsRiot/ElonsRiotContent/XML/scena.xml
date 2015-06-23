@@ -39,6 +39,60 @@
 	//magazyn 
 	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
 		<Position>
+		  <X>30</X>
+		  <Y>0</Y>
+		  <Z>48</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>270</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
+		<Position>
+		  <X>8</X>
+		  <Y>0</Y>
+		  <Z>48</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>270</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_pom">
+		<Position>
+		  <X>3</X>
+		  <Y>0</Y>
+		  <Z>-10</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
+		<Position>
 		  <X>3</X>
 		  <Y>0</Y>
 		  <Z>1</Z>
@@ -315,6 +369,60 @@
 
 	
 	//Super pokój 
+	<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_pom">
+		<Position>
+		  <X>46</X>
+		  <Y>0</Y>
+		  <Z>-60</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+		<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_pom">
+		<Position>
+		  <X>46</X>
+		  <Y>0</Y>
+		  <Z>-70</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>4</X>
+		  <Y>0</Y>
+		  <Z>-75</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
 	<GameObject Name="AssetStol" Id="ABCDEF" Path="3D/placeholders/stol"> //dziwna sciana
 		<Position>
 		  <X>8</X>
@@ -419,6 +527,24 @@
 		  <X>1</X>
 		  <Y>0.75</Y>
 		  <Z>1</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2"> //dziwna sciana
+		<Position>
+		  <X>25</X>
+		  <Y>0</Y>
+		  <Z>-100</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>90</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>1</X>
+		  <Y>0.75</Y>
+		  <Z>0.98</Z>
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
