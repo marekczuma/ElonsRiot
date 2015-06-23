@@ -312,7 +312,7 @@
 		</Scale>
 		<Interactive>false</Interactive> 
 	</GameObject> 
-		<GameObject Name="assetShootWall" Id="ABCDEF" Path="3D/placeholders/scianka_strzelnica">  //dziwna sciana
+<!--		<GameObject Name="assetShootWall" Id="ABCDEF" Path="3D/placeholders/scianka_strzelnica">  //dziwna sciana
 		<Position>
 		  <X>76</X>
 		  <Y>-4</Y>
@@ -329,7 +329,7 @@
 		  <Z>1.2</Z>
 		</Scale>
 		<Interactive>false</Interactive> 
-		</GameObject>
+		</GameObject> -->
 	<GameObject Name="wall1" Id="ABCDEF" Path="3D/placeholders/Wall1">
 		<Position>
 		  <X>102.5</X>

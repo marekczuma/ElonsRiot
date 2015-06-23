@@ -524,11 +524,6 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="3D\Placeholders\scianka_strzelnica.FBX">
-      <Name>scianka_strzelnica</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
     <Compile Include="3D\Placeholders\skrzynka1.FBX">
       <Name>skrzynka1</Name>
       <Importer>FbxImporter</Importer>
