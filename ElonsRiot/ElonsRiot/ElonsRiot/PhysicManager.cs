@@ -56,7 +56,7 @@ namespace ElonsRiot
                 }
                 else
                 {
-                    if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar"))
+                    if (gObj.Name.Contains("wall") || gObj.Name.Contains("filar") || gObj.Name.Contains("asset"))
                     {
                         if (!gObj.Name.Contains("character") && !gObj.Name.Contains("stuff") && !gObj.Name.Contains("MV")) 
                         {
