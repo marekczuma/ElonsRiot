@@ -30,8 +30,9 @@ namespace ElonsRiot
         public SkinningData skinningData;
         public FriendState previousState;
 
-        public PaloCharacter()
+        public PaloCharacter(Scene _scene)
         {
+            Scene = _scene;
             distance = 1.0f;
             PaloState = FriendState.idle;
             previousState = FriendState.idle;
@@ -42,7 +43,8 @@ namespace ElonsRiot
             ammo = 50;
             ammoMax = 50;
             Skills = new Learning.PaloSkills { Palo = this };
-            LearningManager = new Learning.LearningManager { Palo = this, Scene = Scene  };
+            LearningManager = new Learning.LearningManager(Scene);
+            LearningManager.Palo = this;
         }
 
         public void WalkForward()
