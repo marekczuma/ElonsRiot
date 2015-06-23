@@ -171,21 +171,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="HUD\item1.png">
-      <Name>item1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="HUD\item2.png">
-      <Name>item2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="HUD\progress.png">
-      <Name>progress</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="HUD\Tesseract1.png">
       <Name>Tesseract1</Name>
       <Importer>TextureImporter</Importer>
@@ -203,13 +188,6 @@
       <Importer>FbxImporter</Importer>
       <Processor>MergeAnimationsProcessor</Processor>
       <ProcessorParameters_MergeAnimations>3D/ludzik/elon-walk.fbx%3b3D/ludzik/elon-run.fbx%3b3D/ludzik/elon-walkshoot.fbx%3b3D/ludzik/elon-push.fbx%3b3D/ludzik/elon-climb.fbx%3b3D/ludzik/elon-interact.fbx%3b3D/ludzik/elon-idleshoot.fbx</ProcessorParameters_MergeAnimations>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="HUD\skills.png">
-      <Name>skills</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +438,57 @@
       <Name>intro</Name>
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\Legend\legendL.png">
+      <Name>legendL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\Legend\legendMouse.png">
+      <Name>legendMouse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\Legend\legendO.png">
+      <Name>legendO</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\Legend\legendP.png">
+      <Name>legendP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\Legend\legendSpace.png">
+      <Name>legendSpace</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\Skills\skillsBg.png">
+      <Name>skillsBg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\Progress\progress1.png">
+      <Name>progress1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\Progress\progress2.png">
+      <Name>progress2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\Skills\skill.png">
+      <Name>skill</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

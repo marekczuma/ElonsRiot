@@ -20,12 +20,22 @@ namespace ElonsRiot
         public static Texture2D gunElon;
         public static Texture2D dialoguesBackground;
         public static Texture2D gunPalo;
-        public static Texture2D progress;
+        public static Texture2D progress1;
+        public static Texture2D progress2;
         public static Texture2D crossHair;
-        public static Texture2D newItem1;
-        public static Texture2D newItem2;
-        public static Texture2D skills;
+        public static Texture2D skillsBackground;
+        public static Texture2D skill;
+        public static Texture2D engineering;
+        public static Texture2D persuasion;
+        public static Texture2D usingLearning;
+        public static Texture2D shooting;
         public static Texture2D learning;
+        public static Texture2D legendP;
+        public static Texture2D legendO;
+        public static Texture2D legendSpace;
+        public static Texture2D legendMouse;
+        public static Texture2D legendL;
+
         public static Vector2 scalePalo;
 
         public static void LoadHUD(ContentManager content, float health)
@@ -37,13 +47,19 @@ namespace ElonsRiot
             healthValue = content.Load<Texture2D>("HUD/health");
             gunElon = content.Load<Texture2D>("HUD/Gun/gunElon");
             gunPalo = content.Load<Texture2D>("HUD/Gun/GunPalo");
-            progress = content.Load<Texture2D>("HUD/progress");
+            progress1 = content.Load<Texture2D>("HUD/Progress/progress1");
+            progress2 = content.Load<Texture2D>("HUD/Progress/progress2");
             crossHair = content.Load<Texture2D>("HUD/crosshair");
-            newItem1 = content.Load<Texture2D>("HUD/item1");
-            newItem2 = content.Load<Texture2D>("HUD/item2");
-            skills = content.Load<Texture2D>("HUD/skills");
+            skillsBackground = content.Load<Texture2D>("HUD/Skills/skillsBg");
+            skill = content.Load<Texture2D>("HUD/Skills/skill");
             learning = content.Load<Texture2D>("HUD/nauka");
             dialoguesBackground = content.Load<Texture2D>("HUD/background");
+            legendL = content.Load<Texture2D>("HUD/Legend/legendL");
+            legendO = content.Load<Texture2D>("HUD/Legend/legendO");
+            legendP = content.Load<Texture2D>("HUD/Legend/legendP");
+            legendSpace = content.Load<Texture2D>("HUD/Legend/legendSpace");
+            legendMouse = content.Load<Texture2D>("HUD/Legend/legendMouse");
+
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
@@ -81,6 +97,17 @@ namespace ElonsRiot
 
             spriteBatch[1].End();
 
+            Vector2 firstPos = new Vector2(graphics.Viewport.Width - 330, graphics.Viewport.Height - 130);
+
+            spriteBatch[2].Begin();
+            spriteBatch[2].Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch[2].Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 50), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch[2].Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 100), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch[2].Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 150), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch[2].Draw(legendO, new Vector2(firstPos.X, firstPos.Y - 200), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch[2].End();
+
+
             graphics.DepthStencilState = DepthStencilState.Default;
 
 
@@ -102,7 +129,7 @@ namespace ElonsRiot
         public static void DrawProgress(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(progress, new Vector2(10, 123), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.Draw(progress1, new Vector2(10, 123), null, Color.White, 0, Vector2.Zero, 0.12f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
@@ -115,21 +142,21 @@ namespace ElonsRiot
             graphics.DepthStencilState = DepthStencilState.Default;
         }
 
-        public static void DrawItem1(SpriteBatch spriteBatch, GraphicsDevice graphics)
-        {
-            spriteBatch.Begin();
-            spriteBatch.Draw(newItem1, new Vector2(graphics.Viewport.Width / 2 - 120, 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
-            spriteBatch.End();
-            graphics.DepthStencilState = DepthStencilState.Default;
-        }
+        //public static void DrawItem1(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        //{
+        //    spriteBatch.Begin();
+        //    spriteBatch.Draw(newItem1, new Vector2(graphics.Viewport.Width / 2 - 120, 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+        //    spriteBatch.End();
+        //    graphics.DepthStencilState = DepthStencilState.Default;
+        //}
 
-        public static void DrawItem2(SpriteBatch spriteBatch, GraphicsDevice graphics)
-        {
-            spriteBatch.Begin();
-            spriteBatch.Draw(newItem2, new Vector2(graphics.Viewport.Width / 2 - 120, 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
-            spriteBatch.End();
-            graphics.DepthStencilState = DepthStencilState.Default;
-        }
+        //public static void DrawItem2(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        //{
+        //    spriteBatch.Begin();
+        //    spriteBatch.Draw(newItem2, new Vector2(graphics.Viewport.Width / 2 - 120, 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+        //    spriteBatch.End();
+        //    graphics.DepthStencilState = DepthStencilState.Default;
+        //}
 
         public static void DrawString(SpriteBatch spriteBatch,String message, GraphicsDevice graphic)
         {
@@ -143,7 +170,7 @@ namespace ElonsRiot
             spriteBatch.Begin();
             spriteBatch.Draw(dialoguesBackground, new Vector2(20, graphic.Viewport.Height - 80), null, Color.White, 0, Vector2.Zero, 0.96f, SpriteEffects.None, 0);
            // spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White);
-            spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
+           spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
             //Debug.WriteLine(message.Count());
@@ -165,10 +192,14 @@ namespace ElonsRiot
             graphic.DepthStencilState = DepthStencilState.Default;
         }
 
-        public static void DrawSkills(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        public static void DrawSkills(SpriteBatch spriteBatch, GraphicsDevice graphics, PaloCharacter palo)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(skills, new Vector2(graphics.Viewport.Width - 230, 123), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.Draw(skillsBackground, new Vector2(graphics.Viewport.Width - 350, 123), null, Color.White, 0, Vector2.Zero, 0.12f, SpriteEffects.None, 0);
+            spriteBatch.Draw(skill, new Vector2(graphics.Viewport.Width - 163f, 200), null, Color.White, 0, Vector2.Zero, new Vector2(palo.Skills.Shooting / 100 * 0.12f, 0.12f), SpriteEffects.None, 0);
+            spriteBatch.Draw(skill, new Vector2(graphics.Viewport.Width - 163f, 232), null, Color.White, 0, Vector2.Zero, new Vector2(palo.Skills.Engineering / 100 * 0.12f, 0.12f), SpriteEffects.None, 0);
+            spriteBatch.Draw(skill, new Vector2(graphics.Viewport.Width - 163f, 263), null, Color.White, 0, Vector2.Zero, new Vector2(palo.Skills.Using/ 100 * 0.12f, 0.12f), SpriteEffects.None, 0);
+            spriteBatch.Draw(skill, new Vector2(graphics.Viewport.Width - 163f, 295), null, Color.White, 0, Vector2.Zero, new Vector2(palo.Skills.Persuasion / 100 * 0.12f, 0.12f), SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
@@ -177,6 +208,14 @@ namespace ElonsRiot
         {
             spriteBatch.Begin();
             spriteBatch.Draw(learning, new Vector2(graphics.Viewport.Width / 2 , 50), null, Color.White, 0, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
+        public static void DrawLegend(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(legendL, new Vector2(graphics.Viewport.Width - 100, graphics.Viewport.Height - 50), null, Color.White, 0, Vector2.Zero, 0.15f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }

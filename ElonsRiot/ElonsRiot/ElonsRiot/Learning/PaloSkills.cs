@@ -11,12 +11,14 @@ namespace ElonsRiot.Learning
         public float Engineering { get; set; }
         public float Shooting { get; set; }
         public float Using { get; set; }
+        public float Persuasion { get; set; }
 
         public PaloSkills()
         {
-            Engineering = 0;
+            Engineering = 34;
             Shooting = 0;
-            Using = 0;
+            Using = 16;
+            Persuasion = 73;
         }
     }
 }
