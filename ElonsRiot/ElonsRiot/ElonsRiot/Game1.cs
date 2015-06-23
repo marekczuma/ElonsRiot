@@ -59,7 +59,7 @@ namespace ElonsRiot
             Components.Add(bigExplosionParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
-            //   MyDialogues = new DialoguesManager();
+         //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
             graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
@@ -74,11 +74,12 @@ namespace ElonsRiot
 
         protected override void LoadContent()
         {
-            spriteBatchHUD = new SpriteBatch[2];
+            spriteBatchHUD = new SpriteBatch[3];
             spriteBatchHUD2 = new SpriteBatch[2];
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD[0] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD[1] = new SpriteBatch(GraphicsDevice);
+            spriteBatchHUD[2] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD2[0] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD2[1] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD3 = new SpriteBatch(GraphicsDevice);
@@ -108,6 +109,7 @@ namespace ElonsRiot
         protected override void Update(GameTime gameTime)
         {
             MyScene.time = gameTime;
+
             if (MyScene.PlayerObject.showShootExplosion)
             {
                 UpdateProjectiles(gameTime);
@@ -145,7 +147,6 @@ namespace ElonsRiot
             explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             bigExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
 
-
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, gameTime);
@@ -172,45 +173,45 @@ namespace ElonsRiot
                 HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
             }
 
-            if (MyScene.PlayerObject.showItem1 == true)
-            {
-                HUD.DrawItem1(spriteBatchHUD5, GraphicsDevice);
-            }
-            if (MyScene.PlayerObject.showItem2 == true)
-            {
-                HUD.DrawItem2(spriteBatchHUD6, GraphicsDevice);
-            }
+            //if (MyScene.PlayerObject.showItem1 == true)
+            //{
+            //    HUD.DrawItem1(spriteBatchHUD5, GraphicsDevice);
+            //}
+            //if (MyScene.PlayerObject.showItem2 == true)
+            //{
+            //    HUD.DrawItem2(spriteBatchHUD6, GraphicsDevice);
+            //}
             if (MyScene.PlayerObject.showSkills == true)
             {
-                HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice);
+                HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice, MyScene.PaloObject);
             }
             if(MyScene.ObjectDetector.Information)
             {
                 HUD.DrawStringForInformation(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
             }
-            if (DialoguesManager.IsCorrectRoom)
+
+            if (MyScene.PlayerObject.introEnd)
             {
+                if (DialoguesManager.IsCorrectRoom)
+                {
                     HUD.DrawString(sptiteBatchDialogues,
                         DialoguesManager.Statements[DialoguesManager.AcctualStatementNumber].dialogLines.Line[DialoguesManager.AcctualLineOfStatementCounter], GraphicsDevice);
-            }
-            if(DialoguesManager.IsPressed)
-            {
-                HUD.DrawString(sptiteBatchDialogues,
-                       DialoguesManager.OnKeystatements[0].dialogLines.Line[DialoguesManager.ActualLineOnPress], GraphicsDevice);
-            }
-            if (DialoguesManager.IsLerning)
-            {
-                if (DialoguesManager.ActualLineLerning != -1)
+                }
+                if (DialoguesManager.IsPressed)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                           DialoguesManager.OnKeystatements[0].dialogLines.Line[DialoguesManager.ActualLineOnPress], GraphicsDevice);
+                }
+                if (DialoguesManager.IsLerning)
                 {
                     HUD.DrawString(sptiteBatchDialogues,
                            DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
                 }
+                if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
+                {
+                    HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
+                }
             }
-            if(MyScene.PaloObject.PaloLearningState == LearningState.Learning)
-            {
-                HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
-            }
-
             playIntro();
 
             base.Draw(gameTime);
@@ -317,6 +318,7 @@ namespace ElonsRiot
             Texture2D videoTexture = null;
             if (MyScene.PlayerObject.introEnd)
                 player.Stop();
+
             if (player.State != MediaState.Stopped)
                 videoTexture = player.GetTexture();
             else

@@ -343,21 +343,21 @@ namespace ElonsRiot
             {
                 showProgress = false;
             }
-            else if (state.IsKeyDown(Keys.NumPad5))
-            {
-                showItem1 = true;
-                showItem2 = false;
-            }
-            else if (state.IsKeyDown(Keys.NumPad6))
-            {
-                showItem1 = false;
-                showItem2 = true;
-            }
-            else if (state.IsKeyDown(Keys.NumPad7))
-            {
-                showItem1 = false;
-                showItem2 = false;
-            }
+            //else if (state.IsKeyDown(Keys.NumPad5))
+            //{
+            //    showLegend = true;
+            //    showItem2 = false;
+            //}
+            //else if (state.IsKeyDown(Keys.NumPad6))
+            //{
+            //    showItem1 = false;
+            //    showItem2 = true;
+            //}
+            //else if (state.IsKeyDown(Keys.NumPad7))
+            //{
+            //    showItem1 = false;
+            //    showItem2 = false;
+            //}
             else if (state.IsKeyDown(Keys.NumPad8))
             {
                 showSkills = true;

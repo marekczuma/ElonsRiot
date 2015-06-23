@@ -212,7 +212,6 @@ namespace ElonsRiot
                 referenceMin.X -= 3f;
                 referenceMax.Y -= 7f;
                 referenceMin.Y += 7f;
-
             }
             referenceObject.boundingBox = new BoundingBox(referenceMin, referenceMax); 
         }

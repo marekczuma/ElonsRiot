@@ -27,6 +27,8 @@ namespace ElonsRiot.Learning
                     break;
                 }
             }
+            Scene.PaloObject.Skills.Shooting += 5;
+            Console.WriteLine(Scene.PaloObject.Skills.Shooting);
         }
     }
 }
