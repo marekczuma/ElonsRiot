@@ -36,6 +36,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchString;
         SpriteBatch spriteBatchLearning;
         SpriteBatch spriteBatchVideo;
+        SpriteBatch spriteBatchLegend;
         bool isEnd = false;
         public bool isTalking = false;
         GameObject currentInteractiveObject;
@@ -47,7 +48,7 @@ namespace ElonsRiot
         ParticleSystem bigExplosionParticles;
         ParticleSystem tinExplosionParticles;
         public float countdownTime;
-        public float hackingCuntdownTime;
+        public float hackingCountdownTime;
         public float bigExplosionTime;
         public float stringTime;
 
@@ -81,12 +82,11 @@ namespace ElonsRiot
 
         protected override void LoadContent()
         {
-            spriteBatchHUD = new SpriteBatch[3];
+            spriteBatchHUD = new SpriteBatch[2];
             spriteBatchHUD2 = new SpriteBatch[2];
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD[0] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD[1] = new SpriteBatch(GraphicsDevice);
-            spriteBatchHUD[2] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD2[0] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD2[1] = new SpriteBatch(GraphicsDevice);
             spriteBatchHUD3 = new SpriteBatch(GraphicsDevice);
@@ -98,6 +98,7 @@ namespace ElonsRiot
             sptiteBatchDialogues = new SpriteBatch(GraphicsDevice);
             spriteBatchLearning = new SpriteBatch(GraphicsDevice);
             spriteBatchVideo = new SpriteBatch(GraphicsDevice);
+            spriteBatchLegend = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             DialoguesManager.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
@@ -106,7 +107,7 @@ namespace ElonsRiot
             player = new VideoPlayer();
             player.Play(intro);
             countdownTime = 6;
-            hackingCuntdownTime = 6;
+            hackingCountdownTime = 6;
             bigExplosionTime = 0.15f;
             stringTime = 0f;
            // MyRay.setReferences(GraphicsDevice, MyScene);
@@ -132,6 +133,7 @@ namespace ElonsRiot
             if (MyScene.PlayerObject.showTinExplosion)
             {
                 UpdateProjectiles(gameTime, tinExplosionParticles);
+                TinExplosionUpdate(gameTime);
             }
 
             state = Keyboard.GetState();
@@ -153,10 +155,10 @@ namespace ElonsRiot
             }
             if (MyScene.PlayerObject.isBomb)
                 Countdown(gameTime);
-            if(MyScene.PlayerObject.isHacking)
+            if (MyScene.PlayerObject.isHacking)
                 HackingCountdown(gameTime);
-     		if(MyScene.PlayerObject.showTinExplosion)
-                tinExplosionUpdate(gameTime);            //CheckRay(state);
+
+            //CheckRay(state);
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -169,7 +171,8 @@ namespace ElonsRiot
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, gameTime);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
-            HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCuntdownTime);
+
+            HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
@@ -185,9 +188,8 @@ namespace ElonsRiot
                 HUD.DrawProgress(spriteBatchHUD3, GraphicsDevice);
             }
 
-            if (MyScene.PlayerObject.showCrosshair == true)
+            if (MyScene.PlayerObject.elonState.State == State.idleShoot || MyScene.PlayerObject.elonState.State == State.walkShoot)
             {
-                Vector2 tmp = new Vector2(0, 0);
                 HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
             }
 
@@ -231,10 +233,13 @@ namespace ElonsRiot
                    // HUD.DrawString(sptiteBatchDialogues, "Palo:Przeanalizowalem budowe czujek.Mozemy je unieszkodliwic jesli zestrzelimy je jednoczesnie", this.GraphicsDevice);
                     isEnd = false;
                 }
-                
                 if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
                 {
                     HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
+                }
+                if (MyScene.PlayerObject.showLegend)
+                {
+                    HUD.DrawLegend(spriteBatchLegend, GraphicsDevice);
                 }
             }
             playIntro();
@@ -289,10 +294,8 @@ namespace ElonsRiot
             return pickRay;
         }
 
-
         void UpdateProjectiles(GameTime gameTime, ParticleSystem explosion)
         {
-
             projectiles.Add(new Projectile(explosion, MyScene));
 
             int i = 0;
@@ -305,19 +308,34 @@ namespace ElonsRiot
                     i++;
             }
         }
-        void HackingCountdown(GameTime gameTime)
+
+        void TinExplosionUpdate(GameTime gameTime)
         {
-            if (hackingCuntdownTime > 0)
+            if (MyScene.tinExplosionTime > 0)
             {
-                hackingCuntdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                MyScene.tinExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                MusicManager.PlaySound(2);
             }
             else
             {
-                //HUD.DrawString(spriteBatchHUD7, "Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+                MyScene.PlayerObject.showTinExplosion = false;
+            }
+        }
+
+        void HackingCountdown(GameTime gameTime)
+        {
+            if (hackingCountdownTime > 0)
+            {
+                hackingCountdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                //HUD.DrawString(spriteBatchHUD7, "Ah... nie uda mi sie tego rozbroic!", this.GraphicsDevice);
                 isEnd = true;
                 stringTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
         }
+
         void Countdown(GameTime gameTime)
         {
             if (countdownTime > 0)
@@ -333,19 +351,6 @@ namespace ElonsRiot
             else
             {
                 MyScene.PlayerObject.showBigExplosion = false;
-            }
-        }
-
-        public void tinExplosionUpdate(GameTime gameTime)
-        {
-            if (MyScene.tinExplosionTime > 0)
-            {
-                MyScene.tinExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                MusicManager.PlaySound(2);
-            }
-            else
-            {
-                MyScene.PlayerObject.showTinExplosion = false;
             }
         }
 

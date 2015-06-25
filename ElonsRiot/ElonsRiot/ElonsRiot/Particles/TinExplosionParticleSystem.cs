@@ -20,11 +20,11 @@ namespace ElonsRiot.Particles
             settings.Duration = TimeSpan.FromSeconds(0.25f);
             settings.DurationRandomness = 0;
 
-            settings.MinHorizontalVelocity = 3;
-            settings.MaxHorizontalVelocity = 7;
+            settings.MinHorizontalVelocity = 1;
+            settings.MaxHorizontalVelocity = 3;
 
-            settings.MinVerticalVelocity = 3;
-            settings.MaxVerticalVelocity = 7;
+            settings.MinVerticalVelocity = 1;
+            settings.MaxVerticalVelocity = 3;
 
             settings.EndVelocity = 0;
 

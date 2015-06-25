@@ -375,7 +375,7 @@ namespace ElonsRiot
                 }
             
             //kolija między charakterami
-       /*     foreach (GameObject character in Characters)
+     /*       foreach (GameObject character in Characters)
             {
                 foreach (GameObject character2 in Characters)
                     if (character.Name != character2.Name && boxesCollision.TestAABBAABB(character, character2))

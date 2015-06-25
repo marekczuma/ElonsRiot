@@ -180,25 +180,23 @@ namespace ElonsRiot
         }
         public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, ParticleSystem bigExplosion, ParticleSystem tinExplosion, GameTime gameTime)
         {
-            graphic.SetRenderTarget(renderTarget);
-            //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
-
-            graphic.DepthStencilState = DepthStencilState.Default;
-            graphic.RasterizerState = RasterizerState.CullCounterClockwise;
-
-            foreach (var elem in GameObjects)
-            {
-                if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo")                
-                {
-                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap, reflect, false);
-                }
-
-                
-            }
-            graphic.SetRenderTarget(null);
-            shadowMap = (Texture2D)renderTarget;
-
+            //graphic.SetRenderTarget(renderTarget);
             graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+
+            //graphic.DepthStencilState = DepthStencilState.Default;
+            //graphic.RasterizerState = RasterizerState.CullCounterClockwise;
+
+            //foreach (var elem in GameObjects)
+            //{
+            //    if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name == "gunPalo")                
+            //    {
+            //        elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowMap", shadowMap, reflect, false);
+            //    }  
+            //}
+            //graphic.SetRenderTarget(null);
+            //shadowMap = (Texture2D)renderTarget;
+
+            //graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
 
              foreach(var elem in VisibleGameObjects)
              {
@@ -222,10 +220,10 @@ namespace ElonsRiot
             foreach(var elem in GameObjects)
             {
                 if ((PlayerObject.elonState.State == State.idleShoot || PlayerObject.elonState.State == State.walkShoot) && elem.Name == "gun")
-                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                 
-                if((PaloObject.PaloState == FriendState.shoot) && elem.Name == "gunPalo")
-                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+                if ((PaloObject.PaloState == FriendState.shoot) && elem.Name == "gunPalo")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
             }
 
 
@@ -233,10 +231,8 @@ namespace ElonsRiot
              {
                  if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo")                 
                  {
-                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
+                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                  }
-
-            
              }
             // gun.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "ShadowedScene", shadowMap, reflect, false);
 
@@ -248,10 +244,10 @@ namespace ElonsRiot
             {
                 gObj.RefreshMatrix();
                
-               // DrawBoudingBoxes(graphic, gObj);
+                DrawBoudingBoxes(graphic, gObj);
             }
             shadowMap = null;
-       //    DrawBoudingBox(graphic);
+            DrawBoudingBox(graphic);
             DrawRay(graphic);
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
@@ -331,6 +327,7 @@ namespace ElonsRiot
                         gobj.Position = gunPosition + 3.5f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
                     }
                 }
+
                 if (gobj.Name == "gunPalo")
                 {
                     Vector3 gunPosition;
@@ -341,13 +338,10 @@ namespace ElonsRiot
                         gunPosition += Vector3.Transform(Vector3.Right * 2.15f, PaloObject.RotationQ);
                         gobj.Position = gunPosition + 5.0f * Vector3.Transform(Vector3.Forward, PaloObject.RotationQ) + Vector3.Up * 7.8f;
                     }
-                }
+                 }
+
                 gobj.update();
             }
-
-            //if (PlayerObject.showTinExplosion)
-            //    tinExplosionUpdate(gameTime);
-
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
@@ -356,7 +350,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-			Vector3 tmpPos = new Vector3(80, 10, -25);
+            Vector3 tmpPos = new Vector3(80, 10, -25);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
@@ -603,18 +597,6 @@ namespace ElonsRiot
 
             mirrorIndices = new IndexBuffer(graphic, IndexElementSize.SixteenBits, 6, BufferUsage.WriteOnly);
             mirrorIndices.SetData<UInt16>(indices);
-        }
-
-        public void tinExplosionUpdate(GameTime gameTime)
-        {
-            if (tinExplosionTime > 0)
-            {
-                tinExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else
-            {
-                PlayerObject.showTinExplosion = false;
-            }
         }
     }
 }
