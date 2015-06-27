@@ -40,7 +40,7 @@ namespace ElonsRiot.Learning
 
         public void LearningUpdate()
         {
-            if ((Palo.PaloLearningState == LearningState.Learning) || (Vector3.Distance(Scene.PlayerObject.Position, ShootingLearning.PosA) <= 5))
+            if ((Palo.PaloLearningState == LearningState.Learning) && (Vector3.Distance(Scene.PlayerObject.Position, ShootingLearning.PosA) <= 5))
             {
                 if (!ShootingLearning.IsStarted)
                 {

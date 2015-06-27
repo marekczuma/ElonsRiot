@@ -23,15 +23,15 @@ namespace ElonsRiot.Interaction
             Door1.id = "ABCDEF";
             InteractiveObjects.Add(Door1);
 
-            //Door Door2 = new Door { Name = "Drzwi 2", ObjectPath = "3D/placeholders/drzwi", Interactive = true, Position = new Vector3(86, 0, -0.5f), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1.38f, 0.75f, 1) };
-            //Door2.id = "ABCDEF";
-            //InteractiveObjects.Add(Door2);
+            Door Door2 = new Door { Name = "Drzwi 2", ObjectPath = "3D/placeholders/drzwi", Interactive = true, Position = new Vector3(86, 0, -0.5f), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1.38f, 0.75f, 1) };
+            Door2.id = "ABCDEF";
+            InteractiveObjects.Add(Door2);
             HardChest BigChest = new HardChest { Name = "boxForMovement", ObjectPath = "3D/placeholders/skrzynka1", Interactive = true, Position = new Vector3(45, 0, 20), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1f, 2.5f, 1f) };
             BigChest.id = "ABCDEF";
             InteractiveObjects.Add(BigChest);
-            BombDoor bombDoor = new BombDoor { Name = "Drzwi 2", ObjectPath = "3D/placeholders/drzwi", Interactive = true, Position = new Vector3(86, 0, -0.5f), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1.38f, 0.75f, 1) };
-            bombDoor.id = "ABCDEF";
-            InteractiveObjects.Add(bombDoor);
+            //BombDoor bombDoor = new BombDoor { Name = "Drzwi 2", ObjectPath = "3D/placeholders/drzwi", Interactive = true, Position = new Vector3(86, 0, -0.5f), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1.38f, 0.75f, 1) };
+            //bombDoor.id = "ABCDEF";
+            //InteractiveObjects.Add(bombDoor);
             Chest JustChest = new Chest { Name = "boxForMovement", ObjectPath = "3D/placeholders/skrzynka1", Interactive = true, Position = new Vector3(15, 0, -10), Rotation = new Vector3(0, 180, 0), Scale = new Vector3(1f, 1f, 1f) };
             JustChest.id = "ABCDEF";
             InteractiveObjects.Add(JustChest);

@@ -403,9 +403,9 @@ namespace ElonsRiot
             Zenon.Scene = this;
 
             GameObjects.Add(Marian);
-            GameObjects.Add(Zenon);
+            //GameObjects.Add(Zenon);
             NPCs.Add(Marian);
-            NPCs.Add(Zenon);
+            //NPCs.Add(Zenon);
 
         }
         private void LoadPalo()
