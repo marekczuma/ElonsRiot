@@ -21,8 +21,9 @@ namespace ElonsRiot.Interaction
         }
         public override void Interaction(Scene _scene)
         {
-          _scene.PlayerObject.elonState.SetCurrentState(State.interact);
-          _scene.PlayerObject.isHacking = true;
+            _scene.PlayerObject.elonState.SetCurrentState(State.interact);
+
+            _scene.PlayerObject.isHacking = true;
         }
 
         public override void AfterInteraction(Scene _scene)

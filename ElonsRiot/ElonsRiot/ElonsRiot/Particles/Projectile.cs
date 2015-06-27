@@ -12,7 +12,6 @@ namespace ElonsRiot.Particles
         const float gravity = 0;
 
         ParticleSystem explosionParticles;
- //       ParticleSystem bigExplosionParticles;
 
         Vector3 position;
         Vector3 velocity;
@@ -45,20 +44,20 @@ namespace ElonsRiot.Particles
             {
                 this.explosionParticles = explosionParticles;
                 position = new Vector3(86,4,-7);
-                foreach(var element in scene.GameObjects)
+                foreach (var element in scene.PlayerObject.Scene.GameObjects)
                 {
                     if (element.Name == "Drzwi 2")
                     {
                         element.ChangePosition(new Vector3(12, 0, 0));
-                        scene.GameObjects.Remove(element);
+                        scene.PlayerObject.Scene.GameObjects.Remove(element);
                         break;
                     }
                 }
-                foreach (var element in scene.GameObjects)
+                foreach (var element in scene.PlayerObject.Scene.GameObjects)
                 {
                     if (element.Name == "Bomba")
                     {
-                        scene.GameObjects.Remove(element);
+                        scene.PlayerObject.Scene.GameObjects.Remove(element);
                         break;
                     }
                 }
@@ -67,16 +66,16 @@ namespace ElonsRiot.Particles
                 velocity.Y = (float)(random.NextDouble() + 5) * verticalVelocityRange;
                 velocity.Z = (float)(random.NextDouble() - 5) * sidewaysVelocityRange;
             }
-
             if (scene.PlayerObject.showTinExplosion)
             {
                 this.explosionParticles = explosionParticles;
-                position = new Vector3(scene.currentTinPos.X, scene.currentTinPos.Y + 5, scene.currentTinPos.Z);
+                position = new Vector3(scene.currentTinPos.X, scene.currentTinPos.Y+2, scene.currentTinPos.Z);
 
                 velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
                 velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
                 velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
             }
+            
         }
 
         public bool Update (GameTime gameTime)

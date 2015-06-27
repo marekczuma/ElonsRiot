@@ -44,8 +44,7 @@ namespace ElonsRiot
             ammo = 50;
             ammoMax = 50;
             Skills = new Learning.PaloSkills { Palo = this };
-            LearningManager = 
-                new Learning.LearningManager(Scene);
+            LearningManager = new Learning.LearningManager(Scene);
             LearningManager.Palo = this;
             PaloShooting = new Shooting.NPCShooting(Scene);
         }

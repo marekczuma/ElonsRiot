@@ -25,7 +25,7 @@ namespace ElonsRiot
         private bool isMouseMovement;
         public float angle;
         public Vector3 oldPosition, newPosition;
-        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion, showBigExplosion, showTinExplosion;
+        public bool showGun, showProgress, showCrosshair, showItem1, showItem2, showSkills, showShootExplosion, showBigExplosion, showTinExplosion, showLegend;
         public bool introEnd = false;
         public PaloCharacter Palo { get; set; }
         public List<BoundingBox> boxes;
@@ -159,7 +159,7 @@ namespace ElonsRiot
                     Scene.GameObjects.Add(tmp);
                     isBomb = true;
                 }
-                else if(isHacking == false)
+                else if (isHacking == false)
                 {
                     isHacking = true;
                 }
@@ -207,7 +207,17 @@ namespace ElonsRiot
             {
                 introEnd = true;
             }
-
+            else if (state.IsKeyDown(Keys.Tab))
+            {
+                if (timer <= 0)
+                {
+                    if (showLegend)
+                        showLegend = false;
+                    else
+                        showLegend = true;
+                    timer = 500;
+                }
+            }
             else if((!state.IsKeyDown(Keys.E)) && (elonState.State == State.interact))
             {
                 if (interactTime > 0)

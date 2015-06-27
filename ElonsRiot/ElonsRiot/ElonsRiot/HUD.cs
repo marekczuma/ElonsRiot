@@ -97,21 +97,9 @@ namespace ElonsRiot
 
             spriteBatch[1].End();
 
-            Vector2 firstPos = new Vector2(graphics.Viewport.Width - 330, graphics.Viewport.Height - 130);
-
-            spriteBatch[2].Begin();
-            spriteBatch[2].Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch[2].Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 50), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch[2].Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 100), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch[2].Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 150), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch[2].Draw(legendO, new Vector2(firstPos.X, firstPos.Y - 200), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch[2].End();
-
-
             graphics.DepthStencilState = DepthStencilState.Default;
-
-
         }
+
         public static void DrawProgress(SpriteBatch[] spriteBatch, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
         {
             spriteBatch[1].Begin();
@@ -123,6 +111,7 @@ namespace ElonsRiot
                 spriteBatch[1].DrawString(bigFont, "1", new Vector2(width / 2 - 30, 50), Color.Blue);
             spriteBatch[1].End();
         }
+
         public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammoElon,float ammoPalo,float ammoMax, GraphicsDevice graphics,int width)
         {
             spriteBatch[0].Begin();
@@ -225,8 +214,14 @@ namespace ElonsRiot
 
         public static void DrawLegend(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
+            Vector2 firstPos = new Vector2(graphics.Viewport.Width - 330, graphics.Viewport.Height - 130);
+
             spriteBatch.Begin();
-            spriteBatch.Draw(legendL, new Vector2(graphics.Viewport.Width - 100, graphics.Viewport.Height - 50), null, Color.White, 0, Vector2.Zero, 0.15f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 50), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 100), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 150), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendO, new Vector2(firstPos.X, firstPos.Y - 200), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
