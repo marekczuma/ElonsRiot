@@ -5,6 +5,7 @@ namespace ElonsRiot.Particles
 {
     class Projectile
     {
+        const float numLaserParticles = 1;
         const int numExplosionParticles = 30;
         const float projectileLifespan = 0f;
         const float sidewaysVelocityRange = 0;
@@ -12,18 +13,24 @@ namespace ElonsRiot.Particles
         const float gravity = 0;
 
         ParticleSystem explosionParticles;
+        ParticleSystem laserParticles;
 
         Vector3 position;
+        Vector3 laserPosition;
         Vector3 velocity;
+        Vector3 laserVelocity;
         float age;
 
         static Random random = new Random();
 
-        public Projectile(ParticleSystem explosionParticles, Scene scene)
+        public Projectile(ParticleSystem explosionParticles, ParticleSystem laserParticles, Scene scene)
         {
+            this.explosionParticles = explosionParticles;
+            this.laserParticles = laserParticles;
+
             if (scene.PlayerObject.showShootExplosion)
             {
-                this.explosionParticles = explosionParticles;
+           //     this.explosionParticles = explosionParticles;
 
                 if (scene.PlayerObject.elonState.State == State.walkShoot)
                 {
@@ -42,8 +49,9 @@ namespace ElonsRiot.Particles
             }
             if (scene.PlayerObject.showBigExplosion)
             {
-                this.explosionParticles = explosionParticles;
+             //   this.explosionParticles = explosionParticles;
                 position = new Vector3(86,4,-7);
+
                 foreach (var element in scene.PlayerObject.Scene.GameObjects)
                 {
                     if (element.Name == "Drzwi 2")
@@ -68,12 +76,20 @@ namespace ElonsRiot.Particles
             }
             if (scene.PlayerObject.showTinExplosion)
             {
-                this.explosionParticles = explosionParticles;
+            //    this.explosionParticles = explosionParticles;
                 position = new Vector3(scene.currentTinPos.X, scene.currentTinPos.Y+2, scene.currentTinPos.Z);
 
                 velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
                 velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
                 velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            }
+            if (scene.PlayerObject.showLaser)
+            {
+                laserPosition = new Vector3(2, 3.5f, -90);
+
+                laserVelocity.X = 15f;
+
+                //laserEmitter = new ParticleEmitter(explosionParticles, trailLaserPerSecond, position);
             }
             
         }
@@ -83,15 +99,20 @@ namespace ElonsRiot.Particles
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             position += velocity * elapsedTime;
-            velocity.Y -= elapsedTime * gravity;
+            velocity.X += elapsedTime * gravity;
             age += elapsedTime;
+
+            //laserEmitter.Update(gameTime, position);
 
            if (age > projectileLifespan)
            {
                for (int i = 0; i < numExplosionParticles; i++)
                    explosionParticles.AddParticle(position, velocity);
 
-               return false;
+               for (int i = 0; i < numLaserParticles; i++)
+                   laserParticles.AddParticle(laserPosition, laserVelocity);
+
+                   return false;
            }
            return true;
         }

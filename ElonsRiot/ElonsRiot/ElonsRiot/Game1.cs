@@ -47,6 +47,8 @@ namespace ElonsRiot
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
         ParticleSystem bigExplosionParticles;
         ParticleSystem tinExplosionParticles;
+        ParticleSystem laserParticles;
+        ParticleSystem helperParticles;
         public float countdownTime;
         public float hackingCountdownTime;
         public float bigExplosionTime;
@@ -62,9 +64,13 @@ namespace ElonsRiot
             explosionParticles = new ExplosionParticleSystem(this, Content);
             bigExplosionParticles = new BigExplosionParticleSystem(this, Content);
             tinExplosionParticles = new TinExplosionParticleSystem(this, Content);
+            laserParticles = new LaserParticleSystem(this, Content);
+            helperParticles = new ExplosionParticleSystem(this, Content);
             Components.Add(explosionParticles);
             Components.Add(bigExplosionParticles);
             Components.Add(tinExplosionParticles);
+            Components.Add(laserParticles);
+            Components.Add(helperParticles);
 
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
          //   MyDialogues = new DialoguesManager();
@@ -120,20 +126,23 @@ namespace ElonsRiot
         protected override void Update(GameTime gameTime)
         {
             MyScene.time = gameTime;
-
             if (MyScene.PlayerObject.showShootExplosion)
             {
-                UpdateProjectiles(gameTime, explosionParticles);
+                UpdateProjectiles(gameTime, explosionParticles, laserParticles);
             }
 
             if (MyScene.PlayerObject.showBigExplosion)
             {
-                UpdateProjectiles(gameTime, bigExplosionParticles);
+                UpdateProjectiles(gameTime, bigExplosionParticles, laserParticles);
             }
             if (MyScene.PlayerObject.showTinExplosion)
             {
-                UpdateProjectiles(gameTime, tinExplosionParticles);
+                UpdateProjectiles(gameTime, tinExplosionParticles, laserParticles);
                 TinExplosionUpdate(gameTime);
+            }
+            if (MyScene.PlayerObject.showLaser)
+            {
+                UpdateProjectiles(gameTime, helperParticles, laserParticles);
             }
 
             state = Keyboard.GetState();
@@ -166,10 +175,12 @@ namespace ElonsRiot
             explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             bigExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             tinExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
+            laserParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
+            helperParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
-            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, gameTime);
+            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
 
             HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
@@ -294,9 +305,9 @@ namespace ElonsRiot
             return pickRay;
         }
 
-        void UpdateProjectiles(GameTime gameTime, ParticleSystem explosion)
+        void UpdateProjectiles(GameTime gameTime, ParticleSystem explosion, ParticleSystem laser)
         {
-            projectiles.Add(new Projectile(explosion, MyScene));
+            projectiles.Add(new Projectile(explosion, laser, MyScene));
 
             int i = 0;
 

@@ -217,11 +217,11 @@ namespace ElonsRiot
             Vector2 firstPos = new Vector2(graphics.Viewport.Width - 330, graphics.Viewport.Height - 130);
 
             spriteBatch.Begin();
-            spriteBatch.Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 50), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 100), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 150), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendO, new Vector2(firstPos.X, firstPos.Y - 200), null, Color.White, 0, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 50), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 100), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 150), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendO, new Vector2(firstPos.X, firstPos.Y - 200), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
