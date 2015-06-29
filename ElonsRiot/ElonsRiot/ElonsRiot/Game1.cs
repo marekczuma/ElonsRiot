@@ -80,7 +80,7 @@ namespace ElonsRiot
          //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
 
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }
@@ -88,6 +88,7 @@ namespace ElonsRiot
         {
             PhysicManager.setElements(graphics.GraphicsDevice);
             MusicManager.Initialize(Content);
+            DialoguesSoundManager.Initialize(Content);
             renderTarget = new RenderTarget2D(
                            GraphicsDevice,
                            GraphicsDevice.PresentationParameters.BackBufferWidth,
@@ -382,7 +383,7 @@ namespace ElonsRiot
             {
                 bigExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 MyScene.PlayerObject.showBigExplosion = true;
-                MusicManager.PlaySound(3);
+                MusicManager.PlaySound(8);
             }
             else
             {
@@ -467,6 +468,11 @@ namespace ElonsRiot
                 {
                     HUD.DrawString(sptiteBatchDialogues,
                           DialoguesManager.OpeningStatements[0].dialogLines.Line[DialoguesManager.ActualLineOpening], GraphicsDevice);
+                }
+                if (DialoguesManager.IsLaser && DialoguesManager.LaserStatements.Count != 0)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                          DialoguesManager.LaserStatements[0].dialogLines.Line[DialoguesManager.ActualLineLaser], GraphicsDevice);
                 }
                 if(isEnd == true && stringTime <4)
                 {

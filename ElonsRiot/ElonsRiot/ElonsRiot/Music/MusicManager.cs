@@ -22,14 +22,26 @@ namespace ElonsRiot.Music
         public static void Initialize(ContentManager content )
         {
             soundEffectInstance = new List<SoundEffectInstance>();
-          soundEffect = content.Load<SoundEffect>("Sounds/alarm");
+          soundEffect = content.Load<SoundEffect>("Sounds/alarm"); //0
           soundEffectInstance.Add(soundEffect.CreateInstance());
           SetSoundEffectInstance(1, 0, 0, true, 0);
-          soundEffect = content.Load<SoundEffect>("Sounds/EXPLOSIO");
+          soundEffect = content.Load<SoundEffect>("Sounds/EXPLOSIO"); //1
           soundEffectInstance.Add(soundEffect.CreateInstance());
-          soundEffect = content.Load<SoundEffect>("Sounds/DeviceExplosion");
+          soundEffect = content.Load<SoundEffect>("Sounds/DeviceExplosion");  //2
           soundEffectInstance.Add(soundEffect.CreateInstance());
-          soundEffect = content.Load<SoundEffect>("Sounds/Final");
+          soundEffect = content.Load<SoundEffect>("Sounds/blaster"); //3
+          soundEffectInstance.Add(soundEffect.CreateInstance());
+          soundEffect = content.Load<SoundEffect>("Sounds/paloWalk"); //4
+          soundEffectInstance.Add(soundEffect.CreateInstance());
+          SetSoundEffectInstance(1, 0, 0, true, 4);
+          soundEffect = content.Load<SoundEffect>("Sounds/picking"); //5
+          soundEffectInstance.Add(soundEffect.CreateInstance());
+          SetSoundEffectInstance(1, 0, 0, false, 5);
+          soundEffect = content.Load<SoundEffect>("Sounds/runElon"); //6
+          soundEffectInstance.Add(soundEffect.CreateInstance());
+          soundEffect = content.Load<SoundEffect>("Sounds/walkElon"); //7
+          soundEffectInstance.Add(soundEffect.CreateInstance());
+          soundEffect = content.Load<SoundEffect>("Sounds/Final"); //8
           soundEffectInstance.Add(soundEffect.CreateInstance());
         }
         /// <summary>

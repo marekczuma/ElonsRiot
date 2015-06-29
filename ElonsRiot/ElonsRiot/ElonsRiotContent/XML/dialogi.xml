@@ -20,6 +20,9 @@
   <statement>
     <dialogLines>
 	 <line>Palo: Odradzam. Lasery w ciagu sekundy zakoncza twoje funkcje zyciowe.</line>
+	 <line></line>
+	 <line>Palo:Przeskanowalem budowe czujnikow. Jesli zniszczymy je w jednym moemenci alarm nie zostanie uruchomiony</line>
+	 <line>Elon: Palo, jestes genialny. Jestem taki dumny. </line>
 	</dialogLines>
 	<place>Laser</place>
 </statement>
@@ -36,13 +39,6 @@
 		<line>Elon:Tak,zrozumialem! Idziemy.</line>
 	</dialogLines>
 	<place>ClosedDoor</place>
-</statement>
-<statement>
-	<dialogLines>
-		<line>Palo:Przeskanowalem budowe czujnikow. Jesli zniszczymy je w jednym moemenci alarm nie zostanie uruchomiony</line>
-		<line>Elon: Palo, jestes genialny. Jestem taki dumny. </line>
-	</dialogLines>
-	<place>PaloIdea</place>
 </statement>
 //dalogi pokolei
   <statement>

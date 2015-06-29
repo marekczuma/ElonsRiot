@@ -320,6 +320,23 @@ namespace ElonsRiot
             time = gameTime;
             ShootingManager.UpdateShooting();
             QuestManager.UpdateQuests();
+            if(checkPlayerPosition())
+            {
+                Dialogues.DialoguesManager.IsLaser = true;
+            }
+        }
+        private bool checkPlayerPosition()
+        {
+            
+       
+            if(PlayerObject.Position.X >= 3f && PlayerObject.Position.X <= 47.5f)
+            {
+                if(PlayerObject.Position.Z >= -100 && PlayerObject.Position.Z <= -80)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private void LoadElon()
         {

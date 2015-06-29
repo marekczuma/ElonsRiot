@@ -120,6 +120,7 @@
     <Compile Include="Learning\PaloSkills.cs" />
     <Compile Include="Learning\ShootingLearning.cs" />
     <Compile Include="Learning\Tin.cs" />
+    <Compile Include="Music\DialoguesSoundManager.cs" />
     <Compile Include="Music\MusicManager.cs" />
     <Compile Include="MyPlane.cs" />
     <Compile Include="PaloCharacter.cs" />
