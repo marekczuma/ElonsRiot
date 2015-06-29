@@ -378,9 +378,9 @@ namespace ElonsRiot
             Zenon.Tag = "guard";
 
             GameObjects.Add(Marian);
-            //GameObjects.Add(Zenon);
+            GameObjects.Add(Zenon);
             NPCs.Add(Marian);
-            //NPCs.Add(Zenon);
+            NPCs.Add(Zenon);
 
         }
         private void LoadPalo()
