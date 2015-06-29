@@ -40,7 +40,8 @@ namespace ElonsRiot
         private List<GameObject> actualGameObjects;
         public Vector3 currentTinPos;
         public float tinExplosionTime;
-
+        public bool isSensore;
+        public bool isGray;
         Guard Marian;
         Guard Zenon;
         Guard Artur;
@@ -61,6 +62,7 @@ namespace ElonsRiot
         IndexBuffer mirrorIndices;
 
         int indexMarian;
+
 
         DepthStencilState addIfMirror = new DepthStencilState()
         {
@@ -92,6 +94,8 @@ namespace ElonsRiot
             ShootingManager = new Shooting.ShootingManager { Scene = this };
             actualGameObjects = new List<GameObject>();
             QuestManager = new Quests.QuestManager(this);
+            isSensore = false;
+            isGray = false;
         }
         public Scene()
         {
@@ -319,7 +323,7 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(80, 10, -25);
+            Vector3 tmpPos = new Vector3(80, 10, -25);// 80 -25
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";

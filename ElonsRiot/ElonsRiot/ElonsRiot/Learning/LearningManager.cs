@@ -47,7 +47,6 @@ namespace ElonsRiot.Learning
                     ShootingLearning.MoveElonAndPalo();
                     ShootingLearning.IsStarted = true;
                     Palo.PaloState = FriendState.shoot;
-                    
                 }
                 else
                 {
@@ -61,7 +60,7 @@ namespace ElonsRiot.Learning
                         if(Scene.PlayerObject.ammo <1)
                         {
                             ShootingLearning.ElonShoot = false;
-                            Timer = 2000;
+                            Timer = 3000;
                         }
                     }else
                     {
@@ -69,11 +68,11 @@ namespace ElonsRiot.Learning
                         Timer -= timeInMS;
                         if (Timer <= 0)
                         {
-                            Palo.PaloShooting.TinShot(ShootingLearning.Tins[1]);
+                            Palo.PaloShooting.Shoot(ShootingLearning.Tins[1]);
                             ShootingLearning.ElonShoot = true;
                             ShootingLearning.ElonAfterFirst = true;
+                            ShootingLearning.IsStarted = false;
                         }                                                                                                                          
-                        //Palo.NPCShooting.Shoot(T
                     }
                 }
             }

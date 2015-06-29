@@ -34,6 +34,7 @@ namespace ElonsRiot
         KeyboardState oldState;
         MouseState oldMouseState;
         public bool isBomb = false;
+        public bool isOpening = false;
         public bool isHacking = false;
         public AnimationClip clip;
         public AnimationPlayer animationPlayer;

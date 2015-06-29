@@ -42,6 +42,16 @@ namespace ElonsRiot.Shooting
             MusicManager.PlaySound(1); //Szczela i nawet słychać!
         }
 
+        public void ShootWhenLearning(GameObject _target)
+        {
+            //Character.LookAtOnce(_target.Position);
+            Random rand = new Random();
+            float tmpRange = rand.Next((int)RangeOfMistake);
+            //Character.RotateQuaternions(MathHelper.ToRadians(tmpRange));
+            Console.WriteLine(MathHelper.ToRadians(tmpRange));
+            Scene.ShootingManager.Shot(Character, Character.RotationQ);
+            MusicManager.PlaySound(1); //Szczela i nawet słychać!
+        }
 
         public void NPCManage()
         {

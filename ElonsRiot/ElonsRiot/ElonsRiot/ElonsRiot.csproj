@@ -60,7 +60,8 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -106,10 +107,12 @@
     <Compile Include="Interaction\BombDoor.cs" />
     <Compile Include="Interaction\Chest.cs" />
     <Compile Include="Interaction\Door.cs" />
+    <Compile Include="Interaction\EndStuff.cs" />
     <Compile Include="Interaction\EngineeringStuff.cs" />
     <Compile Include="Interaction\HardChest.cs" />
     <Compile Include="Interaction\InteractiveGameObject.cs" />
     <Compile Include="Interaction\InteractiveObjectsList.cs" />
+    <Compile Include="Interaction\OpeningDoor.cs" />
     <Compile Include="Interaction\Stuff.cs" />
     <Compile Include="Interaction\Wall.cs" />
     <Compile Include="Learning\LearningManager.cs" />
