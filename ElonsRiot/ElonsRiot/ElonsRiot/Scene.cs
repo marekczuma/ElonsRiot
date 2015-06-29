@@ -318,6 +318,7 @@ namespace ElonsRiot
 
             UpdateGunsPosition();
 
+           
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
