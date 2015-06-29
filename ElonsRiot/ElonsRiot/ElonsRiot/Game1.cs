@@ -431,6 +431,11 @@ namespace ElonsRiot
                     HUD.DrawString(sptiteBatchDialogues,
                            DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
                 }
+                if(DialoguesManager.IsOpening)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                          DialoguesManager.OpeningStatements[0].dialogLines.Line[DialoguesManager.ActualLineOpening], GraphicsDevice);
+                }
                 if(isEnd == true && stringTime <4)
                 {
                     HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);

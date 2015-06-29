@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ElonsRiot.Interaction
 {
-    class EndStuff : InteractiveGameObject
+    class OpeningDoor : InteractiveGameObject
     {
         bool isTalking;
 
@@ -14,7 +14,7 @@ namespace ElonsRiot.Interaction
             get { return isTalking; }
             set { isTalking = value; }
         }
-        public EndStuff()
+        public OpeningDoor()
         {
             this.Information = "";
             isTalking = false;
@@ -22,12 +22,13 @@ namespace ElonsRiot.Interaction
         public override void Interaction(Scene _scene)
         {
             _scene.PlayerObject.elonState.SetCurrentState(State.interact);
+
+            _scene.PlayerObject.isOpening = true;
+            Dialogues.DialoguesManager.IsOpening = true;
         }
 
         public override void AfterInteraction(Scene _scene)
         {
-            _scene.isGray = true;
-            Music.MusicManager.PlaySound(0);
             isTalking = false;
         }
     }

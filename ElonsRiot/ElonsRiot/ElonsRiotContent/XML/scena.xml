@@ -983,7 +983,7 @@
 		<Interactive>false</Interactive>
 		</GameObject> -->
 //Otaczanie sceny 
-    <GameObject Name="door" Id="ABCDEF" Path="3D/placeholders/drzwi_suwane_2"> //dziwna sciana
+ <!--   <GameObject Name="door" Id="ABCDEF" Path="3D/placeholders/drzwi_suwane_2"> //dziwna sciana
 		<Position>
 		  <X>51</X>
 		  <Y>0</Y>
@@ -1000,7 +1000,7 @@
 		  <Z>1</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-		</GameObject>
+		</GameObject> -->
 	<GameObject Name="assetdoor" Id="ABCDEF" Path="3D/placeholders/drzwi_suwane_2"> //dziwna sciana
 		<Position>
 		  <X>112</X>
