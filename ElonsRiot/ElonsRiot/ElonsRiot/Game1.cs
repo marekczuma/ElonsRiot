@@ -39,6 +39,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchLegend;
         bool isEnd = false;
         public bool isTalking = false;
+        bool visibleHUD = false;
         GameObject currentInteractiveObject;
         SpriteBatch sptiteBatchDialogues;
        // HUD myHUD;
@@ -182,11 +183,17 @@ namespace ElonsRiot
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
             
-            GraphicsDevice.BlendState = BlendState.Opaque;
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+            
+            visibleHUD = false;
             DrawHUD();
-        
+
+            if (!visibleHUD)
+            {
+                GraphicsDevice.BlendState = BlendState.Opaque;
+                GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+            }
+
             playIntro();
 
             base.Draw(gameTime);
@@ -320,10 +327,16 @@ namespace ElonsRiot
 
         void DrawHUD()
         {
+            //visibleHUD = true;
+
             HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
 
             HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
-            
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+
             if(MyScene.PlayerObject.showGun == true)
             {
                 HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
@@ -381,7 +394,8 @@ namespace ElonsRiot
                     HUD.DrawLegend(spriteBatchLegend, GraphicsDevice);
                 }
             }
-            
+
+            visibleHUD = true;
         }
     }
 }
