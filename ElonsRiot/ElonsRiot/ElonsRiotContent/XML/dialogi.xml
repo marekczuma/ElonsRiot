@@ -17,25 +17,50 @@
    </dialogLines> 
 	 <place>OnKey</place>
  </statement>
- <statement>
+  <statement>
+    <dialogLines>
+	 <line>Palo: Odradzam. Lasery w ciagu sekundy zakoncza twoje funkcje zyciowe.</line>
+	</dialogLines>
+	<place>Laser</place>
+</statement>
+<statement>
+	<dialogLines>
+	    <line></line>
+		<line>Elon: Cholera,nie dziala..moja karta nie ma wystarczjacych uprawnien.</line>
+		<line>Elon: Palo,przeanalizuj mape bazy i znajdz inna droge do laboratorium.</line>
+		<line>Palo: Zlokalizowalem polaczenie w promieniu pieciu metrow</line>
+		<line>Elon:Tak,tylko ze ono jest niedostepne..</line>
+		<line>Palo: Kolejne drzwi znajduja sie w magazynie</line>
+		<line>Elon: To niemozliwe. W magazyn jest polaczony tylko z hallem. </line>
+		<line>Palo: Zlokalizowalem..</line>
+		<line>Elon:Tak,zrozumialem! Idziemy.</line>
+	</dialogLines>
+	<place>ClosedDoor</place>
+</statement>
+<statement>
+	<dialogLines>
+		<line>Palo:Przeskanowalem budowe czujnikow. Jesli zniszczymy je w jednym moemenci alarm nie zostanie uruchomiony</line>
+		<line>Elon: Palo, jestes genialny. Jestem taki dumny. </line>
+	</dialogLines>
+	<place>PaloIdea</place>
+</statement>
+//dalogi pokolei
+  <statement>
   <dialogLines>
 	 <line>Elon: .. i dlaczego uzyles czasowej dezaktywacji? Jestes cyborgiem, powinienes przewidziec tysiac scenariuszy w jedna sekunde. I akurat ten przegapiles?!</line>
 	 <line>Palo: Zadanie nie bylo sprecyzowane. Mialem unieszkodliwic monitoring. Nie podales estymacji czasowej.</line>
 	 <line>Elon:A jak poprosze cie o przebudowanie sie w transformersa i wymontowanie dysku twardego?</line>
 	 <line>Palo: Skanuje w poszukiwaniu 'tranformers'..nie posiadam niezbednych danych aby zainicjowac restrukturyzacje. </line>
-	 <line>Elon: Kuzwa! Stworzylem pierwszego cyborga-idiote. Pieprzyc taka robote...</line>
+	 <line>Elon: Stworzylem pierwszego cyborga-idiote. Pieprzyc taka robote...</line>
 	 <line> </line>
 	 <line>Palo: Przynajmniej zdobyles trzy czesci systemu.</line>
-	 <line>Elon: Trzy czesci,trzy czesci.. co mi po trzech czesciach?! Jesli nie znajdziemy tej ostatniej zanimm uruchomia sie kamery to wszystko szlag jasny trafi!</line>
-     <line> Znalazłeś jakieś w końcu jakies przejscie do tego labolatorium?</line>
-	 <line> Palo: W promieniu 15 metrow znajduja sie drzwi do labolatorium numer szesnascie</line>
-	 <line> Elon: Tak, tylko ze one ...</line>
-	 <line> Palo: Kolejne drzwi znajduja sie w magazynie </line>
+	 <line>Elon: Trzy czesci,trzy czesci.. co mi po trzech czesciach?! Jesli nie znajdziemy tej ostatniej zanimm uruchomia sie kamery to juz po nas!</line>
    </dialogLines> 
 	 <place>Hall</place>
  </statement>
  <statement>
 	<dialogLines>
+	 <line></line>
 	 <line>Elon: Tutaj nic nie ma!..Palo przeanalizuj mape bazy i znajdz te przekleta droge!</line>
 	 <line>Palo:Zlokalizowalem polaczenie miedzy miedzy magazynem a laboratorium.</line>
 	 <line>Elon:Gedzie do.. dobra, gdzie dokladnie jest to polaczenie?</line>
@@ -46,30 +71,25 @@
  <statement>
 	 <dialogLines>
 	  <line>Elon: No,wreszcie na miejscu!</line>
-	  <line>Palo: Odradzam. Lasery w ciagu sekundy zakoncza twoje funkcje zyciowe.</line>
-	  <line>Elon: Jakie lasery? </line>
-	  <line>Palo: Teren przy drzwiach.</line>
     </dialogLines>
 	<place>Laboratory</place>
- </statement>
+ </statement> 
   <statement>
 	<dialogLines>
 	  <line>Elon: Stoj,Palo! Slyszysz to? </line>
-	  <line>Palo: Wykrylem trzy formy zycia na lewo od wejscia</line>
-	  <line>Elon: Tak,wiem.. nie mozemy tam tak po prostu wejsc.Jesli by cie uszkodzili moglibysmy stracic dane.</line>
-	  <line>Palo:Jak chcesz sie tam wiec dostac?</line>
-	  <line>Elon: Coz..oddawaj dysk i wlaz do srodka. Sprobuj sprowadzic ich do hallu.</line>
+	  <line>Palo: Wykrylem forme zycia na prawo od wejscia</line>
+	  <line>Elon: Tak,wiem.. nie mozemy tam tak po prostu wejsc.</line>
+	  <line>Palo:Wiec jak chcesz sie tam dostac?</line>
     </dialogLines>
 	<place>Hall</place>
  </statement>
   <statement>
 	<dialogLines>
-	  <line>Elon: Pieprzony rzad ..najpierw rozwijaja przed toba wizje pieknego, bezpiecznego swiata, mamia cie ta utopijna wizja i obrazem twojej osoby jako bohatera, a potem okazuje sie, ze wszystko to klamstwo.</line>
+	  <line>Elon: Pieprzony rzad ..najpierw rozwijaja przed toba wizje pieknego, bezpiecznego swiata,a potem okazuje sie, ze to wszystko klamstwo.</line>
 	  <line>Palo:Odnotowalem sprzecznosc informacji. Czy nie bylo ci wiadomo,ze bedziesz tworzyl chipy wszczepiane ludziom?</line>
 	  <line>Elon: Bylo..poniekad. Jednak przedstawiono nam to calkiem inaczej. One mialy chronic ludzi, nie zamieniac w bezmyslne zombi. I nie mialy byc niebezpieczne. Tymczasem tak wielu ludzi zginelo w trakcie testow.</line>
 	  <line>Palo: I mimo to pracowales dalej?</line> 
-	  <line>Elon: No przeciez, ze nie!Co ty sobie wyobrazasz?!Ze przychodze sobie rano do pracy wstawiam wode na kawe i w miedzyczasie zabijam tuzin ludzi?!Przeciez nic o tym nie wiedzialem! </line>
-	  <line>Pracowalem w calkiem innym zespole, dopiero niedawno sie dowiedzialem. A zreszta co ja sie bede maszynie tlumaczyl. </line>
+	  <line>Elon: Jasne, ze nie!Nic o tym nie wiedzialem!Pracowalem w calkiem innym zespole, dopiero niedawno sie dowiedzialem.. a zreszta co ja sie bede maszynie tlumaczyl. </line>
     </dialogLines>
 	<place>ShootingGallery</place>
  </statement> 

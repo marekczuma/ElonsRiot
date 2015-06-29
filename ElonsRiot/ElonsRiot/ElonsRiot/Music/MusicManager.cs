@@ -22,8 +22,9 @@ namespace ElonsRiot.Music
         public static void Initialize(ContentManager content )
         {
             soundEffectInstance = new List<SoundEffectInstance>();
-          soundEffect = content.Load<SoundEffect>("Sounds/MyTree");
+          soundEffect = content.Load<SoundEffect>("Sounds/alarm");
           soundEffectInstance.Add(soundEffect.CreateInstance());
+          SetSoundEffectInstance(1, 0, 0, true, 0);
           soundEffect = content.Load<SoundEffect>("Sounds/EXPLOSIO");
           soundEffectInstance.Add(soundEffect.CreateInstance());
           soundEffect = content.Load<SoundEffect>("Sounds/DeviceExplosion");

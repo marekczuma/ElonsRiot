@@ -33,6 +33,7 @@ namespace ElonsRiot
         public Vector3 farPoint;
         KeyboardState oldState;
         public bool isBomb = false;
+        public bool isOpening = false;
         public bool isHacking = false;
         public AnimationClip clip;
         public AnimationPlayer animationPlayer;

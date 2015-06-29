@@ -362,9 +362,11 @@ namespace ElonsRiot
             List<Vector3> vecAB = new List<Vector3>();
             List<Vector3> vecAC = new List<Vector3>();
             List<Vector3> vecA = new List<Vector3>();
-            if (referenceObject.Name.Contains("6") ||(referenceObject.Rotation.Y !=0 && referenceObject.Name.Contains("2") )
-                || (referenceObject.Rotation.Y ==0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")) ||
-                (referenceObject.Name.Contains("door") && referenceObject.Rotation.Y == 0))
+            if (referenceObject.Name.Contains("6") || (referenceObject.Rotation.Y != 0 && referenceObject.Name.Contains("2"))
+                || (referenceObject.Rotation.Y == 0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y != 90 && referenceObject.Name.Contains("7")) ||
+                (referenceObject.Name.Contains("door") && referenceObject.Rotation.Y == 0) || referenceObject.Name.Contains("assetDoor")
+                || (referenceObject.Name.Contains("Wardrobe") && referenceObject.Rotation.Y != 270) || referenceObject.Name.Contains("Server") || referenceObject.Name.Contains("Stol")
+                || referenceObject.Name.Contains("filar"))
             {
 
                 vecAB.Add(corners[4] - corners[0]);  //odwracam normalne w physic manager
@@ -421,7 +423,8 @@ namespace ElonsRiot
             GetCorners();
             Vector3[] corners = referenceObject.boundingBox.GetCorners();
             if ((referenceObject.Name.Contains("door") && referenceObject.Rotation.Y == 0) || (referenceObject.Rotation.Y != 0 && referenceObject.Name.Contains("2")) || referenceObject.Name.Contains("6") ||
-                (referenceObject.Rotation.Y == 0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y !=90 && referenceObject.Name.Contains("7")))
+                 (referenceObject.Rotation.Y == 0 && referenceObject.Name.Contains("4")) || (referenceObject.Rotation.Y != 90 && referenceObject.Name.Contains("7")) || referenceObject.Name.Contains("assetDoor")
+                 || (referenceObject.Name.Contains("Wardrobe") && referenceObject.Rotation.Y != 270) || referenceObject.Name.Contains("Server") || referenceObject.Name.Contains("Stol") || referenceObject.Name.Contains("filar"))
             {
                 centersOfWalls[2].X = (corners[4].X + corners[6].X) / 2; //front
                 centersOfWalls[2].Y = (corners[4].Y + corners[6].Y) / 2;
