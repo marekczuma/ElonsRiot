@@ -7,7 +7,7 @@ using SkinnedModel;
 
 namespace ElonsRiot
 {
-    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot, idleFollow }
+    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot, idleFollow, death }
     public enum LearningState { idle, Learning, EngineeringLearning, ShootingLearning, UsingLearning }
     public class PaloCharacter : GameObject
     {
@@ -29,6 +29,8 @@ namespace ElonsRiot
         public AnimationPlayer animationPlayer;
         public SkinningData skinningData;
         public FriendState previousState;
+        public Shooting.NPCShooting PaloShooting { get; set; }
+        private List<string> enemiesTags = new List<string>();
 
         public PaloCharacter(Scene _scene)
         {
@@ -37,7 +39,7 @@ namespace ElonsRiot
             PaloState = FriendState.idle;
             previousState = FriendState.idle;
             PaloLearningState = LearningState.idle;
-            velocity = 0.12f;
+            velocity = 0.21f;
             Guards = new List<Guard>();
             health = 100;
             ammo = 50;
@@ -45,6 +47,15 @@ namespace ElonsRiot
             Skills = new Learning.PaloSkills { Palo = this };
             LearningManager = new Learning.LearningManager(Scene);
             LearningManager.Palo = this;
+            PaloShooting = new Shooting.NPCShooting(Scene, this);
+            FillEnemies();
+            PaloShooting.RangeOfMistake = 10;
+        }
+
+        public void FillEnemies()
+        {
+            enemiesTags.Add("guard");
+            PaloShooting.enemiesTags = enemiesTags;
         }
 
         public void WalkForward()
@@ -61,7 +72,7 @@ namespace ElonsRiot
         }
         public void WalkToPlayer()
         {
-            WalkToTarget(Elon, velocity, 10);
+            WalkToTarget(Elon, velocity, 15);
         }
 
         public List<Guard> FindGuards(float _range, Scene _scene)

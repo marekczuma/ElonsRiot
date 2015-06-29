@@ -36,12 +36,12 @@ namespace ElonsRiot.Quests
                     if (element.Tag == "hiddenPassage")
                     {
                         Vector3 tmpV = element.Position;
-                        if (tmpV.X > 10)
+                        if (tmpV.X > 5)
                         {
                             tmpV.X -= 0.02f;
                             element.Position = tmpV;
                         }
-                        if(element.Position.X <= 10)
+                        if(element.Position.X <= 5)
                         {
                             HiddenPassage.WallIsMoving = false;
                             HiddenPassage.QuestFinished = true;

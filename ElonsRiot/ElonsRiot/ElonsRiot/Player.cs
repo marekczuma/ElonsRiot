@@ -289,7 +289,7 @@ namespace ElonsRiot
             {
                 if(elonState.State == State.idleShoot)
                 {
-                    angle -= 0.005f;
+                    angle -= 0.025f;
                 }else
                     angle -= 0.08f;
             }
@@ -297,7 +297,7 @@ namespace ElonsRiot
             {
                 if (elonState.State == State.idleShoot)
                 {
-                    angle += 0.005f;
+                    angle += 0.025f;
                 }
                 else
                     angle += 0.08f;
@@ -429,11 +429,11 @@ namespace ElonsRiot
             {
                 if (timer <= 0)
                 {
-                    if (Palo.PaloState != FriendState.follow)
+                    if ((Palo.PaloState != FriendState.follow) && (Palo.PaloState != FriendState.idleFollow))
                     {
                         Palo.PaloState = FriendState.follow;
                     }
-                    else if (Palo.PaloState == FriendState.follow)
+                    else if ((Palo.PaloState == FriendState.follow) || (Palo.PaloState == FriendState.idleFollow))
                     {
                         Palo.PaloState = FriendState.idle;
                     }

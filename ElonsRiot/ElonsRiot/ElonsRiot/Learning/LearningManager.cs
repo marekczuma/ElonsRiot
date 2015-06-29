@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,47 @@ namespace ElonsRiot.Learning
         public void AddObjectToScene()
         {
             ShootingLearning.AddObjectsToScene();
+        }
+
+        public void LearningUpdate()
+        {
+            if ((Palo.PaloLearningState == LearningState.Learning) && (Vector3.Distance(Scene.PlayerObject.Position, ShootingLearning.PosA) <= 5))
+            {
+                if (!ShootingLearning.IsStarted)
+                {
+                    ShootingLearning.MoveElonAndPalo();
+                    ShootingLearning.IsStarted = true;
+                    Palo.PaloState = FriendState.shoot;
+                    
+                }
+                else
+                {
+                    if(ShootingLearning.ElonShoot)
+                    {
+                        if (ShootingLearning.ElonAfterFirst)
+                        {
+                            Scene.PlayerObject.ammo = 1;
+                            ShootingLearning.ElonAfterFirst = false;
+                        }
+                        if(Scene.PlayerObject.ammo <1)
+                        {
+                            ShootingLearning.ElonShoot = false;
+                            Timer = 2000;
+                        }
+                    }else
+                    {
+                        float timeInMS = Scene.time.ElapsedGameTime.Milliseconds;
+                        Timer -= timeInMS;
+                        if (Timer <= 0)
+                        {
+                            Palo.PaloShooting.TinShot(ShootingLearning.Tins[1]);
+                            ShootingLearning.ElonShoot = true;
+                            ShootingLearning.ElonAfterFirst = true;
+                        }                                                                                                                          
+                        //Palo.NPCShooting.Shoot(T
+                    }
+                }
+            }
         }
 
 
