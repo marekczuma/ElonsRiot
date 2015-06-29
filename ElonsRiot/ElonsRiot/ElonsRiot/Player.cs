@@ -474,10 +474,6 @@ namespace ElonsRiot
                     //Palo.Walk = WalkState.decoy;
                 }
             }
-            if(state.IsKeyDown(Keys.O))
-            {
-                Palo.RotateToBox(Palo.MoveBoxAI.Cube);
-            }
         }
 
 

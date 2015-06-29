@@ -37,6 +37,7 @@ namespace ElonsRiot
         public static Texture2D legendL;
 
         public static Vector2 scalePalo;
+        public const float offset = 25;
 
         public static void LoadHUD(ContentManager content, float health)
         {
@@ -65,20 +66,19 @@ namespace ElonsRiot
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
         {
             float scaleFloat = 0.12f;
-            scale = new Vector2(scaleFloat * (healthElon / 100), scaleFloat);
 
             spriteBatch[0].Begin();
 
-            spriteBatch[0].Draw(healthBarElon, new Vector2(0, 10), null, Color.White, 0, Vector2.Zero, scaleFloat, SpriteEffects.None, 0);
-            spriteBatch[0].Draw(healthValue, new Vector2(0, 10), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
-           // spriteBatch[0].DrawString(font, "" + healthElon, new Vector2(150, 5), Color.White);
+            spriteBatch[0].Draw(healthBarElon, new Vector2(0+offset, 10), null, Color.White, 0, Vector2.Zero, scaleFloat, SpriteEffects.None, 0);
+       //     spriteBatch[0].Draw(healthValue, new Vector2(0, 10), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+           spriteBatch[0].Draw(healthValue, new Vector2(-1+offset, 10), new Rectangle(0, 0, healthValue.Width - (int)(250-2.5*healthElon), healthValue.Height), Color.White, 0, Vector2.Zero, new Vector2(1.2f, 1.18f), SpriteEffects.None, 0);
+            // spriteBatch[0].DrawString(font, "" + healthElon, new Vector2(150, 5), Color.White);
 
             spriteBatch[0].End();
             
-            scalePalo = new Vector2(scaleFloat * (healthPalo / 100), scaleFloat);
             spriteBatch[1].Begin();
             spriteBatch[1].Draw(healthBarPalo, new Vector2(width - 320, 10), null, Color.White, 0, Vector2.Zero, scaleFloat, SpriteEffects.None, 0);
-            spriteBatch[1].Draw(healthValue, new Vector2(width - 320, 10), null, Color.White, 0, Vector2.Zero, scalePalo, SpriteEffects.None, 0);
+            spriteBatch[1].Draw(healthValue, new Vector2(width - 321, 10), new Rectangle(0, 0, healthValue.Width - (int)(250 - 2.5 * healthPalo), healthValue.Height), Color.White, 0, Vector2.Zero, new Vector2(1.2f, 1.18f), SpriteEffects.None, 0);
            // spriteBatch[1].DrawString(font, "" + healthPalo, new Vector2(width - 190, 5), Color.White);
             
             if (countdownTime > 2 && countdownTime < 3)
@@ -115,7 +115,7 @@ namespace ElonsRiot
         public static void DrawHUDGuns(SpriteBatch[] spriteBatch, float ammoElon,float ammoPalo,float ammoMax, GraphicsDevice graphics,int width)
         {
             spriteBatch[0].Begin();
-            spriteBatch[0].Draw(gunElon, new Vector2(5, 75), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+            spriteBatch[0].Draw(gunElon, new Vector2(5+offset, 75), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
             spriteBatch[0].DrawString(font, "" + ammoElon + "/" + ammoMax, new Vector2(160, 75), Color.White);
             spriteBatch[0].End();
           //  spriteBatch[1].Begin();
@@ -129,7 +129,7 @@ namespace ElonsRiot
         public static void DrawProgress(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(progress1, new Vector2(10, 123), null, Color.White, 0, Vector2.Zero, 0.12f, SpriteEffects.None, 0);
+            spriteBatch.Draw(progress1, new Vector2(10+offset, 123), null, Color.White, 0, Vector2.Zero, 0.12f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
@@ -168,9 +168,9 @@ namespace ElonsRiot
                 messageScale =count;
             }
             spriteBatch.Begin();
-            spriteBatch.Draw(dialoguesBackground, new Vector2(20, graphic.Viewport.Height - 80), null, Color.White, 0, Vector2.Zero, 0.96f, SpriteEffects.None, 0);
+            spriteBatch.Draw(dialoguesBackground, new Vector2(20+offset, graphic.Viewport.Height - 80), null, Color.White, 0, Vector2.Zero, 0.96f, SpriteEffects.None, 0);
            // spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White);
-            spriteBatch.DrawString(font, "" + message, new Vector2(25, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
+           spriteBatch.DrawString(font, "" + message, new Vector2(25+offset, graphic.Viewport.Height - 60), Color.White, 0, Vector2.Zero, new Vector2(messageScale,1f), SpriteEffects.None, 0);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
             //Debug.WriteLine(message.Count());
@@ -179,7 +179,7 @@ namespace ElonsRiot
         public static void DrawStringForInformation(SpriteBatch spriteBatch, String message, GraphicsDevice graphic)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "" + message, new Vector2(20, graphic.Viewport.Height - 200), Color.White);
+            spriteBatch.DrawString(font, "" + message, new Vector2(20+offset, graphic.Viewport.Height - 200), Color.White);
             spriteBatch.End();
             graphic.DepthStencilState = DepthStencilState.Default;
         }
