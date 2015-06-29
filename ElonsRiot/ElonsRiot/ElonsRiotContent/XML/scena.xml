@@ -37,7 +37,7 @@
 	<Interactive>false</Interactive>
 </GameObject>   
 	//magazyn 
-	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
+	<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
 		<Position>
 		  <X>30</X>
 		  <Y>0</Y>
@@ -55,7 +55,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
+	<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
 		<Position>
 		  <X>8</X>
 		  <Y>0</Y>
@@ -73,7 +73,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_pom">
+	<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_pom">
 		<Position>
 		  <X>3</X>
 		  <Y>0</Y>
@@ -91,7 +91,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="AssetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
+	<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_szara">
 		<Position>
 		  <X>3</X>
 		  <Y>0</Y>
@@ -387,7 +387,6 @@
 
 	
 	//Super pokój 
-	
 		<GameObject Name="assetWardrobe" Id="ABCDEF" Path="3D/placeholders/szafa1_pom">
 		<Position>
 		  <X>46</X>
@@ -397,6 +396,24 @@
 		<Rotation>
 		  <X>0</X>
 		  <Y>0</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetDoor" Id="ABCDEF" Path="3D/placeholders/drzwi_suwane_2">
+		<Position>
+		  <X>49</X>
+		  <Y>0</Y>
+		  <Z>-67</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
 		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
@@ -478,7 +495,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 		</GameObject>
-	<GameObject Name="AssetStol" Id="ABCDEF" Path="3D/placeholders/stol"> //dziwna sciana
+	<GameObject Name="assetStol" Id="ABCDEF" Path="3D/placeholders/stol"> //dziwna sciana
 		<Position>
 		  <X>8</X>
 		  <Y>0</Y>
@@ -486,8 +503,8 @@
 		</Position>
 		<Rotation>
 		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>-90</Z>
+		  <Y>180</Y>
+		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
 		  <X>0.3</X>
@@ -505,7 +522,7 @@
 		<Rotation>
 		  <X>0</X>
 		  <Y>0</Y>
-		  <Z>-90</Z>
+		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
 		  <X>0.6</X>
@@ -514,7 +531,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetPudelko" Id="ABCDEF" Path="3D/assets/pudelko"> //dziwna sciana
+	<GameObject Name="AssetPudelko" Id="ABCDEF" Path="3D/assets/pudelko"> //dziwna sciana
 		<Position>
 		  <X>17</X>
 		  <Y>3.6</Y>
@@ -523,7 +540,7 @@
 		<Rotation>
 		  <X>00</X>
 		  <Y>0</Y>
-		  <Z>90</Z>
+		  <Z>0</Z>
 		</Rotation>
 		<Scale> 
 		  <X>0.003</X>
@@ -532,7 +549,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetPudelko" Id="ABCDEF" Path="3D/assets/pudelko"> //dziwna sciana
+	<GameObject Name="AssetPudelko" Id="ABCDEF" Path="3D/assets/pudelko"> //dziwna sciana
 		<Position>
 		  <X>17</X>
 		  <Y>3.9</Y>
@@ -550,7 +567,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetSomething" Id="ABCDEF" Path="3D/assets/roznosci"> //dziwna sciana
+	<GameObject Name="AssetSomething" Id="ABCDEF" Path="3D/assets/roznosci"> //dziwna sciana
 		<Position>
 		  <X>14.5</X>
 		  <Y>3.9</Y>
@@ -568,7 +585,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetMicroscope" Id="ABCDEF" Path="3D/assets/mikroskop"> //dziwna sciana
+	<GameObject Name="AssetMicroscope" Id="ABCDEF" Path="3D/assets/mikroskop"> //dziwna sciana
 		<Position>
 		  <X>19</X>
 		  <Y>3.6</Y>
@@ -586,7 +603,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetAccessories" Id="ABCDEF" Path="3D/assets/akcesoria"> //dziwna sciana
+	<GameObject Name="AssetAccessories" Id="ABCDEF" Path="3D/assets/akcesoria"> //dziwna sciana
 		<Position>
 		  <X>20.8</X>
 		  <Y>3.6</Y>
@@ -604,7 +621,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetAccessories" Id="ABCDEF" Path="3D/assets/akcesoria"> //dziwna sciana
+	<GameObject Name="AssetAccessories" Id="ABCDEF" Path="3D/assets/akcesoria"> //dziwna sciana
 		<Position>
 		  <X>18</X>
 		  <Y>3.6</Y>
@@ -622,7 +639,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetMug" Id="ABCDEF" Path="3D/placeholders/kubeczek"> //dziwna sciana
+	<GameObject Name="AssetMug" Id="ABCDEF" Path="3D/placeholders/kubeczek"> //dziwna sciana
 		<Position>
 		  <X>10</X>
 		  <Y>3</Y>
@@ -729,42 +746,6 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="miejsce do strzelania" Id="ABCDEF" Path="3D/placeholders/Button"> //miejsce dla Elona
-		<Position>
-		  <X>55</X>
-		  <Y>-5.5</Y>
-		  <Z>43</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>90</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>1</X>
-		  <Y>1</Y>
-		  <Z>1</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject> 
-	<GameObject Name="miejsce do strzelania2" Id="ABCDEF" Path="3D/placeholders/Button"> // Miejsce dla Pala
-		<Position>
-		  <X>65</X>
-		  <Y>-5.5</Y>
-		  <Z>43</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>90</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>1</X>
-		  <Y>1</Y>
-		  <Z>1</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject> 
 		<GameObject Name="wall2" Id="ABCDEF" Path="3D/placeholders/Wall2"> //dziwna sciana
 		<Position>
 		  <X>25</X>
@@ -802,7 +783,188 @@
 		</Scale>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="assetSuperComputer" Id="ABCDEF" Path="3D/placeholders/komputer_dol"> //dziwna sciana
+		<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>3</X>
+		  <Y>0</Y>
+		  <Z>-140</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+		<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>3</X>
+		  <Y>0</Y>
+		  <Z>-133</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>3</X>
+		  <Y>0</Y>
+		  <Z>-126</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>3</X>
+		  <Y>0</Y>
+		  <Z>-119</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>3</X>
+		  <Y>0</Y>
+		  <Z>-112</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	//drugi rzad
+		<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>12</X>
+		  <Y>0</Y>
+		  <Z>-140</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+		<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>12</X>
+		  <Y>0</Y>
+		  <Z>-133</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>12</X>
+		  <Y>0</Y>
+		  <Z>-126</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>12</X>
+		  <Y>0</Y>
+		  <Z>-119</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">
+		<Position>
+		  <X>12</X>
+		  <Y>0</Y>
+		  <Z>-112</Z>
+		</Position>
+		<Rotation>
+		  <X>0</X>
+		  <Y>180</Y>
+		  <Z>0</Z>
+		</Rotation>
+		<Scale> 
+		  <X>0.7</X>
+		  <Y>0.75</Y>
+		  <Z>0.7</Z>
+		</Scale>
+		<Interactive>false</Interactive>
+	</GameObject> 
+	<!--<GameObject Name="assetSuperComputer" Id="ABCDEF" Path="3D/placeholders/komputer_dol"> //dziwna sciana
 		<Position>
 		  <X>25</X>
 		  <Y>0</Y>
@@ -819,9 +981,9 @@
 		  <Z>0.98</Z>
 		</Scale>
 		<Interactive>false</Interactive>
-		</GameObject>
+		</GameObject> -->
 //Otaczanie sceny 
-    <GameObject Name="assetdoor" Id="ABCDEF" Path="3D/placeholders/drzwi_suwane_2"> //dziwna sciana
+    <GameObject Name="door" Id="ABCDEF" Path="3D/placeholders/drzwi_suwane_2"> //dziwna sciana
 		<Position>
 		  <X>51</X>
 		  <Y>0</Y>
@@ -953,7 +1115,7 @@
 		<Position>
 		  <X>80</X>
 		  <Y>0</Y>
-		  <Z>-50</Z>
+		  <Z>-40</Z>
 		</Position>
 		<Rotation>
 		  <X>0</X>
@@ -968,7 +1130,7 @@
 		<Tag>escapePlace</Tag>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
+	<!--<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
 		  <X>88</X>
 		  <Y>0</Y>
@@ -986,7 +1148,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
-	</GameObject>
+	</GameObject> -->
  	<GameObject Name="gun" Id="ABCDEF" Path="3D/placeholders/gun">
 		<Position>
 		  <X>100</X>
@@ -1046,78 +1208,6 @@
 		<Tag>Button</Tag>
 	</GameObject>
 	<GameObject Name="gunPalo" Id="ABCDEF" Path="3D/placeholders/gun">
-		<Position>
-		  <X>100</X>
-		  <Y>5</Y>
-		  <Z>-25</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>0.05</X>
-		  <Y>0.05</Y>
-		  <Z>0.05</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject>
-		<GameObject Name="gunPalo" Id="ABCDEF" Path="3D/placeholders/gun">
-		<Position>
-		  <X>100</X>
-		  <Y>5</Y>
-		  <Z>-25</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>0.05</X>
-		  <Y>0.05</Y>
-		  <Z>0.05</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject>
-		<GameObject Name="gunMarian" Id="ABCDEF" Path="3D/placeholders/gun">
-		<Position>
-		  <X>100</X>
-		  <Y>5</Y>
-		  <Z>-25</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>0.05</X>
-		  <Y>0.05</Y>
-		  <Z>0.05</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject>
-		<GameObject Name="gunArtur" Id="ABCDEF" Path="3D/placeholders/gun">
-		<Position>
-		  <X>100</X>
-		  <Y>5</Y>
-		  <Z>-25</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>0</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>0.05</X>
-		  <Y>0.05</Y>
-		  <Z>0.05</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject>
-		<GameObject Name="gunZenon" Id="ABCDEF" Path="3D/placeholders/gun">
 		<Position>
 		  <X>100</X>
 		  <Y>5</Y>
