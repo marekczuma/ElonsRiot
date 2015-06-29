@@ -54,6 +54,9 @@ namespace ElonsRiot
         public float hackingCountdownTime;
         public float bigExplosionTime;
         public float stringTime;
+        RenderTarget2D renderTarget;
+        Effect grayEffect;
+        float amount;
 
         Video intro;
         VideoPlayer player;
@@ -84,11 +87,19 @@ namespace ElonsRiot
         {
             PhysicManager.setElements(graphics.GraphicsDevice);
             MusicManager.Initialize(Content);
+            renderTarget = new RenderTarget2D(
+                           GraphicsDevice,
+                           GraphicsDevice.PresentationParameters.BackBufferWidth,
+                           GraphicsDevice.PresentationParameters.BackBufferHeight,
+                           false,
+                           GraphicsDevice.PresentationParameters.BackBufferFormat,
+                           DepthFormat.Depth24);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            grayEffect = Content.Load<Effect>("Effects/GrayScale");
             spriteBatchHUD = new SpriteBatch[2];
             spriteBatchHUD2 = new SpriteBatch[2];
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -169,7 +180,41 @@ namespace ElonsRiot
                 HackingCountdown(gameTime);
 
             //CheckRay(state);
+            if (MyScene.isGray == true) { 
+                if (amount > 0) {
+                    amount -= 0.01f;
+                }
+                else { 
+                    amount = 0;
+                }
+            }
+            
             base.Update(gameTime);
+        }
+        protected Texture2D DrawSceneToTexture(RenderTarget2D renderTarget, GameTime gameTime)
+        {
+            // Set the render target
+            GraphicsDevice.SetRenderTarget(renderTarget);
+            GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+            // Draw the scene
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
+            // Drop the render target
+            GraphicsDevice.SetRenderTarget(null);
+            // Return the texture in the render target
+            return renderTarget;
+        }
+        private void DrawGrayScene(GameTime gameTime)
+        {
+             Texture2D texture = DrawSceneToTexture(renderTarget, gameTime);
+                //set the amountcolor in shader 
+                EffectParameterCollection parameters = grayEffect.Parameters;
+                parameters["ColourAmount"].SetValue((float)amount);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                    SamplerState.LinearClamp, DepthStencilState.Default,
+                    RasterizerState.CullNone, grayEffect);
+                spriteBatch.Draw(texture, new Rectangle(0, 0, 800, 480), Color.White);
+                spriteBatch.End();
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -181,9 +226,16 @@ namespace ElonsRiot
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
-            MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
-            
-            
+            //MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
+           
+            if (MyScene.isGray == true)
+            {
+                DrawGrayScene(gameTime);
+            }
+            else
+            {
+                MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
+            }
             visibleHUD = false;
             DrawHUD();
 
