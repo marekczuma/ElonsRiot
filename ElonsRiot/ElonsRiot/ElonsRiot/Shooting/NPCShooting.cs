@@ -28,6 +28,12 @@ namespace ElonsRiot.Shooting
 
         public void Shoot(GameObject _target)
         {
+
+            //if(Character is Guard)
+            //{
+            //    Guard tmpGuard = (Guard)Character;
+            //    tmpGuard.showShootExplosion = true;
+            //}
             Character.LookAt(_target.Position);
             Random rand = new Random();
             float tmpRange = rand.Next((int)RangeOfMistake);
@@ -52,7 +58,9 @@ namespace ElonsRiot.Shooting
                     {
                         Guard tmpGuard = (Guard)Character;
                         tmpGuard.State = GuardState.shoot;
-                    }else if (Character is PaloCharacter)
+                        //tmpGuard.showShootExplosion = false;
+                    }
+                    else if (Character is PaloCharacter)
                     {
                         PaloCharacter tmpGuard = (PaloCharacter)Character;
                         tmpGuard.PaloState = FriendState.shoot;

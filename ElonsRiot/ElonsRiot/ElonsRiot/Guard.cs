@@ -22,7 +22,7 @@ namespace ElonsRiot
         public float playSpeed;
         public TimeSpan elapsedTime;
         float guardTime;
-        public bool isDead;
+        public bool isDead;//, showShootExplosion;
         private List<string> enemiesTags = new List<string>();
 
         public Guard(Scene _scene)

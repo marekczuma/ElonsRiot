@@ -185,7 +185,7 @@ namespace ElonsRiot
                 referenceMin = Vector3.Transform(referenceMin, meshTransform);
                 referenceMax = Vector3.Transform(referenceMax, meshTransform);
             }
-            if (referenceObject.Name.Contains("character") && referenceObject.Name != "enemyMarian" && !referenceObject.Name.Contains("Palo"))
+            if (referenceObject.Name.Contains("character") && !referenceObject.Name.Contains("enemy") && !referenceObject.Name.Contains("Palo"))
             {
                 referenceMax.Z += 1.5f;
                 referenceMin.Z -= 1.5f;
@@ -199,10 +199,14 @@ namespace ElonsRiot
               //  referenceMax.Z += 1f;
              //   referenceMin.Z -= 1f;
             }
-            else if (referenceObject.Name == "enemyMarian")
+            else if (referenceObject.Name.Contains("enemy"))
             {
-                referenceMax.Z -= 1.5f;
-                referenceMin.Z += 1.5f;
+                referenceMax.Z += 1.0f;
+                referenceMin.Z -= 1.0f;
+                referenceMax.X += 1f;
+                referenceMin.X -= 1f;
+                referenceMax.Y -= 10.0f;
+                referenceMin.Y += 3.0f;
             }
             else if (referenceObject.Name.Contains("Palo"))
             {
@@ -210,7 +214,7 @@ namespace ElonsRiot
                 referenceMin.Z -= 5f;
                 referenceMax.X += 3f;
                 referenceMin.X -= 3f;
-                referenceMax.Y -= 7f;
+                referenceMax.Y -= 7.1f;
                 referenceMin.Y += 7f;
             }
             referenceObject.boundingBox = new BoundingBox(referenceMin, referenceMax); 
@@ -257,24 +261,28 @@ namespace ElonsRiot
                     // transform by mesh bone matrix
                     meshMin = Vector3.Transform(meshMin, meshTransform);
                     meshMax = Vector3.Transform(meshMax, meshTransform);
-                    if (referenceObject.Name != "enemyMarian" && !referenceObject.Name.Contains("Palo"))
+                    if (!referenceObject.Name.Contains("enemy") && !referenceObject.Name.Contains("Palo"))
                     {
                         meshMax.X -= 1;
                         meshMin.X += 1;
                     }
-                    if (referenceObject.Name == "enemyMarian")
+                    if (referenceObject.Name.Contains("enemy"))
                     {
-                        meshMax.X += 1;
-                        meshMin.X -= 1;
+                        meshMax.Z += 1.0f;
+                        meshMin.Z -= 1.0f;
+                        meshMax.X += 1f;
+                        meshMin.X -= 1f;
+                        meshMax.Y -= 10.0f;
+                        meshMin.Y += 3.0f;
                     }
                     else if (referenceObject.Name.Contains("Palo"))
                     {
-                        meshMax.Z += 5f;
-                        meshMin.Z -= 5f;
-                        meshMax.X += 3f;
-                        meshMin.X -= 3f;
-                        meshMax.Y -= 7f;
-                        meshMin.Y += 7f;
+                        meshMax.Z += 1.0f;
+                        meshMin.Z -= 1.0f;
+                        meshMax.X += 1f;
+                        meshMin.X -= 1f;
+                        meshMax.Y -= 7.0f;
+                        meshMin.Y += 7.0f;
                     }
                     
                     referenceObject.boxes.Add(new BoundingBox(meshMin, meshMax));
@@ -319,7 +327,7 @@ namespace ElonsRiot
                     referenceMin.Z -= 3f;
                     referenceMax.X += 2f;
                     referenceMin.X -= 2f;
-                    referenceMax.Y -= 7f;
+                    referenceMax.Y -= 7.1f;
                     referenceMin.Y += 7f;
                  }
                 else if (referenceObject.Name.Contains("stuff"))
@@ -330,7 +338,16 @@ namespace ElonsRiot
                     referenceMin.Y -= 1f;
                    // referenceMax.Z += 1f;
                   //  referenceMin.Z -= 1f;
-                } 
+                }
+                else if (referenceObject.Name.Contains("enemy"))
+                {
+                    referenceMax.Z += 1.0f;
+                    referenceMin.Z -= 1.0f;
+                    referenceMax.X += 1f;
+                    referenceMin.X -= 1f;
+                    referenceMax.Y -= 10.0f;
+                    referenceMin.Y += 3.0f;
+                }
                 referenceObject.boxes.Add(new BoundingBox(referenceMin, referenceMax));
 
             }

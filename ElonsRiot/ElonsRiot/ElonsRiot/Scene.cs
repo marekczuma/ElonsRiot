@@ -43,6 +43,7 @@ namespace ElonsRiot
 
         Guard Marian;
         Guard Zenon;
+        Guard Artur;
 
         public Effect effect;
         Vector3 lightPos;
@@ -149,24 +150,6 @@ namespace ElonsRiot
                 if (obj.Name != "characterElon" && obj.Name != "characterPalo" && obj.Tag != "guard")
                     obj.LoadEffects(effect);
             }
-            int indexElon = 0;
-            int indexPalo = 0;
-            indexMarian = 0;
-            for (int i=0; i<GameObjects.Count; i++)
-            {
-                if (GameObjects[i].Name == "characterElon")
-                    indexElon = i;
-            }
-            for (int i = 0; i < GameObjects.Count; i++)
-            {
-                if (GameObjects[i].Name == "characterPalo")
-                    indexPalo = i;
-            }
-            for (int i = 0; i < GameObjects.Count; i++)
-            {
-                if (GameObjects[i].Name == "enemyMarian")
-                    indexMarian = i;
-            }
 
             basicEffect = new BasicEffect(graphic);
             PlayerObject.LoadAnimation();
@@ -229,8 +212,8 @@ namespace ElonsRiot
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                 if (NPCs[1].State == GuardState.shoot && elem.Name == "gunZenon")
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
-                //if (NPCs[2].State == GuardState.shoot && elem.Name == "gunArtur")
-                //    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
+                if (NPCs[2].State == GuardState.shoot && elem.Name == "gunArtur")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
 
             }
 
@@ -261,7 +244,7 @@ namespace ElonsRiot
         }
         public void PlayerControll(KeyboardState _state, GameTime gameTime, MouseState _mouseState)
         {
-            PlayerObject.SetState(_state, gameTime);
+            PlayerObject.SetState(_state, gameTime, _mouseState);
             PlayerObject.Movement(_state, _mouseState);
             PlayerObject.CameraUpdate(gameTime);
             PlayerObject.ChangeHealth(_state);
@@ -341,7 +324,7 @@ namespace ElonsRiot
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
             Elon.id = "ABCDEF";
-            Elon.Scale = new Vector3(0.035f, 0.035f, 0.035f);
+            Elon.Scale = new Vector3(0.03f, 0.035f, 0.03f);
             Elon.ObjectPath = "3D/ludzik/elon-idle";
             Elon.id = "ABCDEF";
             Elon.Palo = PaloObject;
@@ -377,11 +360,23 @@ namespace ElonsRiot
             Zenon.newPosition = new Vector3(80, 0, 34);
             Zenon.Tag = "guard";
 
+            Artur = new Guard(this);
+            Artur.Name = "enemyArtur";
+            Artur.id = "ABCDEF";
+            Artur.Scale = new Vector3(0.4f, 0.4f, 0.4f);
+            Artur.Position = new Vector3(70, 0, 34); //jest w raju
+            Artur.Rotation = new Vector3(0, 0, 0);
+            Artur.ObjectPath = "3D/ludzik/soldier_idle";
+            Artur.oldPosition = new Vector3(80, 0, 34);
+            Artur.newPosition = new Vector3(80, 0, 34);
+            Artur.Tag = "guard";
+
             GameObjects.Add(Marian);
             GameObjects.Add(Zenon);
+            GameObjects.Add(Artur);
             NPCs.Add(Marian);
             NPCs.Add(Zenon);
-
+            NPCs.Add(Artur);
         }
         private void LoadPalo()
         {
@@ -649,17 +644,17 @@ namespace ElonsRiot
                         gobj.Position = gunPosition + 3.2f * Vector3.Transform(Vector3.Forward, NPCs[1].RotationQ) + Vector3.Up * 7.5f;
                     }
                 }
-                //if (gobj.Name == "gunArtur")
-                //{
-                //    Vector3 gunPosition;
-                //    gobj.RotationQ = NPCs[2].RotationQ;
-                //    if (NPCs[2].State == GuardState.shoot)
-                //    {
-                //    gunPosition = NPCs[2].Position;
-                //    gunPosition += Vector3.Transform(Vector3.Right * 0.8f, NPCs[2].RotationQ);
-                //    gobj.Position = gunPosition + 3.2f * Vector3.Transform(Vector3.Forward, NPCs[2].RotationQ) + Vector3.Up * 7.5f;
-                //    }
-                //}
+                if (gobj.Name == "gunArtur")
+                {
+                    Vector3 gunPosition;
+                    gobj.RotationQ = NPCs[2].RotationQ;
+                    if (NPCs[2].State == GuardState.shoot)
+                    {
+                        gunPosition = NPCs[2].Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 0.8f, NPCs[2].RotationQ);
+                        gobj.Position = gunPosition + 3.2f * Vector3.Transform(Vector3.Forward, NPCs[2].RotationQ) + Vector3.Up * 7.5f;
+                    }
+                }
 
                 gobj.update();
             }

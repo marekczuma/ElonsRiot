@@ -76,7 +76,7 @@ namespace ElonsRiot
             MyScene = new Scene(Content, GraphicsDevice);   //Dziêki temu mo¿emy korzystaæ z naszego contentu
          //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }
@@ -145,6 +145,11 @@ namespace ElonsRiot
             {
                 UpdateProjectiles(gameTime, helperParticles, laserParticles);
             }
+            foreach (var npc in MyScene.NPCs)
+            {
+                if (npc.State == GuardState.shoot)
+                    UpdateProjectiles(gameTime, explosionParticles, laserParticles);
+            }
 
             state = Keyboard.GetState();
             // Allows the game to exit
@@ -168,7 +173,9 @@ namespace ElonsRiot
             if (MyScene.PlayerObject.isHacking)
                 HackingCountdown(gameTime);
 
-            //CheckRay(state);
+            if(MyScene.PlayerObject.elonState.State != State.idleShoot)
+                CheckRay(state);
+
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -185,6 +192,7 @@ namespace ElonsRiot
             
             
             visibleHUD = false;
+
             DrawHUD();
 
             if (!visibleHUD)
@@ -211,7 +219,7 @@ namespace ElonsRiot
                         if (result.Value < selectedDistance)
                         {
                             selectedDistance = result.Value;
-                            MyScene.PlayerObject.camera.offsetDistance.Z = -150;
+                            MyScene.PlayerObject.camera.offsetDistance.Z = 50;
                         }
                     }
                   //  else
