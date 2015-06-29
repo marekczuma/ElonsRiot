@@ -80,7 +80,7 @@ namespace ElonsRiot
          //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
 
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }
@@ -382,7 +382,7 @@ namespace ElonsRiot
             {
                 bigExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 MyScene.PlayerObject.showBigExplosion = true;
-                MusicManager.PlaySound(3);
+                MusicManager.PlaySound(8);
             }
             else
             {

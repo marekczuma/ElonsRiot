@@ -39,10 +39,10 @@ namespace ElonsRiot.Music
           SetSoundEffectInstance(1, 0, 0, false, 5);
           soundEffect = content.Load<SoundEffect>("Sounds/runElon"); //6
           soundEffectInstance.Add(soundEffect.CreateInstance());
-        //  SetSoundEffectInstance(1, 0, 0, true, 6);
           soundEffect = content.Load<SoundEffect>("Sounds/walkElon"); //7
           soundEffectInstance.Add(soundEffect.CreateInstance());
-        //  SetSoundEffectInstance(1, 0, 0, true, 7);
+          soundEffect = content.Load<SoundEffect>("Sounds/Final"); //8
+          soundEffectInstance.Add(soundEffect.CreateInstance());
         }
         /// <summary>
         /// Jeśli chcemy ustawić jakieś inne wartosci niz domyslne dla wybranego dzwieku
