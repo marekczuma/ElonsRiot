@@ -61,13 +61,18 @@ namespace ElonsRiot.Learning
                         if(Scene.PlayerObject.ammo <1)
                         {
                             ShootingLearning.ElonShoot = false;
+                            Timer = 2000;
                         }
                     }else
                     {
-                        Palo.PaloShooting.TinShot(ShootingLearning.Tins[1]);
-                        ShootingLearning.ElonShoot = true;
-                        ShootingLearning.ElonAfterFirst = true;
-                                                                                                                                                           
+                        float timeInMS = Scene.time.ElapsedGameTime.Milliseconds;
+                        Timer -= timeInMS;
+                        if (Timer <= 0)
+                        {
+                            Palo.PaloShooting.TinShot(ShootingLearning.Tins[1]);
+                            ShootingLearning.ElonShoot = true;
+                            ShootingLearning.ElonAfterFirst = true;
+                        }                                                                                                                          
                         //Palo.NPCShooting.Shoot(T
                     }
                 }

@@ -45,13 +45,16 @@ namespace ElonsRiot.Shooting
                 element.Shoot();
                 if(element.IsCollision())
                 {
-                    Interaction(element.targetGO);
+                    Interaction(element.Shooter, element.targetGO);
                     Scene.GameObjects.Remove(element);
                 }
             }
         }
-
-        public void Interaction(GameObject target)
+        public void UpdateShooting()
+        {
+            BulletsMovement();
+        }
+        public void Interaction(GameObject shooter, GameObject target)
         {
             if(target.Tag == "guard")
             {
@@ -73,6 +76,9 @@ namespace ElonsRiot.Shooting
                         tmpTin.Destroy();
                     }
                 }
+            }else if ((target.Tag == "Player") && (shooter.Tag != "Player"))
+            {
+                Scene.PlayerObject.health -= 13;
             }
 
         }

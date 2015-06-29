@@ -193,9 +193,7 @@ namespace ElonsRiot
             tmpPos.Y = this.Position.Y;
             rightTarget.Position = tmpPos;
             Vector3 toTarget = (rightTarget.Position - Position);
-            Vector3 currentDirection = Vector3.Normalize(MatrixWorld.Forward);
             float distanceEP = getDistance(rightTarget) / velocity;
-            float angle = (float)Math.Atan2(toTarget.X, toTarget.Z);
 
             if (getDistance(rightTarget) > stopDistance)
             {
@@ -402,13 +400,22 @@ namespace ElonsRiot
         //}
        }
 
-        //Vector3 RotatePointAroundPivot(Vector3 pos, Vector3 pivot, Quaternion rotation)
-        //{
-        //    Vector3 dir = pos - pivot;
-        //    dir = Quaternion * dir;
-        //    pos = dir + pos;
-        //    return pos;
-        //}
+        public void LookAt(Vector3 _targetVector)
+        {
+            Vector3 target = _targetVector;
+            target.Y = this.Position.Y;
+            Vector3 rightTarget = target - this.Position;
+            Vector3 deltaVectorCopy = new Vector3(rightTarget.X, 0, rightTarget.Z);
+            deltaVectorCopy.Normalize();
+            Matrix mat = Matrix.CreateLookAt(Position,
+                                                Position + deltaVectorCopy,
+                                                Vector3.Up);
+            mat = Matrix.Transpose(mat);
+            Quaternion q = Quaternion.Slerp(RotationQ,
+                                            Quaternion.CreateFromRotationMatrix(mat),
+                                            1.0f); //1ka sprawia że patrzy  natychmiastowo
+            RotationQ = q;
+        }
 
     }
 

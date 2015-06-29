@@ -14,6 +14,7 @@ namespace ElonsRiot
         public GuardState State { get; set; }
         public Scene Scene { get; set; }
         public float Velocity { get; set; }
+        public Shooting.NPCShooting Shooting { get; set; }
         public AnimationClip clip;
         public AnimationPlayer animationPlayer;
         public SkinningData skinningData;
@@ -22,13 +23,17 @@ namespace ElonsRiot
         public TimeSpan elapsedTime;
         float guardTime;
         public bool isDead;
+        private List<string> enemiesTags = new List<string>();
 
-        public Guard()
+        public Guard(Scene _scene)
         {
+            Scene = _scene;
             State = GuardState.idle;
-            Velocity = 0.09f;
+            Velocity = 0.18f;
             guardTime = 1.42f;
             isDead = false;
+            Shooting = new Shooting.NPCShooting(Scene, this);
+            FillEnemies();
         }
         public void Chase()
         {
@@ -40,6 +45,13 @@ namespace ElonsRiot
         public void Die()
         {
             State = GuardState.dead;
+        }
+
+        public void FillEnemies()
+        {
+            enemiesTags.Add("Player");
+            enemiesTags.Add("characterPalo");
+            Shooting.enemiesTags = enemiesTags;
         }
 
         public void LoadAnimation()

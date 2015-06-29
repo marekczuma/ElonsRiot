@@ -29,13 +29,13 @@ namespace ElonsRiot
             }
             else if (_state == ElonsRiot.State.walk)
             {
-                VelocityForward = 0.2f;
+                VelocityForward = 0.22f;
                 VelocitySide = 0.15f;
                 VelocityBack = 0.15f;
             }
             else if (_state == ElonsRiot.State.run)
             {
-                VelocityForward = 0.3f;
+                VelocityForward = 0.33f;
                 VelocitySide = 0.2f;
                 VelocityBack = 0.2f;
             }

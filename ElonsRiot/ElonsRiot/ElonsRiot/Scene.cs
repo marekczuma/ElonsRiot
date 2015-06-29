@@ -259,6 +259,10 @@ namespace ElonsRiot
             PlayerObject.ChangeAmmo(_state);
             PlayerObject.ShowHUDElements(_state);
             PlayerObject.SetPaloState(_state, this);
+            if(PlayerObject.health <=3)
+            {
+                PlayerObject.ChangePosition(new Vector3(0, 10, 0));
+            }
         }
         private XMLScene DeserializeFromXML()
         {
@@ -304,8 +308,11 @@ namespace ElonsRiot
 
             foreach (var npc in NPCs)
             {
-                npc.AnimationUpdate(gameTime);
-                npc.animationPlayer.Update(npc.elapsedTime, true, Matrix.Identity);
+                if (!npc.isDead)
+                {
+                    npc.AnimationUpdate(gameTime);
+                    npc.animationPlayer.Update(npc.elapsedTime, true, Matrix.Identity);
+                }
             }
 
 
@@ -346,7 +353,7 @@ namespace ElonsRiot
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
-            ShootingManager.BulletsMovement();
+            ShootingManager.UpdateShooting();
             QuestManager.UpdateQuests();
         }
         private void LoadElon()
@@ -372,7 +379,7 @@ namespace ElonsRiot
         }
         private void LoadGuards()
         {
-            Marian = new Guard();
+            Marian = new Guard(this);
             Marian.Name = "enemyMarian";
             Marian.id = "ABCDEF";
             Marian.Scale = new Vector3(0.4f, 0.4f, 0.4f);
@@ -380,11 +387,10 @@ namespace ElonsRiot
             Marian.Rotation = new Vector3(86, 0, 34);
             Marian.ObjectPath = "3D/ludzik/soldier_idle";
             Marian.Tag = "guard";
-            Marian.Scene = this;
             Marian.oldPosition = new Vector3(90, 4, 35);
             Marian.newPosition = new Vector3(90, 4, 35);
 
-            Zenon = new Guard();
+            Zenon = new Guard(this);
             Zenon.Name = "enemyZenon";
             Zenon.id = "ABCDEF";
             Zenon.Scale = new Vector3(0.4f, 0.4f, 0.4f);
@@ -394,7 +400,6 @@ namespace ElonsRiot
             Zenon.oldPosition = new Vector3(80, 0, 34);
             Zenon.newPosition = new Vector3(80, 0, 34);
             Zenon.Tag = "guard";
-            Zenon.Scene = this;
 
             GameObjects.Add(Marian);
             //GameObjects.Add(Zenon);
@@ -426,6 +431,7 @@ namespace ElonsRiot
             if ((PaloObject.PaloState == FriendState.follow) || (PaloObject.PaloState == FriendState.idleFollow))
             {
                 PaloObject.WalkToPlayer();
+                //PaloObject.MoveWithDirectionRotate((PlayerObject.newPosition - PaloObject.Position)/50);
             }
             else if(PaloObject.PaloState == FriendState.decoy)
             {
@@ -434,6 +440,9 @@ namespace ElonsRiot
             else if ((PaloObject.PaloState == FriendState.moveBox) || (PaloObject.PaloState == FriendState.moveToBox))
             {
                 PaloObject.MoveBox();
+            }else if(PaloObject.PaloState == FriendState.idle)
+            {
+                PaloObject.LookAt(PlayerObject.Position);
             }
         }
         private void NPCControl()
@@ -445,6 +454,8 @@ namespace ElonsRiot
                 {
                     currGuard.Chase();
                 }
+                currGuard.Shooting.NPCManage();
+
             }
         }
 

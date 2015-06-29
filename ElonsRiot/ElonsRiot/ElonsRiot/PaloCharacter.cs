@@ -38,7 +38,7 @@ namespace ElonsRiot
             PaloState = FriendState.idle;
             previousState = FriendState.idle;
             PaloLearningState = LearningState.idle;
-            velocity = 0.12f;
+            velocity = 0.21f;
             Guards = new List<Guard>();
             health = 100;
             ammo = 50;
@@ -46,7 +46,7 @@ namespace ElonsRiot
             Skills = new Learning.PaloSkills { Palo = this };
             LearningManager = new Learning.LearningManager(Scene);
             LearningManager.Palo = this;
-            PaloShooting = new Shooting.NPCShooting(Scene);
+            PaloShooting = new Shooting.NPCShooting(Scene, this);
         }
 
         public void WalkForward()
@@ -63,7 +63,7 @@ namespace ElonsRiot
         }
         public void WalkToPlayer()
         {
-            WalkToTarget(Elon, velocity, 10);
+            WalkToTarget(Elon, velocity, 15);
         }
 
         public List<Guard> FindGuards(float _range, Scene _scene)

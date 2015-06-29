@@ -50,10 +50,8 @@ namespace ElonsRiot.Learning
         public void MoveElonAndPalo()
         {
             Scene.PlayerObject.Position = PosA;
-            Scene.PlayerObject.newPosition = PosA;
-            Scene.PlayerObject.oldPosition = PosA;
             Scene.PaloObject.Position = PosB;
-            Scene.PaloObject.RotateQuaternions(MathHelper.ToRadians(180));
+            Scene.PaloObject.LookAt(Scene.PlayerObject.Position);
         }
 }
     }
