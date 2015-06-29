@@ -417,6 +417,23 @@ namespace ElonsRiot
             RotationQ = q;
         }
 
+        public void LookAtOnce(Vector3 _targetVector) //Gdy jedna klatka
+        {
+            Vector3 target = _targetVector;
+            target.Y = this.Position.Y;
+            Vector3 rightTarget = target - this.Position;
+            Vector3 deltaVectorCopy = new Vector3(rightTarget.X, 0, rightTarget.Z);
+            deltaVectorCopy.Normalize();
+            Matrix mat = Matrix.CreateLookAt(Position,
+                                                Position + deltaVectorCopy,
+                                                Vector3.Up);
+            mat = Matrix.Transpose(mat);
+            Quaternion q = Quaternion.Slerp(RotationQ,
+                                            Quaternion.CreateFromRotationMatrix(mat),
+                                            10.0f); //1ka sprawia że patrzy  natychmiastowo
+            RotationQ = q;
+        }
+
     }
 
 

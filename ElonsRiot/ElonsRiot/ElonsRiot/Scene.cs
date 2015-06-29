@@ -262,6 +262,7 @@ namespace ElonsRiot
             PlayerObject.SetPaloState(_state, this);
             if(PlayerObject.health <=3)
             {
+                //Przegrana
                 PlayerObject.ChangePosition(new Vector3(0, 10, 0));
             }
         }
@@ -359,15 +360,13 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            //Vector3 tmpPos = new Vector3(80, 10, -25);
-            Vector3 tmpPos = new Vector3(20, 5, -50);
+            Vector3 tmpPos = new Vector3(80, 10, -25);
+            //Vector3 tmpPos = new Vector3(20, 5, -50);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
             Elon.id = "ABCDEF";
             Elon.Scale = new Vector3(0.035f, 0.035f, 0.035f);
-            //Elon.Position = new Vector3(-100, 4 , 13);
-            //Elon.Rotation = new Vector3(0, 0, 0);
             Elon.ObjectPath = "3D/ludzik/elon-idle";
             Elon.id = "ABCDEF";
             Elon.Palo = PaloObject;
@@ -444,8 +443,14 @@ namespace ElonsRiot
                 PaloObject.MoveBox();
             }else if(PaloObject.PaloState == FriendState.idle)
             {
-                PaloObject.LookAt(PlayerObject.Position);
+                //PaloObject.LookAt(PlayerObject.Position);
             }
+            if(PaloObject.health <=3)
+            {
+                //Przegrana Pala
+                PaloObject.ChangePosition(new Vector3(0, 10, 0));
+            }
+            PaloObject.PaloShooting.NPCManage();
         }
         private void NPCControl()
         {

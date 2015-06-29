@@ -7,7 +7,7 @@ using SkinnedModel;
 
 namespace ElonsRiot
 {
-    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot, idleFollow }
+    public enum FriendState { idle, walk, follow, decoy, moveToBox, moveBox, shoot, idleFollow, death }
     public enum LearningState { idle, Learning, EngineeringLearning, ShootingLearning, UsingLearning }
     public class PaloCharacter : GameObject
     {
@@ -30,6 +30,7 @@ namespace ElonsRiot
         public SkinningData skinningData;
         public FriendState previousState;
         public Shooting.NPCShooting PaloShooting { get; set; }
+        private List<string> enemiesTags = new List<string>();
 
         public PaloCharacter(Scene _scene)
         {
@@ -47,6 +48,14 @@ namespace ElonsRiot
             LearningManager = new Learning.LearningManager(Scene);
             LearningManager.Palo = this;
             PaloShooting = new Shooting.NPCShooting(Scene, this);
+            FillEnemies();
+            PaloShooting.RangeOfMistake = 10;
+        }
+
+        public void FillEnemies()
+        {
+            enemiesTags.Add("guard");
+            PaloShooting.enemiesTags = enemiesTags;
         }
 
         public void WalkForward()

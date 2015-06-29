@@ -45,19 +45,23 @@ namespace ElonsRiot.Shooting
                         }
                     }
                 }
-            }else
+            }else if (Character is PaloCharacter)
             {
-                foreach (var element in Scene.GameObjects)
+                PaloCharacter currentGuard = (PaloCharacter)Character;
+                if (currentGuard.PaloState != FriendState.death)
                 {
-                    if (_tags.Contains(element.Tag))
+                    foreach (var element in Scene.GameObjects)
                     {
-                        float tmpDistance = Vector3.Distance(Character.Position, element.Position);
-                        if (tmpDistance <= Range)
+                        if (_tags.Contains(element.Tag))
                         {
-                            if (tmpDistance <= currentDistance)
+                            float tmpDistance = Vector3.Distance(Character.Position, element.Position);
+                            if (tmpDistance <= Range)
                             {
-                                tmpTarget = element;
-                                currentDistance = tmpDistance;
+                                if (tmpDistance <= currentDistance)
+                                {
+                                    tmpTarget = element;
+                                    currentDistance = tmpDistance;
+                                }
                             }
                         }
                     }

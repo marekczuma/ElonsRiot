@@ -1,4 +1,5 @@
 ﻿using ElonsRiot.Music;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,14 @@ namespace ElonsRiot.Shooting
             timer = 1000; //sekunda
         }
 
+
+
         public void Shoot(GameObject _target)
         {
             Character.LookAt(_target.Position);
-            //Character.RotateQuaternions(20);
+            Random rand = new Random();
+            float tmpRange = rand.Next((int)RangeOfMistake);
+            Character.RotateQuaternions(MathHelper.ToRadians(tmpRange));
             Scene.ShootingManager.Shot(Character, Character.RotationQ);
             MusicManager.PlaySound(1); //Szczela i nawet słychać!
         }
@@ -47,7 +52,12 @@ namespace ElonsRiot.Shooting
                     {
                         Guard tmpGuard = (Guard)Character;
                         tmpGuard.State = GuardState.shoot;
+                    }else if (Character is PaloCharacter)
+                    {
+                        PaloCharacter tmpGuard = (PaloCharacter)Character;
+                        tmpGuard.PaloState = FriendState.shoot;
                     }
+
                 }
             }
 

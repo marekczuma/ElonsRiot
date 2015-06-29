@@ -79,6 +79,9 @@ namespace ElonsRiot.Shooting
             }else if ((target.Tag == "Player") && (shooter.Tag != "Player"))
             {
                 Scene.PlayerObject.health -= 13;
+            }else if ((target.Tag == "Palo"))
+            {
+                Scene.PaloObject.health -= 13;
             }
 
         }

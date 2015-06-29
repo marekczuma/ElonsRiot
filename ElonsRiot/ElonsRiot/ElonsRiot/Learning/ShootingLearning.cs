@@ -51,7 +51,7 @@ namespace ElonsRiot.Learning
         {
             Scene.PlayerObject.Position = PosA;
             Scene.PaloObject.Position = PosB;
-            Scene.PaloObject.LookAt(Scene.PlayerObject.Position);
+            Scene.PaloObject.LookAtOnce(Scene.PlayerObject.Position);
         }
 }
     }

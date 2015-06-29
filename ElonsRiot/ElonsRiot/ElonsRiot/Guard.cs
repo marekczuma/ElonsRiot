@@ -34,6 +34,7 @@ namespace ElonsRiot
             isDead = false;
             Shooting = new Shooting.NPCShooting(Scene, this);
             FillEnemies();
+            Shooting.RangeOfMistake = 15;
         }
         public void Chase()
         {
@@ -50,7 +51,7 @@ namespace ElonsRiot
         public void FillEnemies()
         {
             enemiesTags.Add("Player");
-            enemiesTags.Add("characterPalo");
+            enemiesTags.Add("Palo");
             Shooting.enemiesTags = enemiesTags;
         }
 
