@@ -49,6 +49,9 @@ namespace ElonsRiot.Interaction
             EngineeringStuff eStuff2 = new EngineeringStuff { Name = "superComputer", ObjectPath = "3D/placeholders/komputer_dol", Interactive = true, Position = new Vector3(25, 0, -148), Rotation = new Vector3(0, 90, 0), Scale = new Vector3(1, 0.75f, 0.98f) };
             eStuff2.id = "ABCDEF";
             InteractiveObjects.Add(eStuff2);
+            Sensore Sensore1 = new Sensore { Name = "assetSensor", ObjectPath = "3D/placeholders/czujniki", Interactive = true, Position = new Vector3(3, 0, -90), Rotation = new Vector3(0, 270, 0), Scale = new Vector3(0.7f, 0.75f, 0.7f) };
+            Sensore1.id = "ABCDEF";
+            InteractiveObjects.Add(Sensore1);
         }
 
         public void AddToScene()

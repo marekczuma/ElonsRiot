@@ -49,7 +49,7 @@ namespace ElonsRiot
             LearningManager.Palo = this;
             PaloShooting = new Shooting.NPCShooting(Scene, this);
             FillEnemies();
-            PaloShooting.RangeOfMistake = 10;
+            PaloShooting.RangeOfMistake = 5;
         }
 
         public void FillEnemies()

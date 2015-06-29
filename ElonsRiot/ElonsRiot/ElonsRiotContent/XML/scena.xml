@@ -442,24 +442,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 </GameObject>
-<GameObject Name="assetSensor" Id="ABCDEF" Path="3D/placeholders/czujniki">
-		<Position>
-		  <X>3</X>
-		  <Y>0</Y>
-		  <Z>-90</Z>
-		</Position>
-		<Rotation>
-		  <X>0</X>
-		  <Y>270</Y>
-		  <Z>0</Z>
-		</Rotation>
-		<Scale> 
-		  <X>0.7</X>
-		  <Y>0.75</Y>
-		  <Z>0.7</Z>
-		</Scale>
-		<Interactive>false</Interactive>
-	</GameObject> 
+
 	<GameObject Name="assetSensor" Id="ABCDEF" Path="3D/placeholders/czujniki">
 		<Position>
 		  <X>48</X>

@@ -166,6 +166,8 @@ namespace ElonsRiot
                 Countdown(gameTime);
             if (MyScene.PlayerObject.isHacking)
                 HackingCountdown(gameTime);
+            if (MyScene.isSensore)
+                LaserCountdown(gameTime);
 
             //CheckRay(state);
             base.Update(gameTime);
@@ -362,6 +364,24 @@ namespace ElonsRiot
             else
             {
                 MyScene.PlayerObject.showBigExplosion = false;
+            }
+        }
+
+        void LaserCountdown(GameTime gameTime)
+        {
+            if (countdownTime > 0)
+            {
+                countdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else if (bigExplosionTime > 0)
+            {
+                bigExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                MyScene.PlayerObject.showBigExplosion = true;
+                MusicManager.PlaySound(3);
+            }
+            else
+            {
+                MyScene.PlayerObject.showLaser = false;
             }
         }
 
