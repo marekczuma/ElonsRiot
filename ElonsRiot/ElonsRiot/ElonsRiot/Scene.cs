@@ -224,12 +224,20 @@ namespace ElonsRiot
                 
                 if ((PaloObject.PaloState == FriendState.shoot) && elem.Name == "gunPalo")
                     elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
+                
+                if (NPCs[0].State == GuardState.shoot && elem.Name == "gunMarian")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
+                if (NPCs[1].State == GuardState.shoot && elem.Name == "gunZenon")
+                    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
+                //if (NPCs[2].State == GuardState.shoot && elem.Name == "gunArtur")
+                //    elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
+
             }
 
 
              foreach (var elem in VisibleGameObjects)
              {
-                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo")                 
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo" && elem.Name != "gunMarian" && elem.Name != "gunZenon" && elem.Name != "gunArtur")                 
                  {
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                  }
@@ -308,41 +316,8 @@ namespace ElonsRiot
                 npc.animationPlayer.Update(npc.elapsedTime, true, Matrix.Identity);
             }
 
+            UpdateGunsPosition();
 
-            foreach(GameObject gobj in GameObjects)
-            {
-                if (gobj.Name == "gun")
-                {
-                    Vector3 gunPosition;
-                    gobj.RotationQ = PlayerObject.RotationQ;
-                    if (PlayerObject.elonState.State == State.walkShoot)
-                    {
-                        gunPosition = PlayerObject.Position;
-                        gunPosition += Vector3.Transform(Vector3.Right * 1.2f, PlayerObject.RotationQ);
-                        gobj.Position = gunPosition + 3.0f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
-                    }
-                    else if (PlayerObject.elonState.State == State.idleShoot)
-                    {
-                        gunPosition = PlayerObject.Position;
-                        gunPosition += Vector3.Transform(Vector3.Right * 1f, PlayerObject.RotationQ);
-                        gobj.Position = gunPosition + 3.5f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
-                    }
-                }
-
-                if (gobj.Name == "gunPalo")
-                {
-                    Vector3 gunPosition;
-                    gobj.RotationQ = PaloObject.RotationQ;
-                    if (PaloObject.PaloState == FriendState.shoot)
-                    {
-                        gunPosition = PaloObject.Position;
-                        gunPosition += Vector3.Transform(Vector3.Right * 2.15f, PaloObject.RotationQ);
-                        gobj.Position = gunPosition + 5.0f * Vector3.Transform(Vector3.Forward, PaloObject.RotationQ) + Vector3.Up * 7.8f;
-                    }
-                 }
-
-                gobj.update();
-            }
             ObjectDetector.CheckRay();
             InteractionsManager.ManageInteractiveObject(_state);
             time = gameTime;
@@ -351,8 +326,8 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            //Vector3 tmpPos = new Vector3(80, 10, -25);
-            Vector3 tmpPos = new Vector3(20, 5, -80);
+            Vector3 tmpPos = new Vector3(80, 10, -25);
+           // Vector3 tmpPos = new Vector3(20, 5, -80);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";
@@ -599,6 +574,78 @@ namespace ElonsRiot
 
             mirrorIndices = new IndexBuffer(graphic, IndexElementSize.SixteenBits, 6, BufferUsage.WriteOnly);
             mirrorIndices.SetData<UInt16>(indices);
+        }
+
+        private void UpdateGunsPosition()
+        {
+            foreach (GameObject gobj in GameObjects)
+            {
+                if (gobj.Name == "gun")
+                {
+                    Vector3 gunPosition;
+                    gobj.RotationQ = PlayerObject.RotationQ;
+                    if (PlayerObject.elonState.State == State.walkShoot)
+                    {
+                        gunPosition = PlayerObject.Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 1.2f, PlayerObject.RotationQ);
+                        gobj.Position = gunPosition + 3.0f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
+                    }
+                    else if (PlayerObject.elonState.State == State.idleShoot)
+                    {
+                        gunPosition = PlayerObject.Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 1f, PlayerObject.RotationQ);
+                        gobj.Position = gunPosition + 3.5f * Vector3.Transform(Vector3.Forward, PlayerObject.RotationQ) + Vector3.Up * 6.8f;
+                    }
+                }
+
+                if (gobj.Name == "gunPalo")
+                {
+                    Vector3 gunPosition;
+                    gobj.RotationQ = PaloObject.RotationQ;
+                    if (PaloObject.PaloState == FriendState.shoot)
+                    {
+                        gunPosition = PaloObject.Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 2.15f, PaloObject.RotationQ);
+                        gobj.Position = gunPosition + 5.0f * Vector3.Transform(Vector3.Forward, PaloObject.RotationQ) + Vector3.Up * 7.8f;
+                    }
+                }
+
+                if (gobj.Name == "gunMarian")
+                {
+                    Vector3 gunPosition;
+                    gobj.RotationQ = NPCs[0].RotationQ;
+                    if (NPCs[0].State == GuardState.shoot)
+                    {
+                        gunPosition = NPCs[0].Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 0.8f, NPCs[0].RotationQ);
+                        gobj.Position = gunPosition + 3.2f * Vector3.Transform(Vector3.Forward, NPCs[0].RotationQ) + Vector3.Up * 7.5f;
+                    }
+                }
+                if (gobj.Name == "gunZenon")
+                {
+                    Vector3 gunPosition;
+                    gobj.RotationQ = NPCs[1].RotationQ;
+                    if (NPCs[1].State == GuardState.shoot)
+                    {
+                        gunPosition = NPCs[1].Position;
+                        gunPosition += Vector3.Transform(Vector3.Right * 0.8f, NPCs[1].RotationQ);
+                        gobj.Position = gunPosition + 3.2f * Vector3.Transform(Vector3.Forward, NPCs[1].RotationQ) + Vector3.Up * 7.5f;
+                    }
+                }
+                //if (gobj.Name == "gunArtur")
+                //{
+                //    Vector3 gunPosition;
+                //    gobj.RotationQ = NPCs[2].RotationQ;
+                //    if (NPCs[2].State == GuardState.shoot)
+                //    {
+                //    gunPosition = NPCs[2].Position;
+                //    gunPosition += Vector3.Transform(Vector3.Right * 0.8f, NPCs[2].RotationQ);
+                //    gobj.Position = gunPosition + 3.2f * Vector3.Transform(Vector3.Forward, NPCs[2].RotationQ) + Vector3.Up * 7.5f;
+                //    }
+                //}
+
+                gobj.update();
+            }
         }
     }
 }

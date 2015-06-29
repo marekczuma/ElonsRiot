@@ -15,23 +15,23 @@ namespace ElonsRiot.Particles
         {
             settings.TextureName = "Particle/explosion";
 
-            settings.MaxParticles = 100;
+            settings.MaxParticles = 30;
 
             settings.Duration = TimeSpan.FromSeconds(0.25f);
             settings.DurationRandomness = 0;
 
             settings.MinHorizontalVelocity = 10;
-            settings.MaxHorizontalVelocity = 20;
+            settings.MaxHorizontalVelocity = 10;
 
             settings.MinVerticalVelocity = 10;
-            settings.MaxVerticalVelocity = 20;
+            settings.MaxVerticalVelocity = 10;
 
             settings.Gravity = new Vector3(0, 0, 0);
 
             settings.EndVelocity = 0;
 
             settings.MinColor = Color.DarkGray;
-            settings.MaxColor = Color.Gray;
+            settings.MaxColor = Color.Black;
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
