@@ -63,7 +63,7 @@ namespace ElonsRiot.Particles
                 }
                 foreach (var element in scene.PlayerObject.Scene.GameObjects)
                 {
-                    if (element.Name == "Bomba")
+                    if (element.Name == "paczuszka")
                     {
                         scene.PlayerObject.Scene.GameObjects.Remove(element);
                         break;

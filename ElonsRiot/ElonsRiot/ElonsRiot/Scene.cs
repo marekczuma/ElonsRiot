@@ -193,7 +193,7 @@ namespace ElonsRiot
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, PaloObject.animationPlayer, reflect, false);
                  else if (elem.Name == "ceil")
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
-                 else if (elem.Name == "Kuleczka" || elem.Name == "Bomba")
+                 else if (elem.Name == "Kuleczka")
                      elem.DrawNoEffectModels(ContentManager, PlayerObject, reflect, false);
                 elem.RefreshMatrix();
              }
@@ -224,7 +224,7 @@ namespace ElonsRiot
 
              foreach (var elem in VisibleGameObjects)
              {
-                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo" && elem.Name != "gunMarian" && elem.Name != "gunZenon" && elem.Name != "gunArtur")                 
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "gunPalo" && elem.Name != "gunMarian" && elem.Name != "gunZenon" && elem.Name != "gunArtur")                 
                  {
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                  }
