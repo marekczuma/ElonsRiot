@@ -178,7 +178,7 @@ namespace ElonsRiot
             PhysicManager.InitializePhysicManager(GameObjects, PlayerObject);
             tinExplosionTime = 0.1f;
         }
-        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, ParticleSystem bigExplosion, ParticleSystem tinExplosion, GameTime gameTime)
+        public void DrawAllContent(GraphicsDevice graphic, ParticleSystem explosion, ParticleSystem bigExplosion, ParticleSystem tinExplosion, ParticleSystem laserParticles, GameTime gameTime)
         {
             //graphic.SetRenderTarget(renderTarget);
             graphic.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
@@ -239,6 +239,7 @@ namespace ElonsRiot
              explosion.DrawParticle(gameTime);
              bigExplosion.DrawParticle(gameTime);
              tinExplosion.DrawParticle(gameTime);
+             laserParticles.DrawParticle(gameTime);
 
             foreach (GameObject gObj in this.VisibleGameObjects)
             {
@@ -358,7 +359,8 @@ namespace ElonsRiot
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(80, 10, -25);
+            //Vector3 tmpPos = new Vector3(80, 10, -25);
+            Vector3 tmpPos = new Vector3(20, 5, -50);
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";

@@ -25,6 +25,8 @@ namespace ElonsRiot.Particles
             settings.MinVerticalVelocity = 1;
             settings.MaxVerticalVelocity = 1;
 
+            settings.Gravity = new Vector3(0, 0, 0);
+
             settings.EndVelocity = 0;
 
             settings.MinColor = Color.DarkGray;
