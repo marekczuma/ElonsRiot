@@ -91,10 +91,14 @@ namespace ElonsRiot
             if (state.IsKeyDown(Keys.LeftShift))
             {
                 elonState.SetCurrentState(State.run);
+                Music.MusicManager.StopSound(7);
+                Music.MusicManager.PlaySound(6);
             }
             else if ((state.IsKeyDown(Keys.W)) || (state.IsKeyDown(Keys.S)) || (state.IsKeyDown(Keys.A)) || (state.IsKeyDown(Keys.D)))
             {
                 elonState.SetCurrentState(State.walk);
+                Music.MusicManager.StopSound(6);
+                Music.MusicManager.PlaySound(7);
             }
             else if(state.IsKeyDown(Keys.M))
             {

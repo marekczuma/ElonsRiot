@@ -334,10 +334,27 @@ namespace ElonsRiot
             time = gameTime;
             ShootingManager.UpdateShooting();
             QuestManager.UpdateQuests();
+            if(checkPlayerPosition())
+            {
+                Dialogues.DialoguesManager.IsLaser = true;
+            }
+        }
+        private bool checkPlayerPosition()
+        {
+            
+       
+            if(PlayerObject.Position.X >= 3f && PlayerObject.Position.X <= 47.5f)
+            {
+                if(PlayerObject.Position.Z >= -100 && PlayerObject.Position.Z <= -80)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private void LoadElon()
         {
-            Vector3 tmpPos = new Vector3(80, 10, -25);// 80 -25
+            Vector3 tmpPos = new Vector3(20, 10, -70);// 80 -25
             Vector3 tmpRot = new Vector3(0, 180, 0);
             Player Elon = new Player(tmpPos, tmpRot, this);
             Elon.Name = "characterElon";

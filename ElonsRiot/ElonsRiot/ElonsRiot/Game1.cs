@@ -87,6 +87,7 @@ namespace ElonsRiot
         {
             PhysicManager.setElements(graphics.GraphicsDevice);
             MusicManager.Initialize(Content);
+            DialoguesSoundManager.Initialize(Content);
             renderTarget = new RenderTarget2D(
                            GraphicsDevice,
                            GraphicsDevice.PresentationParameters.BackBufferWidth,
@@ -435,6 +436,11 @@ namespace ElonsRiot
                 {
                     HUD.DrawString(sptiteBatchDialogues,
                           DialoguesManager.OpeningStatements[0].dialogLines.Line[DialoguesManager.ActualLineOpening], GraphicsDevice);
+                }
+                if (DialoguesManager.IsLaser && DialoguesManager.LaserStatements.Count != 0)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                          DialoguesManager.LaserStatements[0].dialogLines.Line[DialoguesManager.ActualLineLaser], GraphicsDevice);
                 }
                 if(isEnd == true && stringTime <4)
                 {

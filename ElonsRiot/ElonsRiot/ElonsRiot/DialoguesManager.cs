@@ -15,6 +15,7 @@ namespace ElonsRiot.Dialogues
         private static List<Statement> statements; //lista wypowiedzi
         private static List<Statement> lerningStatements; //lista wypowiedzi w trakcie uczenia sie
         private static List<Statement> openingStatements; //lista wypowiedzi przy otwieraniu dzwi od lab
+        private static List<Statement> laserStatements;//gdy podejdziemy do lasera 
         private static List<Statement> onKeystatements; //lista wypowiedzi uruchamiana przyciskiem
         private static XMLDialogues xmlDialogues;
         private static int acctualStatementNumber; //ktora jest teraz wypowiedz (z listy wypowiedzi)
@@ -27,13 +28,26 @@ namespace ElonsRiot.Dialogues
         private static int actualLineOnPress; //która linia dialogowa z tych na przycisk
         private static int actualLineLerning; //ktora linia dialogowa z tych w trakcie nauki
         private static int actualLineOpening; //ktora linia dialogowa z tych w trakcie otwierania drzwi do lab
+        private static int actualLineLaser;
         private static int LerningLinesCount; //dlugosc (ilosc linii) wypowiedzi o uczeniu sie
         private static int OpeningLinesCount; //dlugosc (ilosc linii) wypowiedzi o otwieraniu drzwi
+        private static int LaserLinesCount;
         private static int OnPressLinesCount; //dlugosc (ilosc linii) wypowiedzi na przycisk
         private static bool isPressed;
         private static bool isLerning;
         private static bool isOpening;
+        private static bool isLaser;
 
+        public static bool IsLaser
+        {
+            get { return DialoguesManager.isLaser; }
+            set { DialoguesManager.isLaser = value; }
+        }
+        public static List<Statement> LaserStatements
+        {
+            get { return DialoguesManager.laserStatements; }
+            set { DialoguesManager.laserStatements = value; }
+        }
         public static int ActualLineOpening
         {
             get { return DialoguesManager.actualLineOpening; }
@@ -44,7 +58,11 @@ namespace ElonsRiot.Dialogues
             get { return DialoguesManager.isOpening; }
             set { DialoguesManager.isOpening = value; }
         }
-
+        public static int ActualLineLaser
+        {
+            get { return DialoguesManager.actualLineLaser; }
+            set { DialoguesManager.actualLineLaser = value; }
+        }
         public static int ActualLineLerning
         {
             get { return DialoguesManager.actualLineLerning; }
@@ -83,6 +101,7 @@ namespace ElonsRiot.Dialogues
         private static TimeSpan timeToEnd;
         private static TimeSpan timeToNextLerning;
         private static TimeSpan timeToNextOpening;
+        private static TimeSpan timeToNextLaser;
         public static int AcctualStatementNumber
         {
             get { return acctualStatementNumber; }
@@ -111,12 +130,12 @@ namespace ElonsRiot.Dialogues
             onKeystatements = new List<Statement>();
             lerningStatements = new List<Statement>();
             openingStatements = new List<Statement>();
+            laserStatements = new List<Statement>();
             xmlDialogues = DeserializeFromXML();
             foreach(Statement statement in xmlDialogues.statements)
             {
                 if (statement.placeToShow != "OnKey" && statement.placeToShow != "PaloLerning"
-                    && statement.placeToShow != "ClosedDoor" && statement.placeToShow != "Laser" &&
-                    statement.placeToShow != "PaloIdea" && statement.placeToShow != "PaloIdea")
+                    && statement.placeToShow != "ClosedDoor" && statement.placeToShow != "Laser")
                 {
                     statements.Add(statement);
                 }
@@ -132,24 +151,32 @@ namespace ElonsRiot.Dialogues
                 {
                     openingStatements.Add(statement);
                 }
+                else if(statement.placeToShow == "Laser")
+                {
+                    laserStatements.Add(statement);
+                }
             }
             OnPressLinesCount = OnKeystatements[0].dialogLines.Line.Count;
             LerningLinesCount = lerningStatements[0].dialogLines.Line.Count;
             OpeningLinesCount = openingStatements[0].dialogLines.Line.Count;
+            LaserLinesCount = laserStatements[0].dialogLines.Line.Count;
             timeToNextLine = TimeSpan.Zero;
             timeToEnd = TimeSpan.Zero;
             timeToNextLerning = TimeSpan.Zero;
             timeToNextOpening = TimeSpan.Zero;
+            timeToNextLaser = TimeSpan.Zero;
             acctualLineOfStatementCounter = 0;
             actuallLineOfLerningStatement = 0;
             acctualStatementNumber = 0;
             actualLineLerning = 0;
             actualLineOpening = 0;
+            actualLineLaser = 0;
             isNextStatements = true;
             isStart = true;
             isPressed = false;
             isLerning = false;
             isOpening = false;
+            isLaser = false;
         }
         private static XMLDialogues DeserializeFromXML()
         {
@@ -279,6 +306,26 @@ namespace ElonsRiot.Dialogues
                     {
                         actualLineOpening = 0;
                         timeToNextOpening = TimeSpan.Zero;
+                        isOpening = false;
+                    }
+                }
+            }
+            if (isLaser == true && laserStatements.Count !=0)
+            {
+                timeToNextLaser += gameTime.ElapsedGameTime;
+                if (timeToNextLaser > TimeSpan.FromSeconds(5))
+                {
+                    if (actualLineLaser < LaserLinesCount - 1)
+                    {
+                        actualLineLaser++;
+                        timeToNextLaser = TimeSpan.Zero;
+                    }
+                    else
+                    {
+                        actualLineLaser = 0;
+                        timeToNextLaser = TimeSpan.Zero;
+                        laserStatements[0].dialogLines.Line.Clear();
+                        laserStatements.Clear();
                         isOpening = false;
                     }
                 }
