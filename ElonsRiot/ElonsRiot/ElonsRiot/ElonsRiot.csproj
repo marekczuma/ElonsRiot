@@ -106,6 +106,7 @@
     <Compile Include="Interaction\BombDoor.cs" />
     <Compile Include="Interaction\Chest.cs" />
     <Compile Include="Interaction\Door.cs" />
+    <Compile Include="Interaction\EndStuff.cs" />
     <Compile Include="Interaction\EngineeringStuff.cs" />
     <Compile Include="Interaction\HardChest.cs" />
     <Compile Include="Interaction\InteractiveGameObject.cs" />

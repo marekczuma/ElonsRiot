@@ -46,7 +46,7 @@ namespace ElonsRiot.Interaction
             EngineeringStuff eStuff = new EngineeringStuff { Name = "laptop", ObjectPath = "3D/placeholders/laptop", Interactive = true, Position = new Vector3(8, 3, -56), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(0.3f, 0.4f, 0.4f) };
             eStuff.id = "ABCDEF";
             InteractiveObjects.Add(eStuff);
-            EngineeringStuff eStuff2 = new EngineeringStuff { Name = "superComputer", ObjectPath = "3D/placeholders/komputer_dol", Interactive = true, Position = new Vector3(25, 0, -148), Rotation = new Vector3(0, 90, 0), Scale = new Vector3(1, 0.75f, 0.98f) };
+            EndStuff eStuff2 = new EndStuff { Name = "superComputer", ObjectPath = "3D/placeholders/komputer_dol", Interactive = true, Position = new Vector3(25, 0, -148), Rotation = new Vector3(0, 90, 0), Scale = new Vector3(1, 0.75f, 0.98f) };
             eStuff2.id = "ABCDEF";
             InteractiveObjects.Add(eStuff2);
         }
