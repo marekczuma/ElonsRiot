@@ -181,78 +181,71 @@ namespace ElonsRiot
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
             MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
+            
+            //    HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
 
-            HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
+        //    HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
-            
-            if(MyScene.PlayerObject.showGun == true)
-            {
-                HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
-                GraphicsDevice,GraphicsDevice.Viewport.Width);
-            }
+            DrawHUD();
+        //    if(MyScene.PlayerObject.showGun == true)
+        //    {
+        //        HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
+        //        GraphicsDevice,GraphicsDevice.Viewport.Width);
+        //    }
 
-            if(MyScene.PlayerObject.showProgress == true)
-            {
-                HUD.DrawProgress(spriteBatchHUD3, GraphicsDevice);
-            }
+        //    if(MyScene.PlayerObject.showProgress == true)
+        //    {
+        //        HUD.DrawProgress(spriteBatchHUD3, GraphicsDevice);
+        //    }
 
-            if (MyScene.PlayerObject.elonState.State == State.idleShoot || MyScene.PlayerObject.elonState.State == State.walkShoot)
-            {
-                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
-            }
+        //    if (MyScene.PlayerObject.elonState.State == State.idleShoot || MyScene.PlayerObject.elonState.State == State.walkShoot)
+        //    {
+        //        HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
+        //    }
 
-            //if (MyScene.PlayerObject.showItem1 == true)
-            //{
-            //    HUD.DrawItem1(spriteBatchHUD5, GraphicsDevice);
-            //}
-            //if (MyScene.PlayerObject.showItem2 == true)
-            //{
-            //    HUD.DrawItem2(spriteBatchHUD6, GraphicsDevice);
-            //}
-            if (MyScene.PlayerObject.showSkills == true)
-            {
-                HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice, MyScene.PaloObject);
-            }
-            if(MyScene.ObjectDetector.Information)
-            {
-                HUD.DrawStringForInformation(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
-            }
+        //    if (MyScene.PlayerObject.showSkills == true)
+        //    {
+        //        HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice, MyScene.PaloObject);
+        //    }
+        //    if(MyScene.ObjectDetector.Information)
+        //    {
+        //        HUD.DrawStringForInformation(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
+        //    }
 
-            if (MyScene.PlayerObject.introEnd)
-            {
-                if (DialoguesManager.IsCorrectRoom)
-                {
-                    HUD.DrawString(sptiteBatchDialogues,
-                        DialoguesManager.Statements[DialoguesManager.AcctualStatementNumber].dialogLines.Line[DialoguesManager.AcctualLineOfStatementCounter], GraphicsDevice);
-                }
-                if (DialoguesManager.IsPressed)
-                {
-                    HUD.DrawString(sptiteBatchDialogues,
-                           DialoguesManager.OnKeystatements[0].dialogLines.Line[DialoguesManager.ActualLineOnPress], GraphicsDevice);
-                }
-                if (DialoguesManager.IsLerning)
-                {
-                    HUD.DrawString(sptiteBatchDialogues,
-                           DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
-                }
-                if(isEnd == true && stringTime <4)
-                {
-                    HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
-                   // HUD.DrawString(sptiteBatchDialogues, "Palo:Przeanalizowalem budowe czujek.Mozemy je unieszkodliwic jesli zestrzelimy je jednoczesnie", this.GraphicsDevice);
-                    isEnd = false;
-                }
-                if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
-                {
-                    HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
-                }
-                if (MyScene.PlayerObject.showLegend)
-                {
-                    HUD.DrawLegend(spriteBatchLegend, GraphicsDevice);
-                }
-            }
+        //    if (MyScene.PlayerObject.introEnd)
+        //    {
+        //        if (DialoguesManager.IsCorrectRoom)
+        //        {
+        //            HUD.DrawString(sptiteBatchDialogues,
+        //                DialoguesManager.Statements[DialoguesManager.AcctualStatementNumber].dialogLines.Line[DialoguesManager.AcctualLineOfStatementCounter], GraphicsDevice);
+        //        }
+        //        if (DialoguesManager.IsPressed)
+        //        {
+        //            HUD.DrawString(sptiteBatchDialogues,
+        //                   DialoguesManager.OnKeystatements[0].dialogLines.Line[DialoguesManager.ActualLineOnPress], GraphicsDevice);
+        //        }
+        //        if (DialoguesManager.IsLerning)
+        //        {
+        //            HUD.DrawString(sptiteBatchDialogues,
+        //                   DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
+        //        }
+        //        if(isEnd == true && stringTime <4)
+        //        {
+        //            HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+        //           // HUD.DrawString(sptiteBatchDialogues, "Palo:Przeanalizowalem budowe czujek.Mozemy je unieszkodliwic jesli zestrzelimy je jednoczesnie", this.GraphicsDevice);
+        //            isEnd = false;
+        //        }
+        //        if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
+        //        {
+        //            HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
+        //        }
+        //        if (MyScene.PlayerObject.showLegend)
+        //        {
+        //            HUD.DrawLegend(spriteBatchLegend, GraphicsDevice);
+        //        }
+        //    }
             playIntro();
 
             base.Draw(gameTime);
@@ -382,6 +375,75 @@ namespace ElonsRiot
                 spriteBatchVideo.Draw(videoTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatchVideo.End();
             }
+        }
+
+        void DrawHUD()
+        {
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
+
+            HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
+            //GraphicsDevice.BlendState = BlendState.Opaque;
+            //GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+            
+            if(MyScene.PlayerObject.showGun == true)
+            {
+                HUD.DrawHUDGuns(spriteBatchHUD2, MyScene.PlayerObject.ammo, MyScene.PaloObject.ammo,MyScene.PlayerObject.ammoMax,
+                GraphicsDevice,GraphicsDevice.Viewport.Width);
+            }
+
+            if(MyScene.PlayerObject.showProgress == true)
+            {
+                HUD.DrawProgress(spriteBatchHUD3, GraphicsDevice);
+            }
+
+            if (MyScene.PlayerObject.elonState.State == State.idleShoot || MyScene.PlayerObject.elonState.State == State.walkShoot)
+            {
+                HUD.DrawCrosshair(spriteBatchHUD4, GraphicsDevice);
+            }
+
+            if (MyScene.PlayerObject.showSkills == true)
+            {
+                HUD.DrawSkills(spriteBatchHUD6, GraphicsDevice, MyScene.PaloObject);
+            }
+            if(MyScene.ObjectDetector.Information)
+            {
+                HUD.DrawStringForInformation(spriteBatchHUD4, MyScene.ObjectDetector.currentInteractiveObject.Information, GraphicsDevice);
+            }
+
+            if (MyScene.PlayerObject.introEnd)
+            {
+                if (DialoguesManager.IsCorrectRoom)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                        DialoguesManager.Statements[DialoguesManager.AcctualStatementNumber].dialogLines.Line[DialoguesManager.AcctualLineOfStatementCounter], GraphicsDevice);
+                }
+                if (DialoguesManager.IsPressed)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                           DialoguesManager.OnKeystatements[0].dialogLines.Line[DialoguesManager.ActualLineOnPress], GraphicsDevice);
+                }
+                if (DialoguesManager.IsLerning)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                           DialoguesManager.LerningStatements[0].dialogLines.Line[DialoguesManager.ActualLineLerning], GraphicsDevice);
+                }
+                if(isEnd == true && stringTime <4)
+                {
+                    HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+                   // HUD.DrawString(sptiteBatchDialogues, "Palo:Przeanalizowalem budowe czujek.Mozemy je unieszkodliwic jesli zestrzelimy je jednoczesnie", this.GraphicsDevice);
+                    isEnd = false;
+                }
+                if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
+                {
+                    HUD.DrawLearningIcon(spriteBatchLearning, GraphicsDevice);
+                }
+                if (MyScene.PlayerObject.showLegend)
+                {
+                    HUD.DrawLegend(spriteBatchLegend, GraphicsDevice);
+                }
+            }
+            
         }
     }
 }
