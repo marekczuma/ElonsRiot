@@ -223,7 +223,7 @@ namespace ElonsRiot
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
                     SamplerState.LinearClamp, DepthStencilState.Default,
                     RasterizerState.CullNone, grayEffect);
-                spriteBatch.Draw(texture, new Rectangle(0, 0, 800, 480), Color.White);
+                spriteBatch.Draw(texture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.End();
         }
         protected override void Draw(GameTime gameTime)
@@ -249,7 +249,8 @@ namespace ElonsRiot
             }
             visibleHUD = false;
 
-            DrawHUD();
+            if (!MyScene.isGray)
+                DrawHUD();
 
             if (!visibleHUD)
             {

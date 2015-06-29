@@ -1113,7 +1113,7 @@
 		<Tag>escapePlace</Tag>
 		<Interactive>false</Interactive>
 	</GameObject> 
-	<!--<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
+	<GameObject Name="filar" Id="ABCDEF" Path="3D/placeholders/filar">
 		<Position>
 		  <X>88</X>
 		  <Y>0</Y>
@@ -1131,7 +1131,7 @@
 		</Scale>
 		<Interactive>false</Interactive>
 		<Tag>guardPlace</Tag>
-	</GameObject> -->
+	</GameObject>
  	<GameObject Name="gun" Id="ABCDEF" Path="3D/placeholders/gun">
 		<Position>
 		  <X>100</X>
