@@ -215,14 +215,13 @@ namespace ElonsRiot
 
         public static void DrawLegend(SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
-            Vector2 firstPos = new Vector2(graphics.Viewport.Width - 330, graphics.Viewport.Height - 130);
+            Vector2 firstPos = new Vector2(graphics.Viewport.Width - 370, graphics.Viewport.Height - 130);
 
             spriteBatch.Begin();
-            spriteBatch.Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 50), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 100), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 150), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
-            spriteBatch.Draw(legendO, new Vector2(firstPos.X, firstPos.Y - 200), null, Color.White, 0, Vector2.Zero, 0.07f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendL, firstPos, null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 35), null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 70), null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
+            spriteBatch.Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 105), null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }

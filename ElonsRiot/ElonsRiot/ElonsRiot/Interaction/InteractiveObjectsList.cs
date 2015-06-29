@@ -49,6 +49,9 @@ namespace ElonsRiot.Interaction
             EndStuff eStuff2 = new EndStuff { Name = "superComputer", ObjectPath = "3D/placeholders/komputer_dol", Interactive = true, Position = new Vector3(25, 0, -148), Rotation = new Vector3(0, 90, 0), Scale = new Vector3(1, 0.75f, 0.98f) };
             eStuff2.id = "ABCDEF";
             InteractiveObjects.Add(eStuff2);
+            Sensore Sensore1 = new Sensore { Name = "assetSensor", ObjectPath = "3D/placeholders/czujniki", Interactive = true, Position = new Vector3(3, 0, -90), Rotation = new Vector3(0, 270, 0), Scale = new Vector3(0.7f, 0.75f, 0.7f) };
+            Sensore1.id = "ABCDEF";
+            InteractiveObjects.Add(Sensore1);
             OpeningDoor openingDoor = new OpeningDoor { Name = "openingDoor", ObjectPath = "3D/placeholders/drzwi_suwane_2", Interactive = true, Position = new Vector3(51, 0, -85), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(1, 0.75f, 1f) };
             openingDoor.id = "ABCDEF";
             InteractiveObjects.Add(openingDoor);

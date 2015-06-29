@@ -32,6 +32,7 @@ namespace ElonsRiot
         public Vector3 nearPoint;
         public Vector3 farPoint;
         KeyboardState oldState;
+        MouseState oldMouseState;
         public bool isBomb = false;
         public bool isOpening = false;
         public bool isHacking = false;
@@ -84,7 +85,7 @@ namespace ElonsRiot
             Scene = _scene;
         }
 
-        public void SetState(KeyboardState state, GameTime gameTime)
+        public void SetState(KeyboardState state, GameTime gameTime, MouseState mState)
         {
             float timeInMS = Scene.time.ElapsedGameTime.Milliseconds;
             timer -= timeInMS;
@@ -110,16 +111,16 @@ namespace ElonsRiot
             {
                 elonState.SetCurrentState(State.climb);
             }
-            else if (state.IsKeyDown(Keys.D2))
+            else if (mState.RightButton == ButtonState.Pressed)
             {
                 camera.SetOffsetDistance();
                 elonState.SetCurrentState(State.idleShoot);
-                if (state.IsKeyDown(Keys.G))
+                if (mState.LeftButton == ButtonState.Pressed)
                 {
                     Scene.ShootingManager.Shot(this, RotationQ);
                     MusicManager.PlaySound(1);
 
-                    if (!oldState.IsKeyDown(Keys.G))
+                    if (oldMouseState.LeftButton != ButtonState.Pressed)
                     {
                         showShootExplosion = true;
                         ammo--;
@@ -249,6 +250,7 @@ namespace ElonsRiot
                 elonState.SetCurrentState(State.idle);
             }
             oldState = state;
+            oldMouseState = mState;
         }
         public void Movement(KeyboardState state, MouseState _oldMouseState)
         {

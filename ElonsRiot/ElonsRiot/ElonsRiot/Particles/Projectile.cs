@@ -91,6 +91,42 @@ namespace ElonsRiot.Particles
 
                 //laserEmitter = new ParticleEmitter(explosionParticles, trailLaserPerSecond, position);
             }
+            //if (scene.NPCs[0].showShootExplosion)
+            //{
+            //    if (scene.NPCs[0].State == GuardState.shoot)
+            //    {
+            //        scene.NPCs[0].Position += Vector3.Transform(Vector3.Right * 1.05f, scene.NPCs[0].RotationQ);
+            //        position = scene.NPCs[0].Position + 4.4f * Vector3.Transform(Vector3.Forward, scene.NPCs[0].RotationQ) + Vector3.Up * 7.6f;
+            //    }
+
+            //    velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            //    velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
+            //    velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            //}
+            //if (scene.NPCs[1].showShootExplosion)
+            //{
+            //    if (scene.NPCs[1].State == GuardState.shoot)
+            //    {
+            //        scene.NPCs[1].Position += Vector3.Transform(Vector3.Right * 1.05f, scene.NPCs[1].RotationQ);
+            //        position = scene.NPCs[1].Position + 4.4f * Vector3.Transform(Vector3.Forward, scene.NPCs[1].RotationQ) + Vector3.Up * 7.6f;
+            //    }
+
+            //    velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            //    velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
+            //    velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            //}
+            //if (scene.NPCs[2].showShootExplosion)
+            //{
+            //    if (scene.NPCs[2].State == GuardState.shoot)
+            //    {
+            //        scene.NPCs[2].Position += Vector3.Transform(Vector3.Right * 1.05f, scene.NPCs[2].RotationQ);
+            //        position = scene.NPCs[2].Position + 4.4f * Vector3.Transform(Vector3.Forward, scene.NPCs[2].RotationQ) + Vector3.Up * 7.6f;
+            //    }
+
+            //    velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            //    velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
+            //    velocity.Z = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
+            //}
             
         }
 
