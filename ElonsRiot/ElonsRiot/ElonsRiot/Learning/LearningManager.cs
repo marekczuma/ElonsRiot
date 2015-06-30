@@ -68,10 +68,22 @@ namespace ElonsRiot.Learning
                         Timer -= timeInMS;
                         if (Timer <= 0)
                         {
-                            Palo.PaloShooting.Shoot(ShootingLearning.Tins[1]);
-                            ShootingLearning.ElonShoot = true;
-                            ShootingLearning.ElonAfterFirst = true;
-                            ShootingLearning.IsStarted = false;
+                            Tin targetTin = new Tin();
+                            foreach(var elem in ShootingLearning.Tins)
+                            {
+                                if(elem.isAlive && (!elem.IsPlayer))
+                                {
+                                    targetTin = elem;
+                                    break;
+                                }
+                            }
+                            if (targetTin != null)
+                            {
+                                Palo.PaloShooting.Shoot(targetTin);
+                                ShootingLearning.ElonShoot = true;
+                                ShootingLearning.ElonAfterFirst = true;
+                                ShootingLearning.IsStarted = false;
+                            }
                         }                                                                                                                          
                     }
                 }

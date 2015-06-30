@@ -11,6 +11,7 @@ namespace ElonsRiot.Learning
         public Scene Scene { get; set; }
         public float Weight { get; set; }
         public bool IsPlayer { get; set; }
+        public bool isAlive = true;
         
         public Tin()
         {
@@ -30,6 +31,7 @@ namespace ElonsRiot.Learning
                     break;
                 }
             }
+            this.isAlive = false;
             Scene.PaloObject.Skills.Shooting += 10;
             Console.WriteLine(Scene.PaloObject.Skills.Shooting);
         }

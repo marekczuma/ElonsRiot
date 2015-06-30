@@ -374,7 +374,7 @@ namespace ElonsRiot
             Zenon.Name = "enemyZenon";
             Zenon.id = "ABCDEF";
             Zenon.Scale = new Vector3(0.4f, 0.4f, 0.4f);
-            Zenon.Position = new Vector3(35, 0, -130); //Jest w raju
+            Zenon.Position = new Vector3(35, 0, -125); //Jest w raju
             Zenon.Rotation = new Vector3(0, 0, 0);
             Zenon.ObjectPath = "3D/ludzik/soldier_idle";
             Zenon.oldPosition = new Vector3(80, 0, 34);
