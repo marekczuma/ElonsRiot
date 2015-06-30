@@ -97,6 +97,7 @@
     <Compile Include="ControlPlayer\ObjectDetectionManager.cs" />
     <Compile Include="DecoyAI.cs" />
     <Compile Include="DialogLine.cs" />
+    <Compile Include="DialogTime.cs" />
     <Compile Include="DialoguesManager.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="ExplosionParticleSystem.cs" />
