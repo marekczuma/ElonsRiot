@@ -325,7 +325,7 @@ namespace ElonsRiot
                 }
             }
             //ruchoma sciana
-            foreach (GameObject character in Characters)
+        /*    foreach (GameObject character in Characters)
             {
                   if (boxesCollision.TestAABBAABB(character, movableWall))
                     {
@@ -410,7 +410,7 @@ namespace ElonsRiot
                     }
             }*/
             //kolizja elemetów nieinteraktywnych z bahataterami 
-            foreach (GameObject character in Characters)
+           /* foreach (GameObject character in Characters)
             {
 
                 foreach (GameObject gObj in NotInteractiveGameObject)
@@ -456,7 +456,7 @@ namespace ElonsRiot
                         }
                     }
                 }
-            }
+            }*/
             if (ramp.GameObjectModel != null)
             {
                 //kolizja rampy z bahataterami 
