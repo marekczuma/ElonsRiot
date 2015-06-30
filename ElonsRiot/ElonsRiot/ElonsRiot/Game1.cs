@@ -82,7 +82,7 @@ namespace ElonsRiot
          //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
 
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }
@@ -473,6 +473,11 @@ namespace ElonsRiot
                 {
                     HUD.DrawString(sptiteBatchDialogues,
                           DialoguesManager.OpeningStatements[0].dialogLines.Line[DialoguesManager.ActualLineOpening], GraphicsDevice);
+                }
+                if (DialoguesManager.IsHacking)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                          DialoguesManager.HackingStatements[0].dialogLines.Line[DialoguesManager.ActualLineHacking], GraphicsDevice);
                 }
                 if (DialoguesManager.IsLaser && DialoguesManager.LaserStatements.Count != 0)
                 {
