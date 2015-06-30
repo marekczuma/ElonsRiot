@@ -37,6 +37,16 @@ namespace ElonsRiot.Learning
             Tins.Add(HighTin1);
             Tin HighTin2 = new Tin { Scene = Scene, Position = new Vector3(65, 0, 80), Scale = new Vector3(0.3f, 0.8f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset Wysoka puszka2", id = "ABCDEF", IsPlayer = false, Tag = "Tin" };
             Tins.Add(HighTin2);
+
+            Tin TinElon = new Tin { Scene = Scene, Position = new Vector3(53, 0, 80), Scale = new Vector3(0.3f, 0.9f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset puszka elona", id = "ABCDEF", IsPlayer = true, Tag = "Tin" };
+            Tins.Add(TinElon);
+            Tin TinElon2 = new Tin { Scene = Scene, Position = new Vector3(57, 0, 80), Scale = new Vector3(0.3f, 0.9f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset puszka elona2", id = "ABCDEF", IsPlayer = true, Tag = "Tin" };
+            Tins.Add(TinElon2);
+
+            Tin TinPalo = new Tin { Scene = Scene, Position = new Vector3(63, 0, 80), Scale = new Vector3(0.3f, 0.9f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset puszka Pala", id = "ABCDEF", IsPlayer = false, Tag = "Tin" };
+            Tins.Add(TinPalo);
+            Tin TinPalo2 = new Tin { Scene = Scene, Position = new Vector3(67, 0, 80), Scale = new Vector3(0.3f, 0.9f, 0.3f), ObjectPath = "3D/Placeholders/Tin", Name = "asset puszka Pala2", id = "ABCDEF", IsPlayer = false, Tag = "Tin" };
+            Tins.Add(TinPalo2);
         }
 
         public void AddObjectsToScene()

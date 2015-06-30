@@ -764,6 +764,7 @@
 		  <Y>0.75</Y>
 		  <Z>0.98</Z>
 		</Scale>
+		<Tag>guardPlace</Tag>
 		<Interactive>false</Interactive>
 	</GameObject> 
 		<GameObject Name="assetServer" Id="ABCDEF" Path="3D/placeholders/serwer">

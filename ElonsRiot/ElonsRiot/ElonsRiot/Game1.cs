@@ -82,7 +82,7 @@ namespace ElonsRiot
          //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
 
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }

@@ -374,7 +374,7 @@ namespace ElonsRiot
             Zenon.Name = "enemyZenon";
             Zenon.id = "ABCDEF";
             Zenon.Scale = new Vector3(0.4f, 0.4f, 0.4f);
-            Zenon.Position = new Vector3(500, 0, 34); //Jest w raju
+            Zenon.Position = new Vector3(35, 0, -130); //Jest w raju
             Zenon.Rotation = new Vector3(0, 0, 0);
             Zenon.ObjectPath = "3D/ludzik/soldier_idle";
             Zenon.oldPosition = new Vector3(80, 0, 34);
@@ -385,7 +385,7 @@ namespace ElonsRiot
             Artur.Name = "enemyArtur";
             Artur.id = "ABCDEF";
             Artur.Scale = new Vector3(0.4f, 0.4f, 0.4f);
-            Artur.Position = new Vector3(530, 0, 34); //jest w raju
+            Artur.Position = new Vector3(25, 0, -125); //jest w raju
             Artur.Rotation = new Vector3(0, 0, 0);
             Artur.ObjectPath = "3D/ludzik/soldier_idle";
             Artur.oldPosition = new Vector3(80, 0, 34);

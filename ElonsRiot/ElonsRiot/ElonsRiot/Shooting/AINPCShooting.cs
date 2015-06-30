@@ -48,7 +48,7 @@ namespace ElonsRiot.Shooting
             }else if (Character is PaloCharacter)
             {
                 PaloCharacter currentGuard = (PaloCharacter)Character;
-                if ((currentGuard.PaloState != FriendState.death) && (currentGuard.PaloState != FriendState.decoy) && (currentGuard.Skills.Shooting >= 20))
+                if (((currentGuard.PaloState != FriendState.death) && (currentGuard.PaloState != FriendState.decoy)) || ((currentGuard.PaloState != FriendState.death) && (currentGuard.Skills.Shooting >= 10)))
                 {
                     foreach (var element in Scene.GameObjects)
                     {
