@@ -484,8 +484,9 @@ namespace ElonsRiot
                 }
                 if(isEnd == true && stringTime <4)
                 {
-                    HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
+                    //HUD.DrawString(sptiteBatchDialogues, "Elon:Ah...nie uda mi sie tego rozbroic!", this.GraphicsDevice);
                    // HUD.DrawString(sptiteBatchDialogues, "Palo:Przeanalizowalem budowe czujek.Mozemy je unieszkodliwic jesli zestrzelimy je jednoczesnie", this.GraphicsDevice);
+                    DialoguesManager.IsHacking = true;
                     isEnd = false;
                 }
                 if (MyScene.PaloObject.PaloLearningState == LearningState.Learning)
