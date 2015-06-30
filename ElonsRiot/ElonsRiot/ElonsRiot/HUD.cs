@@ -64,7 +64,7 @@ namespace ElonsRiot
             intro = content.Load<Texture2D>("HUD/intro");
         }
 
-        public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
+        public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime, float laserCountdownTime)
         {
             float scaleFloat = 0.12f;
 
@@ -87,6 +87,13 @@ namespace ElonsRiot
             else if (countdownTime > 1 && countdownTime < 2)
                 spriteBatch[1].DrawString(bigFont, "2", new Vector2(width / 2 - 30, 50), Color.Maroon);
             else if (countdownTime > 0 && countdownTime < 1)
+                spriteBatch[1].DrawString(bigFont, "1", new Vector2(width / 2 - 30, 50), Color.Maroon);
+
+            if (laserCountdownTime > 2 && laserCountdownTime < 3)
+                spriteBatch[1].DrawString(bigFont, "3", new Vector2(width / 2 - 30, 50), Color.Maroon);
+            else if (laserCountdownTime > 1 && laserCountdownTime < 2)
+                spriteBatch[1].DrawString(bigFont, "2", new Vector2(width / 2 - 30, 50), Color.Maroon);
+            else if (laserCountdownTime > 0 && laserCountdownTime < 1)
                 spriteBatch[1].DrawString(bigFont, "1", new Vector2(width / 2 - 30, 50), Color.Maroon);
 
             //foreach (var elem in myScene.GameObjects)

@@ -53,6 +53,7 @@ namespace ElonsRiot
         ParticleSystem helperParticles;
         public float countdownTime;
         public float hackingCountdownTime;
+        public float laserCountdownTime;
         public float bigExplosionTime;
         public float stringTime;
         RenderTarget2D renderTarget;
@@ -132,6 +133,7 @@ namespace ElonsRiot
             hackingCountdownTime = 6;
             bigExplosionTime = 0.15f;
             stringTime = 0f;
+            laserCountdownTime = 4;
            // MyRay.setReferences(GraphicsDevice, MyScene);
 
         }
@@ -383,18 +385,13 @@ namespace ElonsRiot
 
         void LaserCountdown(GameTime gameTime)
         {
-            if (countdownTime > 0)
+            if (laserCountdownTime > 0)
             {
-                countdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else if (bigExplosionTime > 0)
-            {
-                bigExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                MyScene.PlayerObject.showBigExplosion = true;
-                MusicManager.PlaySound(8);
+                laserCountdownTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
+                MusicManager.PlaySound(8);
                 MyScene.PlayerObject.showLaser = false;
             }
         }
@@ -422,7 +419,7 @@ namespace ElonsRiot
         {
             //visibleHUD = true;
 
-            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime);
+            HUD.DrawHUD(spriteBatchHUD, MyScene.PlayerObject.health, MyScene.PaloObject.health, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, countdownTime, laserCountdownTime);
 
             HUD.DrawProgress(spriteBatchHUD, GraphicsDevice, MyScene, GraphicsDevice.Viewport.Width, hackingCountdownTime);
 
