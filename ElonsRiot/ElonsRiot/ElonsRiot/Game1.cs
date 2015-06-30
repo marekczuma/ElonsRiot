@@ -37,6 +37,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchLearning;
         SpriteBatch spriteBatchVideo;
         SpriteBatch spriteBatchLegend;
+        SpriteBatch spriteBatchIntro;
         bool isEnd = false;
         public bool isTalking = false;
         bool visibleHUD = false;
@@ -80,7 +81,7 @@ namespace ElonsRiot
          //   MyDialogues = new DialoguesManager();
             CurrentMouseState = Mouse.GetState();
 
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.PreferMultiSampling = true;
         }
@@ -119,13 +120,14 @@ namespace ElonsRiot
             spriteBatchLearning = new SpriteBatch(GraphicsDevice);
             spriteBatchVideo = new SpriteBatch(GraphicsDevice);
             spriteBatchLegend = new SpriteBatch(GraphicsDevice);
+            spriteBatchIntro = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             DialoguesManager.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
 
-            intro = Content.Load<Video>("Video/Intro");
-            player = new VideoPlayer();
-            player.Play(intro);
+     //       intro = Content.Load<Video>("Video/Intro");
+     //       player = new VideoPlayer();
+     //       player.Play(intro);
             countdownTime = 6;
             hackingCountdownTime = 6;
             bigExplosionTime = 0.15f;
@@ -229,6 +231,8 @@ namespace ElonsRiot
         }
         protected override void Draw(GameTime gameTime)
         {
+            
+
             explosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             bigExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
             tinExplosionParticles.SetCameraParameters(MyScene.PlayerObject.camera.viewMatrix, MyScene.PlayerObject.camera.projectionMatrix);
@@ -237,6 +241,8 @@ namespace ElonsRiot
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
             MyScene.GraphicsDevice = GraphicsDevice;
+
+           
 
             //MyScene.DrawAllContent(graphics.GraphicsDevice, explosionParticles, bigExplosionParticles, tinExplosionParticles, laserParticles, gameTime);
            
@@ -260,7 +266,9 @@ namespace ElonsRiot
                 GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             }
 
-            playIntro();
+         //   playIntro();
+            if (!MyScene.PlayerObject.introEnd)
+                HUD.DrawIntro(spriteBatchIntro, GraphicsDevice);
 
             base.Draw(gameTime);
         }
@@ -492,5 +500,6 @@ namespace ElonsRiot
 
             visibleHUD = true;
         }
+
     }
 }

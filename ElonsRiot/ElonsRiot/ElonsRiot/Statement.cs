@@ -11,6 +11,8 @@ namespace ElonsRiot.Dialogues
     {
         [XmlElement("dialogLines")]
         public DialogLine dialogLines { get; set; } //linie wypowiedzi
+        [XmlElement("dialogTimes")]
+        public DialogTime dialogTimes { get; set; } //linie wypowiedzi
         [XmlElement("place")]
         public string placeToShow {get;set;} //miejsce wyswietlenia wypowiedzi
 
