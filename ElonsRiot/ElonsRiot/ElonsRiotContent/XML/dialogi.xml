@@ -47,7 +47,7 @@
 	</dialogLines>
 	 <dialogTimes>
 		<time>2</time>
-		<time>7</time>
+		<time>4</time>
 		<time>2</time>
 		<time>1</time>
    </dialogTimes>
@@ -66,14 +66,14 @@
 		<line>Elon:Tak,zrozumialem! Idziemy.</line>
 	</dialogLines>
 	 <dialogTimes>
-		<time>5</time>
-		<time>5</time>
-		<time>5</time>
-		<time>5</time>
-		<time>5</time>
-		<time>5</time>
-		<time>5</time>
-		<time>5</time>
+		<time>3</time>
+		<time>3</time>
+		<time>2</time>
+		<time>2</time>
+		<time>3</time>
+		<time>3</time>
+		<time>1</time>
+		<time>1</time>
 		<time>5</time>
    </dialogTimes>
 	<place>ClosedDoor</place>
@@ -90,13 +90,13 @@
 	 <line>Elon: Trzy czesci,trzy czesci.. co mi po trzech czesciach?! Jesli nie znajdziemy tej ostatniej zanimm uruchomia sie kamery to juz po nas!</line>
    </dialogLines> 
     <dialogTimes>
-		<time>6</time>
-		<time>7</time>
+		<time>4</time>
 		<time>3</time>
-		<time>7</time>
+		<time>3</time>
 		<time>3</time>
 		<time>2</time>
-		<time>5</time>
+		<time>1</time>
+		<time>3</time>
    </dialogTimes>
 	 <place>Hall</place>
  </statement>
@@ -110,9 +110,9 @@
     </dialogLines>
 	 <dialogTimes>
 	    <time>2</time>
-		<time>4</time>
-		<time>4</time>
 		<time>2</time>
+		<time>2</time>
+		<time>1</time>
 		<time>1</time>
    </dialogTimes>
 	<place>WareHouse</place>
@@ -122,7 +122,7 @@
 	  <line>Elon: No,wreszcie na miejscu!</line>
     </dialogLines>
 	 <dialogTimes>
-		<time>2</time>
+		<time>1</time>
 	</dialogTimes>
 	<place>Laboratory</place>
  </statement> 
@@ -150,11 +150,11 @@
 	  <line>Elon: Jasne, ze nie!Nic o tym nie wiedzialem!Pracowalem w calkiem innym zespole, dopiero niedawno sie dowiedzialem.. a zreszta co ja sie bede maszynie tlumaczyl. </line>
     </dialogLines>
 	 <dialogTimes>
-		<time>6</time>
-		<time>7</time>
-		<time>9</time>
+		<time>3</time>
+		<time>3</time>
+		<time>4</time>
 		<time>2</time>
-		<time>7</time>
+		<time>5</time>
    </dialogTimes>
 	<place>ShootingGallery</place>
  </statement> 
