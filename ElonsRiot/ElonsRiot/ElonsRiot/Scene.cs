@@ -193,7 +193,7 @@ namespace ElonsRiot
                      elem.DrawAnimatedModels(ContentManager, PlayerObject, PaloObject.animationPlayer, reflect, false);
                  else if (elem.Name == "ceil")
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
-                 else if (elem.Name == "Kuleczka" || elem.Name == "Bomba")
+                 else if (elem.Name == "Kuleczka")
                      elem.DrawNoEffectModels(ContentManager, PlayerObject, reflect, false);
                 elem.RefreshMatrix();
              }
@@ -224,7 +224,7 @@ namespace ElonsRiot
 
              foreach (var elem in VisibleGameObjects)
              {
-                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "Bomba" && elem.Name != "gunPalo" && elem.Name != "gunMarian" && elem.Name != "gunZenon" && elem.Name != "gunArtur")                 
+                 if (elem.Name != "characterElon" && elem.Name != "characterPalo" && elem.Tag != "guard" && elem.Name != "ceil" && elem.Name != "Kuleczka" && elem.Name != "gun" && elem.Name != "gunPalo" && elem.Name != "gunMarian" && elem.Name != "gunZenon" && elem.Name != "gunArtur")                 
                  {
                      elem.DrawModels(ContentManager, PlayerObject, lightPos, lightPower, ambientPower, lightViewProjection, "Simplest", shadowMap, reflect, false);
                  }
@@ -320,6 +320,23 @@ namespace ElonsRiot
             time = gameTime;
             ShootingManager.UpdateShooting();
             QuestManager.UpdateQuests();
+            if(checkPlayerPosition())
+            {
+                Dialogues.DialoguesManager.IsLaser = true;
+            }
+        }
+        private bool checkPlayerPosition()
+        {
+            
+       
+            if(PlayerObject.Position.X >= 3f && PlayerObject.Position.X <= 47.5f)
+            {
+                if(PlayerObject.Position.Z >= -100 && PlayerObject.Position.Z <= -80)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private void LoadElon()
         {
@@ -357,7 +374,7 @@ namespace ElonsRiot
             Zenon.Name = "enemyZenon";
             Zenon.id = "ABCDEF";
             Zenon.Scale = new Vector3(0.4f, 0.4f, 0.4f);
-            Zenon.Position = new Vector3(80, 0, 34);
+            Zenon.Position = new Vector3(500, 0, 34); //Jest w raju
             Zenon.Rotation = new Vector3(0, 0, 0);
             Zenon.ObjectPath = "3D/ludzik/soldier_idle";
             Zenon.oldPosition = new Vector3(80, 0, 34);
@@ -368,7 +385,7 @@ namespace ElonsRiot
             Artur.Name = "enemyArtur";
             Artur.id = "ABCDEF";
             Artur.Scale = new Vector3(0.4f, 0.4f, 0.4f);
-            Artur.Position = new Vector3(70, 0, 34); //jest w raju
+            Artur.Position = new Vector3(530, 0, 34); //jest w raju
             Artur.Rotation = new Vector3(0, 0, 0);
             Artur.ObjectPath = "3D/ludzik/soldier_idle";
             Artur.oldPosition = new Vector3(80, 0, 34);

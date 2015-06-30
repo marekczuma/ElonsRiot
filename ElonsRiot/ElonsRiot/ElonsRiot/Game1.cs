@@ -88,6 +88,7 @@ namespace ElonsRiot
         {
             PhysicManager.setElements(graphics.GraphicsDevice);
             MusicManager.Initialize(Content);
+            DialoguesSoundManager.Initialize(Content);
             renderTarget = new RenderTarget2D(
                            GraphicsDevice,
                            GraphicsDevice.PresentationParameters.BackBufferWidth,
@@ -223,7 +224,7 @@ namespace ElonsRiot
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
                     SamplerState.LinearClamp, DepthStencilState.Default,
                     RasterizerState.CullNone, grayEffect);
-                spriteBatch.Draw(texture, new Rectangle(0, 0, 800, 480), Color.White);
+                spriteBatch.Draw(texture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.End();
         }
         protected override void Draw(GameTime gameTime)
@@ -249,7 +250,8 @@ namespace ElonsRiot
             }
             visibleHUD = false;
 
-            DrawHUD();
+            if (!MyScene.isGray)
+                DrawHUD();
 
             if (!visibleHUD)
             {
@@ -381,7 +383,7 @@ namespace ElonsRiot
             {
                 bigExplosionTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 MyScene.PlayerObject.showBigExplosion = true;
-                MusicManager.PlaySound(3);
+                MusicManager.PlaySound(8);
             }
             else
             {
@@ -466,6 +468,11 @@ namespace ElonsRiot
                 {
                     HUD.DrawString(sptiteBatchDialogues,
                           DialoguesManager.OpeningStatements[0].dialogLines.Line[DialoguesManager.ActualLineOpening], GraphicsDevice);
+                }
+                if (DialoguesManager.IsLaser && DialoguesManager.LaserStatements.Count != 0)
+                {
+                    HUD.DrawString(sptiteBatchDialogues,
+                          DialoguesManager.LaserStatements[0].dialogLines.Line[DialoguesManager.ActualLineLaser], GraphicsDevice);
                 }
                 if(isEnd == true && stringTime <4)
                 {

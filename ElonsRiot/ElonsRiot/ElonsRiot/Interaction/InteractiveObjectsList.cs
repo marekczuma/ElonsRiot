@@ -55,6 +55,9 @@ namespace ElonsRiot.Interaction
             OpeningDoor openingDoor = new OpeningDoor { Name = "openingDoor", ObjectPath = "3D/placeholders/drzwi_suwane_2", Interactive = true, Position = new Vector3(51, 0, -85), Rotation = new Vector3(0, 0, 0), Scale = new Vector3(1, 0.75f, 1f) };
             openingDoor.id = "ABCDEF";
             InteractiveObjects.Add(openingDoor);
+            Stuff boom = new Stuff { Name = "stuffBoom", ObjectPath = "3D/placeholders/Bomba", Interactive = true, Position = new Vector3(17, 3.6f, -55), Rotation = new Vector3(0, 90, 0), Scale = new Vector3(1f, 1f, 1f) };
+            boom.id = "ABCDEF";
+            InteractiveObjects.Add(boom);
         }
 
         public void AddToScene()

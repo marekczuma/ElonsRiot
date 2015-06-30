@@ -36,7 +36,7 @@ namespace ElonsRiot.Quests
             {
                 foreach (var elem in Scene.GameObjects)
                 {
-                    if (Vector3.Distance(elem.Position, PosButtonA) <= 5)
+                    if (Vector3.Distance(elem.Position, PosButtonA) <= 7)
                     {
                         AIsIncluded = true;
                         break;
@@ -47,7 +47,7 @@ namespace ElonsRiot.Quests
                 }
                 foreach (var elem in Scene.GameObjects)
                 {
-                    if (Vector3.Distance(elem.Position, PosButtonB) <= 5)
+                    if (Vector3.Distance(elem.Position, PosButtonB) <= 6)
                     {
                         BIsIncluded = true;
                         break;
