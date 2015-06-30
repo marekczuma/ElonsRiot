@@ -32,7 +32,6 @@ namespace ElonsRiot.Music
           soundEffect = content.Load<SoundEffect>("Sounds/Final");
           soundEffectInstance.Add(soundEffect.CreateInstance());
         }
-        /// <summary>
         /// Jeśli chcemy ustawić jakieś inne wartosci niz domyslne dla wybranego dzwieku
         /// </summary>
         /// <param name="volue">glosnosc </param>
