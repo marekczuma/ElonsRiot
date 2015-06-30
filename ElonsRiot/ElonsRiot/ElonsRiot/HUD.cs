@@ -35,6 +35,7 @@ namespace ElonsRiot
         public static Texture2D legendSpace;
         public static Texture2D legendMouse;
         public static Texture2D legendL;
+        public static Texture2D intro;
 
         public static Vector2 scalePalo;
         public const float offset = 25;
@@ -60,7 +61,7 @@ namespace ElonsRiot
             legendP = content.Load<Texture2D>("HUD/Legend/legendP");
             legendSpace = content.Load<Texture2D>("HUD/Legend/legendSpace");
             legendMouse = content.Load<Texture2D>("HUD/Legend/legendMouse");
-
+            intro = content.Load<Texture2D>("HUD/intro");
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime)
@@ -222,6 +223,14 @@ namespace ElonsRiot
             spriteBatch.Draw(legendSpace, new Vector2(firstPos.X, firstPos.Y - 35), null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
             spriteBatch.Draw(legendMouse, new Vector2(firstPos.X, firstPos.Y - 70), null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
             spriteBatch.Draw(legendP, new Vector2(firstPos.X, firstPos.Y - 105), null, Color.White, 0, Vector2.Zero, 0.09f, SpriteEffects.None, 0);
+            spriteBatch.End();
+            graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
+        public static void DrawIntro(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(intro, new Rectangle(0, 0, graphics.Viewport.Width, graphics.Viewport.Height), null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
         }
