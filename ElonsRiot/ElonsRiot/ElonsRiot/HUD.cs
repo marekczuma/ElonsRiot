@@ -36,6 +36,7 @@ namespace ElonsRiot
         public static Texture2D legendMouse;
         public static Texture2D legendL;
         public static Texture2D intro;
+        public static Texture2D newModul;
 
         public static Vector2 scalePalo;
         public const float offset = 25;
@@ -62,6 +63,7 @@ namespace ElonsRiot
             legendSpace = content.Load<Texture2D>("HUD/Legend/legendSpace");
             legendMouse = content.Load<Texture2D>("HUD/Legend/legendMouse");
             intro = content.Load<Texture2D>("HUD/intro");
+            newModul = content.Load<Texture2D>("HUD/newModul");
         }
 
         public static void DrawHUD(SpriteBatch[] spriteBatch, float healthElon, float healthPalo, GraphicsDevice graphics, Scene myScene, int width, float countdownTime, float laserCountdownTime)
@@ -240,6 +242,13 @@ namespace ElonsRiot
             spriteBatch.Draw(intro, new Rectangle(0, 0, graphics.Viewport.Width, graphics.Viewport.Height), null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
             spriteBatch.End();
             graphics.DepthStencilState = DepthStencilState.Default;
+        }
+
+        public static void DrawNewModul(SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(newModul, new Vector2(graphics.Viewport.Width/2 - 284.5f, 100), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+            spriteBatch.End();
         }
     }
 }

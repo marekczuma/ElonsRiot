@@ -38,6 +38,7 @@ namespace ElonsRiot
         SpriteBatch spriteBatchVideo;
         SpriteBatch spriteBatchLegend;
         SpriteBatch spriteBatchIntro;
+        SpriteBatch spriteBatchFinal;
         bool isEnd = false;
         public bool isTalking = false;
         bool visibleHUD = false;
@@ -122,6 +123,7 @@ namespace ElonsRiot
             spriteBatchVideo = new SpriteBatch(GraphicsDevice);
             spriteBatchLegend = new SpriteBatch(GraphicsDevice);
             spriteBatchIntro = new SpriteBatch(GraphicsDevice);
+            spriteBatchFinal = new SpriteBatch(GraphicsDevice);
             MyScene.LoadAllContent(graphics.GraphicsDevice);
             DialoguesManager.InitializeDialoguesManager();
             HUD.LoadHUD(MyScene.ContentManager, MyScene.PlayerObject.health);
@@ -251,6 +253,7 @@ namespace ElonsRiot
             if (MyScene.isGray == true)
             {
                 DrawGrayScene(gameTime);
+                HUD.DrawNewModul(spriteBatchFinal, GraphicsDevice);
             }
             else
             {
@@ -259,7 +262,7 @@ namespace ElonsRiot
             visibleHUD = false;
 
             if (!MyScene.isGray)
-                DrawHUD();
+                 DrawHUD();
 
             if (!visibleHUD)
             {
@@ -391,7 +394,8 @@ namespace ElonsRiot
             }
             else
             {
-                MusicManager.PlaySound(8);
+                if(MyScene.PlayerObject.showLaser)
+                    MusicManager.PlaySound(8);
                 MyScene.PlayerObject.showLaser = false;
             }
         }

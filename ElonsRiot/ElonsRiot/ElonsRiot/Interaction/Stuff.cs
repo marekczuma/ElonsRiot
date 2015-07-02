@@ -7,6 +7,7 @@ namespace ElonsRiot.Interaction
 {
     public class Stuff : InteractiveGameObject
     {
+
         private List<GameObject> stuffs;
         public Stuff()
         {
@@ -15,7 +16,7 @@ namespace ElonsRiot.Interaction
         }
         public override void Interaction(Scene _scene)
         {
-            Music.MusicManager.PlaySound(5);
+           //     Music.MusicManager.PlaySound(5);
           _scene.PlayerObject.elonState.SetCurrentState(State.interact);
           stuffs.Add(this);
           _scene.GameObjects.Remove(this);
@@ -24,7 +25,6 @@ namespace ElonsRiot.Interaction
 
         public override void AfterInteraction(Scene _scene)
         {
-            
         }
     }
 }

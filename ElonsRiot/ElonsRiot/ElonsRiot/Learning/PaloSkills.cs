@@ -16,7 +16,7 @@ namespace ElonsRiot.Learning
         public PaloSkills()
         {
             Engineering = 34;
-            Shooting = 30;
+            Shooting = 0;
             Using = 16;
             Persuasion = 73;
         }

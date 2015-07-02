@@ -46,9 +46,9 @@
 	 <line> Tak</line>
 	</dialogLines>
 	 <dialogTimes>
-		<time>2</time>
-		<time>4</time>
-		<time>2</time>
+		<time>3</time>
+		<time>5</time>
+		<time>3</time>
 		<time>1</time>
    </dialogTimes>
 	<place>Hacking</place>
@@ -66,14 +66,14 @@
 		<line>Elon:Tak,zrozumialem! Idziemy.</line>
 	</dialogLines>
 	 <dialogTimes>
+		<time>4</time>
+		<time>4</time>
+		<time>3</time>
+		<time>2</time>
 		<time>3</time>
 		<time>3</time>
 		<time>2</time>
 		<time>2</time>
-		<time>3</time>
-		<time>3</time>
-		<time>1</time>
-		<time>1</time>
 		<time>5</time>
    </dialogTimes>
 	<place>ClosedDoor</place>
@@ -90,13 +90,13 @@
 	 <line>Elon: Trzy czesci,trzy czesci.. co mi po trzech czesciach?! Jesli nie znajdziemy tej ostatniej zanimm uruchomia sie kamery to juz po nas!</line>
    </dialogLines> 
     <dialogTimes>
+		<time>5</time>
 		<time>4</time>
 		<time>3</time>
-		<time>3</time>
+		<time>4</time>
 		<time>3</time>
 		<time>2</time>
-		<time>1</time>
-		<time>3</time>
+		<time>4</time>
    </dialogTimes>
 	 <place>Hall</place>
  </statement>
@@ -109,10 +109,10 @@
 	 <line>Palo: Prawa sciana od wejscia.</line>
     </dialogLines>
 	 <dialogTimes>
-	    <time>2</time>
+	    <time>3</time>
+		<time>3</time>
+		<time>3</time>
 		<time>2</time>
-		<time>2</time>
-		<time>1</time>
 		<time>1</time>
    </dialogTimes>
 	<place>WareHouse</place>
